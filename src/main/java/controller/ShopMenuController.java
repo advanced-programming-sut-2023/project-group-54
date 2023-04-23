@@ -1,28 +1,17 @@
 package controller;
 
-import view.commands.outputs.ShopMenuOutput;
+import view.enums.messages.ShopMenuMessage;
 
 public class ShopMenuController {
-    private String itemName;
-    private int amount;
-
-    public String showPriceList() {
+    public String showItemList() {
 
     }
 
-    public ShopMenuOutput buyItem(String itemName,int amount) {
+    public ShopMenuMessage buyItem(String itemName, int amount) {
 
     }
 
-    public ShopMenuOutput buyItemFinal() {
-
-    }
-
-    public ShopMenuOutput sellItem(String itemName,int amount) {
-
-    }
-
-    public ShopMenuOutput sellItemOutput() {
+    public ShopMenuMessage sellItem(String itemName, int amount) {
 
     }
 }
