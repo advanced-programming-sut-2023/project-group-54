@@ -1,109 +1,49 @@
 package controller;
 
-import model.Building;
+import model.*;
 import model.Buildings.Building;
-import model.Map;
-import model.Unit;
-import model.units.Unit;
-import view.commands.outputs.GameMenuOutput;
-
-import java.util.ArrayList;
-import java.util.regex.Matcher;
+import view.enums.messages.GameMenuMessage;
 
 public class GameMenuController {
-   private Building selectedBuilding;
-   private ArrayList<Unit> selectedUnit;
-   public Map showMap(int xCoordinate,int yCoordinate){
+    private static Game currentGame;
 
-   }
-   public String showPopularityFactors(){
+    public static String popularityFactorsShow() {
 
-   }
-   public String showPopularity(){
+    }
 
-   }
-   public String showFoodList(){
+    public static String popularityShow() {
 
-   }
-   public GameMenuOutput foodRate(int rateNumber){
+    }
 
-   }
-   public String foodRateShow(){
+    public static String foodListShow() {
 
-   }
-   public GameMenuOutput taxRate(){
+    }
 
-   }
-   public String taxRateShow(){
+    public static String foodRateShow() {
 
-   }
-   public GameMenuOutput fearRate(){
+    }
 
-   }
-   public GameMenuOutput dropBuilding(int xCoordinate,int yCoordinate,String type){
+    public static String taxRateShow() {
 
-   }
-   public Building selectBuilding(int xCoordinate,int yCoordinate){
+    }
 
-   }
-   public GameMenuOutput createUnit(String type,int count){
+    public static GameMenuMessage fearRateSet(int rateNumber) {
 
-   }
-   public GameMenuOutput repair(){
+    }
 
-   }
-   public Unit selectUnit(int xCoordinate,int yCoordinate){
+    public static GameMenuMessage dropBuilding(int xCoordinate, int yCoordinate, Building building) {
 
-   }
-   public GameMenuOutput moveUnit(int xCoordinate,int yCoordinate){
+    }
 
-   }
-   public GameMenuOutput patrolUnit(int xCoordinate1,int yCoordinate1,int xCoordinate2,int yCoordinate2){
+    public static GameMenuMessage selectBuilding(int xCoordinate, int yCoordinate) {
 
-   }
-   public GameMenuOutput stopPatrolUnit(){
+    }
 
-   }
-   public GameMenuOutput set(int xCoordinate,int yCoordinate,String state){
+    public static GameMenuMessage selectUnit(int xCoordinate, int yCoordinate) {
 
-   }
-   public GameMenuOutput attackE(int enemyXCoordinate,int enemyYCoordinate){
+    }
 
-   }
-   public GameMenuOutput attackX(int xCoordinate,int yCoordinate){
+    public static GameMenuMessage nextTurn() {
 
-   }
-   public GameMenuOutput pourOil(String direction){
-
-   }
-   public GameMenuOutput digTunnel(int xCoordinate,int yCoordinate){
-
-   }
-   public GameMenuOutput buildEquipment(String equipmentName){
-
-   }
-   public GameMenuOutput disbandUnit(){
-
-   }
-   public GameMenuOutput setTexture(int x1Coordinate,int y1Coordinate, int x2Coordinate,int y2Coordinate){
-
-   }
-   public  GameMenuOutput clearBlock(int xCoordinate, int yCoordinate) {
-
-   }
-
-   public  GameMenuOutput dropBlock(int xCoordinate, int yCoordinate, String direction) {
-
-   }
-
-   public  GameMenuOutput dropTree(int xCoordinate, int yCoordinate, String treeName) {
-
-   }
-   public GameMenuOutput dropUnit(int xCoordinate,int yCoordinate,String type,int count ){
-
-   }
-   public GameMenuOutput nextTurn(){
-
-   }
-
+    }
 }

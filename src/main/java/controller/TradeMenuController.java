@@ -1,35 +1,22 @@
 package controller;
 
-import view.commands.outputs.TradeMenuOutput;
+import model.Resource;
+import view.enums.messages.TradeMenuMessage;
 
 public class TradeMenuController {
-
-
-    public String showAllUsers() {
+    public String tradeListShow() {
 
     }
 
-    public String showAllTradeRequestsToMe() {
+    public String historyShow() {
 
     }
 
-    public String showTradeList() {
+    public TradeMenuMessage trade(String username, Resource resource, int amount, int price, String message) {
 
     }
 
-    public String showHistory() {
-
-    }
-
-    public TradeMenuOutput tradeChecker(String username,String resourceType,int amount,int price,String message) {
-
-    }
-
-    public TradeMenuOutput trade(String username,String resourceType,int amount,int price,String message) {
-
-    }
-
-    public TradeMenuOutput acceptTrade(String id,String message) {
+    public TradeMenuMessage acceptTrade(String id, String message) {
 
     }
 }
