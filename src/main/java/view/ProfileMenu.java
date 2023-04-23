@@ -11,7 +11,7 @@ public class ProfileMenu {
         this.profileMenuController = new ProfileMenuController();
     }
 
-    private String run() {
+    public String run() {
         String command;
         Matcher matcher;
         while (true) {
