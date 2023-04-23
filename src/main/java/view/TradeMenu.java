@@ -1,35 +1,35 @@
 package view;
+
 import controller.*;
 
 import java.util.regex.Matcher;
 
 public class TradeMenu {
-    private TradeMenuController tradeMenuController;
-
-    public TradeMenu() {
-        this.tradeMenuController = new TradeMenuController();
-    }
-     private String run() {
+    private String run() {
         String command;
         Matcher matcher;
-        //show all users;
-         // show all requests;
-         while (true) {
-             command = Menu.getScanner().nextLine();
-             //if show current menu
-             //if back
-             //if trade
-             //if trade list
-             //if trade accept
-             //if trade history
-         }
-     }
+        while (true) {
+            command = Controller.getScanner().nextLine();
+            //if command is tradeListShow
+            //if command is historyShow
+            //if command is trade
+            //if command is acceptTrade
+        }
+    }
 
-     public void trade(Matcher matcher) {
+    public void tradeListShow(Matcher matcher) {
 
-     }
+    }
 
-     public void tradeAccept(Matcher matcher) {
+    public void historyShow(Matcher matcher) {
 
-     }
+    }
+
+    public void trade(Matcher matcher) {
+
+    }
+
+    public void acceptTrade(Matcher matcher) {
+
+    }
 }

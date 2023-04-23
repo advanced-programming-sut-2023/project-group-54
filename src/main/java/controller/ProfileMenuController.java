@@ -1,48 +1,48 @@
 package controller;
 
-import view.commands.outputs.ProfileMenuOutput;
-
+import model.User;
+import view.enums.messages.ProfileMenuMessage;
 
 public class ProfileMenuController {
-    private String passwordTOChange;
+    private static User user;
 
-    public ProfileMenuOutput changeUsername(String newUsername) {
-
-    }
-
-    public ProfileMenuOutput changeNickname(String newNickname) {
+    public static ProfileMenuMessage changeUsername(String newUsername) {
 
     }
 
-    public ProfileMenuOutput changePassword(String oldPassword,String newPassword) {
+    public static ProfileMenuMessage changeNickname(String newNickname) {
 
     }
 
-    public ProfileMenuOutput changePasswordSecondTimeChecker(String newPasswordRepetition) {
+    public static ProfileMenuMessage changePassword(String oldPassword, String newPassword) {
 
     }
 
-    public ProfileMenuOutput changeEmail(String newEmail) {
+    public static ProfileMenuMessage changeEmail(String newEmail) {
 
     }
 
-    public ProfileMenuOutput changeSlogan(String newSlogan) {
+    public static ProfileMenuMessage changeSlogan(String newSlogan) {
 
     }
 
-    public String showHighScore() {
+    public static ProfileMenuMessage removeSlogan() {
 
     }
 
-    public String showRank() {
+    public static String showHighScore() {
 
     }
 
-    public String showSlogan() {
+    public static String showRank() {
 
     }
 
-    public String showProfile() {
+    public static String showSlogan() {
+
+    }
+
+    public static String showProfile() {
 
     }
 }

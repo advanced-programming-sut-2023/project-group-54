@@ -1,8 +1,14 @@
 package model.Buildings;
 
-public class TrapBuilding {
-    enum TrapType{
-        ;
+public class TrapBuilding extends Building {
+    private TrapType trapType;
+
+    public TrapBuilding(TrapType trapType) {
+        super(trapType.getBuildingType(), trapType.getBuildingType().getMaxHp());
+        this.trapType = trapType;
     }
-    private Boolean isEnable;
+
+    public void firePitchDitch() {
+
+    }
 }

@@ -7,5 +7,4 @@ public class Main {
         Controller.setScanner(scanner);
         Controller.run();
     }
-
 }
