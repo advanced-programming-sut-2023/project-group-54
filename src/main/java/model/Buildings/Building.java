@@ -1,13 +1,13 @@
 package model.Buildings;
 
+import model.Resources;
+
 import java.util.HashMap;
 
 public class Building {
-    private static HashMap<Building, Integer> buildings;
-    private BuildingType buildingType;
+    private HashMap<Integer, Resources> costs;
+    private int workers;
+    private int maxHp;
     private int hp;
-
-    public Building(BuildingType buildingType, int maxHp) {
-
-    }
+    private BuildingGroup buildingGroup;
 }

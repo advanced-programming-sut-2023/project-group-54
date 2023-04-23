@@ -1,10 +1,10 @@
 package model.Buildings;
 
 public enum BuildingGroup {
-    CASTLE,
-    FARM,
-    FOOD_PROCESSING,
-    INDUSTRY,
-    TOWN,
-    WEAPONS;
+    CASTLE_TYPE,
+    FOOD_PROCESS,
+    INDUSTRIAL,
+    URBAN_STRUCTURE,
+    WEAPON,
+    FARM_GROUND;
 }
