@@ -2,19 +2,9 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
-      <option name="id" value="jargs" />
-      <option name="name" value="jargs" />
-      <option name="url" value="https://dist.wso2.org/maven2/" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
       <option name="url" value="https://repo.maven.apache.org/maven2" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="wso2-maven2-repository" />
-      <option name="name" value="wso2-maven2-repository" />
-      <option name="url" value="https://dist.wso2.org/maven2/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
@@ -25,11 +15,6 @@
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="sonatype-oss-public" />
-      <option name="name" value="sonatype-oss-public" />
-      <option name="url" value="https://oss.sonatype.org/content/groups/public/" />
     </remote-repository>
   </component>
 </project>

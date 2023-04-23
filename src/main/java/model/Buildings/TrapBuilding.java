@@ -1,14 +1,8 @@
 package model.Buildings;
 
-public class TrapBuilding extends Building {
-    private TrapType trapType;
-
-    public TrapBuilding(TrapType trapType) {
-        super(trapType.getBuildingType(), trapType.getBuildingType().getMaxHp());
-        this.trapType = trapType;
+public class TrapBuilding {
+    enum TrapType{
+        ;
     }
-
-    public void firePitchDitch() {
-
-    }
+    private Boolean isEnable;
 }
