@@ -9,5 +9,8 @@
         <module name="phase0" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="StrongHold" target="19" />
+    </bytecodeTargetLevel>
   </component>
 </project>
