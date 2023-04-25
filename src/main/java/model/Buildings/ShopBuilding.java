@@ -1,10 +1,16 @@
 package model.Buildings;
 
-import model.Resources;
-import model.SellBuy;
+import model.Resource;
 
-import java.util.HashMap;
+public class ShopBuilding extends Building{
+    public ShopBuilding() {
+        super(BuildingType.MARKET, BuildingType.MARKET.getMaxHp());
+    }
+    public void buy(Resource resource) {
 
-public class ShopBuilding {
-    HashMap<Resources, SellBuy> products;
+    }
+
+    public void sell(Resource resource) {
+
+    }
 }
