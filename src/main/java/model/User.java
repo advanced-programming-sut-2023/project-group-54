@@ -3,18 +3,15 @@ package model;
 import java.util.ArrayList;
 
 public class User {
+    private static ArrayList<User> users;
     private String username;
     private String password;
     private String nickname;
     private String email;
     private String slogan;
     private int questionNumber;
-    private Government government;
     private String questionAnswer;
-    private static ArrayList<User> users;
-
-
-
+    private Government government;
 
     public User(String username, String password, String nickname, String email, String slogan, int questionNumber, String questionAnswer, Government government) {
         this.username = username;
@@ -27,34 +24,15 @@ public class User {
         this.government = government;
     }
 
-
-
-
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public User(String username, String password, String nickname, String email, String slogan,
-                int questionNumber, String questionAnswer) {
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-        this.email = email;
-        this.slogan = slogan;
-        this.questionNumber = questionNumber;
-        this.questionAnswer = questionAnswer;
-    }
-
     public String getUsername() {
         return username;
     }
 
-    public boolean isPasswordValid(String password) {
-        return password.equals(this.getPassword());
-    }
     public String getPassword() {
         return password;
+    }
+    public boolean isPasswordValid(String password) {
+        return password.equals(this.getPassword());
     }
 
     public String getNickname() {
@@ -73,15 +51,11 @@ public class User {
         return questionNumber;
     }
 
-    public Government getGovernment() {
-        return government;
-    }
-
     public String getQuestionAnswer() {
         return questionAnswer;
     }
 
-    public void setMap(int mapNumber) {
-
+    public Government getGovernment() {
+        return government;
     }
 }

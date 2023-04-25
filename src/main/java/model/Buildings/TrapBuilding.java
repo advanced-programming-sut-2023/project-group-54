@@ -12,4 +12,3 @@ public class TrapBuilding extends Building {
 
     }
 }
-

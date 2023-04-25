@@ -14,4 +14,3 @@ public class ProducerBuilding extends Building {
 
     }
 }
-
