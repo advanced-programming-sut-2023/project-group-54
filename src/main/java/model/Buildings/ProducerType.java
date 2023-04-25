@@ -104,11 +104,11 @@ public enum ProducerType {
             put(Resource.MACE, 1);
         }});
         put(new HashMap<>() {{
-            put(Resource.IRON, 1);
-        }},
-        new HashMap<>() {{
-            put(Resource.SWORDS, 1);
-        }});
+                put(Resource.IRON, 1);
+            }},
+                new HashMap<>() {{
+                    put(Resource.SWORDS, 1);
+                }});
     }}, false, null, false),
     FLETCHER(BuildingType.FLETCHER, new HashMap<>() {{
         put(new HashMap<>() {{
@@ -117,11 +117,11 @@ public enum ProducerType {
             put(Resource.BOW, 1);
         }});
         put(new HashMap<>() {{
-            put(Resource.WOOD, 3);
-        }},
-        new HashMap<>() {{
-            put(Resource.CROSSBOW, 1);
-        }});
+                put(Resource.WOOD, 3);
+            }},
+                new HashMap<>() {{
+                    put(Resource.CROSSBOW, 1);
+                }});
     }}, false, null, false),
     POLETURNER(BuildingType.POLETURNER, new HashMap<>() {{
         put(new HashMap<>() {{
@@ -130,11 +130,11 @@ public enum ProducerType {
             put(Resource.SPEAR, 1);
         }});
         put(new HashMap<>() {{
-            put(Resource.WOOD, 2);
-        }},
-        new HashMap<>() {{
-            put(Resource.PIKE, 1);
-        }});
+                put(Resource.WOOD, 2);
+            }},
+                new HashMap<>() {{
+                    put(Resource.PIKE, 1);
+                }});
     }}, false, null, false);
 
 
@@ -173,3 +173,4 @@ public enum ProducerType {
         return isAddPopularity;
     }
 }
+

@@ -54,7 +54,7 @@ public enum BuildingType {
     MANGONEL(100, 2, 3, 50, "mangonel", new ArrayList<>(Arrays.asList(DefenseType.SQUARE_TOWER, DefenseType.ROUND_TOWER)), 2, null,
             0, true, BuildingGroup.CASTLE),
     BALLISTAE(100, 2, 3, 50, "ballistae",  new ArrayList<>(Arrays.asList(DefenseType.SQUARE_TOWER, DefenseType.ROUND_TOWER)), 2, null,
-                0, true, BuildingGroup.CASTLE),
+            0, true, BuildingGroup.CASTLE),
     STABLE(300, 6, 6, 400, "stable", null, 0, Resource.WOOD,
             20, false, BuildingGroup.CASTLE),
     APPLE_ORCHARD(200, 11, 11, 0, "apple orchard", new ArrayList<>(Arrays.asList(MapType.THICK_SCRUB,

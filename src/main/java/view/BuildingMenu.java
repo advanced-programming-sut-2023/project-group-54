@@ -9,7 +9,7 @@ public class BuildingMenu {
         String command;
         Matcher matcher;
         while (true) {
-            command = Controller.getScanner().nextLine();
+            command = Menu.getScanner().nextLine();
             //if command is repair
             //if command is createUnit
             //if command is taxRateSet
@@ -41,3 +41,4 @@ public class BuildingMenu {
 
     }
 }
+

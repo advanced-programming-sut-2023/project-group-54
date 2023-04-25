@@ -7,11 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="StrongHold" />
+        <module name="phase0" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="phase0" target="19" />
-      <module name="strongHold" target="19" />
-    </bytecodeTargetLevel>
   </component>
 </project>

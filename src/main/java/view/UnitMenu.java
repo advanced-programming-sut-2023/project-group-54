@@ -1,61 +1,43 @@
 package view;
-
 import controller.*;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class UnitMenu {
+public class BuildingMenu {
     public String run() {
         String command;
         Matcher matcher;
         while (true) {
-            command = Controller.getScanner().nextLine();
-            //if command is moveUnit
-            //if command is patrolUnit
-            //if command is stopPatrolUnit
-            //if command is setState
-            //if command is attack
-            //if command is pourOil
-            //if command is digTunnel
-            //if command is buildEquipment
-            //if command is disbandUnit
+            command = Menu.getScanner().nextLine();
+            //if command is repair
+            //if command is createUnit
+            //if command is taxRateSet
+            //if command is foodRateSet
         }
     }
 
-    private void moveUnit(Matcher matcher) {
+    private void repair(Matcher matcher) {
 
     }
 
-    private void patrolUnit(Matcher matcher) {
+    private void createUnit(Matcher matcher) {
 
     }
 
-    private void stopPatrolUnit(Matcher matcher) {
+    private void taxRateSet(Matcher matcher) {
 
     }
 
-    private void setState(Matcher matcher) {
+    private void foodRateSet(Matcher matcher) {
 
     }
 
-    private void attack() {
+    private void openGate(Matcher matcher) {
 
     }
 
-    private void pourOil() {
-
-    }
-
-    private void digTunnel() {
-
-    }
-
-    private void buildEquipment() {
-
-    }
-
-    private void disbandUnit() {
+    private void changeOutput(Matcher matcher) {
 
     }
 }
