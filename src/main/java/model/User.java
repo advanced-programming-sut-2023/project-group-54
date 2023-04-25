@@ -1,9 +1,12 @@
 package model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.*;
 import java.util.ArrayList;
 
 public class User {
-    private static ArrayList<User> users;
     private String username;
     private String password;
     private String nickname;
@@ -22,6 +25,36 @@ public class User {
         this.questionNumber = questionNumber;
         this.questionAnswer = questionAnswer;
         this.government = government;
+
+        Gson gson = new Gson();
+        String filePath = new File("").getAbsolutePath().concat("/src/main/java/" +
+                "model/data/users.json");
+        FileReader fileReader = null;
+        try {
+            fileReader = new FileReader(filePath);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<User> users = gson.fromJson(fileReader, new TypeToken<ArrayList<User>>() {}.getType());
+        if (users == null) users = new ArrayList<>();
+        users.add(this);
+        try {
+            fileReader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        gson.toJson(users, fileWriter);
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getUsername() {
@@ -57,5 +90,29 @@ public class User {
 
     public Government getGovernment() {
         return government;
+    }
+    private static void saveChange(User changedUser) {
+        ArrayList<User> users = Game.getUsers();
+        for (User user : users) {
+            if(user.getUsername().equals(changedUser.getUsername())){
+                users.set(users.indexOf(user), user);
+                break;
+            }
+        }
+        Gson gson = new Gson();
+        String filePath = new File("").getAbsolutePath().concat("/src/main/java/" +
+                "model/data/users.json");
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        gson.toJson(users, fileWriter);
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

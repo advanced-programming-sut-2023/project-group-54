@@ -1,9 +1,11 @@
 package controller;
+import com.google.common.hash.Hashing;
 import model.*;
 import view.commands.inputs.SignupMenuCommands;
 import view.commands.outputs.LoginMenuOutput;
 import view.commands.outputs.SignupMenuOutput;
 
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -18,7 +20,7 @@ public class SignupController {
 
     public SignupMenuOutput setUser(String username,String password,String passwordConfirmation,String nickname,String email,String slogan) {
         this.username = username;
-        this.password = password;
+        this.password = passwordToHash(password);
         this.passwordConfirmation = passwordConfirmation;
         this.nickname = nickname;
         this.email = email;
@@ -101,18 +103,16 @@ public class SignupController {
     }
 
     public SignupMenuOutput createUser(int questionNumber,String questionAnswer,String repetition) {
-        passwordToHash();
-        Game.addUsers(new User(username,password,nickname,email,slogan,questionNumber,questionAnswer));
-        //add to file
+        Game.addUsers(new User(username,password,nickname,email,slogan,questionNumber,questionAnswer, new Government()));
         return SignupMenuOutput.USER_CREATED;
     }
 
-    private void passwordToHash() {
-        //to complete
+    private String passwordToHash(ُString password) {
+        password = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+        return password;
     }
 
     public SignupMenuOutput chooseMap(int mapNumber){
-        // to complete
         return SignupMenuOutput.MAP_SELECTED;
     }
 }
