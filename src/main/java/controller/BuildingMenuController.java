@@ -9,26 +9,26 @@ public class BuildingMenuController {
     private Building selectedBuilding;
 
     public BuildingMenuMessage repair() {
-
+        return BuildingMenuMessage.SUCCESS;
     }
 
     public BuildingMenuMessage createUnit(Unit unit, int count) {
-
+        return BuildingMenuMessage.SUCCESS;
     }
 
     public BuildingMenuMessage taxRateSet(int rateNumber) {
-
+        return BuildingMenuMessage.SUCCESS;
     }
 
     public BuildingMenuMessage foodRateSet(int rateNumber) {
-
+        return BuildingMenuMessage.SUCCESS;
     }
 
     public BuildingMenuMessage openGate(){
-
+        return BuildingMenuMessage.SUCCESS;
     }
 
     public BuildingMenuMessage changeOutput(Resource resource){
-
+        return BuildingMenuMessage.SUCCESS;
     }
 }

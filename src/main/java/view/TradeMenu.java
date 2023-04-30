@@ -9,7 +9,7 @@ public class TradeMenu {
         String command;
         Matcher matcher;
         while (true) {
-            command = Controller.getScanner().nextLine();
+            command = MainMenu.getScanner().nextLine();
             //if command is tradeListShow
             //if command is historyShow
             //if command is trade

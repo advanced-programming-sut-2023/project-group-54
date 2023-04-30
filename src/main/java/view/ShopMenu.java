@@ -8,7 +8,7 @@ public class ShopMenu {
         String command;
         Matcher matcher;
         while (true) {
-            command = Controller.getScanner().nextLine();
+            command = MainMenu.getScanner().nextLine();
             //if command is showPriceList
             //if command is buyItem
             //if command is sellItem

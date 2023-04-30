@@ -47,9 +47,8 @@ public class LoginMenuController {
         return answer.equals(user.getQuestionAnswer());
     }
 
-    public static LoginMenuMessage setNewPassword(String password) {
+    public static void setNewPassword(String password) {
         user.setPassword(password);
-        return LoginMenuMessage.NEW_PASSWORD_SET;
     }
 
     public static LoginMenuMessage logout() {

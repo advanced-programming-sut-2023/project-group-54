@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class User {
-    private static ArrayList<User> users;
+    private static final ArrayList<User> users = new ArrayList<>();
     private String username;
     private String password;
     private String nickname;
@@ -54,8 +54,14 @@ public class User {
         return government;
     }
     public static User findUserByUsername(String username){
-        for (User user : Game.getUsers()) {
+        for (User user : User.getUsers()) {
             if (user.getUsername().equals(username)) return user;
+        }
+        return null;
+    }
+    public static User findUserByEmail(String email) {
+        for (User user : User.getUsers()) {
+            if (user.getEmail().equalsIgnoreCase(email)) return user;
         }
         return null;
     }

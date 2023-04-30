@@ -3,7 +3,6 @@ package controller;
 import com.google.common.hash.Hashing;
 import model.Government;
 import model.User;
-import view.enums.messages.LoginMenuMessage;
 import view.enums.messages.SignupMenuMessage;
 
 import java.nio.charset.StandardCharsets;
@@ -48,10 +47,6 @@ public class SignupMenuController {
     public static SignupMenuMessage chooseMap(int mapNumber) {
         // to complete
         return SignupMenuMessage.MAP_SELECTED;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public static SignupMenuMessage createUserChecker() {

@@ -8,7 +8,7 @@ public class GameMenu {
         String command;
         Matcher matcher;
         while (true) {
-            command = Controller.getScanner().nextLine();
+            command = MainMenu.getScanner().nextLine();
             //if command is popularityFactorsShow
             //if command is popularityShow
             //if command is foodListShow

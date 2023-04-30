@@ -8,7 +8,7 @@ public class ProfileMenu {
         String command;
         Matcher matcher;
         while (true) {
-            command = Controller.getScanner().nextLine();
+            command = MainMenu.getScanner().nextLine();
             //if command is changeUsername
             //if command is changeNickname
             //if command is changePassword

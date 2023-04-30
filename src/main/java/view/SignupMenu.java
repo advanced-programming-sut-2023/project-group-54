@@ -138,9 +138,10 @@ public class SignupMenu {
         if (secondResult.equals("success")) {
             System.out.println("user created successfully with username " + Controller.getLoggedInUser().getUsername());
             chooseMap();
-            secondResult = "map selected successfully";
+            secondResult = "";
         }
-        System.out.println(secondResult);
+        if(!secondResult.isEmpty())
+            System.out.println(secondResult);
     }
 
     private SignupMenuMessage randomPasswordConfirmation() {
@@ -246,11 +247,13 @@ public class SignupMenu {
         //maps properties
         for (int i = 0; i < 3; i++) {
             mapNumber = MainMenu.getScanner().nextInt();
-            // id ont know how many maps we have for now:
-            if (mapNumber >= 1 && mapNumber <= 5)
-                if(SignupMenuController.chooseMap(mapNumber).equals(SignupMenuMessage.MAP_SELECTED))
+            // I don't know how many maps we have for now:
+            if (mapNumber >= 1 && mapNumber <= 5){
+                if(SignupMenuController.chooseMap(mapNumber).equals(SignupMenuMessage.MAP_SELECTED)){
                     System.out.println("map selected successfully");
-
+                    return;
+                }
+            }
             System.out.println("please enter valid number");
         }
         System.out.println("you entered 3 invalid numbers map number 1 will be selected for you");

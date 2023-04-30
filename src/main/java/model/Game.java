@@ -3,10 +3,10 @@ package model;
 import java.util.ArrayList;
 
 public class Game {
-    private static ArrayList<ArrayList<Map>> map;
-    private static ArrayList<User> users;
+    private static final ArrayList<ArrayList<Map>> map = new ArrayList<>();
+    private static final ArrayList<User> users = new ArrayList<>();
+    private static final ArrayList<Integer> lastTurn = new ArrayList<>();
     private static User currentUser;
-    private static ArrayList<Integer> lastTurn;
     private static int currentTurn;
 
     public static ArrayList<ArrayList<Map>> getMap() {
