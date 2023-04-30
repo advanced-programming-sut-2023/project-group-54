@@ -10,7 +10,7 @@ public class UnitMenu {
         String command;
         Matcher matcher;
         while (true) {
-            command = Controller.getScanner().nextLine();
+            command = MainMenu.getScanner().nextLine();
             //if command is moveUnit
             //if command is patrolUnit
             //if command is stopPatrolUnit
