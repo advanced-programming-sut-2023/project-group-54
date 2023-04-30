@@ -1,14 +1,15 @@
 package view;
 
-import controller.*;
-import view.commands.CommonEnums;
+import controller.Controller;
+import view.enums.commands.Command;
+import view.enums.commands.CommandHandler;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Menu {
+public class MainMenu {
     private static final Scanner scanner = new Scanner(System.in);
     private GameMenu gameMenu;
 
@@ -18,17 +19,18 @@ public class Menu {
     }
 
     public static boolean captchaChecker() {
-
         for (int i = 0; i < 10; i++) {
-            System.out.println(CommonEnums.ENTER_CAPTCHA.getRegex());
+            System.out.println("please enter captcha (only uppercase letters): ");
             ArrayList<String> captcha = Controller.captcha();
             for (String s : captcha) {
-                System.out.println(s);
+                if (!s.equals(captcha.get(0))) {
+                    System.out.println(s);
+                }
             }
             String correctCaptcha = captcha.get(0);
             String userInput = scanner.nextLine();
             if (userInput.equals(correctCaptcha)) return true;
-            System.out.println(CommonEnums.WRONG_CAPTCHA.getRegex() + (9 - i) + " attempts left");
+            System.out.println("you entered captcha wrong you have " + (9 - i) + " attempts left");
         }
         return false;
     }
@@ -41,16 +43,20 @@ public class Menu {
         SignupMenu signupMenu = new SignupMenu();
         LoginMenu loginMenu = new LoginMenu();
         if (Controller.checkIfStayLoggedIn()) {
-            this.gameMenu = new GameMenu();
-            gameMenu.run();
+//            this.gameMenu = new GameMenu();
+//            gameMenu.run();
         }
         String command;
         while (true) {
-            command = Menu.getScanner().nextLine();
-            if (command.matches("\\s*sign\\s+up\\s+menu\\s*")) signupMenu.run();
-            else if (command.matches("\\s*login\\s+menu\\s*")) loginMenu.run();
-            else if (command.matches(CommonEnums.EXIT.getRegex())) return;
-            else System.out.println("Invalid command");
+            command = MainMenu.getScanner().nextLine();
+            if (command.matches("\\s*sign\\s+up\\s+menu\\s*"))
+                signupMenu.run();
+            else if (command.matches("\\s*login\\s+menu\\s*"))
+                loginMenu.run();
+            else if (CommandHandler.parsCommand(Command.EXIT, command) != null)
+                return;
+            else
+                System.out.println("Invalid command");
         }
     }
 }

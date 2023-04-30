@@ -1,12 +1,9 @@
 package model;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.*;
 import java.util.ArrayList;
 
 public class User {
+    private static ArrayList<User> users;
     private String username;
     private String password;
     private String nickname;
@@ -25,49 +22,14 @@ public class User {
         this.questionNumber = questionNumber;
         this.questionAnswer = questionAnswer;
         this.government = government;
-
-        Gson gson = new Gson();
-        String filePath = new File("").getAbsolutePath().concat("/src/main/java/" +
-                "model/data/users.json");
-        FileReader fileReader = null;
-        try {
-            fileReader = new FileReader(filePath);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        ArrayList<User> users = gson.fromJson(fileReader, new TypeToken<ArrayList<User>>() {}.getType());
-        if (users == null) users = new ArrayList<>();
-        users.add(this);
-        try {
-            fileReader.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(filePath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        gson.toJson(users, fileWriter);
-        try {
-            fileWriter.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public String getUsername() {
         return username;
     }
-
-    public String getPassword() {
+    private String getPassword() {
         return password;
     }
-    public boolean isPasswordValid(String password) {
-        return password.equals(this.getPassword());
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -91,28 +53,52 @@ public class User {
     public Government getGovernment() {
         return government;
     }
-    private static void saveChange(User changedUser) {
-        ArrayList<User> users = Game.getUsers();
-        for (User user : users) {
-            if(user.getUsername().equals(changedUser.getUsername())){
-                users.set(users.indexOf(user), user);
-                break;
-            }
+    public static User findUserByUsername(String username){
+        for (User user : Game.getUsers()) {
+            if (user.getUsername().equals(username)) return user;
         }
-        Gson gson = new Gson();
-        String filePath = new File("").getAbsolutePath().concat("/src/main/java/" +
-                "model/data/users.json");
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(filePath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        gson.toJson(users, fileWriter);
-        try {
-            fileWriter.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return null;
+    }
+    public boolean isPasswordValid(String password){
+        return this.getPassword().equals(password);
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
+    }
+
+    public void setQuestionNumber(int questionNumber) {
+        this.questionNumber = questionNumber;
+    }
+
+    public void setQuestionAnswer(String questionAnswer) {
+        this.questionAnswer = questionAnswer;
+    }
+
+    public void setGovernment(Government government) {
+        this.government = government;
+    }
+
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
+    public static void addUser(User user){
+        users.add(user);
     }
 }

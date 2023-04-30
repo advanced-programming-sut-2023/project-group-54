@@ -1,0 +1,25 @@
+package view.enums.messages;
+
+public enum LoginMenuMessage {
+    SUCCESS,
+
+    USER_NOT_FOUND,
+
+    WRONG_PASSWORD,
+
+    LOGIN_FAILED,
+
+    NEW_PASSWORD_SET,
+
+    WRONG_ANSWER,
+
+    FAILED_DURING_SETTING_NEW_PASSWORD,
+
+    FAILED_DURING_ANSWERING_QUESTION,
+
+    LOGGED_OUT_FIRST_PART,
+
+    LOGGED_OUT,
+
+    FAILED_DURING_CAPTCHA;
+}

@@ -2,48 +2,47 @@ package controller;
 
 import model.Direction;
 import model.units.Unit;
-import view.commands.outputs.UnitMenuOutput;
-import view.commands.outputs.GameMenuOutput;
-import view.commands.outputs.UnitMenuOutput;
+import view.enums.messages.GameMenuMessage;
+import view.enums.messages.UnitMenuMessage;
 
 import java.util.ArrayList;
 
 public class UnitMenuController {
     private ArrayList<Unit> selectedUnit;
 
-    public UnitMenuOutput moveUnit(int xCoordinate, int yCoordinate) {
+    public UnitMenuMessage moveUnit(int xCoordinate, int yCoordinate) {
 
     }
 
-    public UnitMenuOutput patrolUnit(int xCoordinate1, int yCoordinate1, int xCoordinate2, int yCoordinate2) {
+    public UnitMenuMessage patrolUnit(int xCoordinate1, int yCoordinate1, int xCoordinate2, int yCoordinate2) {
 
     }
 
-    public UnitMenuOutput stopPatrolUnit() {
+    public UnitMenuMessage stopPatrolUnit() {
 
     }
 
-    public UnitMenuOutput setState(int xCoordinate, int yCoordinate, String state) {
+    public UnitMenuMessage setState(int xCoordinate, int yCoordinate, String state) {
 
     }
 
-    public UnitMenuOutput attack(int enemyXCoordinate, int enemyYCoordinate) {
+    public UnitMenuMessage attack(int enemyXCoordinate, int enemyYCoordinate) {
 
     }
 
-    public UnitMenuOutput pourOil(Direction direction) {
+    public UnitMenuMessage pourOil(Direction direction) {
 
     }
 
-    public UnitMenuOutput digTunnel(int xCoordinate, int yCoordinate) {
+    public UnitMenuMessage digTunnel(int xCoordinate, int yCoordinate) {
 
     }
 
-    public UnitMenuOutput buildEquipment(String equipmentName) {
+    public UnitMenuMessage buildEquipment(String equipmentName) {
 
     }
 
-    public UnitMenuOutput disbandUnit() {
+    public UnitMenuMessage disbandUnit() {
 
     }
 }

@@ -1,31 +1,52 @@
 package view;
 
+import controller.Controller;
 import controller.MapMenuController;
 import controller.ProfileMenuController;
 
 import java.util.regex.Matcher;
 
 public class MapMenu {
-    private MapMenuController mapMenuController;
-
-    public MapMenu() {
-        this.mapMenuController = new MapMenuController();
-    }
-    public String run(){
+    public String run() {
         String command;
         Matcher matcher;
         while (true) {
-//            command = Menu.getScanner().nextLine();
-            //if command is map
-            //if command is show details
-            //if command is exit --> return
-
+            command = MainMenu.getScanner().nextLine();
+            //if command is showMap
+            //if command is showMapDetails
+            //if command is moveMap
+            //if command is setTexture
+            //if command is clearBlock
+            //if command is dropRock
+            //if command is dropTree
         }
     }
-    private void map(Matcher matcher){
+
+    private void showMap(Matcher matcher) {
 
     }
-    private void showDetail(Matcher matcher){
+
+    private void showMapDetails(Matcher matcher) {
+
+    }
+
+    private void moveMap(Matcher matcher) {
+
+    }
+
+    private void setTexture(Matcher matcher) {
+
+    }
+
+    private void clearBlock(Matcher matcher) {
+
+    }
+
+    private void dropRock(Matcher matcher) {
+
+    }
+
+    private void dropTree(Matcher matcher) {
 
     }
 }

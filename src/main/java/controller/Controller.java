@@ -1,45 +1,48 @@
 package controller;
 
-import model.Game;
 import model.User;
-import view.commands.inputs.SignupMenuCommands;
-import view.commands.outputs.SignupMenuOutput;
+import view.enums.messages.SignupMenuMessage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Controller {
-
     private static User loggedInUser;
 
     public static void setLoggedInUser(User loggedInUser) {
         Controller.loggedInUser = loggedInUser;
     }
-
-    public static boolean checkIfStayLoggedIn() {
-        return true;
+    public static SignupMenuMessage checkPasswordValidity(String password) {
+        if (!password.matches("(?=^\\S{6,}$)"))
+            return SignupMenuMessage.WRONG_FORMAT_PASSWORD_LENGTH;
+        if (!password.matches("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])"))
+            return SignupMenuMessage.WRONG_FORMAT_PASSWORD_LETTERS;
+        if (!password.matches("(?=.*[^A-Za-z0-9])"))
+            return SignupMenuMessage.WRONG_FORMAT_PASSWORD_SPECIAL;
+        return SignupMenuMessage.SUCCESS;
     }
 
-    public static Matcher checkParameter(String toBeChecked, String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(toBeChecked);
-        return matcher.matches() ? matcher : null;
+    public static SignupMenuMessage checkUsernameValidity(String username) {
+        if (!username.matches("^[A-Za-z_]+$"))
+            return SignupMenuMessage.WRONG_FORMAT_USERNAME;
+        if (User.findUserByUsername(username) != null)
+            return SignupMenuMessage.USERNAME_EXIST;
+        return SignupMenuMessage.SUCCESS;
     }
 
-    public static User findUserByUsername(String username) {
-        for (User user : Game.getUsers()) {
-            if (user.getUsername().equals(username)) return user;
-        }
-        return null;
+    public static SignupMenuMessage checkEmailValidity(String username) {
+        if (!username.matches("^[A-Za-z_.0-9]+@(?<u>[A-Za-z_0-9]+)\\.(?<a>[A-Za-z_0-9]+)$"))
+            return SignupMenuMessage.WRONG_FORMAT_EMAIL;
+        if (User.findUserByUsername(username) != null)
+            return SignupMenuMessage.EMAIL_EXIST;
+        return SignupMenuMessage.SUCCESS;
     }
 
     public static User findEmail(String email) {
-        for (User user : Game.getUsers()) {
+        for (User user : User.getUsers()) {
             if (user.getEmail().equalsIgnoreCase(email)) return user;
         }
         return null;
@@ -49,22 +52,8 @@ public class Controller {
         return parameter.replaceAll("\"", "");
     }
 
-    public static SignupMenuOutput checkPasswordValidity(String password) {
-        if (!password.matches(SignupMenuCommands.Password_LENGTH.getRegex()))
-            return SignupMenuOutput.WRONG_FORMAT_PASSWORD_LENGTH;
-        if (!password.matches(SignupMenuCommands.PASSWORD_LETTER.getRegex()))
-            return SignupMenuOutput.WRONG_FORMAT_PASSWORD_LETTERS;
-        if (!password.matches(SignupMenuCommands.PASSWORD_SPECIAL_LETTER.getRegex()))
-            return SignupMenuOutput.WRONG_FORMAT_PASSWORD_SPECIAL;
-        return SignupMenuOutput.PASSWORD_OK;
-    }
-
-    public static void timer(int seconds) {
-        try {
-            Thread.sleep(1000 * (5L * (seconds + 1)));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public static User getLoggedInUser() {
+        return loggedInUser;
     }
 
     public static ArrayList<String> captcha() {
@@ -91,5 +80,17 @@ public class Controller {
             captchaArt.add(String.valueOf(asciiArt));
         }
         return captchaArt;
+    }
+
+    public static void timer(int seconds) {
+        try {
+            Thread.sleep(1000 * (5L * (seconds + 1)));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean checkIfStayLoggedIn() {
+        return true;
     }
 }

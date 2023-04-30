@@ -1,32 +1,24 @@
 package view;
 import controller.*;
-import view.commands.outputs.ProfileMenuOutput;
 
 import java.util.regex.Matcher;
 
 public class ProfileMenu {
-    private ProfileMenuController profileMenuController;
-
-    public ProfileMenu() {
-        this.profileMenuController = new ProfileMenuController();
-    }
-
-    public String run() {
+    private String run() {
         String command;
         Matcher matcher;
         while (true) {
-//            command = Menu.getScanner().nextLine();
-            //if current menu
-            //if back
-            //if change username
-            //if change nickname
-            //if change password
-            //if change email
-            //if change slogan and remove slogan
-            //if high score
-            //if rank
-            //if  slogan
-            //if all details
+            command = Controller.getScanner().nextLine();
+            //if command is changeUsername
+            //if command is changeNickname
+            //if command is changePassword
+            //if command is changeEmail
+            //if command is changeSlogan
+            //if command is removeSlogan
+            //if command is showHighScore
+            //if command is showRank
+            //if command is showSlogan
+            //if command is showProfile
         }
     }
 
@@ -42,10 +34,6 @@ public class ProfileMenu {
 
     }
 
-    public void changePasswordSecondTimeChecker(Matcher matcher) {
-
-    }
-
     public void changeEmail(Matcher matcher) {
 
     }
@@ -54,4 +42,23 @@ public class ProfileMenu {
 
     }
 
+    public void removeSlogan(Matcher matcher) {
+
+    }
+
+    public void showHighScore(Matcher matcher) {
+
+    }
+
+    public void showRank(Matcher matcher) {
+
+    }
+
+    public void showSlogan(Matcher matcher) {
+
+    }
+
+    public void showProfile(Matcher matcher) {
+
+    }
 }

@@ -1,9 +1,8 @@
 package controller;
 
 import model.*;
-import view.commands.outputs.MapMenuOutput;
-import view.commands.outputs.GameMenuOutput;
-import view.commands.outputs.MapMenuOutput;
+import view.enums.messages.GameMenuMessage;
+import view.enums.messages.MapMenuMessage;
 
 public class MapMenuController {
     private static User currentUser;
@@ -19,20 +18,19 @@ public class MapMenuController {
 
     }
 
-    public static MapMenuOutput setTexture(int x1Coordinate, int y1Coordinate, int x2Coordinate, int y2Coordinate, MapType mapType) {
+    public static MapMenuMessage setTexture(int x1Coordinate, int y1Coordinate, int x2Coordinate, int y2Coordinate, MapType mapType) {
 
     }
 
-    public static MapMenuOutput clearBlock(int xCoordinate, int yCoordinate) {
+    public static MapMenuMessage clearBlock(int xCoordinate, int yCoordinate) {
 
     }
 
-    public static MapMenuOutput dropRock(int xCoordinate, int yCoordinate, Direction direction) {
+    public static MapMenuMessage dropRock(int xCoordinate, int yCoordinate, Direction direction) {
 
     }
 
-    public static MapMenuOutput dropTree(int xCoordinate, int yCoordinate, TreeType tree) {
+    public static MapMenuMessage dropTree(int xCoordinate, int yCoordinate, TreeType tree) {
 
     }
 }
-

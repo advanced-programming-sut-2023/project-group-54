@@ -28,7 +28,4 @@ public class Game {
     public static int getCurrentTurn() {
         return currentTurn;
     }
-    public static void addUsers(User user) {
-        users.add(user);
-    }
 }

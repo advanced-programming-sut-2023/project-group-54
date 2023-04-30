@@ -3,34 +3,32 @@ package controller;
 import model.Buildings.Building;
 import model.Resource;
 import model.units.Unit;
-import view.commands.outputs.BuildingMenuOutput;
-import view.commands.outputs.BuildingMenuOutput;
+import view.enums.messages.BuildingMenuMessage;
 
 public class BuildingMenuController {
     private Building selectedBuilding;
 
-    public BuildingMenuOutput repair() {
+    public BuildingMenuMessage repair() {
 
     }
 
-    public BuildingMenuOutput createUnit(Unit unit, int count) {
+    public BuildingMenuMessage createUnit(Unit unit, int count) {
 
     }
 
-    public BuildingMenuOutput taxRateSet(int rateNumber) {
+    public BuildingMenuMessage taxRateSet(int rateNumber) {
 
     }
 
-    public BuildingMenuOutput foodRateSet(int rateNumber) {
+    public BuildingMenuMessage foodRateSet(int rateNumber) {
 
     }
 
-    public BuildingMenuOutput openGate(){
+    public BuildingMenuMessage openGate(){
 
     }
 
-    public BuildingMenuOutput changeOutput(Resource resource){
+    public BuildingMenuMessage changeOutput(Resource resource){
 
     }
 }
-

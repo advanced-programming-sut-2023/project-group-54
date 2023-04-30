@@ -1,101 +1,182 @@
 package view;
 
-import controller.*;
-import view.commands.CommonEnums;
-import view.commands.inputs.LoginMenuCommands;
-import view.commands.inputs.SignupMenuCommands;
-import view.commands.outputs.LoginMenuOutput;
-import view.commands.outputs.SignupMenuOutput;
+import controller.Controller;
+import controller.LoginMenuController;
+import view.enums.commands.Command;
+import view.enums.commands.CommandHandler;
+import view.enums.messages.LoginMenuMessage;
+import view.enums.messages.SignupMenuMessage;
 
-import java.util.regex.Matcher;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LoginMenu {
-    private LoginController loginController;
-
-    public LoginMenu() {
-        this.loginController = new LoginController();
-    }
-
-    public String run() {
+    public void run() {
         String command;
-        Matcher matcher;
+        HashMap<String, ArrayList<String>> options;
         while (true) {
-            command = Menu.getScanner().nextLine();
-            if (command.matches("\\s*back\\s*")) return "menu";
-            else if (command.matches(CommonEnums.SHOW_MENU.getRegex())) System.out.println("Login menu");
-            else if ((matcher = Menu.getMatcher(command, LoginMenuCommands.Login.getRegex())) != null)
-                loginUser(matcher);
-            else if ((matcher = Menu.getMatcher(command, LoginMenuCommands.FORGET_PASSWORD.getRegex())) != null)
-                System.out.println(forgetPassword(matcher));
-            else if (command.matches("\s*logout\s*")) logout();
-            else System.out.println("Invalid command in sign up menu");
+            command = MainMenu.getScanner().nextLine();
+            if (CommandHandler.parsCommand(Command.BACK, command) != null)
+                return;
+            else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
+                System.out.println("login menu");
+            else if ((options = CommandHandler.parsCommand(Command.LOGIN, command)) != null)
+                loginUser(options);
+            else if ((options = CommandHandler.parsCommand(Command.FORGET_PASSWORD, command)) != null)
+                forgetPassword(options);
+            else if (CommandHandler.parsCommand(Command.USER_LOGOUT, command) != null)
+                logout();
+            else
+                System.out.println("Invalid command in login up menu");
         }
     }
 
-    private void loginUser(Matcher matcher) {
-        String username = matcher.group("username");
-        String password = matcher.group("password");
-        String stayLoggedIn = matcher.group("stayLoggedIn");
-        LoginMenuOutput result = loginController.login(username, password, stayLoggedIn);
+
+    private void loginUser(HashMap<String, ArrayList<String>> options) {
+        String username = null;
+        String password = null;
+        boolean stayLoggedIn = false;
+        for (String s : options.keySet()) {
+            switch (s) {
+                case "u":
+                    username = Controller.buildParameter(options.get(s).get(0));
+                    break;
+
+                case "p":
+                    password = Controller.buildParameter(options.get(s).get(0));
+                    break;
+
+                case "-stay-logged-in":
+                    stayLoggedIn = true;
+                    break;
+            }
+        }
+        if (username == null) {
+            System.out.println("username not entered");
+            return;
+        } else if (password == null) {
+            System.out.println("password not entered");
+            return;
+        }
+        LoginMenuMessage result = LoginMenuController.loginUser(username, password, stayLoggedIn);
         switch (result) {
-            case LOGGED_IN:
-                System.out.println(result.getRegex() + loginController.getUsername());
+            case SUCCESS:
+                System.out.println("logged in with user with username: " + username);
                 break;
             case WRONG_PASSWORD:
-                wrongPassword(stayLoggedIn);
+                if (!wrongPassword(stayLoggedIn)) {
+                    return;
+                }
                 break;
-            default:
-                System.out.println(result.getRegex());
-                break;
+            case USER_NOT_FOUND:
+                System.out.println("no user with this id exists");
+                return;
+            case FAILED_DURING_CAPTCHA:
+                System.out.println("failed because of multiple wrong answers for captcha");
+                return;
         }
     }
 
-    public void wrongPassword(String stayLoggedIn) {
+    public boolean wrongPassword(boolean stayLoggedIn) {
         System.out.println("please enter your password again");
         String command;
         for (int i = 0; i < 3; i++) {
-            System.out.println(LoginMenuOutput.WRONG_PASSWORD.getRegex() + " please wait for " + ((i + 1) * 5) + " seconds");
+            System.out.println("please wait for " + (i + 1) * 5 + "seconds");
             Controller.timer(i);
-            command = Controller.buildParameter(Menu.getScanner().nextLine());
-            if (loginController.passwordChecker(command).equals(LoginMenuOutput.LOGGED_IN)) {
-                if(!Menu.captchaChecker()) {
-                    System.out.println(LoginMenuOutput.FAILED_DURING_CAPTCHA.getRegex());
-                    return;
+            command = MainMenu.getScanner().nextLine();
+            if (LoginMenuController.passwordChecker(command).equals(LoginMenuMessage.SUCCESS)) {
+                if (!MainMenu.captchaChecker()) {
+                    System.out.println("failed because of multiple wrong answers for captcha");
+                    return false;
                 }
-                loginController.setLoggedInUser(stayLoggedIn);
-                System.out.println(LoginMenuOutput.LOGGED_IN.getRegex() + loginController.getUsername());
-                return;
+                LoginMenuController.setLoggedInUser(stayLoggedIn);
+                System.out.println("logged in with user with username: " + Controller.getLoggedInUser().getUsername());
+                return true;
             }
         }
-        System.out.println(LoginMenuOutput.LOGIN_FAILED.getRegex());
+        System.out.println("you have entered wrong password for 3 times : login failed");
+        return false;
     }
 
-    private String forgetPassword(Matcher matcher) {
-        String username = matcher.group("username");
-        String result = loginController.passwordRecovery(username);
-        if (result.equals(LoginMenuOutput.USER_NOT_FOUND.getRegex())) return result;
-        System.out.println(result);
-        for (int i = 0; i < 3; i++) {
-            if (loginController.checkAnswer(Controller.buildParameter(Menu.getScanner().nextLine()))) {
-                for (int j = 0; j < 3; j++) {
-                    String password = Controller.buildParameter(Menu.getScanner().nextLine());
-                    SignupMenuOutput signupMenuOutput = Controller.checkPasswordValidity(password);
-                    if (signupMenuOutput.equals(SignupMenuOutput.PASSWORD_OK)) {
-                        if (!Menu.captchaChecker()) return LoginMenuOutput.FAILED_DURING_CAPTCHA.getRegex();
-                        return loginController.setNewPassword(password).getRegex();
-                    }
-                    System.out.println(signupMenuOutput.getRegex());
-                }
-                return LoginMenuOutput.FAILED_DURING_SETTING_NEW_PASSWORD.getRegex();
+    private void forgetPassword(HashMap<String, ArrayList<String>> options) {
+        String username = null;
+        for (String s : options.keySet()) {
+            switch (s) {
+                case "u":
+                    username = Controller.buildParameter(options.get(s).get(0));
+                    break;
             }
-            System.out.println(LoginMenuOutput.WRONG_ANSWER.getRegex() + (5 * (i+1)) +" seconds");
+        }
+        if (username == null) {
+            System.out.println("username not entered");
+            return;
+        }
+        LoginMenuMessage result = LoginMenuController.forgetPasswordUsernameCheck(username);
+        int questionNumber = 0;
+        switch (result) {
+            case SUCCESS:
+                questionNumber = LoginMenuController.getQuestion(username);
+                break;
+            case USER_NOT_FOUND:
+                System.out.println("no user with this id exists");
+                return;
+        }
+        switch (questionNumber) {
+            case 1:
+                System.out.println("What is your father’s name?");
+            case 2:
+                System.out.println("What was your first pet’s name?");
+            default:
+                System.out.println("What is your mother’s last name?");
+        }
+        checkAnswer();
+    }
+
+    private void checkAnswer() {
+        for (int i = 0; i < 3; i++) {
+            if (LoginMenuController.checkAnswer(Controller.buildParameter(MainMenu.getScanner().nextLine()))) {
+                for (int j = 0; j < 3; j++) {
+                    String password = Controller.buildParameter(MainMenu.getScanner().nextLine());
+                    SignupMenuMessage result = Controller.checkPasswordValidity(password);
+                    if (result.equals(SignupMenuMessage.SUCCESS)) {
+                        if (!MainMenu.captchaChecker()) {
+                            System.out.println("failed because of multiple wrong answers for captcha");
+                            return;
+                        }
+                        LoginMenuController.setNewPassword(password);
+                        System.out.println("new password has been set");
+                        return;
+                    } else {
+                        passwordErrorsPrint(result);
+                    }
+                }
+                System.out.println("setting new password failed you have entered 3 wrong formats for password");
+                return;
+            }
+            System.out.println("you have entered wrong answer for security question please wait for " + (5 * (i + 1)) + " seconds");
             Controller.timer(i);
         }
-        return LoginMenuOutput.FAILED_DURING_ANSWERING_QUESTION.getRegex();
+        System.out.println("failed because of multiple wrong answers for captcha");
+    }
+
+    private void passwordErrorsPrint(SignupMenuMessage signupMenuMessage) {
+        switch (signupMenuMessage) {
+            case WRONG_FORMAT_PASSWORD_LENGTH:
+                System.out.println("password length is too low at least 6 is needed");
+                break;
+            case WRONG_FORMAT_PASSWORD_LETTERS:
+                System.out.println("your password should contain uppercase and lowercase letters and numbers");
+                break;
+            case WRONG_FORMAT_PASSWORD_SPECIAL:
+                System.out.println("WRONG_FORMAT_PASSWORD_SPECIAL");
+                break;
+        }
     }
 
     private void logout() {
-        if(!Menu.captchaChecker()) System.out.println(LoginMenuOutput.FAILED_DURING_CAPTCHA.getRegex());
-        else System.out.println(loginController.logout());
+        LoginMenuMessage result = LoginMenuController.logout();
+        if (result.equals(LoginMenuMessage.SUCCESS)) {
+            System.out.println("logged out");
+        }
     }
 }
