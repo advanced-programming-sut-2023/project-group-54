@@ -27,11 +27,9 @@ public class User {
     public String getUsername() {
         return username;
     }
-
-    public String getPassword() {
+    private String getPassword() {
         return password;
     }
-
     public String getNickname() {
         return nickname;
     }
@@ -54,5 +52,53 @@ public class User {
 
     public Government getGovernment() {
         return government;
+    }
+    public static User findUserByUsername(String username){
+        for (User user : Game.getUsers()) {
+            if (user.getUsername().equals(username)) return user;
+        }
+        return null;
+    }
+    public boolean isPasswordValid(String password){
+        return this.getPassword().equals(password);
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
+    }
+
+    public void setQuestionNumber(int questionNumber) {
+        this.questionNumber = questionNumber;
+    }
+
+    public void setQuestionAnswer(String questionAnswer) {
+        this.questionAnswer = questionAnswer;
+    }
+
+    public void setGovernment(Government government) {
+        this.government = government;
+    }
+
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
+    public static void addUser(User user){
+        users.add(user);
     }
 }

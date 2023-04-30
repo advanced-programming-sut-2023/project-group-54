@@ -11,7 +11,7 @@ public class MapMenu {
         String command;
         Matcher matcher;
         while (true) {
-            command = Controller.getScanner().nextLine();
+            command = MainMenu.getScanner().nextLine();
             //if command is showMap
             //if command is showMapDetails
             //if command is moveMap
