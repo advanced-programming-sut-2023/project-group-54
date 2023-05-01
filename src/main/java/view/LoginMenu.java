@@ -14,6 +14,7 @@ public class LoginMenu {
     public void run() {
         String command;
         HashMap<String, ArrayList<String>> options;
+        System.out.println("you are in login menu");
         while (true) {
             command = MainMenu.getScanner().nextLine();
             if (CommandHandler.parsCommand(Command.BACK, command) != null)
@@ -27,7 +28,7 @@ public class LoginMenu {
             else if (CommandHandler.parsCommand(Command.USER_LOGOUT, command) != null)
                 logout();
             else
-                System.out.println("Invalid command in login up menu");
+                System.out.println("Invalid command in login menu");
         }
     }
 

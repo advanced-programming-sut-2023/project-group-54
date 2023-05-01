@@ -11,6 +11,11 @@ public class SignupMenuController {
     private static String username;
     private static String password;
     private static String passwordConfirmation;
+
+    public static String getUsername() {
+        return username;
+    }
+
     private static String nickname;
     private static String email;
     private static String slogan;
@@ -66,7 +71,7 @@ public class SignupMenuController {
             return emailChecker;
         }
 
-        if (slogan.equals("random"))
+        if (slogan != null &&slogan.equals("random"))
             randomSloganSetter();
 
         if (password.equals("random"))
