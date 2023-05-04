@@ -6,6 +6,7 @@ import java.util.List;
 
 public enum Command {
     //common
+    
     BACK("back", new ArrayList<>(
     )),
     EXIT("exit", new ArrayList<>(
@@ -47,20 +48,20 @@ public enum Command {
     )),
 
     //ProfileMenu
-    CHANGE_USERNAME("profile\\s+change",new ArrayList<>(Arrays.asList(
+    CHANGE_USERNAME("profile\\s+change",new ArrayList<>(List.of(
             new Option("u",1,true)
     ))),
-    CHANGE_NICKNAME("profile\\s+change",new ArrayList<>(Arrays.asList(
+    CHANGE_NICKNAME("profile\\s+change",new ArrayList<>(List.of(
             new Option("n",1,true)
     ))),
-    CHANGE_PASSWORD("profile\\s+change\\s+password",new ArrayList<>(Arrays.asList(
+    CHANGE_PASSWORD("profile\\s+change\\s+password",new ArrayList<>(List.of(
             new Option("o",1,false),
             new Option("n",1,false)
     ))),
-    CHANGE_EMAIL("profile\\s+change",new ArrayList<>(Arrays.asList(
+    CHANGE_EMAIL("profile\\s+change",new ArrayList<>(List.of(
             new Option("e",1,true)
     ))),
-    CHANGE_SLOGAN("profile\\s+change\\s+slogan",new ArrayList<>(Arrays.asList(
+    CHANGE_SLOGAN("profile\\s+change\\s+slogan",new ArrayList<>(List.of(
             new Option("s",1,true)
     ))),
     REMOVE_SLOGAN("profile\\s+remove\\s+slogan",new ArrayList<>(
@@ -73,7 +74,7 @@ public enum Command {
     //ShopMenu
     SHOW_PRICE_LIST("show\\s+price\\s+list",new ArrayList<>(
     )),
-    SHOP_BUY("buy\\s+",new ArrayList<>(Arrays.asList(
+    SHOP_BUY("buy\\s+",new ArrayList<>(List.of(
             new Option("i",1,false),
             new Option("a",1,false)
     ))),
