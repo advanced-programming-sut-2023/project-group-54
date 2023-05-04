@@ -15,6 +15,7 @@ public class SignupMenu {
         HashMap<String, ArrayList<String>> options;
         while (true) {
             command = MainMenu.getScanner().nextLine();
+            System.out.println(command);
             if (CommandHandler.parsCommand(Command.BACK, command) != null)
                 return;
             else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
@@ -134,6 +135,9 @@ public class SignupMenu {
             case PASSWORD_AND_PASSWORD_CON_NOT_EQUAL_FAILED:
                 System.out.println("password and password confirmation are not equal registration failed");
                 break;
+            case WRONG_FORMAT_EMAIL:
+                System.out.println("invalid format for email");
+                break;
         }
         if (secondResult.equals("success")) {
             System.out.println("user created successfully with username " + Controller.getLoggedInUser().getUsername());
@@ -246,7 +250,7 @@ public class SignupMenu {
         System.out.println("please choose your map number:");
         //maps properties
         for (int i = 0; i < 3; i++) {
-            mapNumber = MainMenu.getScanner().nextInt();
+            mapNumber = Integer.parseInt(MainMenu.getScanner().nextLine());
             // I don't know how many maps we have for now:
             if (mapNumber >= 1 && mapNumber <= 5){
                 if(SignupMenuController.chooseMap(mapNumber).equals(SignupMenuMessage.MAP_SELECTED)){

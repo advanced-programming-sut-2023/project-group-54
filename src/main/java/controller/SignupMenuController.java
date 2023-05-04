@@ -6,7 +6,6 @@ import model.User;
 import view.enums.messages.SignupMenuMessage;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 public class SignupMenuController {
     private static String username;
@@ -38,7 +37,7 @@ public class SignupMenuController {
         passwordToHash();
         User user = new User(username, password, nickname, email, slogan, questionNumber, questionAnswer, new Government());
         User.addUser(user);
-        Controller.setLoggedInUser(user);
+//        Controller.setLoggedInUser(user);
 
         //add to file
         return SignupMenuMessage.SUCCESS;
@@ -53,10 +52,11 @@ public class SignupMenuController {
         SignupMenuMessage usernameChecker = Controller.checkUsernameValidity(username);
         if (!usernameChecker.equals(SignupMenuMessage.SUCCESS))
             return usernameChecker;
-
-        SignupMenuMessage passwordChecker = Controller.checkPasswordValidity(password);
-        if (!passwordChecker.equals(SignupMenuMessage.SUCCESS))
-            return passwordChecker;
+        if(!password.equals("random")){
+            SignupMenuMessage passwordChecker = Controller.checkPasswordValidity(password);
+            if (!passwordChecker.equals(SignupMenuMessage.SUCCESS))
+                return passwordChecker;
+        }
 
         if (!password.equals("random") && !password.equals(passwordConfirmation))
             return SignupMenuMessage.PASSWORD_AND_PASSWORD_CON_NOT_EQUAL_FAILED;
@@ -83,7 +83,7 @@ public class SignupMenuController {
         randomPassword[3] = (char) Math.floor(Math.random() * (47 - 33 + 1) + 33);
         for (int i = 4; i < 15; i++)
             randomPassword[i] = (char) Math.floor(Math.random() * (126 - 33 + 1) + 33);
-        password = Arrays.toString(randomPassword);
+        password = new String(randomPassword);
         return SignupMenuMessage.RANDOM_PASSWORD_BUILT;
     }
 

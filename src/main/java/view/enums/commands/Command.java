@@ -37,7 +37,7 @@ public enum Command {
     LOGIN("user\\s+login", new ArrayList<>(Arrays.asList(
             new Option("u", 1, false),
             new Option("p", 2, false),
-            new Option("-stay-logged-in", 2, false)
+            new Option("-stay-logged-in", 0, false)
     ))),
     FORGET_PASSWORD("forgot\\s+my\\s+password", new ArrayList<>(Arrays.asList(
             new Option("u", 1, false)
