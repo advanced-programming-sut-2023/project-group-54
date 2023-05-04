@@ -9,7 +9,6 @@ public class Building {
     private static ArrayList<Building> buildings;
     private BuildingType buildingType;
     private int hp;
-    private Map[][] mapPositions = new Map[buildingType.getWidth()][buildingType.getLength()];
     public Building(BuildingType buildingType, int maxHp) {
 
     }
