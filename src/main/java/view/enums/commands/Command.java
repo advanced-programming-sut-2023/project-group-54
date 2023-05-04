@@ -46,6 +46,38 @@ public enum Command {
     USER_LOGOUT("user\\s+logout", new ArrayList<>(
     )),
 
+    //ProfileMenu
+    CHANGE_USERNAME("profile\\s+change",new ArrayList<>(Arrays.asList(
+            new Option("u",1,true)
+    ))),
+    CHANGE_NICKNAME("profile\\s+change",new ArrayList<>(Arrays.asList(
+            new Option("n",1,true)
+    ))),
+    CHANGE_PASSWORD("profile\\s+change\\s+password",new ArrayList<>(Arrays.asList(
+            new Option("o",1,false),
+            new Option("n",1,false)
+    ))),
+    CHANGE_EMAIL("profile\\s+change",new ArrayList<>(Arrays.asList(
+            new Option("e",1,true)
+    ))),
+    CHANGE_SLOGAN("profile\\s+change\\s+slogan",new ArrayList<>(Arrays.asList(
+            new Option("s",1,true)
+    ))),
+    REMOVE_SLOGAN("profile\\s+remove\\s+slogan",new ArrayList<>(
+    )),
+    DISPLAY_SLOGAN("profile\\s+display\\s+slogan",new ArrayList<>(
+    )),
+    DISPLAY_PROFILE("profile\\s+display",new ArrayList<>(
+    )),
+
+    //ShopMenu
+    SHOW_PRICE_LIST("show\\s+price\\s+list",new ArrayList<>(
+    )),
+    SHOP_BUY("buy\\s+",new ArrayList<>(Arrays.asList(
+            new Option("i",1,false),
+            new Option("a",1,false)
+    ))),
+
     //GameMenu
     SHOW_POPULARITY_FACTORS("show\\s+popularity\\s+factors", new ArrayList<>(
     )),

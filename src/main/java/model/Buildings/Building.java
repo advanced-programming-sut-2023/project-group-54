@@ -1,16 +1,20 @@
 package model.Buildings;
 
-import model.Map;
+import model.Government;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Building {
     private static ArrayList<Building> buildings;
     private BuildingType buildingType;
     private int hp;
-    public Building(BuildingType buildingType, int maxHp) {
+    private Government owner;
 
+    public Building(BuildingType buildingType, int maxHp,Government owner) {
+        this.buildingType=buildingType;
+        this.hp=maxHp;
+        this.owner=owner;
+        buildings.add(this);
     }
 
     public static ArrayList<Building> getBuildings() {
