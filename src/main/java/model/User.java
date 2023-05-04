@@ -27,7 +27,7 @@ public class User {
     public String getUsername() {
         return username;
     }
-    private String getPassword() {
+    public String getPassword() {
         return password;
     }
     public String getNickname() {

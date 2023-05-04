@@ -11,7 +11,7 @@ public class StorageBuilding extends Building{
     private HashMap<Resource, Integer> storage;
 
     public StorageBuilding(StorageType storageType, HashMap<Resource, Integer> storage) {
-        super(storageType.getBuildingType(), storageType.getBuildingType().getMaxHp());
+        super(storageType.getBuildingType(), storageType.getBuildingType().getMaxHp(), Game.getCurrentUser().getGovernment());
         this.storageType = storageType;
         this.storage = storage;
     }
@@ -22,5 +22,17 @@ public class StorageBuilding extends Building{
 
     public int showStoredResource(Resource resource){
         return storage.get(resource);
+    }
+    public HashMap<Resource, Integer> getStorage(){return storage;}
+
+    public StorageType getStorageType(){
+        return this.storageType;
+    }
+    public int getCapacity(){
+        int capacity = storageType.getCapacity();
+        for (Resource resource : storage.keySet()) {
+            capacity -= storage.get(resource);
+        }
+        return capacity;
     }
 }
