@@ -23,4 +23,8 @@ public class StorageBuilding extends Building{
     public int showStoredResource(Resource resource){
         return storage.get(resource);
     }
+
+    public HashMap<Resource, Integer> getStorage() {
+        return storage;
+    }
 }

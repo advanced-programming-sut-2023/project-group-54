@@ -107,10 +107,6 @@ public class LoginMenu {
                     break;
             }
         }
-        if (username == null) {
-            System.out.println("username not entered");
-            return;
-        }
         LoginMenuMessage result = LoginMenuController.forgetPasswordUsernameCheck(username);
         int questionNumber = 0;
         switch (result) {

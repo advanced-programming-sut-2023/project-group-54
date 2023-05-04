@@ -140,7 +140,7 @@ public class SignupMenu {
                 break;
         }
         if (secondResult.equals("success")) {
-            System.out.println("user created successfully with username " + Controller.getLoggedInUser().getUsername());
+            System.out.println("user created successfully with username " + username);
             chooseMap();
             secondResult = "";
         }
