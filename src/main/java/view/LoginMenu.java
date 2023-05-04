@@ -92,6 +92,7 @@ public class LoginMenu {
                 }
                 LoginMenuController.setLoggedInUser(stayLoggedIn);
                 System.out.println("logged in with user with username: " + Controller.getLoggedInUser().getUsername());
+
                 return true;
             }
         }

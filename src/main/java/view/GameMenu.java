@@ -19,6 +19,7 @@ public class GameMenu {
             //if command is selectBuilding
             //if command is selectUnit
             //if command is nextTurn
+            //show map info in x y
         }
     }
     private void popularityFactorsShow(Matcher matcher){
