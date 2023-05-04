@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Government {
     private int population;
     private int popularity;
@@ -9,6 +12,7 @@ public class Government {
     private int efficiency;
     private int unemployedWorker;
     private int gold;
+    private final HashMap<Resource, Integer> allResources = new HashMap<>();
 
     public Government() {
         this.popularity = 100;
@@ -19,6 +23,10 @@ public class Government {
         this.fearRate = 0;
         this.efficiency = 100;
         this.gold = 4000;
+
+        for (Resource value : Resource.values()) {
+            allResources.put(value, 0);
+        }
     }
 
     public int getPopulation() {
@@ -83,5 +91,13 @@ public class Government {
 
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    public HashMap<Resource, Integer> getAllResources() {
+        return allResources;
+    }
+
+    public int getResourceCount(Resource resource){
+        return allResources.get(resource);
     }
 }

@@ -28,4 +28,5 @@ public class Game {
     public static int getCurrentTurn() {
         return currentTurn;
     }
+
 }
