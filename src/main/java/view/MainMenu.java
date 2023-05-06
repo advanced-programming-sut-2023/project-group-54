@@ -19,7 +19,7 @@ public class MainMenu {
     }
 
     public static boolean captchaChecker() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             System.out.println("please enter captcha (only uppercase letters): ");
             ArrayList<String> captcha = Controller.captcha();
             for (String s : captcha) {
