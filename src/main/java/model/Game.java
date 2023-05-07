@@ -10,6 +10,10 @@ public class Game {
     private static int currentTurn;
     private static Map[][] gameMap = new Map[500][500];
 
+    public static Map[][] getGameMap() {
+        return gameMap;
+    }
+
     public static ArrayList<ArrayList<Map>> getMap() {
         return map;
     }

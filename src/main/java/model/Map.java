@@ -12,10 +12,30 @@ public class Map {
     private MapType mapType;
     public Map(MapType mapType) {
         this.mapType = mapType;
+        this.unit = new ArrayList<>();
+        this.tree = null;
+        this.building = null;
     }
     public Map() {
         this.mapType = MapType.EARTH;
+        this.unit = new ArrayList<>();
+        this.tree = null;
+        this.building = null;
     }
 
+    public Building getBuilding() {
+        return building;
+    }
 
+    public TreeType getTree() {
+        return tree;
+    }
+
+    public ArrayList<Unit> getUnit() {
+        return unit;
+    }
+
+    public MapType getMapType() {
+        return mapType;
+    }
 }
