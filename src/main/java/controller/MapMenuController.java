@@ -6,6 +6,10 @@ import view.enums.messages.MapMenuMessage;
 
 public class MapMenuController {
     private static User currentUser;
+    public static void setMap(int mapNumber) {
+        sw
+    }
+
     public static String showMap(int xCoordinate, int yCoordinate) {
         return "";
     }
