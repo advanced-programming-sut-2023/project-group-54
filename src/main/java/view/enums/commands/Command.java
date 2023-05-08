@@ -55,8 +55,6 @@ public enum Command {
             new Option("x",1,false),
             new Option("y",1,false)
     ))),
-    MAP_UP_LEFT("map\\s+up\\s+left",new ArrayList<>()),
-    MAP_UP_RIGHT("map\\s+up\\s+right",new ArrayList<>()),
     DROP_BUILDING("drop\\s+building",new ArrayList<>(Arrays.asList(
             new Option("x",1,false),
             new Option("y",1,false)

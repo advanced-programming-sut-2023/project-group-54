@@ -2,6 +2,7 @@ package view;
 import controller.*;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
+import view.enums.commands.Regexes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class GameMenu {
 
     public void run() {
         String command;
+        Matcher matcher;
         HashMap<String, ArrayList<String>> options;
         while (true) {
             command = MainMenu.getScanner().nextLine();
@@ -28,11 +30,11 @@ public class GameMenu {
                 System.out.println("you are in game menu");
             else if (CommandHandler.parsCommand(Command.BACK, command) != null) return;
             else if ((options = CommandHandler.parsCommand(Command.SHOW_MAP,command)) != null)
-                showMap(options);
+                setXYOfMap(options);
+            else if ((matcher = MainMenu.getMatcher(command, Regexes.MAP_SHOW_MOVE.getRegex())) != null)
+                showMapMove(matcher);
             //if command is drop building
-            //if command is showMap
             //if command is showMapDetails
-            //if command is moveMap
             //if command is setTexture
             //if command is clearBlock
             //if command is dropRock
@@ -48,7 +50,8 @@ public class GameMenu {
             //if command is nextTurn
         }
     }
-    private void showMap(HashMap<String, ArrayList<String>> options) {
+
+    private void setXYOfMap(HashMap<String, ArrayList<String>> options) {
         int x = 0,y=0;
         for (String s : options.keySet()) {
             switch (s) {
@@ -69,6 +72,10 @@ public class GameMenu {
                     break;
             }
         }
+        showMap(x,y);
+    }
+
+    private void showMap(int x,int y) {
         if (x < 0 || x >= 500 ) {
             System.out.println("you have entered wrong number for x it has to be bigger than 0 and less than 500");
             return;
@@ -76,16 +83,27 @@ public class GameMenu {
             System.out.println("you have entered wrong number for x it has to be bigger than 0 and less than 500");
             return;
         }
-
-
+        xOfMap = x;
+        yOfMap = y;
+        System.out.println(MapMenuController.showMap(x,y));
     }
 
     private void showMapDetails(Matcher matcher) {
 
     }
 
-    private void moveMap(Matcher matcher) {
-
+    private void showMapMove(Matcher matcher) {
+        String upOrDown = matcher.group("upOrDown");
+        String leftOrRight = matcher.group("leftOrRight");
+        if (upOrDown != null) {
+            if(upOrDown.equals("up")) xOfMap++;
+            else xOfMap--;
+        }
+        if (leftOrRight != null) {
+            if (leftOrRight.equals("right")) yOfMap++;
+            else yOfMap--;
+        }
+        showMap(xOfMap,yOfMap);
     }
 
     private void setTexture(Matcher matcher) {
