@@ -83,7 +83,7 @@ public enum BuildingType {
             5, false, BuildingGroup.INDUSTRY),
     OX_TETHER(100, 2, 2, 0, "ox tether", null, 1, Resource.WOOD,
             5, false, BuildingGroup.INDUSTRY),
-    PITCH_RIG(200, 4, 4, 0, "pitch rig", new ArrayList<>(List.of(TreeType.MARSH)), 1, Resource.WOOD,
+    PITCH_RIG(200, 4, 4, 0, "pitch rig", new ArrayList<>(List.of(MapType.SMALL_POND)), 1, Resource.WOOD,
             20, false, BuildingGroup.INDUSTRY),
     QUARRY(350, 6, 6, 0, "quarry", new ArrayList<>(List.of(MapType.ROCK)), 3, Resource.WOOD,
             20, false, BuildingGroup.INDUSTRY),

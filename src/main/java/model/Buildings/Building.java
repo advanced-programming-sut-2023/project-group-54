@@ -12,4 +12,20 @@ public class Building {
     public Building(BuildingType buildingType, int maxHp) {
 
     }
+
+    public static HashMap<Building, Integer> getBuildings() {
+        return buildings;
+    }
+
+    public BuildingType getBuildingType() {
+        return buildingType;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public Map[][] getMapPositions() {
+        return mapPositions;
+    }
 }

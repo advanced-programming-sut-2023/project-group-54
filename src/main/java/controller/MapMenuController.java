@@ -2,6 +2,8 @@ package controller;
 
 import model.*;
 import model.Buildings.DefenseBuilding;
+import model.units.Engineer;
+import model.units.Unit;
 import view.enums.messages.GameMenuMessage;
 import view.enums.messages.MapMenuMessage;
 
@@ -69,6 +71,14 @@ public class MapMenuController {
             }
             map.append("|\n");
         }
+        map.append("**earth has yellow background\t**earth and stone has yellow background and white text\t**boulder has yellow background and black text\n" +
+                "**Rock has yellow background and red text\t**Iron has yellow background and purple text\t**oasis grass has green background\n" +
+                "**scrub has green background and light blue text\t**thick scrub has green background and blue text\n");
+        map.append("**oil has black background\t**plain has green background and black text\t**shallow water has blue background\n" +
+                "**river has light blue background\t**small pond has blue background and white text\t**big pond has blue background and black text\n" +
+                "**beach has yellow background and blue text\t**sea has blue background and rex text\n");
+        map.append("first character of each house shows if there are buildings there or no if there is B that means there are a building " +
+                "and if its a W that means we have wall there\nsecond characters in each house shows the number of soldiers in that house");
         return map.toString();
     }
 
@@ -150,7 +160,22 @@ public class MapMenuController {
     }
 
     public static String showMapDetails(int xCoordinate, int yCoordinate) {
-        return "";
+        Map house = Game.getGameMap()[xCoordinate][yCoordinate];
+        StringBuilder details = new StringBuilder();
+        int i = 1;
+        details.append("Map type is :" + house.getMapType() + "\nUnits in this house are : \n");
+        details.append(((house.getUnit() != null ) ? "we have a " + house.getBuilding().getBuildingType().getName() +
+                " building " + ((house.getBuilding().getBuildingType().getWorkers() != 0) ? "which has " +
+                house.getBuilding().getBuildingType().getWorkers() + " workers" : "") : "there is no building here"));
+        details.append()
+        for (Unit unit : house.getUnit()) {
+            if (unit instanceof Engineer) details.append(i + ") engineer owner : " + unit.getOwner().getUsername());
+            else details.append(i + ") troop name : " + unit.getUnitType().getType() + " - troop hp : " + unit.getHp() +
+                    "- unit " +((unit.getPatrol()) ? "is" : "is not") + " patrol\n\t- troop state : " + unit.getState() +
+                    " - unit owner is : " + unit.getOwner().getUsername() + "\n");
+            i++;
+        }
+        return details.toString();
     }
 
     public static String moveMap(int x, int y) {

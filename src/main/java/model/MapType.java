@@ -16,6 +16,11 @@ public enum MapType {
     SMALL_POND,
     BIG_POUND,
     BEACH,
-    SEA
+    SEA,
+    DATE_PALM,
+    COCONUT_PALM,
+    OLIVE_TREE,
+    CHERRY_PALM,
+    DESERT_SHRUB,
     ;
 }
