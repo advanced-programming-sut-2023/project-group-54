@@ -159,7 +159,7 @@ public class GameMenu {
         showMapDetails(xOfMap,yOfMap);
     }
 
-    private MapType typeChecker(HashMap<String, ArrayList<String>> options) {
+    private String setTypeForTreeAndTexture(HashMap<String, ArrayList<String>> options) {
         String type = "";
         for (String s : options.keySet()) {
             if (s.equals("t")) {
@@ -167,6 +167,10 @@ public class GameMenu {
                 break;
             }
         }
+        return type;
+    }
+    private MapType typeChecker(HashMap<String, ArrayList<String>> options) {
+        String type = setTypeForTreeAndTexture(options);
         boolean sign = true;
         MapType mapToSend = null;
         for (MapType allMapType : MapType.DEFAULT.getAllMapTypes()) {
@@ -191,7 +195,7 @@ public class GameMenu {
         MapType type= typeChecker(options);
         MapMenuMessage mapMenuMessage;
         if (type != null) {
-            mapMenuMessage = MapMenuController.setTextureFinalTest(x,y,type);
+            mapMenuMessage = MapMenuController.setTextureFinalTest(x,y);
             if (!mapMenuMessage.equals(MapMenuMessage.SUCCESS)) {
                 System.out.println("a building exists int house -x "+ x + " -y "+ y + " you can not do this action");
                 return false;
@@ -235,7 +239,7 @@ public class GameMenu {
     private boolean dropOneRock(int x,int y,HashMap<String, ArrayList<String>> options) {
         Direction direction = directionChecker(options);
         if (direction != null ){
-            MapMenuMessage message = MapMenuController.dropRockFinalTest(x,y,direction);
+            MapMenuMessage message = MapMenuController.dropRockFinalTest(x,y);
             if (!message.equals(MapMenuMessage.SUCCESS)) {
                 System.out.println("a building exists int house -x "+ x + " -y "+ y + " you can not do this action");
                 return false;
@@ -247,19 +251,13 @@ public class GameMenu {
     }
 
     private MapType treeChecker(HashMap<String, ArrayList<String>> options) {
-        String treeType = "";
-        for (String s : options.keySet()) {
-            if (s.equals("t")) {
-                treeType = Controller.buildParameter(options.get(s).get(0));
-                break;
-            }
-        }
+        String treeType = setTypeForTreeAndTexture(options);
         boolean sign = true;
         MapType treeToSend = null;
         for (MapType allMapType : MapType.DEFAULT.getAllMapTypes()) {
             if (allMapType.toString().equals(treeType.toUpperCase())) {
                 sign = false;
-                if (!allMapType.isInTextureCommand()) {
+                if (!allMapType.isTree()) {
                     System.out.println("you have to enter something except than those in playground types of game");
                     return null;
                 }
@@ -274,7 +272,17 @@ public class GameMenu {
         return treeToSend;
     }
     private boolean dropOneTree(int x, int y, HashMap<String, ArrayList<String>> options) {
-
+        MapType tree = treeChecker(options);
+        if (tree != null ){
+            MapMenuMessage message = MapMenuController.dropTreeFinalTest(x,y);
+            if (!message.equals(MapMenuMessage.SUCCESS)) {
+                System.out.println("a building exists int house -x "+ x + " -y "+ y + " you can not do this action");
+                return false;
+            }
+            MapMenuController.dropTree(x,y,tree);
+            return true;
+        }
+        return false;
     }
 
     private void checkRectangleIsValid() {

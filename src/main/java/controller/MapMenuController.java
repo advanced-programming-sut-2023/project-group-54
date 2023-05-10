@@ -9,7 +9,8 @@ import view.enums.messages.MapMenuMessage;
 
 import java.util.Collections;
 
-import static model.MapType.THICK_SCRUB;
+import static model.Direction.*;
+import static model.MapType.*;
 
 public class MapMenuController {
     private static User currentUser;
@@ -97,7 +98,7 @@ public class MapMenuController {
                 colors[0] = ANSI_YELLOW;
                 colors[1]= ANSI_TEXT_BLACK;
                 break;
-            case ROCK:
+            case ROCK_N,ROCK_E,ROCK_S,ROCK_W:
                 colors[0] = ANSI_YELLOW;
                 colors[1] = ANSI_TEXT_RED;
                 break;
@@ -182,7 +183,7 @@ public class MapMenuController {
         return "";
     }
 
-    public static MapMenuMessage setTextureFinalTest(int xCoordinate, int yCoordinate, MapType mapType) {
+    public static MapMenuMessage setTextureFinalTest(int xCoordinate, int yCoordinate) {
         if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding() != null) return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
         return MapMenuMessage.SUCCESS;
     }
@@ -200,15 +201,50 @@ public class MapMenuController {
         return MapMenuMessage.SUCCESS;
     }
 
-    public static MapMenuMessage dropRockFinalTest(int xCoordinate, int yCoordinate, Direction direction) {
+    public static MapMenuMessage dropRockFinalTest(int xCoordinate, int yCoordinate) {
         if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding() != null) return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
         return MapMenuMessage.SUCCESS;
     }
     public static void dropRock(int x,int y,Direction direction) {
-
+        Game.getGameMap()[x][y].setUnit();
+        switch (direction) {
+            case N:
+                Game.getGameMap()[x][y].setMapType(MapType.ROCK_N);
+                break;
+            case S:
+                Game.getGameMap()[x][y].setMapType(MapType.ROCK_S);
+                break;
+            case E:
+                Game.getGameMap()[x][y].setMapType(MapType.ROCK_E);
+                break;
+            case W:
+                Game.getGameMap()[x][y].setMapType(MapType.ROCK_W);
+                break;
+            case R:
+                int random = (int) Math.floor(Math.random() * (3 + 1));
+                switch (random) {
+                    case 0:
+                        dropRock(x,y,N);
+                        break;
+                    case 1:
+                        dropRock(x,y,S);
+                        break;
+                    case 2:
+                        dropRock(x,y,E);
+                        break;
+                    case 3:
+                        dropRock(x,y,W);
+                        break;
+                }
+        }
     }
 
-    public static MapMenuMessage dropTree(int xCoordinate, int yCoordinate, TreeType tree) {
+    public static MapMenuMessage dropTreeFinalTest(int xCoordinate, int yCoordinate) {
+        if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding() != null) return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
         return MapMenuMessage.SUCCESS;
+    }
+
+    public static void dropTree(int xCoordinate, int yCoordinate, MapType tree) {
+        Game.getGameMap()[xCoordinate][yCoordinate].setTree(tree);
     }
 }
