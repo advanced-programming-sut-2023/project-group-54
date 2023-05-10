@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Map {
     private Building building;
-    private TreeType tree;
+    private MapType tree;
     private ArrayList<Unit> unit;
     private MapType mapType;
     public Map(MapType mapType) {
@@ -27,7 +27,7 @@ public class Map {
         return building;
     }
 
-    public TreeType getTree() {
+    public MapType getTree() {
         return tree;
     }
 

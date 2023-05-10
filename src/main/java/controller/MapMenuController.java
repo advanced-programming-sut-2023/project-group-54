@@ -163,11 +163,11 @@ public class MapMenuController {
         Map house = Game.getGameMap()[xCoordinate][yCoordinate];
         StringBuilder details = new StringBuilder();
         int i = 1;
-        details.append("Map type is :" + house.getMapType() + "\nUnits in this house are : \n");
+        details.append("Map type is :" + house.getMapType().toString() + "\nUnits in this house are : \n");
         details.append(((house.getUnit() != null ) ? "we have a " + house.getBuilding().getBuildingType().getName() +
                 " building " + ((house.getBuilding().getBuildingType().getWorkers() != 0) ? "which has " +
-                house.getBuilding().getBuildingType().getWorkers() + " workers" : "") : "there is no building here"));
-        details.append()
+                house.getBuilding().getBuildingType().getWorkers() + " workers" : "") : "there is no building here") + "\n");
+        details.append(((house.getTree() != null) ? "we have tree with type " + house.getTree().toString() : "no tree in this house") + "\n");
         for (Unit unit : house.getUnit()) {
             if (unit instanceof Engineer) details.append(i + ") engineer owner : " + unit.getOwner().getUsername());
             else details.append(i + ") troop name : " + unit.getUnitType().getType() + " - troop hp : " + unit.getHp() +

@@ -1,7 +1,10 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public enum MapType {
-    EARTH,
+    EARTH(true,false),
     EARTH_AND_STONE,
     BOULDERS,
     ROCK,
@@ -22,5 +25,10 @@ public enum MapType {
     OLIVE_TREE,
     CHERRY_PALM,
     DESERT_SHRUB,
-    ;
+    DEFAULT;
+    private final ArrayList<MapType> allMapTypes = new ArrayList<>(Arrays.asList(MapType.values()));
+
+    public ArrayList<MapType> getAllMapTypes() {
+        return allMapTypes;
+    }
 }
