@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="view of showing and setting map are getting completed2 show map + colors saved2 move map+2">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="view of showing and setting map are getting completed2 show map + colors saved2 move map+3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/Building.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Direction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/MapType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MapType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/enums/commands/Regexes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/enums/commands/Regexes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/enums/messages/MapMenuMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/enums/messages/MapMenuMessage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +184,7 @@
       <workItem from="1683193521774" duration="1453000" />
       <workItem from="1683403198008" duration="29234000" />
       <workItem from="1683618770957" duration="1084000" />
-      <workItem from="1683634176499" duration="11335000" />
+      <workItem from="1683634176499" duration="20331000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="phase0">
       <created>1681498802040</created>
@@ -273,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683659720015</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="view of showing and setting map are getting completed2 show map + colors saved2 move map+3">
+      <created>1683708465693</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1683708465693</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -319,7 +328,8 @@
     <MESSAGE value="view of showing and setting map are getting completed2 show map + colors saved2" />
     <MESSAGE value="view of showing and setting map are getting completed2 show map + colors saved2 move map+" />
     <MESSAGE value="view of showing and setting map are getting completed2 show map + colors saved2 move map+2" />
-    <option name="LAST_COMMIT_MESSAGE" value="view of showing and setting map are getting completed2 show map + colors saved2 move map+2" />
+    <MESSAGE value="view of showing and setting map are getting completed2 show map + colors saved2 move map+3" />
+    <option name="LAST_COMMIT_MESSAGE" value="view of showing and setting map are getting completed2 show map + colors saved2 move map+3" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,6 +1,7 @@
 package model.Buildings;
 
 import model.Map;
+import model.User;
 
 import java.util.HashMap;
 
@@ -9,6 +10,7 @@ public class Building {
     private BuildingType buildingType;
     private int hp;
     private Map[][] mapPositions = new Map[buildingType.getWidth()][buildingType.getLength()];
+    private User owner;
     public Building(BuildingType buildingType, int maxHp) {
 
     }

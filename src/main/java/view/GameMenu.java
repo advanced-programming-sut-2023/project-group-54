@@ -1,10 +1,13 @@
 package view;
 import controller.*;
+import model.Direction;
 import model.MapType;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
 import view.enums.commands.Regexes;
+import view.enums.messages.MapMenuMessage;
 
+import java.lang.foreign.MemorySegment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -42,10 +45,16 @@ public class GameMenu {
                 setXYOfMapCommonErrors(options,"texture for one house");
             else if ((options = CommandHandler.parsCommand(Command.SET_TEXTURE_FOR_RECTANGLE,command)) != null)
                 setTextureForRectangle(options);
+            else if ((options = CommandHandler.parsCommand(Command.CLEAR,command)) != null)
+                setXYOfMapCommonErrors(options,"clear block for one house");
+            // multiple
+            else if ((options = CommandHandler.parsCommand(Command.DROP_ROCK,command)) != null)
+                setXYOfMapCommonErrors(options,"drop rock for one house");
+            //multiple
+            else if ((options = CommandHandler.parsCommand(Command.DROP_TREE,command)) != null)
+                setXYOfMapCommonErrors(options,"drop tree for one house");
+            //multiple
             //if command is drop building
-            //if command is clearBlock
-            //if command is dropRock
-            //if command is dropTree
             //if command is popularityFactorsShow
             //if command is popularityShow
             //if command is foodListShow
@@ -102,16 +111,19 @@ public class GameMenu {
                 showMapDetails(x,y);
                 break;
             case "texture for one house":
-                setTextureForOneHouse(x,y,options);
+                if (setTextureForOneHouse(x,y,options))
+                    System.out.println("successfully changed the texture in house -x " + x + " -y " + y );
                 break;
             case "clear block for one house":
-                clearOneBlock(x,y,options);
+                clearOneBlock(x,y);
                 break;
             case "drop rock for one house":
-                dropOneRock(x,y,options);
+                if (dropOneRock(x,y,options))
+                    System.out.println("successfully dropped a rock in house -x " + x + " -y " + y );
                 break;
             case "drop tree for one house":
-                dropOneTree(x,y,options);
+               if (dropOneTree(x,y,options))
+                   System.out.println("successfully dropped a tree in house -x " + x + " -y " + y );
                 break;
         }
     }
@@ -147,26 +159,121 @@ public class GameMenu {
         showMapDetails(xOfMap,yOfMap);
     }
 
-    private void setTextureForOneHouse(int x, int y,HashMap<String, ArrayList<String>> options) {
-        String type;
+    private MapType typeChecker(HashMap<String, ArrayList<String>> options) {
+        String type = "";
         for (String s : options.keySet()) {
             if (s.equals("t")) {
                 type = Controller.buildParameter(options.get(s).get(0));
                 break;
             }
         }
-
+        boolean sign = true;
+        MapType mapToSend = null;
+        for (MapType allMapType : MapType.DEFAULT.getAllMapTypes()) {
+            if (allMapType.toString().equals(type.toUpperCase())) {
+                sign = false;
+                if (!allMapType.isInTextureCommand()) {
+                    System.out.println("you have to enter something except than trees and rock");
+                    return null;
+                }
+                mapToSend = allMapType;
+                break;
+            }
+        }
+        if (sign) {
+            System.out.println("wrong type were entered");
+            return null;
+        }
+        return mapToSend;
     }
 
-    private void clearOneBlock(int x,int y,HashMap<String, ArrayList<String>> options) {
+    private boolean setTextureForOneHouse(int x, int y,HashMap<String, ArrayList<String>> options) {
+        MapType type= typeChecker(options);
+        MapMenuMessage mapMenuMessage;
+        if (type != null) {
+            mapMenuMessage = MapMenuController.setTextureFinalTest(x,y,type);
+            if (!mapMenuMessage.equals(MapMenuMessage.SUCCESS)) {
+                System.out.println("a building exists int house -x "+ x + " -y "+ y + " you can not do this action");
+                return false;
+            }
+            MapMenuController.setTexture(x,y,type);
+            return true;
 
+        }
+        else return false;
     }
 
-    private void dropOneRock(int x,int y,HashMap<String, ArrayList<String>> options) {
-
+    private void clearOneBlock(int x,int y) {
+        //to complete
     }
 
-    private void dropOneTree(int x, int y, HashMap<String, ArrayList<String>> options) {
+    private Direction directionChecker(HashMap<String, ArrayList<String>> options) {
+        String direction = "";
+        for (String s : options.keySet()) {
+            if (s.equals("d")) {
+                direction = Controller.buildParameter(options.get(s).get(0));
+                break;
+            }
+        }
+        boolean sign = true;
+        Direction directionToSend = null;
+        for (Direction allDirections : Direction.R.getAllDirections()) {
+            if (allDirections.toString().equals(direction.toUpperCase()) &&
+                    allDirections.isForRock()) {
+                sign = false;
+                directionToSend = allDirections;
+                break;
+            }
+        }
+        if (sign) {
+            System.out.println("wrong direction were entered");
+            return null;
+        }
+        return directionToSend;
+    }
+
+    private boolean dropOneRock(int x,int y,HashMap<String, ArrayList<String>> options) {
+        Direction direction = directionChecker(options);
+        if (direction != null ){
+            MapMenuMessage message = MapMenuController.dropRockFinalTest(x,y,direction);
+            if (!message.equals(MapMenuMessage.SUCCESS)) {
+                System.out.println("a building exists int house -x "+ x + " -y "+ y + " you can not do this action");
+                return false;
+            }
+            MapMenuController.dropRock(x,y,direction);
+            return true;
+        }
+        return false;
+    }
+
+    private MapType treeChecker(HashMap<String, ArrayList<String>> options) {
+        String treeType = "";
+        for (String s : options.keySet()) {
+            if (s.equals("t")) {
+                treeType = Controller.buildParameter(options.get(s).get(0));
+                break;
+            }
+        }
+        boolean sign = true;
+        MapType treeToSend = null;
+        for (MapType allMapType : MapType.DEFAULT.getAllMapTypes()) {
+            if (allMapType.toString().equals(treeType.toUpperCase())) {
+                sign = false;
+                if (!allMapType.isInTextureCommand()) {
+                    System.out.println("you have to enter something except than those in playground types of game");
+                    return null;
+                }
+                treeToSend = allMapType;
+                break;
+            }
+        }
+        if (sign) {
+            System.out.println("wrong type were entered for tree type");
+            return null;
+        }
+        return treeToSend;
+    }
+    private boolean dropOneTree(int x, int y, HashMap<String, ArrayList<String>> options) {
 
     }
 

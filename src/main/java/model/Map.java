@@ -8,6 +8,23 @@ import java.util.ArrayList;
 public class Map {
     private Building building;
     private MapType tree;
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public void setTree(MapType tree) {
+        this.tree = tree;
+    }
+
+    public void addUnit(Unit unit) {
+        this.unit.add(unit);
+    }
+
+    public void setMapType(MapType mapType) {
+        this.mapType = mapType;
+    }
+
     private ArrayList<Unit> unit;
     private MapType mapType;
     public Map(MapType mapType) {

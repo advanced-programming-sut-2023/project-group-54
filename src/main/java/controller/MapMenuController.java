@@ -45,13 +45,13 @@ public class MapMenuController {
     }
 
     public static String showMap(int xCoordinate, int yCoordinate) {
-        int numberOfHousesToShow = 20,xFirstHome = xCoordinate - 20,
-                xEndHome = xCoordinate + 20,
-                yFirstHome = yCoordinate - 20,
-                yEndHome = yCoordinate + 20;
-        if (xCoordinate < 20) xFirstHome = 0;
+        int numberOfHousesToShow = 20,xFirstHome = xCoordinate - numberOfHousesToShow,
+                xEndHome = xCoordinate + numberOfHousesToShow,
+                yFirstHome = yCoordinate - numberOfHousesToShow,
+                yEndHome = yCoordinate + numberOfHousesToShow;
+        if (xCoordinate < numberOfHousesToShow) xFirstHome = 0;
         else if (xCoordinate > 480) xEndHome = 500;
-        if (yCoordinate < 20) yFirstHome = 0;
+        if (yCoordinate < numberOfHousesToShow) yFirstHome = 0;
         else if (yCoordinate > 480) yEndHome = 500;
         Map[][] gameMap = new Map[500][500];
         StringBuilder map = new StringBuilder();
@@ -182,16 +182,30 @@ public class MapMenuController {
         return "";
     }
 
-    public static MapMenuMessage setTexture(int x1Coordinate, int y1Coordinate, int x2Coordinate, int y2Coordinate, MapType mapType) {
+    public static MapMenuMessage setTextureFinalTest(int xCoordinate, int yCoordinate, MapType mapType) {
+        if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding() != null) return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
         return MapMenuMessage.SUCCESS;
+    }
+
+    public static void setTexture(int xCoordinate, int yCoordinate, MapType mapType) {
+        Game.getGameMap()[xCoordinate][yCoordinate].setMapType(mapType);
+        Game.getGameMap()[xCoordinate][yCoordinate].setBuilding(null);
+        Game.getGameMap()[xCoordinate][yCoordinate].setTree(null);
     }
 
     public static MapMenuMessage clearBlock(int xCoordinate, int yCoordinate) {
+        //to complete
+        //checking for not destroy the main house
+        //Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().
         return MapMenuMessage.SUCCESS;
     }
 
-    public static MapMenuMessage dropRock(int xCoordinate, int yCoordinate, Direction direction) {
+    public static MapMenuMessage dropRockFinalTest(int xCoordinate, int yCoordinate, Direction direction) {
+        if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding() != null) return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
         return MapMenuMessage.SUCCESS;
+    }
+    public static void dropRock(int x,int y,Direction direction) {
+
     }
 
     public static MapMenuMessage dropTree(int xCoordinate, int yCoordinate, TreeType tree) {
