@@ -47,17 +47,21 @@ public class GameMenu {
             else if ((options = CommandHandler.parsCommand(Command.SET_TEXTURE_FOR_ONE_HOUSE,command)) != null)
                 setXYOfMapCommonErrors(options,"texture");
             else if ((options = CommandHandler.parsCommand(Command.SET_TEXTURE_FOR_RECTANGLE,command)) != null)
-                setTextureForRectangle(options);
+                checkRectangleIsValid(options,"texture");
             else if ((options = CommandHandler.parsCommand(Command.CLEAR,command)) != null)
                 setXYOfMapCommonErrors(options,"clear block");
-            // multiple
+            else if ((options = CommandHandler.parsCommand(Command.CLEAR_FOR_RECTANGLE,command)) != null)
+                checkRectangleIsValid(options,"clear block");
             else if ((options = CommandHandler.parsCommand(Command.DROP_ROCK,command)) != null)
                 setXYOfMapCommonErrors(options,"drop rock");
-            //multiple
+            else if ((options = CommandHandler.parsCommand(Command.DROP_ROCK_FOR_RECTANGLE,command)) != null)
+                checkRectangleIsValid(options,"drop rock");
             else if ((options = CommandHandler.parsCommand(Command.DROP_TREE,command)) != null)
                 setXYOfMapCommonErrors(options,"drop tree");
-            //multiple
-            //if command is drop building
+            else if ((options = CommandHandler.parsCommand(Command.DROP_TREE_FOR_RECTANGLE,command)) != null)
+                checkRectangleIsValid(options,"drop tree");
+            else if ((options = CommandHandler.parsCommand(Command.DROP_BUILDING,command)) != null)
+                setXYOfMapCommonErrors(options,"drop building");
             //if command is popularityFactorsShow
             //if command is popularityShow
             //if command is foodListShow
@@ -95,14 +99,18 @@ public class GameMenu {
         setXYOfMap(x,y,whichFunction,options);
     }
 
-    private void setXYOfMap(int x,int y,String whichFunction,HashMap<String, ArrayList<String>> options) {
+    private boolean checkXY(int x,int y) {
         if (x < 0 || x >= Game.getX() ) {
             System.out.println("you have entered wrong number for x it has to be bigger than 0 and less than game x length");
-            return;
+            return false;
         } else if (y < 0 ||  y >= Game.getY() ) {
             System.out.println("you have entered wrong number for y it has to be bigger than 0 and less than game y length");
-            return;
-        }
+            return false;
+        } return true;
+    }
+
+    private void setXYOfMap(int x,int y,String whichFunction,HashMap<String, ArrayList<String>> options) {
+       if (!checkXY(x,y)) return;
         switch (whichFunction) {
             case "show map":
                 xOfMap = x;
@@ -129,6 +137,9 @@ public class GameMenu {
                if (dropOneTree(x,y,options,true))
                    System.out.println("successfully dropped a tree in house -x " + x + " -y " + y );
                 break;
+            case "drop building":
+                dropBuilding(x,y,options);
+                break;
         }
     }
 
@@ -140,7 +151,7 @@ public class GameMenu {
         System.out.println(MapMenuController.showMapDetails(x,y));
     }
 
-    private void moveMapShow(Matcher matcher) {
+    private void moveMap(Matcher matcher) {
         String upOrDown = matcher.group("upOrDown");
         String leftOrRight = matcher.group("leftOrRight");
         if (upOrDown != null) {
@@ -154,16 +165,18 @@ public class GameMenu {
     }
 
     private void showMapMove(Matcher matcher) {
-        moveMapShow(matcher);
+        moveMap(matcher);
+        if (!checkXY(xOfMap,yOfMap)) return;
         showMap(xOfMap,yOfMap);
     }
 
     private void showMapDetailsMove(Matcher matcher) {
-        moveMapShow(matcher);
+        moveMap(matcher);
+        if (!checkXY(xOfMap,yOfMap)) return;
         showMapDetails(xOfMap,yOfMap);
     }
 
-    private String setTypeForTreeAndTexture(HashMap<String, ArrayList<String>> options) {
+    private String setTypeForTreeAndTextureAndBuilding(HashMap<String, ArrayList<String>> options) {
         String type = "";
         for (String s : options.keySet()) {
             if (s.equals("t")) {
@@ -173,8 +186,9 @@ public class GameMenu {
         }
         return type;
     }
+
     private MapType typeChecker(HashMap<String, ArrayList<String>> options) {
-        String type = setTypeForTreeAndTexture(options);
+        String type = setTypeForTreeAndTextureAndBuilding(options);
         boolean sign = true;
         MapType mapToSend = null;
         for (MapType allMapType : MapType.DEFAULT.getAllMapTypes()) {
@@ -261,7 +275,7 @@ public class GameMenu {
     }
 
     private MapType treeChecker(HashMap<String, ArrayList<String>> options) {
-        String treeType = setTypeForTreeAndTexture(options);
+        String treeType = setTypeForTreeAndTextureAndBuilding(options);
         boolean sign = true;
         MapType treeToSend = null;
         for (MapType allMapType : MapType.DEFAULT.getAllMapTypes()) {
@@ -403,21 +417,14 @@ public class GameMenu {
         }
     }
 
-    private void setTextureForRectangle(HashMap<String, ArrayList<String>> options) {
+    private void dropBuilding(int x,int y,HashMap<String, ArrayList<String>> options) {
+        String type = setTypeForTreeAndTextureAndBuilding(options);
+        MapMenuMessage message = MapMenuController.dropBuilding(x,y,type);
+        switch (message) {
 
+        }
     }
 
-    private void clearBlockRectangle(Matcher matcher) {
-
-    }
-
-    private void dropRockRectangle(Matcher matcher) {
-
-    }
-
-    private void dropTreeRectangle(Matcher matcher) {
-
-    }
     private void popularityFactorsShow(Matcher matcher){
 
     }

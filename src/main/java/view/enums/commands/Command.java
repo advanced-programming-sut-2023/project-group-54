@@ -57,7 +57,8 @@ public enum Command {
     ))),
     DROP_BUILDING("drop\\s+building",new ArrayList<>(Arrays.asList(
             new Option("x",1,false),
-            new Option("y",1,false)
+            new Option("y",1,false),
+            new Option("t",1,false)
     ))),
     SELECT_BUILDING("select\\s+building",new ArrayList<>(Arrays.asList(
             new Option("x",1,false),
@@ -90,6 +91,28 @@ public enum Command {
             new Option("y",1,false),
             new Option("t",1,false)
     ))),
+    CLEAR_FOR_RECTANGLE("clear",new ArrayList<>(Arrays.asList(
+            new Option("x1",1,false),
+            new Option("y1",1,false),
+            new Option("x2",1,false),
+            new Option("y2",1,false),
+            new Option("t",1,false)
+    ))),
+    DROP_ROCK_FOR_RECTANGLE("drop\\s+rock",new ArrayList<>(Arrays.asList(
+            new Option("x1",1,false),
+            new Option("y1",1,false),
+            new Option("x2",1,false),
+            new Option("y2",1,false),
+            new Option("t",1,false)
+    ))),
+    DROP_TREE_FOR_RECTANGLE("drop\\s+tree",new ArrayList<>(Arrays.asList(
+            new Option("x1",1,false),
+            new Option("y1",1,false),
+            new Option("x2",1,false),
+            new Option("y2",1,false),
+            new Option("t",1,false)
+    ))),
+
 
 
 

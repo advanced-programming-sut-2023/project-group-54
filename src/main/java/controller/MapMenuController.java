@@ -1,9 +1,11 @@
 package controller;
 
 import model.*;
+import model.Buildings.BuildingType;
 import model.Buildings.DefenseBuilding;
 import model.units.Engineer;
 import model.units.Unit;
+import view.GameMenu;
 import view.enums.messages.GameMenuMessage;
 import view.enums.messages.MapMenuMessage;
 
@@ -32,17 +34,9 @@ public class MapMenuController {
     private static final String ANSI_TEXT_LIGHT_BLUE = "\u001b[36m";
     private static final String ANSI_TEXT_WHITE = "\u001b[37m";
 
-
     public static void setMap(int mapNumber) {
-        Map[][] gameMap = new Map[500][500];
-        gameMap = Game.getGameMap();
-        if (mapNumber == 1) {
-            for (int i = 0; i < 50; i++) {
-                for (int i1 = 0; i1 < gameMap[i].length; i1++) {
-
-                }
-            }
-        }
+        if (mapNumber == 1) Game.setGameMap(400,400);
+        else Game.setGameMap(200,200);
     }
 
     public static String showMap(int xCoordinate, int yCoordinate) {
@@ -246,5 +240,16 @@ public class MapMenuController {
 
     public static void dropTree(int xCoordinate, int yCoordinate, MapType tree) {
         Game.getGameMap()[xCoordinate][yCoordinate].setTree(tree);
+    }
+
+    public static MapMenuMessage dropBuilding(int x,int y,String type) {
+        BuildingType buildingType = null;
+        for (BuildingType allBuildingType : BuildingType.INN.getAllBuildingTypes()) {
+            if (allBuildingType.getName().equals(type)) {
+                buildingType = allBuildingType;
+            }
+        }
+        if (buildingType == null) return MapMenuMessage.NOT_VALID_TYPE_FOR_DROP_BUILDING;
+
     }
 }

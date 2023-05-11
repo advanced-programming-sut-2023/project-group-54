@@ -85,7 +85,7 @@ public enum BuildingType {
             5, false, BuildingGroup.INDUSTRY),
     PITCH_RIG(200, 4, 4, 0, "pitch rig", new ArrayList<>(List.of(MapType.SMALL_POND)), 1, Resource.WOOD,
             20, false, BuildingGroup.INDUSTRY),
-    QUARRY(350, 6, 6, 0, "quarry", new ArrayList<>(List.of(MapType.ROCK)), 3, Resource.WOOD,
+    QUARRY(350, 6, 6, 0, "quarry", new ArrayList<>(List.of(MapType.BOULDERS)), 3, Resource.WOOD,
             20, false, BuildingGroup.INDUSTRY),
     STOCK_PILE(-1, 5, 5, 0, "stock pile", null, 0, null,
             0, false, BuildingGroup.INDUSTRY),
@@ -117,6 +117,7 @@ public enum BuildingType {
     private double costAmount;
     private boolean needEngineer;
     private BuildingGroup buildingGroup;
+    private final ArrayList<BuildingType> allBuildingTypes = new ArrayList<>(Arrays.asList(BuildingType.values()));
 
     BuildingType(int maxHp, int width, int length, int cost, String name, ArrayList<?> mapTypes,
                  int workers, Resource costType, double costAmount, boolean needEngineer, BuildingGroup buildingGroup) {
@@ -131,6 +132,10 @@ public enum BuildingType {
         this.costAmount = costAmount;
         this.needEngineer = needEngineer;
         this.buildingGroup = buildingGroup;
+    }
+
+    public ArrayList<BuildingType> getAllBuildingTypes() {
+        return allBuildingTypes;
     }
 
     public int getMaxHp() {

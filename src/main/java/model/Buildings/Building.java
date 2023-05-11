@@ -11,7 +11,7 @@ public class Building {
     private int hp;
     private Map[][] mapPositions = new Map[buildingType.getWidth()][buildingType.getLength()];
     private User owner;
-    public Building(BuildingType buildingType, int maxHp) {
+    public Building(BuildingType buildingType, int maxHp,User owner) {
 
     }
 
