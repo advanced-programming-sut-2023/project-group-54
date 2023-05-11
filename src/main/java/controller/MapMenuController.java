@@ -51,10 +51,10 @@ public class MapMenuController {
                 yFirstHome = yCoordinate - numberOfHousesToShow,
                 yEndHome = yCoordinate + numberOfHousesToShow;
         if (xCoordinate < numberOfHousesToShow) xFirstHome = 0;
-        else if (xCoordinate > 480) xEndHome = 500;
+        else if (xCoordinate > Game.getX() - numberOfHousesToShow) xEndHome = Game.getX();
         if (yCoordinate < numberOfHousesToShow) yFirstHome = 0;
-        else if (yCoordinate > 480) yEndHome = 500;
-        Map[][] gameMap = new Map[500][500];
+        else if (yCoordinate > Game.getY() - numberOfHousesToShow) yEndHome = Game.getY();
+        Map[][] gameMap = new Map[Game.getX()][Game.getY()];
         StringBuilder map = new StringBuilder();
         for (int i = xFirstHome; i < xEndHome; i++) {
             map.append(String.join("",Collections.nCopies((numberOfHousesToShow * 3) + 1,"-")) + "\n");

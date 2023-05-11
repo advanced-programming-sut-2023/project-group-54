@@ -1,6 +1,7 @@
 package view;
 import controller.*;
 import model.Direction;
+import model.Game;
 import model.MapType;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
@@ -15,6 +16,8 @@ import java.util.regex.Matcher;
 public class GameMenu {
     private static int xOfMap;
     private static int yOfMap;
+    private static MapType typeForTreeAndTexture = MapType.DEFAULT;
+    private static Direction direction = Direction.F;
 
     public static int getXOfMap() {
         return xOfMap;
@@ -42,17 +45,17 @@ public class GameMenu {
            else if ((matcher = MainMenu.getMatcher(command,Regexes.MAP_DETAILS_MOVE.getRegex())) != null)
                showMapDetailsMove(matcher);
             else if ((options = CommandHandler.parsCommand(Command.SET_TEXTURE_FOR_ONE_HOUSE,command)) != null)
-                setXYOfMapCommonErrors(options,"texture for one house");
+                setXYOfMapCommonErrors(options,"texture");
             else if ((options = CommandHandler.parsCommand(Command.SET_TEXTURE_FOR_RECTANGLE,command)) != null)
                 setTextureForRectangle(options);
             else if ((options = CommandHandler.parsCommand(Command.CLEAR,command)) != null)
-                setXYOfMapCommonErrors(options,"clear block for one house");
+                setXYOfMapCommonErrors(options,"clear block");
             // multiple
             else if ((options = CommandHandler.parsCommand(Command.DROP_ROCK,command)) != null)
-                setXYOfMapCommonErrors(options,"drop rock for one house");
+                setXYOfMapCommonErrors(options,"drop rock");
             //multiple
             else if ((options = CommandHandler.parsCommand(Command.DROP_TREE,command)) != null)
-                setXYOfMapCommonErrors(options,"drop tree for one house");
+                setXYOfMapCommonErrors(options,"drop tree");
             //multiple
             //if command is drop building
             //if command is popularityFactorsShow
@@ -84,6 +87,7 @@ public class GameMenu {
                         y = Integer.parseInt(Controller.buildParameter(options.get(s).get(0)));
                     } catch (NumberFormatException e) {
                         System.out.println("format is wrong for y you have to enter a number");
+                        return;
                     }
                     break;
             }
@@ -92,11 +96,11 @@ public class GameMenu {
     }
 
     private void setXYOfMap(int x,int y,String whichFunction,HashMap<String, ArrayList<String>> options) {
-        if (x < 0 || x >= 500 ) {
-            System.out.println("you have entered wrong number for x it has to be bigger than 0 and less than 500");
+        if (x < 0 || x >= Game.getX() ) {
+            System.out.println("you have entered wrong number for x it has to be bigger than 0 and less than game x length");
             return;
-        } else if (y < 0 ||  y >= 500 ) {
-            System.out.println("you have entered wrong number for x it has to be bigger than 0 and less than 500");
+        } else if (y < 0 ||  y >= Game.getY() ) {
+            System.out.println("you have entered wrong number for y it has to be bigger than 0 and less than game y length");
             return;
         }
         switch (whichFunction) {
@@ -110,19 +114,19 @@ public class GameMenu {
                 yOfMap = y;
                 showMapDetails(x,y);
                 break;
-            case "texture for one house":
-                if (setTextureForOneHouse(x,y,options))
+            case "texture":
+                if (setTextureForOneHouse(x,y,options,true))
                     System.out.println("successfully changed the texture in house -x " + x + " -y " + y );
                 break;
-            case "clear block for one house":
+            case "clear block":
                 clearOneBlock(x,y);
                 break;
-            case "drop rock for one house":
-                if (dropOneRock(x,y,options))
+            case "drop rock":
+                if (dropOneRock(x,y,options,true))
                     System.out.println("successfully dropped a rock in house -x " + x + " -y " + y );
                 break;
-            case "drop tree for one house":
-               if (dropOneTree(x,y,options))
+            case "drop tree":
+               if (dropOneTree(x,y,options,true))
                    System.out.println("successfully dropped a tree in house -x " + x + " -y " + y );
                 break;
         }
@@ -191,16 +195,19 @@ public class GameMenu {
         return mapToSend;
     }
 
-    private boolean setTextureForOneHouse(int x, int y,HashMap<String, ArrayList<String>> options) {
-        MapType type= typeChecker(options);
+    private boolean setTextureForOneHouse(int x, int y,HashMap<String, ArrayList<String>> options,boolean change) {
+        if (typeForTreeAndTexture.equals(MapType.DEFAULT)) typeForTreeAndTexture = typeChecker(options);
         MapMenuMessage mapMenuMessage;
-        if (type != null) {
+        if (typeForTreeAndTexture != null) {
             mapMenuMessage = MapMenuController.setTextureFinalTest(x,y);
             if (!mapMenuMessage.equals(MapMenuMessage.SUCCESS)) {
                 System.out.println("a building exists int house -x "+ x + " -y "+ y + " you can not do this action");
                 return false;
             }
-            MapMenuController.setTexture(x,y,type);
+            if (change) {
+                MapMenuController.setTexture(x, y, typeForTreeAndTexture);
+                typeForTreeAndTexture = MapType.DEFAULT;
+            }
             return true;
 
         }
@@ -236,15 +243,18 @@ public class GameMenu {
         return directionToSend;
     }
 
-    private boolean dropOneRock(int x,int y,HashMap<String, ArrayList<String>> options) {
-        Direction direction = directionChecker(options);
+    private boolean dropOneRock(int x,int y,HashMap<String, ArrayList<String>> options,boolean change) {
+        if (direction.equals(Direction.F)) direction = directionChecker(options);
         if (direction != null ){
             MapMenuMessage message = MapMenuController.dropRockFinalTest(x,y);
             if (!message.equals(MapMenuMessage.SUCCESS)) {
                 System.out.println("a building exists int house -x "+ x + " -y "+ y + " you can not do this action");
                 return false;
             }
-            MapMenuController.dropRock(x,y,direction);
+            if (change ) {
+                MapMenuController.dropRock(x, y, direction);
+                direction = Direction.F;
+            }
             return true;
         }
         return false;
@@ -271,22 +281,126 @@ public class GameMenu {
         }
         return treeToSend;
     }
-    private boolean dropOneTree(int x, int y, HashMap<String, ArrayList<String>> options) {
-        MapType tree = treeChecker(options);
-        if (tree != null ){
+    private boolean dropOneTree(int x, int y, HashMap<String, ArrayList<String>> options,boolean change) {
+        if (typeForTreeAndTexture.equals(MapType.DEFAULT)) typeForTreeAndTexture = treeChecker(options);
+        if (typeForTreeAndTexture != null ){
             MapMenuMessage message = MapMenuController.dropTreeFinalTest(x,y);
             if (!message.equals(MapMenuMessage.SUCCESS)) {
-                System.out.println("a building exists int house -x "+ x + " -y "+ y + " you can not do this action");
+                System.out.println("a building exists in house -x "+ x + " -y "+ y + " you can not do this action");
                 return false;
             }
-            MapMenuController.dropTree(x,y,tree);
+            if (change) {
+                MapMenuController.dropTree(x, y, typeForTreeAndTexture);
+                typeForTreeAndTexture = MapType.DEFAULT;
+            }
             return true;
         }
         return false;
     }
 
-    private void checkRectangleIsValid() {
+    private void checkRectangleIsValid(HashMap<String, ArrayList<String>> options,String whichFunction) {
+        int x1=0,y1=0,x2=0,y2=0;
+        for (String s : options.keySet()) {
+            switch (s) {
+                case "x1":
+                    try {
+                        x1 = Integer.parseInt(Controller.buildParameter(options.get(s).get(0)));
+                    } catch (NumberFormatException e) {
+                        System.out.println("format is wrong for x1 you have to enter a number");
+                        return;
+                    }
+                    break;
+                case "y1":
+                    try {
+                        y1 = Integer.parseInt(Controller.buildParameter(options.get(s).get(0)));
+                    } catch (NumberFormatException e) {
+                        System.out.println("format is wrong for y1 you have to enter a number");
+                        return;
+                    }
+                    break;
+                case "x2":
+                    try {
+                        x2 = Integer.parseInt(Controller.buildParameter(options.get(s).get(0)));
+                    } catch (NumberFormatException e) {
+                        System.out.println("format is wrong for x2 you have to enter a number");
+                        return;
+                    }
+                    break;
+                case "y2":
+                    try {
+                        y2 = Integer.parseInt(Controller.buildParameter(options.get(s).get(0)));
+                    } catch (NumberFormatException e) {
+                        System.out.println("format is wrong for y2 you have to enter a number");
+                        return;
+                    }
+                    break;
+            }
+        }
+        checkXYForRectangle(x1,y1,x2,y2,options,whichFunction);
+    }
 
+    private void checkXYForRectangle(int x1,int y1,int x2,int y2,HashMap<String, ArrayList<String>> options,String whichFunction) {
+        if (x1 < 0 || x1 >= Game.getX() || x2 < 0 || x2 > Game.getX()) {
+            System.out.println("you have entered wrong number for x1 or x2 it has to be bigger than 0 and less than game map x length");
+            return;
+        } else if (y1 < 0 ||  y1 >= Game.getY() || y2 < 0 || y2 > Game.getY()) {
+            System.out.println("you have entered wrong number for y1 or y2 it has to be bigger than 0 and less than game map y length");
+            return;
+        } else if ( x2 < x1) {
+            System.out.println("x2 is less than x1 action failed");
+            return;
+        } else if ( y2 < y1) {
+            System.out.println("y2 is less than y1 action failed");
+            return;
+        }
+        whichFunctionForRectangle(x1,y1,x2,y2,options,whichFunction);
+    }
+
+    private void whichFunctionForRectangle(int x1,int y1,int x2,int y2,HashMap<String, ArrayList<String>> options,String whichFunction) {
+        switch (whichFunction) {
+            case "texture":
+                for (int i = x1; i < x2; i++) {
+                    for (int j = y1; j < y2; j++) {
+                        if (!setTextureForOneHouse(i,j,options,false)) return;
+                    }
+                }
+                for (int i = x1; i < x2; i++) {
+                    for (int j = y1; j < y2; j++) {
+                        setTextureForOneHouse(i,j,options,true);
+                    }
+                }
+                System.out.println("successfully changed the texture from house x1 " + x1 + " y1 " + y1 + " to x2 " + x2 + " y2 " + y2);
+                break;
+            case "clear block":
+
+                break;
+            case "drop rock":
+                for (int i = x1; i < x2; i++) {
+                    for (int j = y1; j < y2; j++) {
+                        if (!dropOneRock(i,j,options,false)) return;
+                    }
+                }
+                for (int i = x1; i < x2; i++) {
+                    for (int j = y1; j < y2; j++) {
+                        dropOneRock(i,j,options,true);
+                    }
+                }
+                System.out.println("successfully dropped a rock from house x1 " + x1 + " y1 " + y1 + " to x2 " + x2 + " y2 " + y2);
+                break;
+            case "drop tree":
+                for (int i = x1; i < x2; i++) {
+                    for (int j = y1; j < y2; j++) {
+                        if (!dropOneTree(i,j,options,false)) return;
+                    }
+                }
+                for (int i = x1; i < x2; i++) {
+                    for (int j = y1; j < y2; j++) {
+                        dropOneTree(i,j,options,true);
+                    }
+                }
+                System.out.println("successfully dropped tree from house x1 " + x1 + " y1 " + y1 + " to x2 " + x2 + " y2 " + y2 );
+                break;
+        }
     }
 
     private void setTextureForRectangle(HashMap<String, ArrayList<String>> options) {
