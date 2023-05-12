@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.common.hash.Hashing;
 import model.Buildings.Building;
 import model.Buildings.StorageBuilding;
 import model.Buildings.StorageType;
@@ -11,6 +12,7 @@ import view.enums.messages.SignupMenuMessage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -87,7 +89,9 @@ public class Controller {
             e.printStackTrace();
         }
     }
-
+    public static String hashString(String str){
+        return Hashing.sha256().hashString(str, StandardCharsets.UTF_8).toString();
+    }
     public static boolean checkIfStayLoggedIn() {
         return false;
     }

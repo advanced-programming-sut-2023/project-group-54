@@ -1,5 +1,7 @@
 package model;
 
+import controller.Controller;
+
 import java.util.ArrayList;
 
 public class User {
@@ -66,7 +68,7 @@ public class User {
         return null;
     }
     public boolean isPasswordValid(String password){
-        return this.getPassword().equals(password);
+        return this.getPassword().equals(Controller.hashString(password));
     }
 
     public void setUsername(String username) {
