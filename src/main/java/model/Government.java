@@ -16,6 +16,10 @@ public class Government {
     private int gold;
     private final HashMap<Resource, Integer> allResources = new HashMap<>();
     private ArrayList<Building> buildings=new ArrayList<>();
+    private ArrayList<Trade> receivedTrades=new ArrayList<>();
+    private ArrayList<Trade> sentTrades=new ArrayList<>();
+    private ArrayList<Trade> newTrades=new ArrayList<>();
+    private ArrayList<Trade> AllTrades=new ArrayList<>();
 
     public Government() {
         this.popularity = 100;
@@ -30,6 +34,35 @@ public class Government {
         for (Resource value : Resource.values()) {
             allResources.put(value, 0);
         }
+    }
+public ArrayList<Trade> getNewTrades(){return newTrades;}
+
+    public ArrayList<Trade> getReceivedTrades() {
+        return receivedTrades;
+    }
+
+    public void setReceivedTrades(ArrayList<Trade> receivedTrades) {
+        this.receivedTrades = receivedTrades;
+    }
+
+    public ArrayList<Trade> getSentTrades() {
+        return sentTrades;
+    }
+
+    public void setSentTrades(ArrayList<Trade> sentTrades) {
+        this.sentTrades = sentTrades;
+    }
+
+    public void setNewTrades(ArrayList<Trade> newTrades) {
+        this.newTrades = newTrades;
+    }
+
+    public ArrayList<Trade> getAllTrades() {
+        return AllTrades;
+    }
+
+    public void setAllTrades(ArrayList<Trade> allTrades) {
+        AllTrades = allTrades;
     }
 
     public int getPopulation() {
@@ -164,8 +197,6 @@ public class Government {
                     else{
                         amount-=storageBuilding.getStorage().get(item);
                         storageBuilding.getStorage().remove(item);
-
-
                     }
                 }
                 else continue;

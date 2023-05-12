@@ -1,8 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class User {
+public class User implements Comparable<User> {
     private static final ArrayList<User> users = new ArrayList<>();
     private String username;
     private String password;
@@ -12,6 +13,8 @@ public class User {
     private int questionNumber;
     private String questionAnswer;
     private Government government;
+    private int highScore;
+
 
     public User(String username, String password, String nickname, String email, String slogan, int questionNumber, String questionAnswer, Government government) {
         this.username = username;
@@ -106,5 +109,27 @@ public class User {
     }
     public static void addUser(User user){
         users.add(user);
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
+    public static int getUserRank(User user) {
+        ArrayList<User> sortUsers = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            sortUsers.add(users.get(i));
+        }
+        Collections.sort(sortUsers);
+        for (int i = 0; i < sortUsers.size(); i++) {
+            if (sortUsers.get(i).getUsername().equals(user.getUsername())) return i + 1;
+
+        }
+        return -1;
+    }
+    @Override
+    public int compareTo(User a) {
+        if (this.highScore < a.highScore) return 1;
+        else if (this.highScore > a.highScore) return -1;
+        else return this.username.compareTo(a.username);
     }
 }

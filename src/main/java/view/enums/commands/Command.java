@@ -69,13 +69,37 @@ public enum Command {
     DISPLAY_PROFILE("profile\\s+display",new ArrayList<>(
 
     )),
+    PROFILE_DISPLAY_HIGH_SCORE("profile\\s+display\\s+highscore",new ArrayList<>(
+
+    )),
+    PROFILE_DISPLAY_RANK("profile\\s+display\\s+rank",new ArrayList<>(
+
+    )),
     SHOW_PRICE_LIST("show\\s+price\\s+list",new ArrayList<>(
 
     )),
     SHOP_BUY("buy\\s+",new ArrayList<>(Arrays.asList(
             new Option("i",1,false),
             new Option("a",1,false)
-    )));
+    ))),
+    TRADE("trade\\s+",new ArrayList<>(Arrays.asList(
+            new Option("-t",1,false),
+            new Option("-a",1,false),
+            new Option("-p",1,false),
+            new Option("-m",1,false)
+    ))),
+    TRADE_LIST("trade//s+list",new ArrayList<>(
+
+    )),
+    TRADE_ACCEPT("trade\\s+accept\\s+",new ArrayList<>(Arrays.asList(
+            new Option("i",1,false),
+            new Option("m",1,false)
+
+    ))),
+    TRADE_HISTORY("trade\\s+history",new ArrayList<>(
+
+    ));
+
 
 
     private String commandRegex;

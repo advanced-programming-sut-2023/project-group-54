@@ -53,6 +53,10 @@ public class ShopMenu {
             System.out.println("amount not entered");
             return;
         }
+        if(!Controller.isNumeric(amount)) {
+            System.out.println("amount format is invalid");
+            return;
+        }
        ShopMenuMessage result= ShopMenuController.buyItemChecker(name,Integer.parseInt(amount));
 
         switch (result){
@@ -88,6 +92,10 @@ public class ShopMenu {
         }
         if(amount == null){
             System.out.println("amount not entered");
+            return;
+        }
+        if(!Controller.isNumeric(amount)) {
+            System.out.println("amount format is invalid");
             return;
         }
         ShopMenuMessage result= ShopMenuController.sellItemChecker(name,Integer.parseInt(amount));

@@ -5,6 +5,7 @@ import view.enums.messages.ProfileMenuMessage;
 import view.enums.messages.SignupMenuMessage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class ProfileMenuController {
@@ -80,9 +81,8 @@ public class ProfileMenuController {
         return "";
     }
 
-    public static String showRank() {
-        return "";
-    }
+
+
 
     public static String displaySlogan() {
         String slogan= user.getSlogan();
