@@ -1,13 +1,21 @@
 package controller;
 
 import model.Direction;
+import model.Game;
 import model.units.Unit;
 import view.enums.messages.UnitMenuMessage;
 
 import java.util.ArrayList;
 
 public class UnitMenuController {
-    private ArrayList<Unit> selectedUnit;
+    private static ArrayList<Unit> selectedUnit;
+
+    public static void setSelectedUnit(int x,int y) {
+        for (Unit unit : Game.getGameMap()[x][y].getUnit()) {
+            if (unit.getGovernment().equals(Game.getCurrentUser().getGovernment()))
+                selectedUnit.add(unit);
+        }
+    }
 
     public UnitMenuMessage moveUnit(int xCoordinate, int yCoordinate) {
         return UnitMenuMessage.SUCCESS;

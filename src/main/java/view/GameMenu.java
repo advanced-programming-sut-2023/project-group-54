@@ -77,14 +77,13 @@ public class GameMenu {
                 checkRectangleIsValid(options,"drop tree");
             else if ((options = CommandHandler.parsCommand(Command.DROP_BUILDING,command)) != null)
                 setXYOfMapCommonErrors(options,"drop building");
-            else if((options = CommandHandler.parsCommand(Command.SELECT_BUILDING, command)) != null)
-                selectBuilding(options);
             else if((options = CommandHandler.parsCommand(Command.SELECT_UNIT, command)) != null)
-                selectUnit(options);
+                setXYOfMapCommonErrors(options,"select unit");
             else if((options = CommandHandler.parsCommand(Command.NEXT_TURN, command)) != null)
                 nextTurn(options);
             else if ((options = CommandHandler.parsCommand(Command.SELECT_BUILDING,command)) != null)
                 setXYOfMapCommonErrors(options,"select building");
+            else System.out.println("invalid command in game menu");
         }
     }
     private static void popularityFactorsShow(HashMap<String, ArrayList<String>> options){
@@ -209,6 +208,9 @@ public class GameMenu {
                 break;
             case "select building":
                 selectBuilding(x,y);
+                break;
+            case "select unit":
+                selectUnit(x,y);
                 break;
         }
     }
@@ -553,7 +555,7 @@ public class GameMenu {
             case HOUSE_IS_EMPTY:
                 System.out.println("the house you have entered is empty");
                 break;
-            case BUILDING_DOESNT_BELONG_TO_YOU:
+            case BUILDING_OR_SOLDIER_DOESNT_BELONG_TO_YOU:
                 System.out.println("building in that house doesnt belong to you");
                 break;
             case SUCCESS:
@@ -562,8 +564,19 @@ public class GameMenu {
                 break;
         }
     }
-    private static void selectUnit(HashMap<String, ArrayList<String>> options){
-
+    private static void selectUnit(int x,int y){
+        switch (MapMenuController.selectUnit(x,y)) {
+            case HOUSE_IS_EMPTY:
+                System.out.println("there is no soldier in that house");
+                break;
+            case BUILDING_OR_SOLDIER_DOESNT_BELONG_TO_YOU:
+                System.out.println("there is no soldier belonged to you in that house");
+                break;
+            case SUCCESS:
+                System.out.println("successfully entered the unit menu");
+               UnitMenu.run(x,y);
+                break;
+        }
     }
     private static void nextTurn(HashMap<String, ArrayList<String>> options){
 

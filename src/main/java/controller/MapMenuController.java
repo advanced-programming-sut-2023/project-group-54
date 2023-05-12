@@ -472,7 +472,23 @@ public class MapMenuController {
     public static MapMenuMessage selectBuilding(int x,int y) {
         if (Game.getGameMap()[x][y].getBuilding() == null) return MapMenuMessage.HOUSE_IS_EMPTY;
         if (!Game.getGameMap()[x][y].getBuilding().getOwner().equals(Game.getCurrentUser().getGovernment()))
-            return MapMenuMessage.BUILDING_DOESNT_BELONG_TO_YOU;
+            return MapMenuMessage.BUILDING_OR_SOLDIER_DOESNT_BELONG_TO_YOU;
         return MapMenuMessage.SUCCESS;
     }
+
+    public static MapMenuMessage selectUnit(int x,int y) {
+        boolean sign = true;
+        int numberOfSoldiers = 0;
+        for (Unit unit : Game.getGameMap()[x][y].getUnit()) {
+            numberOfSoldiers++;
+            if (unit.getGovernment().equals(Game.getCurrentUser().getGovernment())) {
+                sign = false;
+                break;
+            }
+        }
+        if (numberOfSoldiers == 0) return MapMenuMessage.HOUSE_IS_EMPTY;
+        if (sign) return MapMenuMessage.BUILDING_OR_SOLDIER_DOESNT_BELONG_TO_YOU;
+        return MapMenuMessage.SUCCESS;
+    }
+
 }

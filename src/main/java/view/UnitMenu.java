@@ -6,7 +6,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class UnitMenu {
-    public void run() {
+    public static void run(int x,int y) {
+        UnitMenuController.setSelectedUnit(x,y);
         String command;
         Matcher matcher;
         while (true) {
