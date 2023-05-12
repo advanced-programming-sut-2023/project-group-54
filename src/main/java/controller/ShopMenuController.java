@@ -7,7 +7,7 @@ import view.enums.messages.ShopMenuMessage;
 import java.util.HashMap;
 
 public class ShopMenuController {
-    private static User user=Controller.getLoggedInUser();
+    private static final User user = Controller.getLoggedInUser();
     public static String showItemList() {
         String result="";
         int counter=1;
