@@ -1,19 +1,44 @@
 package model;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
 import controller.Controller;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class User {
-    private static final ArrayList<User> users = new ArrayList<>();
+    private static final ArrayList<User> users;
+    @Expose
     private String username;
+    @Expose
     private String password;
+    @Expose
     private String nickname;
+    @Expose
     private String email;
+    @Expose
     private String slogan;
+    @Expose
     private int questionNumber;
+    @Expose
     private String questionAnswer;
     private Government government;
+    static {
+        Gson gson = new Gson();
+        String filePath = new File("").getAbsolutePath().concat("/src/main/java/model/data/users.json");
+        FileReader fileReader;
+        try {
+            fileReader = new FileReader(filePath);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<User> allUsers = gson.fromJson(fileReader, new TypeToken<ArrayList<User>>() {
+        }.getType());
+        if (allUsers == null) allUsers = new ArrayList<>();
+        users = allUsers;
+    }
 
     public User(String username, String password, String nickname, String email, String slogan, int questionNumber, String questionAnswer, Government government) {
         this.username = username;

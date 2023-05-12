@@ -1,5 +1,3 @@
-
-import model.User;
 import view.MainMenu;
 
 public class Main {

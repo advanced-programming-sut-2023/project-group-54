@@ -14,6 +14,7 @@ public class BuildingMenu {
         setSelectedBuilding(x,y);
         String command;
         HashMap<String, ArrayList<String>> options;
+        System.out.println("you are in building up menu");
         while (true) {
             command = MainMenu.getScanner().nextLine();
             if (CommandHandler.parsCommand(Command.BACK, command) != null)

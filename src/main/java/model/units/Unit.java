@@ -15,7 +15,6 @@ public class Unit {
     private UnitType unitType;
     private int hp;
     private Boolean isPatrol;
-
     public Unit(UnitType unitType, int xPosition, int yPosition) {
         this.owner = Game.getCurrentUser().getGovernment();
         this.unitType = unitType;
@@ -31,6 +30,10 @@ public class Unit {
 
     public static ArrayList<Unit> getUnits() {
         return units;
+    }
+
+    public Government getOwner() {
+        return owner;
     }
 
     public State getState() {

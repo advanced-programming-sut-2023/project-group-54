@@ -16,6 +16,7 @@ public class Government {
     private int efficiency;
     private int unemployedWorker;
     private int gold;
+    private User user;
     private ArrayList<Building> buildings = new ArrayList<>();
 
     public Government() {
@@ -31,6 +32,14 @@ public class Government {
         for (Resource value : Resource.values()) {
             allResources.put(value, 0);
         }
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getPopulation() {

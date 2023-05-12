@@ -4,22 +4,22 @@ import model.Buildings.ProducerType;
 import model.Resource;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public enum UnitType {
-    ARCHER("archer", ProducerType.BARRACKS, 12, new ArrayList<>(Arrays.asList(Resource.BOW)),
+    ARCHER("archer", ProducerType.BARRACKS, 12, new ArrayList<>(List.of(Resource.BOW)),
             3, 20, 350, 40, false, true),
-    CROSSBOWMAN("crossbowman", ProducerType.BARRACKS, 20, new ArrayList<>(Arrays.asList(Resource.CROSSBOW,
+    CROSSBOWMAN("crossbowman", ProducerType.BARRACKS, 20, new ArrayList<>(List.of(Resource.CROSSBOW,
             Resource.LEATHER_ARMOR)), 2, 15, 460, 60, false, false),
-    SPEARMAN("spearman", ProducerType.BARRACKS, 8, new ArrayList<>(Arrays.asList(Resource.SPEAR)),
+    SPEARMAN("spearman", ProducerType.BARRACKS, 8, new ArrayList<>(List.of(Resource.SPEAR)),
             3, 1, 350, 50, false, true),
-    PIKEMAN("pikeman", ProducerType.BARRACKS, 20, new ArrayList<>(Arrays.asList(Resource.PIKE,
+    PIKEMAN("pikeman", ProducerType.BARRACKS, 20, new ArrayList<>(List.of(Resource.PIKE,
             Resource.METAL_ARMOR)), 2, 1, 600, 75, false, false),
-    MACEMAN("maceman", ProducerType.BARRACKS, 20, new ArrayList<>(Arrays.asList(Resource.MACE,
+    MACEMAN("maceman", ProducerType.BARRACKS, 20, new ArrayList<>(List.of(Resource.MACE,
             Resource.LEATHER_ARMOR)), 4, 1, 460, 100, false, true),
-    SWORDSMAN("swordsman", ProducerType.BARRACKS, 40, new ArrayList<>(Arrays.asList(Resource.SWORDS,
+    SWORDSMAN("swordsman", ProducerType.BARRACKS, 40, new ArrayList<>(List.of(Resource.SWORDS,
             Resource.METAL_ARMOR)), 1, 1, 800, 150, false, false),
-    KNIGHT("knight", ProducerType.BARRACKS, 40, new ArrayList<>(Arrays.asList(Resource.SWORDS,
+    KNIGHT("knight", ProducerType.BARRACKS, 40, new ArrayList<>(List.of(Resource.SWORDS,
             Resource.METAL_ARMOR, Resource.HORSE)), 5, 1, 900, 140, false, false),
     TUNNELER("tunneler", ProducerType.ENGINEERS_GUILD, 30, null,
             4, 1, 150, 50, false, false),
@@ -44,16 +44,16 @@ public enum UnitType {
     FIRE_THROWERS("fire throwers", ProducerType.MERCENARY_POST, 100, null,
             3, 10, 250, 90, false, false);
 
-    private String type;
-    private ProducerType producerBuilding;
-    private int goldNeeded;
-    private ArrayList<Resource> resourcesNeeded;
-    private int speed;
-    private int range;
-    private int maxHp;
-    private int damage;
-    private Boolean canUp;
-    private Boolean canUpFromLadder;
+    private final String type;
+    private final ProducerType producerBuilding;
+    private final int goldNeeded;
+    private final ArrayList<Resource> resourcesNeeded;
+    private final int speed;
+    private final int range;
+    private final int maxHp;
+    private final int damage;
+    private final Boolean canUp;
+    private final Boolean canUpFromLadder;
 
     private UnitType(String type, ProducerType producerBuilding, int goldNeeded, ArrayList<Resource> resourcesNeeded, int speed, int range, int maxHp, int damage, boolean canUp, boolean canUpFromLadder) {
         this.type = type;
