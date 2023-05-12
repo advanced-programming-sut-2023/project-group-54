@@ -18,10 +18,10 @@ public class StorageBuilding extends Building{
         return storage;
     }
 
-    public StorageBuilding(StorageType storageType, HashMap<Resource, Double> storage) {
+    public StorageBuilding(StorageType storageType) {
         super(storageType.getBuildingType(), storageType.getBuildingType().getMaxHp(), Game.getCurrentUser().getGovernment());
         this.storageType = storageType;
-        this.storage = storage;
+        this.storage = new HashMap<>();
     }
 
     public void setFoodRate(int foodRate){
