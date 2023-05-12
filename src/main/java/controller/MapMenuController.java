@@ -4,6 +4,7 @@ import model.*;
 import model.Buildings.*;
 import model.units.Engineer;
 import model.units.Unit;
+import view.BuildingMenu;
 import view.enums.messages.MapMenuMessage;
 
 import java.util.Collections;
@@ -249,10 +250,10 @@ public class MapMenuController {
                 house.getBuilding().getBuildingType().getWorkers() + " workers" : "") : "there is no building here") + "\n");
         details.append(((house.getTree() != null) ? "we have tree with type " + house.getTree().toString() : "no tree in this house") + "\n");
         for (Unit unit : house.getUnit()) {
-            if (unit instanceof Engineer) details.append(i + ") engineer owner : " + unit.getOwner().getUsername());
+            if (unit instanceof Engineer) details.append(i + ") engineer owner : " + unit.getGovernment().getOwner().getUsername());
             else details.append(i + ") troop name : " + unit.getUnitType().getType() + " - troop hp : " + unit.getHp() +
                     "- unit " +((unit.getPatrol()) ? "is" : "is not") + " patrol\n\t- troop state : " + unit.getState() +
-                    " - unit owner is : " + unit.getOwner().getUsername() + "\n");
+                    " - unit owner is : " + unit.getGovernment().getOwner().getUsername() + "\n");
             i++;
         }
         return details.toString();
@@ -276,7 +277,16 @@ public class MapMenuController {
     public static MapMenuMessage clearBlock(int xCoordinate, int yCoordinate) {
         //to complete
         //checking for not destroy the main house
-        //Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().
+        int x1 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getX1Position();
+        int y1 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getY1Position();
+        int x2 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getX2Position();
+        int y2 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getY2Position();
+        for (int i = x1; i < x2; i++) {
+            for (int j = y1; j < y2; j++) {
+                Game.getGameMap()[i][j].setBuilding(null);
+            }
+        }
+        Game.getGameMap()[xCoordinate][yCoordinate].setUnitsNull();
         return MapMenuMessage.SUCCESS;
     }
 
@@ -456,6 +466,13 @@ public class MapMenuController {
         Game.getCurrentUser().getGovernment().setGold(finalGold);
         //remove resource
 
+        return MapMenuMessage.SUCCESS;
+    }
+
+    public static MapMenuMessage selectBuilding(int x,int y) {
+        if (Game.getGameMap()[x][y].getBuilding() == null) return MapMenuMessage.HOUSE_IS_EMPTY;
+        if (!Game.getGameMap()[x][y].getBuilding().getOwner().equals(Game.getCurrentUser().getGovernment()))
+            return MapMenuMessage.BUILDING_DOESNT_BELONG_TO_YOU;
         return MapMenuMessage.SUCCESS;
     }
 }

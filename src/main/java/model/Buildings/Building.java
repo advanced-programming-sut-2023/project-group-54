@@ -25,6 +25,10 @@ public class Building {
         buildings.add(this);
     }
 
+    public Government getOwner() {
+        return owner;
+    }
+
     public static ArrayList<Building> getBuildings() {
         return buildings;
     }

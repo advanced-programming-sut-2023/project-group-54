@@ -83,6 +83,8 @@ public class GameMenu {
                 selectUnit(options);
             else if((options = CommandHandler.parsCommand(Command.NEXT_TURN, command)) != null)
                 nextTurn(options);
+            else if ((options = CommandHandler.parsCommand(Command.SELECT_BUILDING,command)) != null)
+                setXYOfMapCommonErrors(options,"select building");
         }
     }
     private static void popularityFactorsShow(HashMap<String, ArrayList<String>> options){
@@ -205,6 +207,9 @@ public class GameMenu {
             case "drop building":
                 dropBuilding(x,y,options);
                 break;
+            case "select building":
+                selectBuilding(x,y);
+                break;
         }
     }
 
@@ -294,7 +299,7 @@ public class GameMenu {
     }
 
     private static void clearOneBlock(int x,int y) {
-        //to complete
+        System.out.println(MapMenuController.clearBlock(x,y));
     }
 
     private static Direction directionChecker(HashMap<String, ArrayList<String>> options) {
@@ -543,8 +548,19 @@ public class GameMenu {
         }
     }
 
-    private static void selectBuilding(HashMap<String, ArrayList<String>> options){
-
+    private static void selectBuilding(int x,int y){
+        switch (MapMenuController.selectBuilding(x,y)) {
+            case HOUSE_IS_EMPTY:
+                System.out.println("the house you have entered is empty");
+                break;
+            case BUILDING_DOESNT_BELONG_TO_YOU:
+                System.out.println("building in that house doesnt belong to you");
+                break;
+            case SUCCESS:
+                System.out.println("successfully entered the building menu");
+                BuildingMenu.run(x,y);
+                break;
+        }
     }
     private static void selectUnit(HashMap<String, ArrayList<String>> options){
 

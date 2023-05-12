@@ -13,6 +13,9 @@ import java.util.ArrayList;
 public class BuildingMenuController {
     private static Building selectedBuilding;
 
+    public static void setSelectedBuilding(int x,int y) {
+        selectedBuilding = Game.getGameMap()[x][y].getBuilding();
+    }
     public static BuildingMenuMessage repair() {
         if (selectedBuilding.getBuildingType().getBuildingGroup().equals(BuildingGroup.CASTLE))
             selectedBuilding.setHp(selectedBuilding.getBuildingType().getMaxHp());

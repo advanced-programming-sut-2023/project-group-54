@@ -55,6 +55,10 @@ public class Map {
         return mapType;
     }
 
+    public void setUnitsNull() {
+        this.unit = new ArrayList<>();
+    }
+
     public void setUnit() {
         this.unit = new ArrayList<>();
     }
