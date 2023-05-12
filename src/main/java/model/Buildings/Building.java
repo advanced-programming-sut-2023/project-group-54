@@ -15,7 +15,7 @@ public class Building {
 
     }
 
-    public static HashMap<Building, Integer> getBuildings() {
+    public static HashMap<Building,Integer> getBuildings() {
         return buildings;
     }
 
@@ -29,5 +29,9 @@ public class Building {
 
     public Map[][] getMapPositions() {
         return mapPositions;
+    }
+
+    public User getOwner() {
+        return owner;
     }
 }

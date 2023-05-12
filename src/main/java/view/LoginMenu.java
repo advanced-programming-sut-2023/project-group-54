@@ -25,8 +25,6 @@ public class LoginMenu {
                 loginUser(options);
             else if ((options = CommandHandler.parsCommand(Command.FORGET_PASSWORD, command)) != null)
                 forgetPassword(options);
-            else if (CommandHandler.parsCommand(Command.USER_LOGOUT, command) != null)
-                logout();
             else
                 System.out.println("Invalid command in login menu");
         }
@@ -174,7 +172,7 @@ public class LoginMenu {
         }
     }
 
-    private void logout() {
+    public static void logout() {
         LoginMenuMessage result = LoginMenuController.logout();
         if (result.equals(LoginMenuMessage.SUCCESS)) {
             System.out.println("logged out");

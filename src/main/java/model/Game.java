@@ -8,6 +8,12 @@ public class Game {
     private static final ArrayList<Integer> lastTurn = new ArrayList<>();
     private static User currentUser;
     private static int currentTurn;
+    private static User currentUserTurn;
+
+    public static User getCurrentUserTurn() {
+        return currentUserTurn;
+    }
+
     private static int x;
     private static int y;
     private static Map[][] gameMap;

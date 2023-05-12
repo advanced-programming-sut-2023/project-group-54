@@ -9,10 +9,23 @@ import java.util.HashMap;
 
 public class StorageBuilding extends Building{
     private StorageType storageType;
-    private HashMap<Resource, Integer> storage;
-    private int storageFilled;
+    private HashMap<Resource, Double> storage;
 
-    public StorageBuilding(StorageType storageType, HashMap<Resource, Integer> storage, User owner) {
+    public StorageType getStorageType() {
+        return storageType;
+    }
+
+    public HashMap<Resource, Double> getStorage() {
+        return storage;
+    }
+
+    public double getStorageFilled() {
+        return storageFilled;
+    }
+
+    private double storageFilled;
+
+    public StorageBuilding(StorageType storageType, HashMap<Resource, Double> storage, User owner) {
         super(storageType.getBuildingType(), storageType.getBuildingType().getMaxHp(),owner);
         this.storageType = storageType;
         this.storage = storage;
@@ -22,7 +35,7 @@ public class StorageBuilding extends Building{
         Game.getCurrentUser().getGovernment().setFoodRate(foodRate);
     }
 
-    public int showStoredResource(Resource resource){
+    public double showStoredResource(Resource resource){
         return storage.get(resource);
     }
 }

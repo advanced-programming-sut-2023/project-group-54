@@ -2,6 +2,8 @@ package view;
 
 import controller.Controller;
 import controller.MapMenuController;
+import view.enums.commands.Command;
+import view.enums.commands.CommandHandler;
 
 import java.util.regex.Matcher;
 
@@ -11,6 +13,8 @@ public class Menu {
         Matcher matcher;
         while (true) {
             command = MainMenu.getScanner().nextLine();
+              else if (CommandHandler.parsCommand(Command.USER_LOGOUT, command) != null)
+                LoginMenu.logout();
         }
     }
 
