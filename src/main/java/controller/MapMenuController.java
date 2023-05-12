@@ -249,10 +249,10 @@ public class MapMenuController {
                 house.getBuilding().getBuildingType().getWorkers() + " workers" : "") : "there is no building here") + "\n");
         details.append(((house.getTree() != null) ? "we have tree with type " + house.getTree().toString() : "no tree in this house") + "\n");
         for (Unit unit : house.getUnit()) {
-            if (unit instanceof Engineer) details.append(i + ") engineer owner : " + unit.getOwner().getUsername());
+            if (unit instanceof Engineer) details.append(i + ") engineer owner : " + unit.getOwner().getUser().getUsername());
             else details.append(i + ") troop name : " + unit.getUnitType().getType() + " - troop hp : " + unit.getHp() +
                     "- unit " +((unit.getPatrol()) ? "is" : "is not") + " patrol\n\t- troop state : " + unit.getState() +
-                    " - unit owner is : " + unit.getOwner().getUsername() + "\n");
+                    " - unit owner is : " + unit.getOwner().getUser().getUsername() + "\n");
             i++;
         }
         return details.toString();

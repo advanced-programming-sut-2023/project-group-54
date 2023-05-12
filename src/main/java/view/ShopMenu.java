@@ -67,8 +67,6 @@ public class ShopMenu {
                 else System.out.println("canceled");
             }
         }
-
-
     }
 
     public void sellItem(HashMap<String, ArrayList<String>> options) {

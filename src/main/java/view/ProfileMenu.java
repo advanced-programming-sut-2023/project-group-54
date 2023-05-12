@@ -145,8 +145,6 @@ public class ProfileMenu {
             case EMAIL_EXIST -> System.out.println("email already exists");
             case SUCCESS -> System.out.println("email changed successfully");
         }
-
-
     }
 
     public void changeSlogan(HashMap<String, ArrayList<String>> options) {

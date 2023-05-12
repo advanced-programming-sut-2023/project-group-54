@@ -1,9 +1,15 @@
 package view;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import controller.Controller;
+import model.User;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -55,8 +61,25 @@ public class MainMenu {
                 signupMenu.run();
             else if (command.matches("\\s*login\\s+menu\\s*"))
                 loginMenu.run();
-            else if (CommandHandler.parsCommand(Command.EXIT, command) != null)
+            else if (CommandHandler.parsCommand(Command.EXIT, command) != null){
+                Gson gson = new GsonBuilder()
+                        .excludeFieldsWithoutExposeAnnotation()
+                        .create();
+                String filePath = new File("").getAbsolutePath().concat("/src/main/java/model/data/users.json");
+                FileWriter fileWriter;
+                try {
+                    fileWriter = new FileWriter(filePath);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                gson.toJson(User.getUsers(), fileWriter);
+                try {
+                    fileWriter.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 return;
+            }
             else
                 System.out.println("Invalid command");
         }

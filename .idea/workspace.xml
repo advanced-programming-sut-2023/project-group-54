@@ -6,8 +6,49 @@
   <component name="ChangeListManager">
     <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="drop completed -">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SignupMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SignupMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Government.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/data/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/units/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/units/Unit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/units/UnitType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/units/UnitType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/BuildingMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/BuildingMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ProfileMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/ShopMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ShopMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/UnitMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/UnitMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/BuildingMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/BuildingMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/SignupMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/SignupMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/Building.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/Building.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/BuildingGroup.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/BuildingGroup.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/BuildingType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/BuildingType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/DefenseBuilding.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/DefenseBuilding.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/DefenseType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/DefenseType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerBuilding.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerBuilding.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/StorageBuilding.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/StorageBuilding.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Government.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Government.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Map.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/units/Engineer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/units/Engineer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/units/Unit$State.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/units/Unit$State.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/units/Unit.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/units/Unit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/units/UnitType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/units/UnitType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/BuildingMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/BuildingMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/GameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/GameMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/MainMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/ProfileMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/ProfileMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/ShopMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/ShopMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/UnitMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/UnitMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/commands/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/enums/commands/Command.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/messages/BuildingMenuMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/enums/messages/BuildingMenuMessage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/messages/MapMenuMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/enums/messages/MapMenuMessage.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,9 +121,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "node.js.selected.package.tslint": "(autodetect)"
+  }
+}]]></component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="phase0" />
