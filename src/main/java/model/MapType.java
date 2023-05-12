@@ -30,12 +30,11 @@ public enum MapType {
     DESERT_SHRUB(false,true,false,false,false),
     DEFAULT(false,false,false,false,false);
 
-    private boolean inTextureCommand;
-    private boolean isTree;
-    private boolean isRock;
-    private boolean canBePassed;
-    private boolean isNormalThingPlacedOn;
-    private final ArrayList<MapType> allMapTypes = new ArrayList<>(Arrays.asList(MapType.values()));
+    private final boolean inTextureCommand;
+    private final boolean isTree;
+    private final boolean isRock;
+    private final boolean canBePassed;
+    private final boolean isNormalThingPlacedOn;
 
     MapType(boolean inTextureCommand, boolean isTree, boolean isRock, boolean canBePassed,boolean isNormalThingPlacedOn) {
         this.inTextureCommand = inTextureCommand;
@@ -63,9 +62,5 @@ public enum MapType {
 
     public boolean isCanBePassed() {
         return canBePassed;
-    }
-
-    public ArrayList<MapType> getAllMapTypes() {
-        return allMapTypes;
     }
 }

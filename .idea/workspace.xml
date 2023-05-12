@@ -4,8 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="connect menus">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="debug allBuilding">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/BuildingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/BuildingType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/StorageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/StorageType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/MapType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MapType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/BuildingType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/BuildingType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/StorageType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/StorageType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/MapType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/MapType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/GameMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/SignupMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/SignupMenu$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/SignupMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/SignupMenu.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +196,13 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۰۷" />
       <updated>1683889866297</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL‎−۰۰۰۰۸" summary="debug allBuilding">
+      <created>1683890102773</created>
+      <option name="number" value="LOCAL‎−۰۰۰۰۸" />
+      <option name="presentableId" value="LOCAL‎−۰۰۰۰۸" />
+      <updated>1683890102773</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,7 +241,18 @@
     <MESSAGE value="change Command" />
     <MESSAGE value="resolve Some Mistake" />
     <MESSAGE value="connect menus" />
-    <option name="LAST_COMMIT_MESSAGE" value="connect menus" />
+    <MESSAGE value="debug allBuilding" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug allBuilding" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ExceptionInInitializerError" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

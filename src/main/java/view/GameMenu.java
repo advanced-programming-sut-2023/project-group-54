@@ -256,7 +256,7 @@ public class GameMenu {
         String type = setTypeForTreeAndTextureAndBuilding(options);
         boolean sign = true;
         MapType mapToSend = null;
-        for (MapType allMapType : MapType.DEFAULT.getAllMapTypes()) {
+        for (MapType allMapType : MapType.values()) {
             if (allMapType.toString().equals(type.toUpperCase())) {
                 sign = false;
                 if (!allMapType.isInTextureCommand()) {
@@ -343,7 +343,7 @@ public class GameMenu {
         String treeType = setTypeForTreeAndTextureAndBuilding(options);
         boolean sign = true;
         MapType treeToSend = null;
-        for (MapType allMapType : MapType.DEFAULT.getAllMapTypes()) {
+        for (MapType allMapType : MapType.values()) {
             if (allMapType.toString().equals(treeType.toUpperCase())) {
                 sign = false;
                 if (!allMapType.isTree()) {
