@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="debug allBuilding">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="drop completed -">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/BuildingGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/BuildingGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/BuildingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/BuildingType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/StorageBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/StorageBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Government.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/units/Engineer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/units/Engineer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/enums/messages/MapMenuMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/enums/messages/MapMenuMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +166,14 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۰۸" />
       <updated>1683890102773</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="drop completed -">
+      <created>1683897881100</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1683897881100</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,7 +213,8 @@
     <MESSAGE value="resolve Some Mistake" />
     <MESSAGE value="connect menus" />
     <MESSAGE value="debug allBuilding" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug allBuilding" />
+    <MESSAGE value="drop completed -" />
+    <option name="LAST_COMMIT_MESSAGE" value="drop completed -" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

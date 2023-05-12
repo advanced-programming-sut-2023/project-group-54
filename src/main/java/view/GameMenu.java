@@ -486,7 +486,60 @@ public class GameMenu {
         String type = setTypeForTreeAndTextureAndBuilding(options);
         MapMenuMessage message = MapMenuController.dropBuilding(x,y,type);
         switch (message) {
-
+            case NOT_VALID_TYPE_FOR_DROP_BUILDING:
+                System.out.println("enter a valid type for building");
+                return;
+            case HOUSE_IS_FILED_WITH_BUILDING:
+                System.out.println("house or houses around that that this building needs them are filled with buildings");
+                return;
+            case FORBIDDEN_DROP_BUILDING_ON_ROCK:
+                System.out.println("you can not drop building on a rock");
+                return;
+            case CAN_NOT_PLACE_THAT_THING_ON_IT:
+                System.out.println("you can place anything on oi,sea,shallow water,river,big pound and sea");
+                return;
+            case MANGONEL_AND_BALLIASTE_MUST_ON_SQUARE_OR_ROUND_TOWER:
+                System.out.println("mangonel and balistae must be place on square or round tower");
+                return;
+            case FARMS_NEED_TO_BE_ON_THICK_SCRUB_OR_OASIS_GRASS:
+                System.out.println("apple orchard,diary farmer,hops farmer,wheat farmer should be place on thick scrub or oasis grass");
+                return;
+            case IRON_MINE_MUST_BE_ON_IRON:
+                System.out.println("iron mine must be placed on iron");
+                return;
+            case PITCH_RIG_ON_SMALL_POUND:
+                System.out.println("pitch rig must be place on small pound");
+                return;
+            case QUARRY_ON_BOULDERS:
+                System.out.println("quarry must be placed on boulders");
+                return;
+            case ONLY_MANGONEL_BALLIASTE_ON_SQUARE_AND_ROUND:
+                System.out.println("you can only drop mangonel and balistae in square or round tower");
+                return;
+            case ONLY_IRON_MINE_ON_IRON:
+                System.out.println("only iron mine can be placed on iron");
+                return;
+            case ONLY_PITCH_RIG_ON_SMALL_POUND:
+                System.out.println("only pitch rig can be placed on small pound");
+                return;
+            case ONLY_QUARRY_ON_BOULDERS:
+                System.out.println("only quarry can be placed on boulders");
+                return;
+            case NOT_ENOUGH_RESOURCE:
+                System.out.println("you dont have enough resources to build that building");
+                return;
+            case NOT_ENOUGH_WORKERS:
+                System.out.println("you dont have enough workers to work on that building");
+                return;
+            case NOT_ENOUGH_ENGINEER:
+                System.out.println("you dont have enough engineer to work on that building");
+                return;
+            case NOT_ENOUGH_MONEY:
+                System.out.println("you dont have enough gold to build that building");
+                return;
+            case SUCCESS:
+                System.out.println("you successfully dropped your building on position x " + x + " y " + y);
+                return;
         }
     }
 
