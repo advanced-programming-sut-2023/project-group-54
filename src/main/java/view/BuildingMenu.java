@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BuildingMenu {
-    public void run() {
+    public static void run(int x,int y) {
+        setSelectedBuilding(x,y);
         String command;
         HashMap<String, ArrayList<String>> options;
         System.out.println("you are in building up menu");
@@ -39,7 +40,11 @@ public class BuildingMenu {
         }
     }
 
-    private void repair() {
+    private static void setSelectedBuilding(int x,int y) {
+        BuildingMenu.setSelectedBuilding(x,y);
+    }
+
+    private static void repair() {
         BuildingMenuMessage result = BuildingMenuController.repair();
         switch (result){
             case SUCCESS -> System.out.println("repaired successfully");
@@ -47,7 +52,7 @@ public class BuildingMenu {
         }
     }
 
-    private void createUnit(HashMap<String, ArrayList<String>> options) {
+    private static void createUnit(HashMap<String, ArrayList<String>> options) {
         String unit = null;
         int count = -100;
         for (String q : options.keySet()) {
@@ -83,7 +88,7 @@ public class BuildingMenu {
             case INVALID_BUILDING -> System.out.println("you have selected invalid building to use this command");
         }
     }
-    private void taxRateSet(HashMap<String, ArrayList<String>> options) {
+    private static void taxRateSet(HashMap<String, ArrayList<String>> options) {
         int taxRate = -100;
         for (String s : options.keySet()) {
             if (s.equals("r")) {
@@ -106,7 +111,7 @@ public class BuildingMenu {
         }
     }
 
-    private void foodRateSet(HashMap<String, ArrayList<String>> options) {
+    private static void foodRateSet(HashMap<String, ArrayList<String>> options) {
         int foodRate = -100;
         for (String s : options.keySet()) {
             if (s.equals("r")) {
@@ -145,7 +150,7 @@ public class BuildingMenu {
         }
     }
 
-    private void changeOutput(HashMap<String, ArrayList<String>> options) {
+    private static void changeOutput(HashMap<String, ArrayList<String>> options) {
         Resource resource = null;
         for (String s : options.keySet()) {
             if(s.equals("r")){

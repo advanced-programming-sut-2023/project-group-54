@@ -229,6 +229,7 @@ public enum Command {
     ))),
     DISBAND_UNIT("disband\\s+unit",  new ArrayList<>(
     )),
+
     ;
 
     private final String commandRegex;

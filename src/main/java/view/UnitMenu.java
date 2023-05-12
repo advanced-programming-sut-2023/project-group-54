@@ -11,7 +11,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class UnitMenu {
-    public void run() {
+    public static void run(int x,int y) {
+        UnitMenuController.setSelectedUnit(x,y);
         String command;
         HashMap<String, ArrayList<String>> options;
         System.out.println("you are in unit up menu");
