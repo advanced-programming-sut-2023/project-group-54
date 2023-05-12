@@ -13,7 +13,7 @@ public class GameMenu {
         HashMap<String, ArrayList<String>> options;
         while (true) {
             command = MainMenu.getScanner().nextLine();
-            if (CommandHandler.parsCommand(Command.BACK, command) != null)
+            if (CommandHandler.parsCommand(Command.EXIT, command) != null)
                 return;
             else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
                 System.out.println("login menu");
