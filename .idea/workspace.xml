@@ -4,19 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="debug allBuilding">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="fix some bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/BuildingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/BuildingType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/StorageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/StorageType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/MapType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MapType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/BuildingType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/BuildingType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/StorageType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/StorageType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/MapType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/MapType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/GameMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/SignupMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/SignupMenu$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/SignupMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/SignupMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SignupMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SignupMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/enums/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/enums/commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/SignupMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/SignupMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/commands/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/enums/commands/Command.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +200,13 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۰۸" />
       <updated>1683890102773</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL‎−۰۰۰۰۹" summary="fix some bug">
+      <created>1683891319830</created>
+      <option name="number" value="LOCAL‎−۰۰۰۰۹" />
+      <option name="presentableId" value="LOCAL‎−۰۰۰۰۹" />
+      <updated>1683891319830</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,7 +246,8 @@
     <MESSAGE value="resolve Some Mistake" />
     <MESSAGE value="connect menus" />
     <MESSAGE value="debug allBuilding" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug allBuilding" />
+    <MESSAGE value="fix some bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix some bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

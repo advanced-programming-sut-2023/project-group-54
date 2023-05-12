@@ -13,6 +13,7 @@ public class Menu {
     public static void run() {
         String command;
         HashMap<String, ArrayList<String>> options;
+        System.out.println("you are in menu");
         while (true) {
             command = MainMenu.getScanner().nextLine();
             if (CommandHandler.parsCommand(Command.USER_LOGOUT, command) != null) {

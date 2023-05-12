@@ -105,6 +105,6 @@ public class SignupMenuController {
     }
 
     private static void passwordToHash() {
-        password = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+        password = Controller.hashString(password);
     }
 }
