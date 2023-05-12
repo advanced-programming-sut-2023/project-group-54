@@ -253,7 +253,7 @@ public class MapMenuController {
 
     public static MapMenuMessage dropBuilding(int x,int y,String type) {
         BuildingType buildingType = null;
-        for (BuildingType allBuildingType : BuildingType.INN.getAllBuildingTypes()) {
+        for (BuildingType allBuildingType : BuildingType.values()) {
             if (allBuildingType.getName().equals(type)) {
                 buildingType = allBuildingType;
             }
