@@ -9,6 +9,7 @@ import java.util.HashMap;
 public class Government {
     private final HashMap<Resource, Integer> allResources = new HashMap<>();
     private int population;
+    private int maxPopulation;
     private int popularity;
     private int foodRate;
     private int taxRate;
@@ -18,10 +19,10 @@ public class Government {
     private int gold;
     private User user;
     private ArrayList<Building> buildings = new ArrayList<>();
-
     public Government() {
         this.popularity = 100;
         this.population = 10;
+        this.maxPopulation = 10;
         this.unemployedWorker = 10;
         this.foodRate = 0;
         this.taxRate = 0;
@@ -32,6 +33,14 @@ public class Government {
         for (Resource value : Resource.values()) {
             allResources.put(value, 0);
         }
+    }
+
+    public int getMaxPopulation() {
+        return maxPopulation;
+    }
+
+    public void setMaxPopulation(int maxPopulation) {
+        this.maxPopulation = maxPopulation;
     }
 
     public User getUser() {

@@ -16,7 +16,7 @@ public class UnitMenu {
         String command;
         HashMap<String, ArrayList<String>> options;
         System.out.println("you are in unit up menu");
-        while (true) {
+//        while (true) {
             command = MainMenu.getScanner().nextLine();
             if (CommandHandler.parsCommand(Command.BACK, command) != null)
                 return;
@@ -28,16 +28,22 @@ public class UnitMenu {
                 patrolUnit(options);
             else if ((options = CommandHandler.parsCommand(Command.STOP_PATROL_UNIT, command)) != null)
                 stopPatrolUnit(options);
+            else if ((options = CommandHandler.parsCommand(Command.SET, command)) != null)
+                stopPatrolUnit(options);
+            else if ((options = CommandHandler.parsCommand(Command.ATTACK, command)) != null)
+                stopPatrolUnit(options);
+            else if ((options = CommandHandler.parsCommand(Command.DISBAND_UNIT, command)) != null)
+                stopPatrolUnit(options);
             //if command is setState
             //if command is attack
             //if command is pourOil
             //if command is digTunnel
             //if command is buildEquipment
             //if command is disbandUnit
-        }
+//        }
     }
 
-    private void moveUnit(HashMap<String, ArrayList<String>> options) {
+    private static void moveUnit(HashMap<String, ArrayList<String>> options) {
         int xTo = -100;
         int yTo = -100;
         for (String s : options.keySet()) {
@@ -74,7 +80,7 @@ public class UnitMenu {
         }
     }
 
-    private void patrolUnit(HashMap<String, ArrayList<String>> options) {
+    private static void patrolUnit(HashMap<String, ArrayList<String>> options) {
         int xTo = -100;
         int xFrom = -100;
         int yTo = -100;
@@ -137,7 +143,7 @@ public class UnitMenu {
         }
     }
 
-    private void stopPatrolUnit(HashMap<String, ArrayList<String>> options) {
+    private static void stopPatrolUnit(HashMap<String, ArrayList<String>> options) {
         UnitMenuMessage result = UnitMenuController.stopPatrolUnit();
         if (Objects.requireNonNull(result) == UnitMenuMessage.SUCCESS) {
             System.out.println("patrol nuit stoped successfully");
@@ -203,15 +209,14 @@ public class UnitMenu {
 
     }
 
-    private void digTunnel() {
-
-    }
-
     private void buildEquipment() {
 
     }
 
     private void disbandUnit() {
-
+        UnitMenuMessage result = UnitMenuController.disbandUnit();
+        if (Objects.requireNonNull(result) == UnitMenuMessage.SUCCESS) {
+            System.out.println("unit(s) disbanded successfully");
+        }
     }
 }

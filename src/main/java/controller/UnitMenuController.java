@@ -69,15 +69,15 @@ public class UnitMenuController {
         return UnitMenuMessage.SUCCESS;
     }
 
-    public static UnitMenuMessage digTunnel(int xCoordinate, int yCoordinate) {
-        return UnitMenuMessage.SUCCESS;
-    }
-
     public static UnitMenuMessage buildEquipment(String equipmentName) {
         return UnitMenuMessage.SUCCESS;
     }
 
     public static UnitMenuMessage disbandUnit() {
+        for (Unit unit : selectedUnit) {
+            Unit.getUnits().remove(unit);
+            Game.getCurrentUser().getGovernment().setPopulation(Game.getCurrentUser().getGovernment().getPopulation() + 1);
+        }
         return UnitMenuMessage.SUCCESS;
     }
 }

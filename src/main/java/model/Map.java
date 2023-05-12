@@ -48,11 +48,6 @@ public class Map {
     public void setBuilding(Building building) {
         this.building = building;
     }
-
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
-
     public MapType getTree() {
         return tree;
     }
@@ -74,6 +69,10 @@ public class Map {
     }
 
     public void setUnit() {
+        this.unit = new ArrayList<>();
+    }
+
+    public void setUnitsNull() {
         this.unit = new ArrayList<>();
     }
 }
