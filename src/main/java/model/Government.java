@@ -8,7 +8,7 @@ public class Government {
     private int fearRate;
     private int efficiency;
     private int unemployedWorker;
-    private int gold;
+    private double gold;
 
     public Government() {
         this.popularity = 100;
@@ -77,7 +77,7 @@ public class Government {
         this.unemployedWorker = unemployedWorker;
     }
 
-    public int getGold() {
+    public double getGold() {
         return gold;
     }
 

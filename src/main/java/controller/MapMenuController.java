@@ -250,6 +250,55 @@ public class MapMenuController {
             }
         }
         if (buildingType == null) return MapMenuMessage.NOT_VALID_TYPE_FOR_DROP_BUILDING;
+        int length = buildingType.getLength();
+        int width = buildingType.getWidth();
+        for (int i = x; i < length; i++) {
+            for (int j = y; j < width; j++) {
+                Map map = Game.getGameMap()[i][j];
+                if (map.getBuilding() != null) return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
+                if (map.getMapType().isRock()) return MapMenuMessage.FORBIDDEN_DROP_BUILDING_ON_ROCK;
+                if (!map.getMapType().isNormalThingPlacedOn()) return MapMenuMessage.CAN_NOT_PLACE_THAT_THING_ON_IT;
+                if ((type.equals("mangonel") || type.equals("ballistae")) &&
+                        (!map.getBuilding().getBuildingType().equals(BuildingType.SQUARE_TOWER) &&
+                                !map.getBuilding().getBuildingType().equals(BuildingType.ROUND_TOWER)))
+                    return MapMenuMessage.MANGONEL_AND_BALLIASTE_MUST_ON_SQUARE_OR_ROUND_TOWER;
+                if ((type.equals("apple orchard") || type.equals("diary farmer")
+                        || type.equals("hops farmer") || type.equals("wheat farmer")) &&
+                        (!map.getMapType().equals(MapType.THICK_SCRUB) &&
+                                !map.getMapType().equals(MapType.OASIS_GRASS)))
+                    return MapMenuMessage.FARMS_NEED_TO_BE_ON_THICK_SCRUB_OR_OASIS_GRASS;
+                if (type.equals("iron mine") &&
+                        !map.getMapType().equals(MapType.IRON))
+                    return MapMenuMessage.IRON_MINE_MUST_BE_ON_IRON;
+                if (type.equals("pitch rig") &&
+                        !map.getMapType().equals(MapType.SMALL_POND))
+                    return MapMenuMessage.PITCH_RIG_ON_SMALL_POUND;
+                if (type.equals("quarry") &&
+                        !map.getMapType().equals(MapType.BOULDERS))
+                    return MapMenuMessage.QUARRY_ON_BOULDERS;
+                if ((!type.equals("mangonel") && !type.equals("ballistae")) &&
+                        (map.getBuilding().getBuildingType().equals(BuildingType.SQUARE_TOWER) ||
+                                map.getBuilding().getBuildingType().equals(BuildingType.ROUND_TOWER)))
+                    return MapMenuMessage.ONLY_MANGONEL_BALLIASTE_ON_SQUARE_AND_ROUND;
+                if (!type.equals("iron mine") &&
+                        map.getMapType().equals(MapType.IRON))
+                    return MapMenuMessage.ONLY_IRON_MINE_ON_IRON;
+                if (!type.equals("pitch rig") &&
+                        map.getMapType().equals(MapType.SMALL_POND))
+                    return MapMenuMessage.ONLY_PITCH_RIG_ON_SMALL_POUND;
+                if (!type.equals("quarry") &&
+                        map.getMapType().equals(MapType.BOULDERS))
+                    return MapMenuMessage.ONLY_QUARRY_ON_BOULDERS;
+            }
+        }
+        return checkCost(x,y,buildingType,length,width);
+    }
 
+    private static MapMenuMessage checkCost(int x,int y,BuildingType buildingType,int length,int width) {
+        if (buildingType.getCost() > Math.floor(Controller.getLoggedInUser().getGovernment().getGold()))
+            return MapMenuMessage.NOT_ENOUGH_MONEY;
+        if (buildingType.getCostType() != null ) {
+
+        }
     }
 }

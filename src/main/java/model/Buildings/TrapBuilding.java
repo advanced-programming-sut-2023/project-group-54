@@ -1,10 +1,12 @@
 package model.Buildings;
 
+import model.*;
+
 public class TrapBuilding extends Building {
     private TrapType trapType;
 
-    public TrapBuilding(TrapType trapType) {
-        super(trapType.getBuildingType(), trapType.getBuildingType().getMaxHp());
+    public TrapBuilding(TrapType trapType, User owner) {
+        super(trapType.getBuildingType(), trapType.getBuildingType().getMaxHp(),owner);
         this.trapType = trapType;
     }
 
