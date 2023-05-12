@@ -11,7 +11,6 @@ import java.util.regex.Matcher;
 
 public class ProfileMenu {
     private String run() {
-
         while (true) {
             String command;
             HashMap<String, ArrayList<String>> options;
@@ -35,11 +34,8 @@ public class ProfileMenu {
                      displaySlogan();
                  else if (CommandHandler.parsCommand(Command.DISPLAY_PROFILE, command) != null)
                      displayProfile();
-
-
-
                 else
-                    System.out.println("Invalid command in sign up menu");
+                    System.out.println("Invalid command in profile up menu");
             }
         }
     }

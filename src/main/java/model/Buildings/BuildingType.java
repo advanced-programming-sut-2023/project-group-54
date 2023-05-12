@@ -2,7 +2,6 @@ package model.Buildings;
 
 import model.MapType;
 import model.Resource;
-import model.TreeType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -117,7 +116,6 @@ public enum BuildingType {
     private double costAmount;
     private boolean needEngineer;
     private BuildingGroup buildingGroup;
-    private final ArrayList<BuildingType> allBuildingTypes = new ArrayList<>(Arrays.asList(BuildingType.values()));
 
     BuildingType(int maxHp, int width, int length, int cost, String name, ArrayList<?> mapTypes,
                  int workers, Resource costType, double costAmount, boolean needEngineer, BuildingGroup buildingGroup) {
@@ -132,10 +130,6 @@ public enum BuildingType {
         this.costAmount = costAmount;
         this.needEngineer = needEngineer;
         this.buildingGroup = buildingGroup;
-    }
-
-    public ArrayList<BuildingType> getAllBuildingTypes() {
-        return allBuildingTypes;
     }
 
     public int getMaxHp() {

@@ -3,17 +3,8 @@ package model;
 import java.util.ArrayList;
 
 public class Game {
-    private static final ArrayList<ArrayList<Map>> map = new ArrayList<>();
-    private static final ArrayList<User> users = new ArrayList<>();
-    private static final ArrayList<Integer> lastTurn = new ArrayList<>();
+    private static ArrayList<User> users;
     private static User currentUser;
-    private static int currentTurn;
-    private static User currentUserTurn;
-
-    public static User getCurrentUserTurn() {
-        return currentUserTurn;
-    }
-
     private static int x;
     private static int y;
     private static Map[][] gameMap;
@@ -22,19 +13,19 @@ public class Game {
         return x;
     }
 
-    public static int getY() {
-        return y;
-    }
-
     public static void setX(int x) {
         Game.x = x;
+    }
+
+    public static int getY() {
+        return y;
     }
 
     public static void setY(int y) {
         Game.y = y;
     }
 
-    public static void setGameMap(int x,int y) {
+    public static void setGameMap(int x, int y) {
         Game.gameMap = new Map[x][y];
     }
 
@@ -42,24 +33,23 @@ public class Game {
         return gameMap;
     }
 
-    public static ArrayList<ArrayList<Map>> getMap() {
-        return map;
+    public static void setGameMap(Map[][] gameMap) {
+        Game.gameMap = gameMap;
     }
 
     public static ArrayList<User> getUsers() {
         return users;
     }
 
+    public static void setUsers(ArrayList<User> users) {
+        Game.users = users;
+    }
+
     public static User getCurrentUser() {
         return currentUser;
     }
 
-    public static ArrayList<Integer> getLastTurn() {
-        return lastTurn;
+    public static void setCurrentUser(User currentUser) {
+        Game.currentUser = currentUser;
     }
-
-    public static int getCurrentTurn() {
-        return currentTurn;
-    }
-
 }

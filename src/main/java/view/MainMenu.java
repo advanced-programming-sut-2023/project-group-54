@@ -43,8 +43,8 @@ public class MainMenu {
         SignupMenu signupMenu = new SignupMenu();
         LoginMenu loginMenu = new LoginMenu();
         if (Controller.checkIfStayLoggedIn()) {
-//            this.gameMenu = new GameMenu();
-//            gameMenu.run();
+            System.out.println("you are stay logged in");
+            Menu.run();
         }
 
         String command;

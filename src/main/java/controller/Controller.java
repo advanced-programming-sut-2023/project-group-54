@@ -88,53 +88,7 @@ public class Controller {
         }
     }
 
-    public static MapMenuMessage addOrDecreaseFromStorage(double costAmount, StorageType storageType, Resource resource) {
-        ArrayList<StorageBuilding> storageBuildings = new ArrayList<>();
-        for (HashMap.Entry<Building,Integer> entry : Building.getBuildings().entrySet()) {
-            if (entry.getKey() instanceof StorageBuilding &&
-                    ((StorageBuilding) entry.getKey()).getStorageType().equals(storageType) &&
-                    entry.getKey().getOwner().equals(Game.getCurrentUserTurn()))
-                storageBuildings.add((StorageBuilding) entry.getKey());
-        }
-        if (costAmount < 0 ) {
-            double capacityOfWhatWeWant = 0d;
-            for (StorageBuilding storageBuilding : storageBuildings) {
-                for (HashMap.Entry<Resource, Double> entry : storageBuilding.getStorage().entrySet())
-                    capacityOfWhatWeWant += entry.getValue();
-            }
-            if (-costAmount > capacityOfWhatWeWant)
-                return MapMenuMessage.NOT_ENOUGH_RESOURCE;
-        } else {
-            double allCapacity = 0d;
-            for (StorageBuilding storageBuilding : storageBuildings) {
-                allCapacity += storageBuilding.getStorageType().getCapacity();
-            }
-            double capacityFilled = 0d;
-            for (StorageBuilding storageBuilding : storageBuildings) {
-               capacityFilled += storageBuilding.getStorageFilled();
-            }
-            if (allCapacity - capacityFilled > costAmount) return MapMenuMessage.NOT_ENOUGH_SPACE;
-        }
-        double toDecreaseOrAdd = 0d;
-        for (StorageBuilding storageBuilding : storageBuildings) {
-            for (HashMap.Entry<Resource, Double> entry : storageBuilding.getStorage().entrySet()) {
-                if (costAmount < 0) {
-                    if (-costAmount > entry.getValue()) toDecreaseOrAdd = -entry.getValue();
-                    else toDecreaseOrAdd = costAmount;
-                }
-                else {
-                    if (costAmount+storageBuilding.getStorageFilled() > storageBuilding.getStorageType().getCapacity())
-                        toDecreaseOrAdd = storageBuilding.getStorageType().getCapacity() - storageBuilding.getStorageFilled();
-                    else toDecreaseOrAdd = costAmount;
-                }
-                costAmount -= toDecreaseOrAdd;
-                storageBuilding.getStorage();
-                if (costAmount == 0) break;
-            }
-        }
-    }
-
     public static boolean checkIfStayLoggedIn() {
-        return true;
+        return false;
     }
 }

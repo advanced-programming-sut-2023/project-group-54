@@ -129,13 +129,13 @@ public class Government {
         return allResources.get(item) >= amount;
     }
 
-    public void addToStorage(Resource item, int amount) {
+    public void addToStorage(Resource item, double amount) {
         for (Building building : buildings) {
             if (building.getBuildingType().equals(item.getStorageType().getBuildingType())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 if (storageBuilding.getCapacity() >= amount) {
                     if (storageBuilding.getStorage().containsKey(item)) {
-                        int newAmount = storageBuilding.getStorage().get(item) + amount;
+                        double newAmount = storageBuilding.getStorage().get(item) + amount;
                         storageBuilding.getStorage().put(item, newAmount);
                     } else {
                         storageBuilding.getStorage().put(item, amount);
@@ -143,7 +143,7 @@ public class Government {
                     return;
                 } else {
                     if (storageBuilding.getStorage().containsKey(item)) {
-                        int newAmount = storageBuilding.getCapacity() + storageBuilding.getStorage().get(item);
+                        double newAmount = storageBuilding.getCapacity() + storageBuilding.getStorage().get(item);
                         storageBuilding.getStorage().put(item, newAmount);
                     } else {
                         storageBuilding.getStorage().put(item, storageBuilding.getCapacity());
@@ -154,7 +154,7 @@ public class Government {
         }
     }
 
-    public void removeFromStorage(Resource item, int amount) {
+    public void removeFromStorage(Resource item, double amount) {
         for (Building building : buildings) {
             if (building.getBuildingType().equals(item.getStorageType().getBuildingType())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;

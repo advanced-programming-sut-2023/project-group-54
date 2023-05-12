@@ -48,10 +48,10 @@ public class SignupMenuController {
         return SignupMenuMessage.SUCCESS;
     }
 
-    public static SignupMenuMessage chooseMap(int mapNumber) {
-        // to complete
-        return SignupMenuMessage.MAP_SELECTED;
-    }
+//    public static SignupMenuMessage chooseMap(int mapNumber) {
+//        // to complete
+//        return SignupMenuMessage.MAP_SELECTED;
+//    }
 
     public static SignupMenuMessage createUserChecker() {
         SignupMenuMessage usernameChecker = Controller.checkUsernameValidity(username);

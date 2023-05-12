@@ -40,7 +40,12 @@ public class MapMenuController {
 
     public static void setMap(int mapNumber) {
         if (mapNumber == 1) Game.setGameMap(400,400);
-        else Game.setGameMap(200,200);
+        else if(mapNumber == 2) Game.setGameMap(200,200);
+        else{
+            Map[][] gameMap = new Map[400][400];
+            //fill gameMap
+            Game.setGameMap(gameMap);
+        }
     }
 
     public static String showMap(int xCoordinate, int yCoordinate) {
@@ -304,5 +309,6 @@ public class MapMenuController {
         if (buildingType.getCostType() != null ) {
 
         }
+        return MapMenuMessage.SUCCESS;
     }
 }

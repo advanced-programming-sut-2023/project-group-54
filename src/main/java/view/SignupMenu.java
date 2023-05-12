@@ -16,7 +16,6 @@ public class SignupMenu {
         System.out.println("you are in sign up menu");
         while (true) {
             command = MainMenu.getScanner().nextLine();
-            System.out.println(command);
             if (CommandHandler.parsCommand(Command.BACK, command) != null)
                 return;
             else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
@@ -142,7 +141,7 @@ public class SignupMenu {
         }
         if (secondResult.equals("success")) {
             System.out.println("user created successfully with username " + username);
-            chooseMap();
+//            chooseMap();
             secondResult = "";
         }
         if(!secondResult.isEmpty())
@@ -246,23 +245,23 @@ public class SignupMenu {
         return SignupMenuMessage.FAILED_DURING_ENTERING_ANSWER_CONFIRMATION;
     }
 
-    private void chooseMap() {
-        int mapNumber;
-        System.out.println("please choose your map number:");
-        //maps properties
-        for (int i = 0; i < 3; i++) {
-            mapNumber = Integer.parseInt(MainMenu.getScanner().nextLine());
-            // I don't know how many maps we have for now:
-            if (mapNumber >= 1 && mapNumber <= 5){
-                if(SignupMenuController.chooseMap(mapNumber).equals(SignupMenuMessage.MAP_SELECTED)){
-                    System.out.println("map selected successfully");
-                    return;
-                }
-            }
-            System.out.println("please enter valid number");
-        }
-        System.out.println("you entered 3 invalid numbers map number 1 will be selected for you");
-        if(SignupMenuController.chooseMap(1).equals(SignupMenuMessage.MAP_SELECTED))
-            System.out.println("map selected successfully");
-    }
+//    private void chooseMap() {
+//        int mapNumber;
+//        System.out.println("please choose your map number:");
+//        //maps properties
+//        for (int i = 0; i < 3; i++) {
+//            mapNumber = Integer.parseInt(MainMenu.getScanner().nextLine());
+//            // I don't know how many maps we have for now:
+//            if (mapNumber >= 1 && mapNumber <= 5){
+//                if(SignupMenuController.chooseMap(mapNumber).equals(SignupMenuMessage.MAP_SELECTED)){
+//                    System.out.println("map selected successfully");
+//                    return;
+//                }
+//            }
+//            System.out.println("please enter valid number");
+//        }
+//        System.out.println("you entered 3 invalid numbers map number 1 will be selected for you");
+//        if(SignupMenuController.chooseMap(1).equals(SignupMenuMessage.MAP_SELECTED))
+//            System.out.println("map selected successfully");
+//    }
 }

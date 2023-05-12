@@ -7,6 +7,7 @@ import model.Game;
 import model.MapType;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
+import view.enums.commands.Regexes;
 import view.enums.messages.GameMenuMessage;
 import view.enums.messages.MapMenuMessage;
 
@@ -15,9 +16,23 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 
 public class GameMenu {
-    public void run() {
+    private static int xOfMap;
+    private static int yOfMap;
+    private static MapType typeForTreeAndTexture = MapType.DEFAULT;
+    private static Direction direction = Direction.F;
+
+    public static int getXOfMap() {
+        return xOfMap;
+    }
+
+    public static int getYOfMap() {
+        return yOfMap;
+    }
+
+    public static void run() {
         String command;
         HashMap<String, ArrayList<String>> options;
+        Matcher matcher;
         while (true) {
             command = MainMenu.getScanner().nextLine();
             if (CommandHandler.parsCommand(Command.EXIT, command) != null)
@@ -70,7 +85,7 @@ public class GameMenu {
                 nextTurn(options);
         }
     }
-    private void popularityFactorsShow(HashMap<String, ArrayList<String>> options){
+    private static void popularityFactorsShow(HashMap<String, ArrayList<String>> options){
         String s = "";
         int foodPop = GameMenuController.getPopularityFromFood();
         int taxPop = GameMenuController.getPopularityFromTax();
@@ -85,10 +100,10 @@ public class GameMenu {
         s += "\nPopularity: " + popularity;
         System.out.println(s);
     }
-    private void popularityShow(HashMap<String, ArrayList<String>> options){
+    private static void popularityShow(HashMap<String, ArrayList<String>> options){
         System.out.println(GameMenuController.getPopularity());
     }
-    private void foodListShow(HashMap<String, ArrayList<String>> options){
+    private static void foodListShow(HashMap<String, ArrayList<String>> options){
         String s = "";
         int appleCount = GameMenuController.getAppleCount();
         int meetCount = GameMenuController.getMeetCount();
@@ -102,13 +117,13 @@ public class GameMenu {
 
         System.out.println(s);
     }
-    private void foodRateShow(HashMap<String, ArrayList<String>> options){
+    private static void foodRateShow(HashMap<String, ArrayList<String>> options){
         System.out.println(GameMenuController.foodRateShow());
     }
-    private void taxRateShow(HashMap<String, ArrayList<String>> options){
+    private static void taxRateShow(HashMap<String, ArrayList<String>> options){
         System.out.println(GameMenuController.taxRateShow());
     }
-    private void fearRateSet(HashMap<String, ArrayList<String>> options){
+    private static void fearRateSet(HashMap<String, ArrayList<String>> options){
         int fearRate = 0;
         try {
             fearRate = Integer.parseInt(options.get("r").get(0));
@@ -124,7 +139,7 @@ public class GameMenu {
         if(result.equals(GameMenuMessage.SUCCESS))
             System.out.println("fear rate changed successfully");
     }
-    private void setXYOfMapCommonErrors(HashMap<String, ArrayList<String>> options,String whichFunction) {
+    private static void setXYOfMapCommonErrors(HashMap<String, ArrayList<String>> options,String whichFunction) {
         int x = 0,y=0;
         for (String s : options.keySet()) {
             switch (s) {
@@ -149,7 +164,7 @@ public class GameMenu {
         setXYOfMap(x,y,whichFunction,options);
     }
 
-    private boolean checkXY(int x,int y) {
+    private static boolean checkXY(int x,int y) {
         if (x < 0 || x >= Game.getX() ) {
             System.out.println("you have entered wrong number for x it has to be bigger than 0 and less than game x length");
             return false;
@@ -159,7 +174,7 @@ public class GameMenu {
         } return true;
     }
 
-    private void setXYOfMap(int x,int y,String whichFunction,HashMap<String, ArrayList<String>> options) {
+    private static void setXYOfMap(int x,int y,String whichFunction,HashMap<String, ArrayList<String>> options) {
         if (!checkXY(x,y)) return;
         switch (whichFunction) {
             case "show map":
@@ -193,15 +208,15 @@ public class GameMenu {
         }
     }
 
-    private void showMap(int x,int y) {
+    private static void showMap(int x,int y) {
         System.out.println(MapMenuController.showMap(x,y));
     }
 
-    private void showMapDetails(int x,int y) {
+    private static void showMapDetails(int x,int y) {
         System.out.println(MapMenuController.showMapDetails(x,y));
     }
 
-    private void moveMap(Matcher matcher) {
+    private static void moveMap(Matcher matcher) {
         String upOrDown = matcher.group("upOrDown");
         String leftOrRight = matcher.group("leftOrRight");
         if (upOrDown != null) {
@@ -214,19 +229,19 @@ public class GameMenu {
         }
     }
 
-    private void showMapMove(Matcher matcher) {
+    private static void showMapMove(Matcher matcher) {
         moveMap(matcher);
         if (!checkXY(xOfMap,yOfMap)) return;
         showMap(xOfMap,yOfMap);
     }
 
-    private void showMapDetailsMove(Matcher matcher) {
+    private static void showMapDetailsMove(Matcher matcher) {
         moveMap(matcher);
         if (!checkXY(xOfMap,yOfMap)) return;
         showMapDetails(xOfMap,yOfMap);
     }
 
-    private String setTypeForTreeAndTextureAndBuilding(HashMap<String, ArrayList<String>> options) {
+    private static String setTypeForTreeAndTextureAndBuilding(HashMap<String, ArrayList<String>> options) {
         String type = "";
         for (String s : options.keySet()) {
             if (s.equals("t")) {
@@ -237,7 +252,7 @@ public class GameMenu {
         return type;
     }
 
-    private MapType typeChecker(HashMap<String, ArrayList<String>> options) {
+    private static MapType typeChecker(HashMap<String, ArrayList<String>> options) {
         String type = setTypeForTreeAndTextureAndBuilding(options);
         boolean sign = true;
         MapType mapToSend = null;
@@ -259,7 +274,7 @@ public class GameMenu {
         return mapToSend;
     }
 
-    private boolean setTextureForOneHouse(int x, int y,HashMap<String, ArrayList<String>> options,boolean change) {
+    private static boolean setTextureForOneHouse(int x, int y,HashMap<String, ArrayList<String>> options,boolean change) {
         if (typeForTreeAndTexture.equals(MapType.DEFAULT)) typeForTreeAndTexture = typeChecker(options);
         MapMenuMessage mapMenuMessage;
         if (typeForTreeAndTexture != null) {
@@ -278,11 +293,11 @@ public class GameMenu {
         else return false;
     }
 
-    private void clearOneBlock(int x,int y) {
+    private static void clearOneBlock(int x,int y) {
         //to complete
     }
 
-    private Direction directionChecker(HashMap<String, ArrayList<String>> options) {
+    private static Direction directionChecker(HashMap<String, ArrayList<String>> options) {
         String direction = "";
         for (String s : options.keySet()) {
             if (s.equals("d")) {
@@ -307,7 +322,7 @@ public class GameMenu {
         return directionToSend;
     }
 
-    private boolean dropOneRock(int x,int y,HashMap<String, ArrayList<String>> options,boolean change) {
+    private static boolean dropOneRock(int x,int y,HashMap<String, ArrayList<String>> options,boolean change) {
         if (direction.equals(Direction.F)) direction = directionChecker(options);
         if (direction != null ){
             MapMenuMessage message = MapMenuController.dropRockFinalTest(x,y);
@@ -324,7 +339,7 @@ public class GameMenu {
         return false;
     }
 
-    private MapType treeChecker(HashMap<String, ArrayList<String>> options) {
+    private static MapType treeChecker(HashMap<String, ArrayList<String>> options) {
         String treeType = setTypeForTreeAndTextureAndBuilding(options);
         boolean sign = true;
         MapType treeToSend = null;
@@ -345,7 +360,7 @@ public class GameMenu {
         }
         return treeToSend;
     }
-    private boolean dropOneTree(int x, int y, HashMap<String, ArrayList<String>> options,boolean change) {
+    private static boolean dropOneTree(int x, int y, HashMap<String, ArrayList<String>> options,boolean change) {
         if (typeForTreeAndTexture.equals(MapType.DEFAULT)) typeForTreeAndTexture = treeChecker(options);
         if (typeForTreeAndTexture != null ){
             MapMenuMessage message = MapMenuController.dropTreeFinalTest(x,y);
@@ -362,7 +377,7 @@ public class GameMenu {
         return false;
     }
 
-    private void checkRectangleIsValid(HashMap<String, ArrayList<String>> options,String whichFunction) {
+    private static void checkRectangleIsValid(HashMap<String, ArrayList<String>> options,String whichFunction) {
         int x1=0,y1=0,x2=0,y2=0;
         for (String s : options.keySet()) {
             switch (s) {
@@ -403,7 +418,7 @@ public class GameMenu {
         checkXYForRectangle(x1,y1,x2,y2,options,whichFunction);
     }
 
-    private void checkXYForRectangle(int x1,int y1,int x2,int y2,HashMap<String, ArrayList<String>> options,String whichFunction) {
+    private static void checkXYForRectangle(int x1,int y1,int x2,int y2,HashMap<String, ArrayList<String>> options,String whichFunction) {
         if (x1 < 0 || x1 >= Game.getX() || x2 < 0 || x2 > Game.getX()) {
             System.out.println("you have entered wrong number for x1 or x2 it has to be bigger than 0 and less than game map x length");
             return;
@@ -420,7 +435,7 @@ public class GameMenu {
         whichFunctionForRectangle(x1,y1,x2,y2,options,whichFunction);
     }
 
-    private void whichFunctionForRectangle(int x1,int y1,int x2,int y2,HashMap<String, ArrayList<String>> options,String whichFunction) {
+    private static void whichFunctionForRectangle(int x1,int y1,int x2,int y2,HashMap<String, ArrayList<String>> options,String whichFunction) {
         switch (whichFunction) {
             case "texture":
                 for (int i = x1; i < x2; i++) {
@@ -467,7 +482,7 @@ public class GameMenu {
         }
     }
 
-    private void dropBuilding(int x,int y,HashMap<String, ArrayList<String>> options) {
+    private static void dropBuilding(int x,int y,HashMap<String, ArrayList<String>> options) {
         String type = setTypeForTreeAndTextureAndBuilding(options);
         MapMenuMessage message = MapMenuController.dropBuilding(x,y,type);
         switch (message) {
@@ -475,13 +490,13 @@ public class GameMenu {
         }
     }
 
-    private void selectBuilding(HashMap<String, ArrayList<String>> options){
+    private static void selectBuilding(HashMap<String, ArrayList<String>> options){
 
     }
-    private void selectUnit(HashMap<String, ArrayList<String>> options){
+    private static void selectUnit(HashMap<String, ArrayList<String>> options){
 
     }
-    private void nextTurn(HashMap<String, ArrayList<String>> options){
+    private static void nextTurn(HashMap<String, ArrayList<String>> options){
 
     }
 }

@@ -25,8 +25,6 @@ public class ShopMenu {
                 buyItem(options);
             else if ((options = CommandHandler.parsCommand(Command.SHOP_BUY, command)) != null)
                 sellItem(options);
-
-
         }
     }
 

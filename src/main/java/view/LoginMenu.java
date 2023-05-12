@@ -11,6 +11,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LoginMenu {
+    private boolean inMenu = false;
+
+    public static void logout() {
+        LoginMenuMessage result = LoginMenuController.logout();
+        if (result.equals(LoginMenuMessage.SUCCESS)) {
+            System.out.println("logged out");
+        }
+    }
+
     public void run() {
         String command;
         HashMap<String, ArrayList<String>> options;
@@ -21,15 +30,16 @@ public class LoginMenu {
                 return;
             else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
                 System.out.println("login menu");
-            else if ((options = CommandHandler.parsCommand(Command.LOGIN, command)) != null)
+            else if ((options = CommandHandler.parsCommand(Command.LOGIN, command)) != null) {
                 loginUser(options);
-            else if ((options = CommandHandler.parsCommand(Command.FORGET_PASSWORD, command)) != null)
+                if (inMenu)
+                    return;
+            } else if ((options = CommandHandler.parsCommand(Command.FORGET_PASSWORD, command)) != null)
                 forgetPassword(options);
             else
                 System.out.println("Invalid command in login menu");
         }
     }
-
 
     private void loginUser(HashMap<String, ArrayList<String>> options) {
         String username = null;
@@ -61,12 +71,15 @@ public class LoginMenu {
         switch (result) {
             case SUCCESS:
                 System.out.println("logged in with user with username: " + username);
-                break;
+                Menu.run();
+                inMenu = true;
+                return;
             case WRONG_PASSWORD:
-                if (!wrongPassword(stayLoggedIn)) {
-                    return;
+                if (wrongPassword(stayLoggedIn)) {
+                    Menu.run();
+                    inMenu = true;
                 }
-                break;
+                return;
             case USER_NOT_FOUND:
                 System.out.println("no user with this id exists");
                 return;
@@ -165,13 +178,6 @@ public class LoginMenu {
             case WRONG_FORMAT_PASSWORD_SPECIAL:
                 System.out.println("WRONG_FORMAT_PASSWORD_SPECIAL");
                 break;
-        }
-    }
-
-    public static void logout() {
-        LoginMenuMessage result = LoginMenuController.logout();
-        if (result.equals(LoginMenuMessage.SUCCESS)) {
-            System.out.println("logged out");
         }
     }
 }
