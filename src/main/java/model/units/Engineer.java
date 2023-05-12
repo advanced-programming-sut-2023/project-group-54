@@ -2,10 +2,12 @@ package model.units;
 
 import model.Buildings.Building;
 import model.Buildings.SiegeType;
+import model.Direction;
 import model.User;
 
 public class Engineer extends Unit{
     private Boolean hasOil;
+    private Direction pour;
     private Building buildingWhichWorks;
     private boolean isWorking;
 

@@ -1,47 +1,75 @@
 package controller;
 
 import model.Direction;
+import model.units.State;
 import model.units.Unit;
 import view.enums.messages.UnitMenuMessage;
 
 import java.util.ArrayList;
 
 public class UnitMenuController {
-    private ArrayList<Unit> selectedUnit;
+    private static ArrayList<Unit> selectedUnit;
 
-    public UnitMenuMessage moveUnit(int xCoordinate, int yCoordinate) {
+    public static UnitMenuMessage moveUnit(int xCoordinate, int yCoordinate) {
+        for (Unit unit : selectedUnit) {
+            unit.setXMoveTarget(xCoordinate);
+            unit.setYMoveTarget(yCoordinate);
+        }
         return UnitMenuMessage.SUCCESS;
     }
 
-    public UnitMenuMessage patrolUnit(int xCoordinate1, int yCoordinate1, int xCoordinate2, int yCoordinate2) {
+    public static UnitMenuMessage patrolUnit(int xCoordinate1, int yCoordinate1, int xCoordinate2, int yCoordinate2) {
+        for (Unit unit : selectedUnit) {
+            unit.setPatrol(true);
+            unit.setPatrolTF(0);
+            unit.setPatrolXFrom(xCoordinate1);
+            unit.setPatrolXTarget(xCoordinate2);
+            unit.setPatrolYFrom(yCoordinate1);
+            unit.setPatrolYTarget(yCoordinate2);
+        }
         return UnitMenuMessage.SUCCESS;
     }
 
-    public UnitMenuMessage stopPatrolUnit() {
+    public static UnitMenuMessage stopPatrolUnit() {
+        for (Unit unit : selectedUnit) {
+            unit.setPatrol(false);
+            unit.setPatrolTF(0);
+            unit.setPatrolXFrom(0);
+            unit.setPatrolXTarget(0);
+            unit.setPatrolYFrom(0);
+            unit.setPatrolYTarget(0);
+        }
         return UnitMenuMessage.SUCCESS;
     }
 
-    public UnitMenuMessage setState(int xCoordinate, int yCoordinate, String state) {
+    public static UnitMenuMessage setState(State state) {
+        for (Unit unit : selectedUnit) {
+            unit.setState(state);
+        }
         return UnitMenuMessage.SUCCESS;
     }
 
-    public UnitMenuMessage attack(int enemyXCoordinate, int enemyYCoordinate) {
+    public static UnitMenuMessage attack(int XCoordinate, int YCoordinate) {
+        for (Unit unit : selectedUnit) {
+            unit.setXTarget(XCoordinate);
+            unit.setYTarget(YCoordinate);
+        }
         return UnitMenuMessage.SUCCESS;
     }
 
-    public UnitMenuMessage pourOil(Direction direction) {
+    public static UnitMenuMessage pourOil(Direction direction) {
         return UnitMenuMessage.SUCCESS;
     }
 
-    public UnitMenuMessage digTunnel(int xCoordinate, int yCoordinate) {
+    public static UnitMenuMessage digTunnel(int xCoordinate, int yCoordinate) {
         return UnitMenuMessage.SUCCESS;
     }
 
-    public UnitMenuMessage buildEquipment(String equipmentName) {
+    public static UnitMenuMessage buildEquipment(String equipmentName) {
         return UnitMenuMessage.SUCCESS;
     }
 
-    public UnitMenuMessage disbandUnit() {
+    public static UnitMenuMessage disbandUnit() {
         return UnitMenuMessage.SUCCESS;
     }
 }

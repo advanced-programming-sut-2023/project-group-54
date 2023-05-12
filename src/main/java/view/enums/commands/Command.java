@@ -207,12 +207,13 @@ public enum Command {
             new Option("x2", 1, false),
             new Option("y2", 1, false)
     ))),
+    STOP_PATROL_UNIT("stop\\s+patrol\\s+unit", new ArrayList<>(
+    )),
     SET("set", new ArrayList<>(List.of(
-            new Option("x", 1, false),
-            new Option("y", 1, false),
-            new Option("s", 1, false)
+            new Option("s", 1, true)
     ))),
     ATTACK("attack", new ArrayList<>(List.of(
+            new Option("e", 1, false),
             new Option("x", 1, false),
             new Option("y", 1, false)
     ))),
