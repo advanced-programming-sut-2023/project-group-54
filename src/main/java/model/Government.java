@@ -90,7 +90,7 @@ public class Government {
     }
 
     public void setUnemployedWorker(int unemployedWorker) {
-        this.unemployedWorker = unemployedWorker;
+        this.unemployedWorker -= unemployedWorker;
     }
 
     public int getGold() {

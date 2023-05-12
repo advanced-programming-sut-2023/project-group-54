@@ -1,25 +1,17 @@
 package controller;
 
 import model.*;
-import model.Buildings.Building;
-import model.Buildings.BuildingType;
-import model.Buildings.DefenseBuilding;
-import model.Buildings.StorageBuilding;
+import model.Buildings.*;
 import model.units.Engineer;
 import model.units.Unit;
-import view.GameMenu;
-import view.enums.messages.GameMenuMessage;
 import view.enums.messages.MapMenuMessage;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 
 import static model.Direction.*;
 import static model.MapType.*;
 
 public class MapMenuController {
-    private static User currentUser;
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_BLACK = "\\u001B[40m";
     private static final String ANSI_RED = "\u001B[41m";
@@ -43,7 +35,19 @@ public class MapMenuController {
         else if(mapNumber == 2) Game.setGameMap(200,200);
         else{
             Map[][] gameMap = new Map[400][400];
-            //fill gameMap
+            for (int i = 0; i < 30; i++) {
+                for (int j = 0; j < 30; j++) {
+                    gameMap[i][j].setMapType(IRON);
+                }
+            }
+            for (int i = 30; i < 55; i++) {
+                for (int j = 30; j < 55; j++) {
+                    gameMap[i][j].setMapType(PLAIN);
+                }
+            }
+            for (int i = ; i < ; i++) {
+
+            }
             Game.setGameMap(gameMap);
         }
     }
@@ -304,11 +308,82 @@ public class MapMenuController {
     }
 
     private static MapMenuMessage checkCost(int x,int y,BuildingType buildingType,int length,int width) {
-        if (buildingType.getCost() > Math.floor(Controller.getLoggedInUser().getGovernment().getGold()))
-            return MapMenuMessage.NOT_ENOUGH_MONEY;
         if (buildingType.getCostType() != null ) {
-
+            if(Game.getCurrentUser().getGovernment().getAllResources().get(buildingType.getCostType() ) < buildingType.getCostAmount())
+                return MapMenuMessage.NOT_ENOUGH_RESOURCE;
         }
+            if (buildingType.getCost() > Game.getCurrentUser().getGovernment().getGold()) return MapMenuMessage.NOT_ENOUGH_MONEY;
+        if (Game.getCurrentUser().getGovernment().getUnemployedWorker() < buildingType.getWorkers())
+            return MapMenuMessage.NOT_ENOUGH_WORKERS;
+        Engineer engineer = null;
+        for (Unit unit : Unit.getUnits()) {
+            if (unit instanceof Engineer &&
+                    unit.getOwner().equals(Game.getCurrentUser()) &&
+                    !((Engineer)unit).isWorking()) engineer = ((Engineer) unit);
+        }
+        if (buildingType.isNeedEngineer() && engineer == null) return MapMenuMessage.NOT_ENOUGH_ENGINEER;
+        return findClassDropBuilding(x,y,buildingType,length,width);
+    }
+
+    private static MapMenuMessage findClassDropBuilding(int x, int y, BuildingType buildingType, int length, int width) {
+        BuildingGroup buildingGroup = buildingType.getBuildingGroup2();
+        DefenseType defenseType = null;
+        ProducerType producerType = null;
+        SiegeType siegeType = null;
+        StorageType storageType = null;
+        TrapType trapType = null;
+        if (buildingGroup.equals(BuildingGroup.DEFENSE_BUILDING)) {
+            for (DefenseType allDefenceType : DefenseType.values()) {
+                if (allDefenceType.getBuildingType().equals(buildingType))
+                    defenseType = allDefenceType;
+            }
+        } else if (buildingGroup.equals(BuildingGroup.PRODUCER_BUILDING)) {
+            for (ProducerType allProducerType : ProducerType.values()) {
+                if (allProducerType.getBuildingType().equals(buildingType))
+                    producerType = allProducerType;
+            }
+        } else if (buildingGroup.equals(BuildingGroup.SIEGE_BUILDING)) {
+            for (SiegeType allSiegeType : SiegeType.values()) {
+                if (allSiegeType.getBuildingType().equals(buildingType))
+                    siegeType = allSiegeType;
+            }
+        } else if (buildingGroup.equals(BuildingGroup.STORAGE_BUILDING)) {
+            for (StorageType allStorageType : StorageType.values()) {
+                if (allStorageType.getBuildingType().equals(buildingType))
+                    storageType = allStorageType;
+            }
+        } else if (buildingGroup.equals(BuildingGroup.TRAP_BUILDING)) {
+            for (TrapType allTrapType : TrapType.values()) {
+                if (allTrapType.getBuildingType().equals(buildingType))
+                    trapType = allTrapType;
+            }
+        }
+        for (int i = x; i < length; i++) {
+            for (int j = y; j < width; j++) {
+                if (defenseType != null) Game.getGameMap()[i][j].setBuilding(new DefenseBuilding(defenseType));
+                else if (producerType != null) Game.getGameMap()[i][j].setBuilding(new ProducerBuilding(producerType));
+                else if (siegeType != null) Game.getGameMap()[i][j].setBuilding(new SiegeBuilding(siegeType));
+                else if (storageType != null ) Game.getGameMap()[i][j].setBuilding(new StorageBuilding(storageType));
+                else if (trapType != null) Game.getGameMap()[i][j].setBuilding(new TrapBuilding(trapType));
+                else Game.getGameMap()[i][j].setBuilding(new Building(buildingType,buildingType.getMaxHp(),
+                            Game.getCurrentUser().getGovernment()));
+            }
+        }
+        Game.getCurrentUser().getGovernment().setUnemployedWorker(buildingType.getWorkers());
+        if (buildingType.isNeedEngineer()) {
+            for (Unit unit : Unit.getUnits()) {
+                if (unit instanceof Engineer &&
+                        unit.getOwner().equals(Game.getCurrentUser()) &&
+                        !((Engineer)unit).isWorking()) {
+                    ((Engineer)unit).setWorking(true);
+                    ((Engineer)unit).setBuildingWhichWorks(Game.getGameMap()[x][y].getBuilding());
+                }
+            }
+        }
+        int finalGold=Game.getCurrentUser().getGovernment().getGold()+ buildingType.getCost();
+        Game.getCurrentUser().getGovernment().setGold(finalGold);
+        //remove resource
+
         return MapMenuMessage.SUCCESS;
     }
 }
