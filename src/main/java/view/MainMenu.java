@@ -46,8 +46,10 @@ public class MainMenu {
 //            this.gameMenu = new GameMenu();
 //            gameMenu.run();
         }
+
         String command;
         while (true) {
+            System.out.println("please enter the menu you want");
             command = MainMenu.getScanner().nextLine();
             if (command.matches("\\s*sign\\s+up\\s+menu\\s*"))
                 signupMenu.run();

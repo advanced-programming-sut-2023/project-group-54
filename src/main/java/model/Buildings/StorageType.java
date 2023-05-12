@@ -4,14 +4,14 @@ public enum StorageType {
     GRANARY(BuildingType.GRANARY, 250), // انبار غذا
     STOCK_PILE(BuildingType.STOCK_PILE, 200), //انبار
     ARMOURY(BuildingType.ARMOURY, 50); //اسلحه خانه
-    private int capacity;
+    private double capacity;
     private BuildingType buildingType;
 
-    StorageType(BuildingType buildingType, int capacity) {
+    StorageType(BuildingType buildingType, double capacity) {
         this.capacity = capacity;
     }
 
-    public int getCapacity() {
+    public double getCapacity() {
         return capacity;
     }
 

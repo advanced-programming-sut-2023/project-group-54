@@ -13,6 +13,7 @@ public class SignupMenu {
     public void run() {
         String command;
         HashMap<String, ArrayList<String>> options;
+        System.out.println("you are in sign up menu");
         while (true) {
             command = MainMenu.getScanner().nextLine();
             System.out.println(command);
@@ -84,7 +85,7 @@ public class SignupMenu {
         String secondResult = "";
         switch (result) {
             case RANDOM_PASSWORD_BUILT:
-                if (slogan.equals("random"))
+                if (slogan != null && slogan.equals("random"))
                     System.out.println("Your slogan is:  " + SignupMenuController.getSlogan());
 
                 if (randomPasswordConfirmation().equals(SignupMenuMessage.PASSWORD_AND_PASSWORD_CON_SAME)) {
@@ -101,7 +102,7 @@ public class SignupMenu {
                 break;
 
             case SECURITY_QUESTION:
-                if (slogan.equals("random"))
+                if (slogan != null &&slogan.equals("random"))
                     System.out.println("Your slogan is:  " + SignupMenuController.getSlogan());
 
                 System.out.println("""

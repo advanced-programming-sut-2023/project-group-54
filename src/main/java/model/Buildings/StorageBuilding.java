@@ -8,9 +8,9 @@ import java.util.HashMap;
 
 public class StorageBuilding extends Building{
     private StorageType storageType;
-    private HashMap<Resource, Integer> storage;
+    private HashMap<Resource, Double> storage;
 
-    public StorageBuilding(StorageType storageType, HashMap<Resource, Integer> storage) {
+    public StorageBuilding(StorageType storageType, HashMap<Resource, Double> storage) {
         super(storageType.getBuildingType(), storageType.getBuildingType().getMaxHp(), Game.getCurrentUser().getGovernment());
         this.storageType = storageType;
         this.storage = storage;
@@ -20,21 +20,7 @@ public class StorageBuilding extends Building{
         Game.getCurrentUser().getGovernment().setFoodRate(foodRate);
     }
 
-    public int showStoredResource(Resource resource){
+    public double showStoredResource(Resource resource){
         return storage.get(resource);
-    }
-
-    public HashMap<Resource, Integer> getStorage(){return storage;}
-
-    public StorageType getStorageType(){
-        return this.storageType;
-    }
-
-    public int getCapacity(){
-        int capacity = storageType.getCapacity();
-        for (Resource resource : storage.keySet()) {
-            capacity -= storage.get(resource);
-        }
-        return capacity;
     }
 }

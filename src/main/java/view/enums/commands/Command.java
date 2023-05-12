@@ -6,7 +6,6 @@ import java.util.List;
 
 public enum Command {
     //common
-    
     BACK("back", new ArrayList<>(
     )),
     EXIT("exit", new ArrayList<>(
@@ -15,14 +14,14 @@ public enum Command {
     )),
 
     //SignupMenu
-    REGISTER("user\\s+create", new ArrayList<>(List.of(
+    REGISTER("user\\s+create", new ArrayList<>(Arrays.asList(
             new Option("u", 1, false),
             new Option("p", 2, false),
             new Option("e", 1, false),
             new Option("n", 1, false),
             new Option("s", 1, false)
     ))),
-    REGISTER_WITH_RANDOM_PASSWORD("user\\s+create", new ArrayList<>(List.of(
+    REGISTER_WITH_RANDOM_PASSWORD("user\\s+create", new ArrayList<>(Arrays.asList(
             new Option("u", 1, false),
             new Option("p", 1, false),
             new Option("e", 1, false),
@@ -157,6 +156,74 @@ public enum Command {
     ))),
     DISBAND_UNIT("disband\\s+unit",  new ArrayList<>(
     )),
+
+    //GameMenu
+    EXIT_OF_GAME_MENU("exit\\s+from\\s+game\\s+menu",new ArrayList<>()),
+    SHOW_MAP("show\\s+map",new ArrayList<>(Arrays.asList(
+            new Option("x",1,false),
+            new Option("y",1,false)
+    ))),
+    SHOW_DETAILS("show\\s+details",new ArrayList<>(Arrays.asList(
+            new Option("x",1,false),
+            new Option("y",1,false)
+    ))),
+    DROP_BUILDING("drop\\s+building",new ArrayList<>(Arrays.asList(
+            new Option("x",1,false),
+            new Option("y",1,false),
+            new Option("t",1,false)
+    ))),
+    SELECT_BUILDING("select\\s+building",new ArrayList<>(Arrays.asList(
+            new Option("x",1,false),
+            new Option("y",1,false)
+    ))),
+    REPAIR("repair",new ArrayList<>()),
+    SET_TEXTURE_FOR_ONE_HOUSE("set\\s+texture",new ArrayList<>(Arrays.asList(
+            new Option("x",1,false),
+            new Option("y",1,false),
+            new Option("t",1,false)
+    ))),
+    SET_TEXTURE_FOR_RECTANGLE("set\\s+texture",new ArrayList<>(Arrays.asList(
+            new Option("x1",1,false),
+            new Option("y1",1,false),
+            new Option("x2",1,false),
+            new Option("y2",1,false),
+            new Option("t",1,false)
+    ))),
+    CLEAR("clear",new ArrayList<>(Arrays.asList(
+            new Option("x",1,false),
+            new Option("y",1,false)
+    ))),
+    DROP_ROCK("drop\\s+rock",new ArrayList<>(Arrays.asList(
+            new Option("x",1,false),
+            new Option("y",1,false),
+            new Option("d",1,false)
+    ))),
+    DROP_TREE("drop\\s+tree",new ArrayList<>(Arrays.asList(
+            new Option("x",1,false),
+            new Option("y",1,false),
+            new Option("t",1,false)
+    ))),
+    CLEAR_FOR_RECTANGLE("clear",new ArrayList<>(Arrays.asList(
+            new Option("x1",1,false),
+            new Option("y1",1,false),
+            new Option("x2",1,false),
+            new Option("y2",1,false),
+            new Option("t",1,false)
+    ))),
+    DROP_ROCK_FOR_RECTANGLE("drop\\s+rock",new ArrayList<>(Arrays.asList(
+            new Option("x1",1,false),
+            new Option("y1",1,false),
+            new Option("x2",1,false),
+            new Option("y2",1,false),
+            new Option("t",1,false)
+    ))),
+    DROP_TREE_FOR_RECTANGLE("drop\\s+tree",new ArrayList<>(Arrays.asList(
+            new Option("x1",1,false),
+            new Option("y1",1,false),
+            new Option("x2",1,false),
+            new Option("y2",1,false),
+            new Option("t",1,false)
+    ))),
     ;
 
     private String commandRegex;
