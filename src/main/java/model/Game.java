@@ -37,6 +37,14 @@ public class Game {
         Game.gameMap = gameMap;
     }
 
+    public static Map getGameMapXY(int x, int y) {
+        return gameMap[x][y];
+    }
+
+    public static void setGameMapXY(int x, int y, Map map) {
+        gameMap[x][y] = map;
+    }
+
     public static ArrayList<User> getUsers() {
         return users;
     }

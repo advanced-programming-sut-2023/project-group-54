@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class UnitMenu {
-    public String run() {
+    public void run() {
         String command;
         Matcher matcher;
         while (true) {

@@ -1,21 +1,33 @@
 package model.units;
 
-import model.User;
+import model.Game;
+import model.Government;
+import model.Map;
 
 import java.util.ArrayList;
 
 public class Unit {
     private static ArrayList<Unit> units;
-    private final User owner;
-    enum State{
-        STATIC,
-        DEFENSIVE,
-        AGGRESSIVE;
-    }
+    private final Government owner;
+    public int xPosition;
+    public int yPosition;
     private State state;
     private UnitType unitType;
     private int hp;
     private Boolean isPatrol;
+
+    public Unit(UnitType unitType, int xPosition, int yPosition) {
+        this.owner = Game.getCurrentUser().getGovernment();
+        this.unitType = unitType;
+        this.state = State.STATIC;
+        this.hp = unitType.getMaxHp();
+        this.isPatrol = false;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+        Map map = Game.getGameMapXY(xPosition, yPosition);
+        map.addUnit(this);
+        units.add(this);
+    }
 
     public static ArrayList<Unit> getUnits() {
         return units;
@@ -37,15 +49,13 @@ public class Unit {
         return isPatrol;
     }
 
-    public User getOwner() {
+    public Government getGovernment() {
         return owner;
     }
 
-    public Unit(User owner, UnitType unitType, int hp) {
-        this.owner = owner;
-        this.unitType = unitType;
-        this.state = State.STATIC;
-        this.hp = hp;
-        this.isPatrol = false;
+    enum State {
+        STATIC,
+        DEFENSIVE,
+        AGGRESSIVE;
     }
 }

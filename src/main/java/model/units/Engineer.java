@@ -6,8 +6,8 @@ import model.User;
 public class Engineer extends Unit{
     private Boolean hasOil;
 
-    public Engineer(User owner) {
-        super(owner,UnitType.ENGINEER, UnitType.ENGINEER.getMaxHp());
+    public Engineer(int xPosition, int yPosition) {
+        super(UnitType.ENGINEER, xPosition, yPosition);
         this.hasOil = false;
     }
 

@@ -15,4 +15,7 @@ public class DefenseBuilding extends Building{
         this.isOpen = true;
         this.climbedUnit = new ArrayList<>();
     }
+    public void setIsOpen(boolean isOpen){
+        this.isOpen = isOpen;
+    }
 }

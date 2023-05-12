@@ -186,9 +186,14 @@ public enum Command {
             new Option("t", 1, false),
             new Option("c", 1, false)
     ))),
-    REPAIR("repair", new ArrayList<>(List.of(
-            new Option("t", 1, false),
-            new Option("c", 1, false)
+    REPAIR("repair", new ArrayList<>(
+    )),
+    OPEN_GATE("open gate", new ArrayList<>(
+    )),
+    CLOSE_GATE("close gate", new ArrayList<>(
+    )),
+    CHANGE_OUTPUT("change output", new ArrayList<>(List.of(
+            new Option("r", 1, true)
     ))),
 
     //UnitMenu

@@ -1,5 +1,7 @@
 package model.Buildings;
 
+import java.util.ArrayList;
+
 public enum DefenseType {
     WALL_STAIRS(BuildingType.WALL_STAIRS, 0, false, false, false, false),
     LOW_WALL(BuildingType.LOW_WALL, 0, false, false, false, false),
