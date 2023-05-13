@@ -74,12 +74,12 @@ public class Unit {
         this.patrolYFrom = patrolYFrom;
     }
 
-    public void setXMoveTarget(int xTarget) {
-        this.xMoveTarget = xTarget;
+    public void setXMoveTarget(int xMoveTarget) {
+        this.xMoveTarget = xMoveTarget;
     }
 
-    public void setYMoveTarget(int yTarget) {
-        this.yMoveTarget = yTarget;
+    public void setYMoveTarget(int yMoveTarget) {
+        this.yMoveTarget = yMoveTarget;
     }
 
     public Government getOwner() {
@@ -162,22 +162,6 @@ public class Unit {
         Unit.units = units;
     }
 
-    public void setxPosition(int xPosition) {
-        this.xPosition = xPosition;
-    }
-
-    public void setyPosition(int yPosition) {
-        this.yPosition = yPosition;
-    }
-
-    public void setxMoveTarget(int xMoveTarget) {
-        this.xMoveTarget = xMoveTarget;
-    }
-
-    public void setyMoveTarget(int yMoveTarget) {
-        this.yMoveTarget = yMoveTarget;
-    }
-
     public void setUnitType(UnitType unitType) {
         this.unitType = unitType;
     }
@@ -188,13 +172,6 @@ public class Unit {
 
     public void setHp(int hp) {
         this.hp = hp;
-    }
-    public void setxTarget(int xTarget) {
-        this.xTarget = xTarget;
-    }
-
-    public void setyTarget(int yTarget) {
-        this.yTarget = yTarget;
     }
 
 }

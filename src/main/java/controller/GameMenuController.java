@@ -292,6 +292,17 @@ public class GameMenuController {
         }
     }
 
+    public static void fightsInEachHouse(Unit unit) {
+        int damageSet;
+        if (unit.getUnitType().getRange()!= 1) damageSet = unit.getUnitType().getDamage()/2;
+        else damageSet = unit.getUnitType().getDamage();
+        for (Unit unit1 : Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getUnit()) {
+            if (!unit1.getGovernment().equals(unit.getGovernment())) {
+                unit1.setHp2(-damageSet);
+            }
+        }
+    }
+
     public static void UnitsAttack() {
         for (Unit unit : Unit.getUnits()) {
             if (unit.getUnitType().getRange() != -1 && !unit.getPatrol()) {

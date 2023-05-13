@@ -22,6 +22,7 @@ public class UnitMenuController {
     }
 
     public static UnitMenuMessage moveUnit(int xCoordinate, int yCoordinate) {
+        //check if out of range
         for (Unit unit : selectedUnit) {
             unit.setXMoveTarget(xCoordinate);
             unit.setYMoveTarget(yCoordinate);
@@ -55,8 +56,8 @@ public class UnitMenuController {
         for (Unit unit : selectedUnit) {
             unit.setPatrol(true);
             unit.setPatrolTF(0);
-            unit.setxPosition(xCoordinate1);
-            unit.setyPosition(yCoordinate1);
+            unit.setXMoveTarget(xCoordinate1);
+            unit.setYMoveTarget(yCoordinate1);
             unit.setPatrolXFrom(xCoordinate1);
             unit.setPatrolXTarget(xCoordinate2);
             unit.setPatrolYFrom(yCoordinate1);
@@ -85,6 +86,7 @@ public class UnitMenuController {
     }
 
     public static UnitMenuMessage attack(int XCoordinate, int YCoordinate) {
+        //check if out of range of speed
         for (Unit unit : selectedUnit) {
             unit.setXTarget(XCoordinate);
             unit.setYTarget(YCoordinate);
