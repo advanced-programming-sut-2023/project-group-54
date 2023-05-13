@@ -4,7 +4,6 @@ import model.*;
 import model.Buildings.*;
 import model.units.Unit;
 import view.enums.messages.GameMenuMessage;
-import view.enums.messages.ShopMenuMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -186,6 +185,40 @@ public class GameMenuController {
                     ((ProducerBuilding)building).getProducerType().getPuts() == null) procedureBuildings(user,building);
             else if (building.getBuildingType().equals(BuildingType.CHURCH) || building.getBuildingType().equals(BuildingType.CATHEDRAL))
                 user.getGovernment().setPopularity2(2);
+        }
+    }
+
+    public static void archersAttackRadios(Unit unit) {
+        int fireRange = unit.getUnitType().getRange();
+        switch (Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().getBuildingType()) {
+            case DEFENCE_TOWER,PERIMETER_TOWER,ROUND_TOWER,SQUARE_TOWER,LOOK_OUT_TOWER :
+                fireRange *= 2;
+                break;
+            default:
+                break;
+        }
+        for (model.Map[] maps : Game.getGameMap()) {
+            for (model.Map map : maps) {
+                for (Unit unit1 : map.getUnit()) {
+                    if (!unit1.getGovernment().equals(unit.getGovernment()))
+                        unit1.setHp2(unit.getUnitType().getDamage());
+                }
+            }
+        }
+    }
+
+    public static void archersAttackSpecialHouse(Unit unit) {
+        for (Unit unit1 : Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getUnit()) {
+            unit
+        }
+    }
+
+    public static void archersAttack() {
+        for (Unit unit : Unit.getUnits()) {
+            if (unit.getUnitType().getRange() != 1 && unit.getxTarget() == -1)
+                archersAttackRadios(unit);
+            else if (unit.getUnitType().getRange() != 1 && unit.getxTarget() != -1)
+                archersAttackRadios(unit);
         }
     }
 

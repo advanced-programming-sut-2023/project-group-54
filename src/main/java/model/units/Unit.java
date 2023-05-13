@@ -35,8 +35,8 @@ public class Unit {
         this.yPosition = yPosition;
         this.xMoveTarget = xPosition;
         this.yMoveTarget = yPosition;
-        this.xMoveTarget = -1;
-        this.yMoveTarget = -1;
+        this.xTarget = -1;
+        this.yTarget = -1;
         Map map = Game.getGameMapXY(xPosition, yPosition);
         map.addUnit(this);
         units.add(this);
@@ -112,5 +112,88 @@ public class Unit {
 
     public Government getGovernment() {
         return owner;
+    }
+
+    public int getxPosition() {
+        return xPosition;
+    }
+
+    public int getyPosition() {
+        return yPosition;
+    }
+
+    public int getxMoveTarget() {
+        return xMoveTarget;
+    }
+
+    public int getyMoveTarget() {
+        return yMoveTarget;
+    }
+
+    public int getPatrolTF() {
+        return patrolTF;
+    }
+
+    public int getPatrolXTarget() {
+        return patrolXTarget;
+    }
+
+    public int getPatrolYTarget() {
+        return patrolYTarget;
+    }
+
+    public int getPatrolXFrom() {
+        return patrolXFrom;
+    }
+
+    public int getPatrolYFrom() {
+        return patrolYFrom;
+    }
+
+    public int getxTarget() {
+        return xTarget;
+    }
+
+    public int getyTarget() {
+        return yTarget;
+    }
+
+    public static void setUnits(ArrayList<Unit> units) {
+        Unit.units = units;
+    }
+
+    public void setxPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public void setyPosition(int yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    public void setxMoveTarget(int xMoveTarget) {
+        this.xMoveTarget = xMoveTarget;
+    }
+
+    public void setyMoveTarget(int yMoveTarget) {
+        this.yMoveTarget = yMoveTarget;
+    }
+
+    public void setUnitType(UnitType unitType) {
+        this.unitType = unitType;
+    }
+
+    public void setHp2(int hp) {
+        this.hp += hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+    public void setxTarget(int xTarget) {
+        this.xTarget = xTarget;
+    }
+
+    public void setyTarget(int yTarget) {
+        this.yTarget = yTarget;
     }
 }
