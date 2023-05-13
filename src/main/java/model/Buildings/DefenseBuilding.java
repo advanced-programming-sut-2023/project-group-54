@@ -18,4 +18,16 @@ public class DefenseBuilding extends Building{
     public void setIsOpen(boolean isOpen){
         this.isOpen = isOpen;
     }
+
+    public DefenseType getDefenseType() {
+        return defenseType;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public ArrayList<Unit> getClimbedUnit() {
+        return climbedUnit;
+    }
 }

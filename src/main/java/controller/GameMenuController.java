@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 import model.Buildings.*;
+import model.units.State;
 import model.units.Unit;
 import view.enums.messages.GameMenuMessage;
 
@@ -182,6 +183,17 @@ public class GameMenuController {
         }
     }
 
+    public static void mangonellBallistae(Building building) {
+        for (int i = building.getX1Position(); i < building.getX2Position() + 10; i++) {
+            for (int j = building.getY1Position(); j < building.getY2Position() + 10; j++) {
+                for (Unit unit : Game.getGameMap()[i][j].getUnit()) {
+                    if (!unit.getGovernment().equals(building.getOwner()))
+                        unit.setHp(-600);
+                }
+            }
+        }
+    }
+
     public static void nextTurnForBuildings(User user) {
         ArrayList<Building> buildings = new ArrayList<>();
         for (Building building : Building.getBuildings()) {
@@ -198,14 +210,37 @@ public class GameMenuController {
                 procedureBuildings(user, building);
             else if (building.getBuildingType().equals(BuildingType.CHURCH) || building.getBuildingType().equals(BuildingType.CATHEDRAL))
                 user.getGovernment().setPopularity2(2);
+            else if (building.getBuildingType().equals(BuildingType.MANGONEL) || building.getBuildingType().equals(BuildingType.BALLISTAE))
+                mangonellBallistae(building);
         }
+    }
+
+    public static void setPlacesToFightInDifferentModes(Unit unit,boolean aggressiveOrDefence) {
+        int range = (5 * unit.getUnitType().getSpeed());
+        if (!aggressiveOrDefence) range /= 2;
+        int fireRange = unit.getUnitType().getRange();
+        if (fireRange == 1) fireRange = 0;
+        for (int i = unit.getxPosition(); i <= unit.getxPosition() + range - fireRange; i++) {
+            for (int j = unit.getyPosition(); j <= unit.getyPosition() + range - fireRange; j++) {
+                for (Unit unit1 : Game.getGameMap()[i][j].getUnit()) {
+                    if (!unit1.getGovernment().equals(unit.getGovernment())) {
+                        moveTroop(unit,i,j);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public static void moveTroop(Unit unit,int x,int y) {
+        //needed to be completed to move unit
     }
 
     public static void archersAttackRadios(Unit unit) {
         int fireRange = unit.getUnitType().getRange();
         switch (Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().getBuildingType()) {
             case DEFENCE_TOWER, PERIMETER_TOWER, ROUND_TOWER, SQUARE_TOWER, LOOK_OUT_TOWER:
-                fireRange *= 2;
+                if (fireRange != 1) fireRange *= 2;
                 break;
             default:
                 break;
@@ -231,12 +266,24 @@ public class GameMenuController {
             ((TrapBuilding)Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding()).firePitchDitch();
     }
 
-    public static void archersAttack() {
+    public static void setAttackPatrolUnit(Unit unit) {
+        for (int i = unit.getx; i < ; i++) {
+            for (int j = 0; j < ; j++) {
+
+            }
+        }
+    }
+
+    public static void UnitsAttack() {
         for (Unit unit : Unit.getUnits()) {
-            if (unit.getUnitType().getRange() != 1 && unit.getxTarget() == -1)
-                archersAttackRadios(unit);
-            else if (unit.getUnitType().getRange() != 1 && unit.getxTarget() != -1)
-                archersAttackRadios(unit);
+            if (unit.getUnitType().getRange() != -1) {
+                if (unit.getState().equals(State.DEFENSIVE)) setPlacesToFightInDifferentModes(unit,false);
+                else if (unit.getState().equals(State.AGGRESSIVE)) setPlacesToFightInDifferentModes(unit,true);
+                if ( unit.getxTarget() == -1)
+                    archersAttackRadios(unit);
+                else if (unit.getxTarget() != -1)
+                    archersAttackRadios(unit);
+            } else if (unit.getPatrol()) setAttackPatrolUnit(unit);
         }
     }
 

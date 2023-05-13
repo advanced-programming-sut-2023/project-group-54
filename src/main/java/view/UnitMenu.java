@@ -141,15 +141,26 @@ public class UnitMenu {
             return;
         }
         UnitMenuMessage result = UnitMenuController.patrolUnit(xFrom, yFrom, xTo, yTo);
-        if (Objects.requireNonNull(result) == UnitMenuMessage.SUCCESS) {
-            System.out.println("patrol set for unit(s) successfully");
+        switch (result) {
+            case THATS_TOO_FAR_FROM_COORDINATE:
+                System.out.println("selected unit is too far rom that coordinate action failed");
+                break;
+            case CAN_NOT_PASS_THAT_MAP_TYPE:
+                System.out.println("there is a type of map in the way which can not be passed");
+                break;
+            case THERE_ARE__BUILDING_ON_THAT_WAY:
+                System.out.println("there are buildings on the way action failed");
+                break;
+            default:
+                System.out.println("patrol set for unit(s) successfully");
+                break;
         }
     }
 
     private static void stopPatrolUnit(HashMap<String, ArrayList<String>> options) {
         UnitMenuMessage result = UnitMenuController.stopPatrolUnit();
         if (Objects.requireNonNull(result) == UnitMenuMessage.SUCCESS) {
-            System.out.println("patrol nuit stoped successfully");
+            System.out.println("patrol unit stopped successfully");
         }
     }
 

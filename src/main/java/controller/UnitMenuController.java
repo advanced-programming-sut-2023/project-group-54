@@ -1,5 +1,6 @@
 package controller;
 
+import model.Buildings.DefenseBuilding;
 import model.Buildings.SiegeType;
 import model.Direction;
 import model.Game;
@@ -29,6 +30,28 @@ public class UnitMenuController {
     }
 
     public static UnitMenuMessage patrolUnit(int xCoordinate1, int yCoordinate1, int xCoordinate2, int yCoordinate2) {
+        int lowestSpeed = 0;
+        int xPos = 0;
+        int yPos = 0;
+        int k = 0;
+        for (Unit unit : selectedUnit) {
+            if (k == 0 ) {
+                lowestSpeed = unit.getUnitType().getSpeed() * 5;
+                xPos = unit.getxPosition();
+                yPos = unit.getyPosition();
+            }
+            else if (unit.getUnitType().getSpeed() * 5 < lowestSpeed) lowestSpeed = unit.getUnitType().getSpeed() * 5;
+            k++;
+        }
+        if ( xPos + lowestSpeed < xCoordinate1 || yPos + lowestSpeed <yCoordinate1) return UnitMenuMessage.THATS_TOO_FAR_FROM_COORDINATE;
+        for (int i = xCoordinate1; i < xCoordinate2; i++) {
+            for (int j = yCoordinate1; j < yCoordinate2; j++) {
+                if (!Game.getGameMap()[i][j].getMapType().isCanBePassed()) return UnitMenuMessage.CAN_NOT_PASS_THAT_MAP_TYPE;
+                if (Game.getGameMap()[i][j].getBuilding() != null)
+                    return UnitMenuMessage.THERE_ARE__BUILDING_ON_THAT_WAY;
+            }
+        }
+
         for (Unit unit : selectedUnit) {
             unit.setPatrol(true);
             unit.setPatrolTF(0);

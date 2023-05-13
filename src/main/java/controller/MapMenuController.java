@@ -23,7 +23,7 @@ public class MapMenuController {
     private static final String ANSI_LIGHT_BLUE = "\u001B[46m\n";
     private static final String ANSI_WHITE = "\u001B[47m";
     private static final String ANSI_TEXT_BLACK = "\u001B[30m";
-    private static final String ANSI_TEXT_RED ="\u001b[31m";
+    private static final String ANSI_TEXT_RED = "\u001b[31m";
     private static final String ANSI_TEXT_GREEN = "\u001b[32m";
     private static final String ANSI_TEXT_YELLOW = "\u001b[33m";
     private static final String ANSI_TEXT_BLUE = "\u001b[34m";
@@ -33,16 +33,14 @@ public class MapMenuController {
 
     public static void setMap(int mapNumber) {
         if (mapNumber == 1) {
-            Game.setGameMap(400,400);
+            Game.setGameMap(400, 400);
             Game.setX(400);
             Game.setY(400);
-        }
-        else if(mapNumber == 2) {
-            Game.setGameMap(200,200);
+        } else if (mapNumber == 2) {
+            Game.setGameMap(200, 200);
             Game.setX(200);
             Game.setY(200);
-        }
-        else{
+        } else {
             Map[][] gameMap = new Map[400][400];
             for (int i = 0; i < 30; i++) {
                 for (int j = 0; j < 30; j++) {
@@ -70,7 +68,7 @@ public class MapMenuController {
                 }
             }
             for (int i = 50; i < 100; i++) {
-                for (int j =120; j < 150; j++) {
+                for (int j = 120; j < 150; j++) {
                     Game.getGameMap()[i][j].setMapType(SMALL_POND);
                     Game.getGameMap()[i][j].setTree(OLIVE_TREE);
                 }
@@ -126,7 +124,7 @@ public class MapMenuController {
     }
 
     public static String showMap(int xCoordinate, int yCoordinate) {
-        int numberOfHousesToShow = 20,xFirstHome = xCoordinate - numberOfHousesToShow,
+        int numberOfHousesToShow = 20, xFirstHome = xCoordinate - numberOfHousesToShow,
                 xEndHome = xCoordinate + numberOfHousesToShow,
                 yFirstHome = yCoordinate - numberOfHousesToShow,
                 yEndHome = yCoordinate + numberOfHousesToShow;
@@ -137,18 +135,18 @@ public class MapMenuController {
         Map[][] gameMap = new Map[Game.getX()][Game.getY()];
         StringBuilder map = new StringBuilder();
         for (int i = xFirstHome; i < xEndHome; i++) {
-            map.append(String.join("",Collections.nCopies((numberOfHousesToShow * 3) + 1,"-")) + "\n");
+            map.append(String.join("", Collections.nCopies((numberOfHousesToShow * 3) + 1, "-")) + "\n");
             for (int i1 = yFirstHome; i1 < yEndHome; i1++) {
                 String[] color = backgroundColor(gameMap[i][i1].getMapType());
-                map.append("|" + color[0] + color[1] + ((gameMap[i][i1].getBuilding() != null ) ? ((gameMap[i][i1].getBuilding() instanceof DefenseBuilding) ? "W" : "B") : "#")
+                map.append("|" + color[0] + color[1] + ((gameMap[i][i1].getBuilding() != null) ? ((gameMap[i][i1].getBuilding() instanceof DefenseBuilding) ? "W" : "B") : "#")
                         + ((gameMap[i][i1].getTree() != null) ? "T" : "#") + ANSI_RESET);
             }
             map.append("|\n");
             for (int j = yFirstHome; j < yEndHome; j++) {
                 String[] color = backgroundColor(gameMap[i][j].getMapType());
                 int numberOfSoldiers = 0;
-                if ( gameMap[i][j].getUnit().size() > 99) numberOfSoldiers = 99;
-                map.append("|"+ color[0] + color[1] +((!gameMap[i][j].getUnit().isEmpty()) ? ((numberOfSoldiers > 9) ? numberOfSoldiers : numberOfSoldiers + "#") : "##") + ANSI_RESET);
+                if (gameMap[i][j].getUnit().size() > 99) numberOfSoldiers = 99;
+                map.append("|" + color[0] + color[1] + ((!gameMap[i][j].getUnit().isEmpty()) ? ((numberOfSoldiers > 9) ? numberOfSoldiers : numberOfSoldiers + "#") : "##") + ANSI_RESET);
             }
             map.append("|\n");
         }
@@ -176,9 +174,9 @@ public class MapMenuController {
                 break;
             case BOULDERS:
                 colors[0] = ANSI_YELLOW;
-                colors[1]= ANSI_TEXT_BLACK;
+                colors[1] = ANSI_TEXT_BLACK;
                 break;
-            case ROCK_N,ROCK_E,ROCK_S,ROCK_W:
+            case ROCK_N, ROCK_E, ROCK_S, ROCK_W:
                 colors[0] = ANSI_YELLOW;
                 colors[1] = ANSI_TEXT_RED;
                 break;
@@ -206,7 +204,7 @@ public class MapMenuController {
     private static String[] setBackgroundColorWater(MapType mapType) {
         String[] colors = new String[2];
         colors[1] = "";
-        switch(mapType) {
+        switch (mapType) {
             case OIL:
                 colors[0] = ANSI_BLACK;
                 break;
@@ -245,26 +243,24 @@ public class MapMenuController {
         StringBuilder details = new StringBuilder();
         int i = 1;
         details.append("Map type is :" + house.getMapType().toString() + "\nUnits in this house are : \n");
-        details.append(((house.getUnit() != null ) ? "we have a " + house.getBuilding().getBuildingType().getName() +
+        details.append(((house.getUnit() != null) ? "we have a " + house.getBuilding().getBuildingType().getName() +
                 " building " + ((house.getBuilding().getBuildingType().getWorkers() != 0) ? "which has " +
                 house.getBuilding().getBuildingType().getWorkers() + " workers" : "") : "there is no building here") + "\n");
         details.append(((house.getTree() != null) ? "we have tree with type " + house.getTree().toString() : "no tree in this house") + "\n");
         for (Unit unit : house.getUnit()) {
-            if (unit instanceof Engineer) details.append(i + ") engineer owner : " + unit.getOwner().getUser().getUsername());
+            if (unit instanceof Engineer)
+                details.append(i + ") engineer owner : " + unit.getOwner().getUser().getUsername());
             else details.append(i + ") troop name : " + unit.getUnitType().getType() + " - troop hp : " + unit.getHp() +
-                    "- unit " +((unit.getPatrol()) ? "is" : "is not") + " patrol\n\t- troop state : " + unit.getState() +
+                    "- unit " + ((unit.getPatrol()) ? "is" : "is not") + " patrol\n\t- troop state : " + unit.getState() +
                     " - unit owner is : " + unit.getGovernment().getUser().getUsername() + "\n");
             i++;
         }
         return details.toString();
     }
 
-    public static String moveMap(int x, int y) {
-        return "";
-    }
-
     public static MapMenuMessage setTextureFinalTest(int xCoordinate, int yCoordinate) {
-        if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding() != null) return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
+        if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding() != null)
+            return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
         return MapMenuMessage.SUCCESS;
     }
 
@@ -290,10 +286,12 @@ public class MapMenuController {
     }
 
     public static MapMenuMessage dropRockFinalTest(int xCoordinate, int yCoordinate) {
-        if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding() != null) return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
+        if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding() != null)
+            return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
         return MapMenuMessage.SUCCESS;
     }
-    public static void dropRock(int x,int y,Direction direction) {
+
+    public static void dropRock(int x, int y, Direction direction) {
         Game.getGameMap()[x][y].setUnit();
         switch (direction) {
             case N:
@@ -312,23 +310,24 @@ public class MapMenuController {
                 int random = (int) Math.floor(Math.random() * (3 + 1));
                 switch (random) {
                     case 0:
-                        dropRock(x,y,N);
+                        dropRock(x, y, N);
                         break;
                     case 1:
-                        dropRock(x,y,S);
+                        dropRock(x, y, S);
                         break;
                     case 2:
-                        dropRock(x,y,E);
+                        dropRock(x, y, E);
                         break;
                     case 3:
-                        dropRock(x,y,W);
+                        dropRock(x, y, W);
                         break;
                 }
         }
     }
 
     public static MapMenuMessage dropTreeFinalTest(int xCoordinate, int yCoordinate) {
-        if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding() != null) return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
+        if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding() != null)
+            return MapMenuMessage.HOUSE_IS_FILED_WITH_BUILDING;
         return MapMenuMessage.SUCCESS;
     }
 
@@ -336,7 +335,7 @@ public class MapMenuController {
         Game.getGameMap()[xCoordinate][yCoordinate].setTree(tree);
     }
 
-    public static MapMenuMessage dropBuilding(int x,int y,String type) {
+    public static MapMenuMessage dropBuilding(int x, int y, String type) {
         BuildingType buildingType = null;
         for (BuildingType allBuildingType : BuildingType.values()) {
             if (allBuildingType.getName().equals(type)) {
@@ -385,25 +384,26 @@ public class MapMenuController {
                     return MapMenuMessage.ONLY_QUARRY_ON_BOULDERS;
             }
         }
-        return checkCost(x,y,buildingType,length,width);
+        return checkCost(x, y, buildingType, length, width);
     }
 
-    private static MapMenuMessage checkCost(int x,int y,BuildingType buildingType,int length,int width) {
-        if (buildingType.getCostType() != null ) {
-            if(Game.getCurrentUser().getGovernment().getAllResources().get(buildingType.getCostType() ) < buildingType.getCostAmount())
+    private static MapMenuMessage checkCost(int x, int y, BuildingType buildingType, int length, int width) {
+        if (buildingType.getCostType() != null) {
+            if (Game.getCurrentUser().getGovernment().getAllResources().get(buildingType.getCostType()) < buildingType.getCostAmount())
                 return MapMenuMessage.NOT_ENOUGH_RESOURCE;
         }
-            if (buildingType.getCost() > Game.getCurrentUser().getGovernment().getGold()) return MapMenuMessage.NOT_ENOUGH_MONEY;
+        if (buildingType.getCost() > Game.getCurrentUser().getGovernment().getGold())
+            return MapMenuMessage.NOT_ENOUGH_MONEY;
         if (Game.getCurrentUser().getGovernment().getUnemployedWorker() < buildingType.getWorkers())
             return MapMenuMessage.NOT_ENOUGH_WORKERS;
         Engineer engineer = null;
         for (Unit unit : Unit.getUnits()) {
             if (unit instanceof Engineer &&
                     unit.getOwner().equals(Game.getCurrentUser()) &&
-                    !((Engineer)unit).isWorking()) engineer = ((Engineer) unit);
+                    !((Engineer) unit).isWorking()) engineer = ((Engineer) unit);
         }
         if (buildingType.isNeedEngineer() && engineer == null) return MapMenuMessage.NOT_ENOUGH_ENGINEER;
-        return findClassDropBuilding(x,y,buildingType,length,width);
+        return findClassDropBuilding(x, y, buildingType, length, width);
     }
 
     private static MapMenuMessage findClassDropBuilding(int x, int y, BuildingType buildingType, int length, int width) {
@@ -444,9 +444,9 @@ public class MapMenuController {
                 if (defenseType != null) Game.getGameMap()[i][j].setBuilding(new DefenseBuilding(defenseType));
                 else if (producerType != null) Game.getGameMap()[i][j].setBuilding(new ProducerBuilding(producerType));
                 else if (siegeType != null) Game.getGameMap()[i][j].setBuilding(new SiegeBuilding(siegeType));
-                else if (storageType != null ) Game.getGameMap()[i][j].setBuilding(new StorageBuilding(storageType));
+                else if (storageType != null) Game.getGameMap()[i][j].setBuilding(new StorageBuilding(storageType));
                 else if (trapType != null) Game.getGameMap()[i][j].setBuilding(new TrapBuilding(trapType));
-                else Game.getGameMap()[i][j].setBuilding(new Building(buildingType,buildingType.getMaxHp(),
+                else Game.getGameMap()[i][j].setBuilding(new Building(buildingType, buildingType.getMaxHp(),
                             Game.getCurrentUser().getGovernment()));
             }
         }
@@ -455,27 +455,27 @@ public class MapMenuController {
             for (Unit unit : Unit.getUnits()) {
                 if (unit instanceof Engineer &&
                         unit.getOwner().equals(Game.getCurrentUser()) &&
-                        !((Engineer)unit).isWorking()) {
-                    ((Engineer)unit).setWorking(true);
-                    ((Engineer)unit).setBuildingWhichWorks(Game.getGameMap()[x][y].getBuilding());
+                        !((Engineer) unit).isWorking()) {
+                    ((Engineer) unit).setWorking(true);
+                    ((Engineer) unit).setBuildingWhichWorks(Game.getGameMap()[x][y].getBuilding());
                 }
             }
         }
-        int finalGold=Game.getCurrentUser().getGovernment().getGold()+ buildingType.getCost();
+        int finalGold = Game.getCurrentUser().getGovernment().getGold() + buildingType.getCost();
         Game.getCurrentUser().getGovernment().setGold(finalGold);
-        Game.getCurrentUser().getGovernment().changeResourceAmount(buildingType.getCostType(),-buildingType.getCostAmount());
-        Game.getCurrentUser().getGovernment().removeFromStorage(buildingType.getCostType(),-buildingType.getCostAmount());
+        Game.getCurrentUser().getGovernment().changeResourceAmount(buildingType.getCostType(), -buildingType.getCostAmount());
+        Game.getCurrentUser().getGovernment().removeFromStorage(buildingType.getCostType(), -buildingType.getCostAmount());
         return MapMenuMessage.SUCCESS;
     }
 
-    public static MapMenuMessage selectBuilding(int x,int y) {
+    public static MapMenuMessage selectBuilding(int x, int y) {
         if (Game.getGameMap()[x][y].getBuilding() == null) return MapMenuMessage.HOUSE_IS_EMPTY;
         if (!Game.getGameMap()[x][y].getBuilding().getOwner().equals(Game.getCurrentUser().getGovernment()))
             return MapMenuMessage.BUILDING_OR_SOLDIER_DOESNT_BELONG_TO_YOU;
         return MapMenuMessage.SUCCESS;
     }
 
-    public static MapMenuMessage selectUnit(int x,int y) {
+    public static MapMenuMessage selectUnit(int x, int y) {
         boolean sign = true;
         int numberOfSoldiers = 0;
         for (Unit unit : Game.getGameMap()[x][y].getUnit()) {
