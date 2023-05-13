@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Government {
-    private final HashMap<Resource, Integer> allResources = new HashMap<>();
+    private final HashMap<Resource, Double> allResources = new HashMap<>();
     private int population;
     private int maxPopulation;
     private int popularity;
@@ -31,7 +31,7 @@ public class Government {
         this.gold = 4000;
 
         for (Resource value : Resource.values()) {
-            allResources.put(value, 0);
+            allResources.put(value, (double) 0);
         }
     }
 
@@ -119,19 +119,19 @@ public class Government {
         this.gold = gold;
     }
 
-    public void changeResourceAmount(Resource Resource, int count) {
+    public void changeResourceAmount(Resource Resource, double count) {
         allResources.put(Resource, allResources.get(Resource) + count);
     }
 
-    public HashMap<Resource, Integer> getAllResources() {
+    public HashMap<Resource, Double> getAllResources() {
         return allResources;
     }
 
-    public int getResourceCount(Resource resource) {
+    public double getResourceCount(Resource resource) {
         return allResources.get(resource);
     }
 
-    public boolean hasStorageForItem(Resource item, int amount) {
+    public boolean hasStorageForItem(Resource item, double amount) {
         int capacity = 0;
         for (Building building : buildings) {
             if (building.getBuildingType().equals(item.getStorageType().getBuildingType())) {
@@ -140,10 +140,9 @@ public class Government {
             }
         }
         return capacity >= amount;
-
     }
 
-    public boolean hasEnoughItem(Resource item, int amount) {
+    public boolean hasEnoughItem(Resource item, double amount) {
         return allResources.get(item) >= amount;
     }
 
@@ -178,13 +177,13 @@ public class Government {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 if (storageBuilding.getStorage().containsKey(item)) {
                     if (storageBuilding.getStorage().get(item) >= amount) {
-                        storageBuilding.getStorage().remove(item);
+                        storageBuilding.getStorage().put(item, storageBuilding.getStorage().get(item) - amount);
                         return;
                     } else {
                         amount -= storageBuilding.getStorage().get(item);
                         storageBuilding.getStorage().remove(item);
                     }
-                } else continue;
+                }
             }
         }
     }

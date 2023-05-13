@@ -100,16 +100,16 @@ public class GameMenuController {
                 getPopularityFromReligion();
     }
 
-    public static int getAppleCount(){
+    public static double getAppleCount(){
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.APPLE);
     }
-    public static int getMeetCount(){
+    public static double getMeetCount(){
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.MEAT);
     }
-    public static int getCheeseCount(){
+    public static double getCheeseCount(){
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.CHEESE);
     }
-    public static int getBreadCount(){
+    public static double getBreadCount(){
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.BREAD);
     }
 

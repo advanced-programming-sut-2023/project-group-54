@@ -1,9 +1,13 @@
 package view;
 
+import controller.BuildingMenuController;
 import controller.UnitMenuController;
+import model.Buildings.SiegeType;
+import model.Direction;
 import model.units.State;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
+import view.enums.messages.BuildingMenuMessage;
 import view.enums.messages.UnitMenuMessage;
 
 import java.util.ArrayList;
@@ -29,17 +33,16 @@ public class UnitMenu {
             else if ((options = CommandHandler.parsCommand(Command.STOP_PATROL_UNIT, command)) != null)
                 stopPatrolUnit(options);
             else if ((options = CommandHandler.parsCommand(Command.SET, command)) != null)
-                stopPatrolUnit(options);
+                setState(options);
             else if ((options = CommandHandler.parsCommand(Command.ATTACK, command)) != null)
-                stopPatrolUnit(options);
+                attack(options);
             else if ((options = CommandHandler.parsCommand(Command.DISBAND_UNIT, command)) != null)
-                stopPatrolUnit(options);
-            //if command is setState
-            //if command is attack
-            //if command is pourOil
-            //if command is digTunnel
+                disbandUnit();
+            else if ((options = CommandHandler.parsCommand(Command.POUR_OIL, command)) != null)
+                pourOil(options);
+            else if ((options = CommandHandler.parsCommand(Command.BUILD, command)) != null)
+                buildEquipment(options);
             //if command is buildEquipment
-            //if command is disbandUnit
 //        }
     }
 
@@ -150,7 +153,7 @@ public class UnitMenu {
         }
     }
 
-    private void setState(HashMap<String, ArrayList<String>> options) {
+    private static void setState(HashMap<String, ArrayList<String>> options) {
         String state = options.get("s").get(0);
         State stateType = null;
         for (State value : State.values()) {
@@ -164,7 +167,7 @@ public class UnitMenu {
         }
     }
 
-    private void attack(HashMap<String, ArrayList<String>> options) {
+    private static void attack(HashMap<String, ArrayList<String>> options) {
         boolean isE = false;
         int x = -100;
         int y = -100;
@@ -205,15 +208,54 @@ public class UnitMenu {
         }
     }
 
-    private void pourOil() {
-
+    private static void pourOil(HashMap<String, ArrayList<String>> options) {
+        String direction = options.get("d").get(0);
+        Direction direction1 = null;
+        switch (direction){
+            case "up":
+                direction1 = Direction.UP;
+                break;
+            case "down":
+                direction1 = Direction.DOWN;
+                break;
+            case "right":
+                direction1 = Direction.RIGHT;
+                break;
+            case "left":
+                direction1 = Direction.LEFT;
+                break;
+        }
+        if(direction1 == null){
+            System.out.println("invalid direction");
+            return;
+        }
+        UnitMenuMessage result = UnitMenuController.pourOil(direction1);
+        switch (result){
+            case SUCCESS -> System.out.println("this unit(s) pour oil after turn");
+            case INVALID_UNIT -> System.out.println("this command can't use for this unit(s)");
+        }
     }
 
-    private void buildEquipment() {
-
+    private static void buildEquipment(HashMap<String, ArrayList<String>> options) {
+        String equipment = options.get("q").get(0);
+        SiegeType siegeType = null;
+        for (SiegeType value : SiegeType.values()) {
+            if(value.getName().equals(equipment)){
+                siegeType = value;
+                break;
+            }
+        }
+        if(siegeType == null){
+            System.out.println("invalid equipment");
+        }
+        UnitMenuMessage result = UnitMenuController.buildEquipment(siegeType);
+        switch (result){
+            case SUCCESS -> System.out.println("this unit(s) make equipment after turn");
+            case INVALID_UNIT -> System.out.println("this command can't use for this unit(s)");
+        }
     }
 
-    private void disbandUnit() {
+    private static void disbandUnit() {
         UnitMenuMessage result = UnitMenuController.disbandUnit();
         if (Objects.requireNonNull(result) == UnitMenuMessage.SUCCESS) {
             System.out.println("unit(s) disbanded successfully");

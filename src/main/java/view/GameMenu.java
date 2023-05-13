@@ -106,10 +106,10 @@ public class GameMenu {
     }
     private static void foodListShow(HashMap<String, ArrayList<String>> options){
         String s = "";
-        int appleCount = GameMenuController.getAppleCount();
-        int meetCount = GameMenuController.getMeetCount();
-        int cheeseCount = GameMenuController.getCheeseCount();
-        int breadCount = GameMenuController.getBreadCount();
+        double appleCount = GameMenuController.getAppleCount();
+        double meetCount = GameMenuController.getMeetCount();
+        double cheeseCount = GameMenuController.getCheeseCount();
+        double breadCount = GameMenuController.getBreadCount();
 
         s += "Apple: " + appleCount;
         s += "\nMeet: " + meetCount;

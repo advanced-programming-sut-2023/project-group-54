@@ -3,18 +3,44 @@ package model.units;
 import model.Buildings.Building;
 import model.Buildings.SiegeType;
 import model.Direction;
-import model.User;
 
-public class Engineer extends Unit{
+public class Engineer extends Unit {
     private Boolean hasOil;
     private Direction pour;
     private Building buildingWhichWorks;
     private boolean isWorking;
+    private SiegeType siegeTypeToBuild;
 
     public Engineer(int xPosition, int yPosition) {
         super(UnitType.ENGINEER, xPosition, yPosition);
         this.hasOil = false;
+        this.pour = null;
         this.isWorking = false;
+        this.siegeTypeToBuild = null;
+    }
+
+    public SiegeType getSiegeTypeToBuild() {
+        return siegeTypeToBuild;
+    }
+
+    public void setSiegeTypeToBuild(SiegeType siegeTypeToBuild) {
+        this.siegeTypeToBuild = siegeTypeToBuild;
+    }
+
+    public Boolean getHasOil() {
+        return hasOil;
+    }
+
+    public void setHasOil(Boolean hasOil) {
+        this.hasOil = hasOil;
+    }
+
+    public Direction getPour() {
+        return pour;
+    }
+
+    public void setPour(Direction pour) {
+        this.pour = pour;
     }
 
     public Building getBuildingWhichWorks() {
@@ -33,11 +59,8 @@ public class Engineer extends Unit{
         isWorking = working;
     }
 
-    public void pourOil(){
 
-    }
-
-    public void makeSiege(SiegeType siegeType){
+    public void makeSiege(SiegeType siegeType) {
 
     }
 }

@@ -1,7 +1,9 @@
 package controller;
 
+import model.Buildings.SiegeType;
 import model.Direction;
 import model.Game;
+import model.units.Engineer;
 import model.units.State;
 import model.units.Unit;
 import view.enums.messages.UnitMenuMessage;
@@ -66,10 +68,33 @@ public class UnitMenuController {
     }
 
     public static UnitMenuMessage pourOil(Direction direction) {
+        boolean isEngineer = true;
+        for (Unit unit : selectedUnit) {
+            if(!(unit instanceof Engineer))
+                isEngineer = false;
+        }
+        if(!isEngineer)
+            return UnitMenuMessage.INVALID_UNIT;
+        for (Unit unit : selectedUnit) {
+            Engineer engineer = (Engineer) unit;
+            engineer.setPour(direction);
+        }
         return UnitMenuMessage.SUCCESS;
     }
 
-    public static UnitMenuMessage buildEquipment(String equipmentName) {
+    public static UnitMenuMessage buildEquipment(SiegeType siegeType) {
+        boolean isEngineer = true;
+        for (Unit unit : selectedUnit) {
+            if(!(unit instanceof Engineer))
+                isEngineer = false;
+        }
+        if(!isEngineer)
+            return UnitMenuMessage.INVALID_UNIT;
+
+        for (Unit unit : selectedUnit) {
+            Engineer engineer = (Engineer) unit;
+            engineer.setSiegeTypeToBuild(siegeType);
+        }
         return UnitMenuMessage.SUCCESS;
     }
 
