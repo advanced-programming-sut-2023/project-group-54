@@ -463,8 +463,8 @@ public class MapMenuController {
         }
         int finalGold=Game.getCurrentUser().getGovernment().getGold()+ buildingType.getCost();
         Game.getCurrentUser().getGovernment().setGold(finalGold);
-        //remove resource
-
+        Game.getCurrentUser().getGovernment().changeResourceAmount(buildingType.getCostType(),-buildingType.getCostAmount());
+        Game.getCurrentUser().getGovernment().removeFromStorage(buildingType.getCostType(),-buildingType.getCostAmount());
         return MapMenuMessage.SUCCESS;
     }
 

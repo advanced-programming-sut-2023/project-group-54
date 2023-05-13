@@ -1,12 +1,14 @@
 package controller;
 
 import model.*;
-import model.Buildings.Building;
-import model.Buildings.BuildingType;
-import model.Buildings.StorageBuilding;
+import model.Buildings.*;
+import model.units.Unit;
 import view.enums.messages.GameMenuMessage;
+import view.enums.messages.ShopMenuMessage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GameMenuController {
     public static int getPopularityFromFood(){
@@ -100,16 +102,16 @@ public class GameMenuController {
                 getPopularityFromReligion();
     }
 
-    public static int getAppleCount(){
+    public static double getAppleCount(){
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.APPLE);
     }
-    public static int getMeetCount(){
+    public static double getMeetCount(){
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.MEAT);
     }
-    public static int getCheeseCount(){
+    public static double getCheeseCount(){
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.CHEESE);
     }
-    public static int getBreadCount(){
+    public static double getBreadCount(){
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.BREAD);
     }
 
@@ -126,16 +128,58 @@ public class GameMenuController {
         return GameMenuMessage.SUCCESS;
     }
 
-    public static GameMenuMessage dropBuilding(int xCoordinate, int yCoordinate, Building building) {
-        return GameMenuMessage.SUCCESS;
+    private static void killingPit(User user,Building building) {
+        for (int i = building.getX1Position(); i < building.getX2Position(); i++) {
+            for (int j = building.getY1Position(); j < building.getY2Position(); j++) {
+                ArrayList<Unit> unitsTobeRemoved = new ArrayList<>();
+                for (Unit unit : Game.getGameMap()[i][j].getUnit()) {
+                    if (unit.getGovernment().equals(user.getGovernment())) unitsTobeRemoved.add(unit);
+                }
+                for (Unit unit : unitsTobeRemoved) {
+                    Game.getGameMap()[i][j].getUnit().remove(unit);
+                }
+            }
+        }
     }
 
-    public static GameMenuMessage selectBuilding(int xCoordinate, int yCoordinate) {
-        return GameMenuMessage.SUCCESS;
+    public static void procedureBuildings(User user,Building building) {
+        if (((ProducerBuilding)building).getProducerType().isAddPopularity()) user.getGovernment().setPopularity2(1);
+        for (HashMap.Entry<HashMap<Resource, Double>,HashMap<Resource,Double>> input : ((ProducerBuilding)building).getProducerType().getPuts().entrySet()) {
+            if (input.getKey() != null) {
+                for(Map.Entry<Resource,Double> input2 : input.getKey().entrySet()) {
+                    if (user.getGovernment().getAllResources().get(input2.getKey()) < input2.getValue())
+                        continue;
+                    for(Map.Entry<Resource,Double> input3 : input.getValue().entrySet()) {
+                        if(!(user.getGovernment().hasStorageForItem(input3.getKey(),input3.getValue()))) continue;
+                        user.getGovernment().changeResourceAmount(input2.getKey(),-input2.getValue());
+                        user.getGovernment().removeFromStorage(input2.getKey(),-input2.getValue());
+                        user.getGovernment().changeResourceAmount(input3.getKey(),input3.getValue());
+                        user.getGovernment().addToStorage(input3.getKey(),input3.getValue());
+                    }
+                }
+            } else {
+                for(Map.Entry<Resource,Double> input3 : input.getValue().entrySet()) {
+                    if(!(user.getGovernment().hasStorageForItem(input3.getKey(),input3.getValue()))) continue;
+                    user.getGovernment().changeResourceAmount(input3.getKey(),input3.getValue());
+                    user.getGovernment().addToStorage(input3.getKey(),input3.getValue());
+                }
+            }
+        }
     }
 
-    public static GameMenuMessage selectUnit(int xCoordinate, int yCoordinate) {
-        return GameMenuMessage.SUCCESS;
+    public static void nextTurnForBuildings(User user) {
+        ArrayList<Building> buildings = new ArrayList<>();
+        for (Building building : Building.getBuildings()) {
+            if (building.getOwner().equals(user.getGovernment())) buildings.add(building);
+        }
+        for (Building building : buildings) {
+            if (building.getBuildingType().equals(BuildingType.SMALL_STONE_GATE) || building.getBuildingType().equals(BuildingType.HOVEL))
+                user.getGovernment().setPopulation2(8);
+            else if (building.getBuildingType().equals(BuildingType.LARGE_STONE_GATE)) user.getGovernment().setPopulation2(10);
+            else if (building.getBuildingType().equals(BuildingType.KILLING_PIT)) killingPit(user,building);
+            else if (building.getBuildingType().getBuildingGroup2().equals(BuildingGroup.PRODUCER_BUILDING) &&
+                    ((ProducerBuilding)building).getProducerType().getPuts() == null) procedureBuildings(user,building);
+        }
     }
 
     public static GameMenuMessage nextTurn() {

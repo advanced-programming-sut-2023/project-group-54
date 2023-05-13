@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Government {
-    private final HashMap<Resource, Integer> allResources = new HashMap<>();
+    private final HashMap<Resource, Double> allResources = new HashMap<>();
     private int population;
     private int maxPopulation;
     private int popularity;
@@ -31,7 +31,7 @@ public class Government {
         this.gold = 4000;
 
         for (Resource value : Resource.values()) {
-            allResources.put(value, 0);
+            allResources.put(value, 0.0);
         }
     }
 
@@ -59,6 +59,10 @@ public class Government {
         this.population = population;
     }
 
+    public void setPopulation2(int population) {
+        this.population += population;
+    }
+
     public void addBuilding(Building building) {
         buildings.add(building);
     }
@@ -67,8 +71,8 @@ public class Government {
         return popularity;
     }
 
-    public void setPopularity(int popularity) {
-        this.popularity = popularity;
+    public void setPopularity2(int popularity) {
+        this.popularity += popularity;
     }
 
     public int getFoodRate() {
@@ -119,20 +123,20 @@ public class Government {
         this.gold = gold;
     }
 
-    public void changeResourceAmount(Resource Resource, int count) {
+    public void changeResourceAmount(Resource Resource, double count) {
         allResources.put(Resource, allResources.get(Resource) + count);
     }
 
-    public HashMap<Resource, Integer> getAllResources() {
+    public HashMap<Resource, Double> getAllResources() {
         return allResources;
     }
 
-    public int getResourceCount(Resource resource) {
+    public double getResourceCount(Resource resource) {
         return allResources.get(resource);
     }
 
-    public boolean hasStorageForItem(Resource item, int amount) {
-        int capacity = 0;
+    public boolean hasStorageForItem(Resource item, double amount) {
+        double capacity = 0d;
         for (Building building : buildings) {
             if (building.getBuildingType().equals(item.getStorageType().getBuildingType())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;

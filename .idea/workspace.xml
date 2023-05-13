@@ -6,25 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="unit menu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/UnitMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/UnitMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ShopMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ShopMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/ProducerBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/ProducerBuilding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/ProducerType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/ProducerType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Government.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/UnitMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/UnitMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/BuildingMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/BuildingMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/UnitMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/UnitMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/Building.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/Building.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Government.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Government.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Map.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/units/Engineer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/units/Engineer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/units/Unit$State.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/units/Unit.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/units/Unit.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/BuildingMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/BuildingMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/GameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/GameMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/UnitMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/UnitMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/commands/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/enums/commands/Command.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/messages/MapMenuMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/enums/messages/MapMenuMessage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/enums/messages/MapMenuMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/enums/messages/MapMenuMessage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,11 +86,9 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "node.js.selected.package.tslint": "(autodetect)"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="phase0" />
