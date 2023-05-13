@@ -1,44 +1,22 @@
 package model;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
 import controller.Controller;
 
-import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class User {
-    private static final ArrayList<User> users;
-    @Expose
+    private static final ArrayList<User> users = new ArrayList<>();
     private String username;
-    @Expose
     private String password;
-    @Expose
     private String nickname;
-    @Expose
     private String email;
-    @Expose
     private String slogan;
-    @Expose
     private int questionNumber;
-    @Expose
     private String questionAnswer;
     private Government government;
-    static {
-        Gson gson = new Gson();
-        String filePath = new File("").getAbsolutePath().concat("/src/main/java/model/data/users.json");
-        FileReader fileReader;
-        try {
-            fileReader = new FileReader(filePath);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        ArrayList<User> allUsers = gson.fromJson(fileReader, new TypeToken<ArrayList<User>>() {
-        }.getType());
-        if (allUsers == null) allUsers = new ArrayList<>();
-        users = allUsers;
-    }
+    private int highScore;
+
 
     public User(String username, String password, String nickname, String email, String slogan, int questionNumber, String questionAnswer, Government government) {
         this.username = username;
@@ -133,5 +111,26 @@ public class User {
     }
     public static void addUser(User user){
         users.add(user);
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
+    public static int getUserRank(User user) {
+        ArrayList<User> sortUsers = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            sortUsers.add(users.get(i));
+        }
+        Collections.sort(sortUsers);
+        for (int i = 0; i < sortUsers.size(); i++) {
+            if (sortUsers.get(i).getUsername().equals(user.getUsername())) return i + 1;
+        }
+        return -1;
+    }
+    @Override
+    public int compareTo(User a) {
+        if (this.highScore < a.highScore) return 1;
+        else if (this.highScore > a.highScore) return -1;
+        else return this.username.compareTo(a.username);
     }
 }

@@ -64,10 +64,19 @@ public enum Command {
             new Option("s",1,true)
     ))),
     REMOVE_SLOGAN("profile\\s+remove\\s+slogan",new ArrayList<>(
+
     )),
     DISPLAY_SLOGAN("profile\\s+display\\s+slogan",new ArrayList<>(
+
     )),
     DISPLAY_PROFILE("profile\\s+display",new ArrayList<>(
+
+    )),
+    PROFILE_DISPLAY_HIGH_SCORE("profile\\s+display\\s+highscore",new ArrayList<>(
+
+    )),
+    PROFILE_DISPLAY_RANK("profile\\s+display\\s+rank",new ArrayList<>(
+
     )),
 
     //ShopMenu
@@ -77,6 +86,22 @@ public enum Command {
             new Option("i",1,false),
             new Option("a",1,false)
     ))),
+
+    //TradeMenu
+    TRADE("trade\\s+",new ArrayList<>(Arrays.asList(
+            new Option("-t",1,false),
+            new Option("-a",1,false),
+            new Option("-p",1,false),
+            new Option("-m",1,false)
+    ))),
+    TRADE_LIST("trade//s+list",new ArrayList<>(
+    )),
+    TRADE_ACCEPT("trade\\s+accept\\s+",new ArrayList<>(Arrays.asList(
+            new Option("i",1,false),
+            new Option("m",1,false)
+    ))),
+    TRADE_HISTORY("trade\\s+history",new ArrayList<>(
+    )),
 
     //GameMenu
     SHOW_POPULARITY_FACTORS("show\\s+popularity\\s+factors", new ArrayList<>(
@@ -169,32 +194,6 @@ public enum Command {
     NEXT_TURN("next\\s+turn", new ArrayList<>(
     )),
 
-    //BuildingMenu,
-    SHOW_FOOD_LIST("show\\s+food\\s+list", new ArrayList<>(
-    )),
-    FOOD_RATE("food\\s+rate", new ArrayList<>(List.of(
-            new Option("r", 1, true)
-    ))),
-    FOOD_RATE_SHOW("food\\s+rate\\s+show", new ArrayList<>(
-    )),
-    TAX_RATE("tax\\s+rate", new ArrayList<>(List.of(
-            new Option("r", 1, true)
-    ))),
-    TAX_RATE_SHOW("tax\\s+rate\\s+show", new ArrayList<>(
-    )),
-    CREATE_UNIT("createunit", new ArrayList<>(List.of(
-            new Option("t", 1, false),
-            new Option("c", 1, false)
-    ))),
-    REPAIR("repair", new ArrayList<>(
-    )),
-    OPEN_GATE("open gate", new ArrayList<>(
-    )),
-    CLOSE_GATE("close gate", new ArrayList<>(
-    )),
-    CHANGE_OUTPUT("change output", new ArrayList<>(List.of(
-            new Option("r", 1, true)
-    ))),
 
     //UnitMenu
     MOVE_UNIT_TO("move\\s+unit\\s+to", new ArrayList<>(List.of(
