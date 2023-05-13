@@ -250,7 +250,7 @@ public class MapMenuController {
                 house.getBuilding().getBuildingType().getWorkers() + " workers" : "") : "there is no building here") + "\n");
         details.append(((house.getTree() != null) ? "we have tree with type " + house.getTree().toString() : "no tree in this house") + "\n");
         for (Unit unit : house.getUnit()) {
-            if (unit instanceof Engineer) details.append(i + ") engineer owner : " + unit.getGovernment().getUser().getUsername());
+            if (unit instanceof Engineer) details.append(i + ") engineer owner : " + unit.getOwner().getUser().getUsername());
             else details.append(i + ") troop name : " + unit.getUnitType().getType() + " - troop hp : " + unit.getHp() +
                     "- unit " +((unit.getPatrol()) ? "is" : "is not") + " patrol\n\t- troop state : " + unit.getState() +
                     " - unit owner is : " + unit.getGovernment().getUser().getUsername() + "\n");
@@ -275,7 +275,6 @@ public class MapMenuController {
     }
 
     public static MapMenuMessage clearBlock(int xCoordinate, int yCoordinate) {
-        //to complete
         //checking for not destroy the main house
         int x1 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getX1Position();
         int y1 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getY1Position();
@@ -286,7 +285,7 @@ public class MapMenuController {
                 Game.getGameMap()[i][j].setBuilding(null);
             }
         }
-        Game.getGameMap()[xCoordinate][yCoordinate].setUnitsNull();
+        Game.getGameMap()[xCoordinate][yCoordinate].setUnit();
         return MapMenuMessage.SUCCESS;
     }
 
@@ -464,8 +463,8 @@ public class MapMenuController {
         }
         int finalGold=Game.getCurrentUser().getGovernment().getGold()+ buildingType.getCost();
         Game.getCurrentUser().getGovernment().setGold(finalGold);
-        //remove resource
-
+        Game.getCurrentUser().getGovernment().changeResourceAmount(buildingType.getCostType(),-buildingType.getCostAmount());
+        Game.getCurrentUser().getGovernment().removeFromStorage(buildingType.getCostType(),-buildingType.getCostAmount());
         return MapMenuMessage.SUCCESS;
     }
 

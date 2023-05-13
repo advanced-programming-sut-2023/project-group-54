@@ -301,7 +301,7 @@ public class GameMenu {
     }
 
     private static void clearOneBlock(int x,int y) {
-        System.out.println(MapMenuController.clearBlock(x,y));
+
     }
 
     private static Direction directionChecker(HashMap<String, ArrayList<String>> options) {
@@ -578,6 +578,8 @@ public class GameMenu {
                 break;
         }
     }
+
+
     private static void nextTurn(HashMap<String, ArrayList<String>> options){
 
     }

@@ -31,7 +31,7 @@ public class Government {
         this.gold = 4000;
 
         for (Resource value : Resource.values()) {
-            allResources.put(value, (double) 0);
+            allResources.put(value, 0);
         }
     }
 
@@ -59,12 +59,20 @@ public class Government {
         this.population = population;
     }
 
+    public void setPopulation2(int population) {
+        this.population += population;
+    }
+
     public void addBuilding(Building building) {
         buildings.add(building);
     }
 
     public int getPopularity() {
         return popularity;
+    }
+
+    public void setPopularity2(int popularity) {
+        this.popularity += popularity;
     }
 
     public void setPopularity(int popularity) {
@@ -140,6 +148,7 @@ public class Government {
             }
         }
         return capacity >= amount;
+
     }
 
     public boolean hasEnoughItem(Resource item, double amount) {
@@ -183,7 +192,7 @@ public class Government {
                         amount -= storageBuilding.getStorage().get(item);
                         storageBuilding.getStorage().remove(item);
                     }
-                }
+                } else continue;
             }
         }
     }
