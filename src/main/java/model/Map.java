@@ -49,10 +49,6 @@ public class Map {
         this.building = building;
     }
 
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
-
     public MapType getTree() {
         return tree;
     }
