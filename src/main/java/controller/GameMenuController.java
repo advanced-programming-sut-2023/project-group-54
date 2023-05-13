@@ -149,12 +149,17 @@ public class GameMenuController {
                 for(Map.Entry<Resource,Double> input2 : input.getKey().entrySet()) {
                     if (user.getGovernment().getAllResources().get(input2.getKey()) < input2.getValue())
                         continue;
-                    for(Map.Entry<Resource,Double> input3 : input.getValue().entrySet()) {
-                        if(!(user.getGovernment().hasStorageForItem(input3.getKey(),input3.getValue()))) continue;
+                    if (input.getValue() == null) {
                         user.getGovernment().changeResourceAmount(input2.getKey(),-input2.getValue());
                         user.getGovernment().removeFromStorage(input2.getKey(),-input2.getValue());
-                        user.getGovernment().changeResourceAmount(input3.getKey(),input3.getValue());
-                        user.getGovernment().addToStorage(input3.getKey(),input3.getValue());
+                    } else {
+                        for (Map.Entry<Resource, Double> input3 : input.getValue().entrySet()) {
+                            if (!(user.getGovernment().hasStorageForItem(input3.getKey(), input3.getValue()))) continue;
+                            user.getGovernment().changeResourceAmount(input2.getKey(), -input2.getValue());
+                            user.getGovernment().removeFromStorage(input2.getKey(), -input2.getValue());
+                            user.getGovernment().changeResourceAmount(input3.getKey(), input3.getValue());
+                            user.getGovernment().addToStorage(input3.getKey(), input3.getValue());
+                        }
                     }
                 }
             } else {
@@ -179,6 +184,8 @@ public class GameMenuController {
             else if (building.getBuildingType().equals(BuildingType.KILLING_PIT)) killingPit(user,building);
             else if (building.getBuildingType().getBuildingGroup2().equals(BuildingGroup.PRODUCER_BUILDING) &&
                     ((ProducerBuilding)building).getProducerType().getPuts() == null) procedureBuildings(user,building);
+            else if (building.getBuildingType().equals(BuildingType.CHURCH) || building.getBuildingType().equals(BuildingType.CATHEDRAL))
+                user.getGovernment().setPopularity2(2);
         }
     }
 
