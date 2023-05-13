@@ -8,6 +8,7 @@ public enum TradeMenuMessage {
     NOT_ENOUGH_CAPACITY,
     CANCEL,
     NOT_ENOUGH_ITEM,
-    INVALID_PRICE;
+    INVALID_PRICE,
+    INVALID_INDEX;
 
 }

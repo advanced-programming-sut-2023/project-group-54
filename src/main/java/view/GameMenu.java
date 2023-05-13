@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
-public class GameMenu {
+public class
+GameMenu {
     private static int xOfMap;
     private static int yOfMap;
     private static MapType typeForTreeAndTexture = MapType.DEFAULT;
