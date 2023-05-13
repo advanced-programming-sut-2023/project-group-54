@@ -51,10 +51,12 @@ public class UnitMenuController {
                     return UnitMenuMessage.THERE_ARE__BUILDING_ON_THAT_WAY;
             }
         }
-
+        //check if it can goes there
         for (Unit unit : selectedUnit) {
             unit.setPatrol(true);
             unit.setPatrolTF(0);
+            unit.setxPosition(xCoordinate1);
+            unit.setyPosition(yCoordinate1);
             unit.setPatrolXFrom(xCoordinate1);
             unit.setPatrolXTarget(xCoordinate2);
             unit.setPatrolYFrom(yCoordinate1);

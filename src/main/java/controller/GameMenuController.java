@@ -266,24 +266,42 @@ public class GameMenuController {
             ((TrapBuilding)Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding()).firePitchDitch();
     }
 
-    public static void setAttackPatrolUnit(Unit unit) {
-        for (int i = unit.getx; i < ; i++) {
-            for (int j = 0; j < ; j++) {
-
+    public static void setPlaceForAttackPatrolUnit(Unit unit) {
+        outer : for (int i = unit.getPatrolXFrom(); i < unit.getPatrolXTarget(); i++) {
+            for (int j = unit.getPatrolYFrom(); j < unit.getPatrolYTarget(); j++) {
+                for (Unit unit1 : Game.getGameMap()[i][j].getUnit()) {
+                    if (!unit1.getGovernment().equals(unit.getGovernment())) {
+                        if (unit.getUnitType().getRange() != 1) {
+                            if (unit1.getyPosition() > unit.getyPosition() + unit.getUnitType().getRange()) {
+                                moveTroop(unit,unit.getxPosition(),unit.getyPosition() +
+                                        unit1.getyPosition() - unit.getUnitType().getRange());
+                            } if (unit1.getyPosition() > unit.getyPosition() + unit.getUnitType().getRange()) {
+                                moveTroop(unit,unit.getxPosition() +
+                                        unit1.getxPosition() - unit.getUnitType().getRange(),unit.getyPosition());
+                            }
+                            unit.setXTarget(i);
+                            unit.setYTarget(j);
+                            archersAttackSpecialHouse(unit);
+                            return;
+                        }
+                        moveTroop(unit,i,j);
+                        return;
+                    }
+                }
             }
         }
     }
 
     public static void UnitsAttack() {
         for (Unit unit : Unit.getUnits()) {
-            if (unit.getUnitType().getRange() != -1) {
+            if (unit.getUnitType().getRange() != -1 && !unit.getPatrol()) {
                 if (unit.getState().equals(State.DEFENSIVE)) setPlacesToFightInDifferentModes(unit,false);
                 else if (unit.getState().equals(State.AGGRESSIVE)) setPlacesToFightInDifferentModes(unit,true);
                 if ( unit.getxTarget() == -1)
                     archersAttackRadios(unit);
                 else if (unit.getxTarget() != -1)
                     archersAttackRadios(unit);
-            } else if (unit.getPatrol()) setAttackPatrolUnit(unit);
+            } else if (unit.getPatrol()) setPlaceForAttackPatrolUnit(unit);
         }
     }
 
