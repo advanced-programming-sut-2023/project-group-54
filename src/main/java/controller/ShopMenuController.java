@@ -13,7 +13,7 @@ public class ShopMenuController {
     public static String showItemList() {
         String result = "";
         int counter = 1;
-        HashMap<Resource, Integer> AllResources = user.getGovernment().getAllResources();
+        HashMap<Resource, Double> AllResources = user.getGovernment().getAllResources();
         for (Resource item : Resource.values()) {
             result += (counter++) + "- itemName:" + item.getName() +
                     " Buy Price: " + item.getBuyPrice() + " Sell Price: " + item.getSellPrice() +

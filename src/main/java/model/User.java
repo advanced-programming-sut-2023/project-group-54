@@ -5,7 +5,7 @@ import controller.Controller;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class User {
+public class User implements Comparable{
     private static final ArrayList<User> users = new ArrayList<>();
     private String username;
     private String password;
@@ -127,10 +127,11 @@ public class User {
         }
         return -1;
     }
+
     @Override
-    public int compareTo(User a) {
-        if (this.highScore < a.highScore) return 1;
-        else if (this.highScore > a.highScore) return -1;
-        else return this.username.compareTo(a.username);
+    public int compareTo(Object a) {
+        if (this.highScore < ((User) a).highScore) return 1;
+        else if (this.highScore > ((User) a).highScore) return -1;
+        else return this.username.compareTo(((User) a).username);
     }
 }

@@ -36,7 +36,7 @@ public class Government {
         this.gold = 4000;
 
         for (Resource value : Resource.values()) {
-            allResources.put(value, 0);
+            allResources.put(value, (double) 0);
         }
     }
 

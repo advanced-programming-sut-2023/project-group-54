@@ -1,5 +1,6 @@
 package view;
 import controller.*;
+import model.User;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
 import view.enums.messages.ProfileMenuMessage;

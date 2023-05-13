@@ -4,19 +4,107 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="some for unit menu">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="debug shop and trade">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/BuildingMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/BuildingMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ShopMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ShopMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/UnitMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/UnitMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/SiegeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/SiegeType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Government.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/units/Engineer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/units/Engineer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/UnitMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/UnitMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/enums/messages/BuildingMenuMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/enums/messages/BuildingMenuMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/enums/messages/UnitMenuMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/enums/messages/UnitMenuMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Trade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Trade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ProfileMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/BuildingMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/BuildingMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/GameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/GameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/LoginMenuController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/ProfileMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/ProfileMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/ShopMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/ShopMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/TradeMenuController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/UnitMenuController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/DefenseBuilding.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/DefenseType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerBuilding.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$1$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$10$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$10$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$10.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$11$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$11.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$12$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$12.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$13$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$13.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$14$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$14.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$15$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$15$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$15.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$16$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$16$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$16$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$16$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$16.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$17$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$17$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$17$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$17$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$17.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$18$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$18$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$18$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$18$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$18.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$2$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$3$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$4$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$5$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$6$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$7$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$7$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$8$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$8$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$8.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$9$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType$9.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ProducerType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/ShopBuilding.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/SiegeBuilding.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/SiegeType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/StorageBuilding.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/TrapBuilding.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Game.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Government.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Government.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Map.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/MapType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/MapType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Trade.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Trade.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/units/Engineer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/units/Unit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/units/UnitType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/BuildingMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/GameMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/LoginMenu$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/LoginMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/MainMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/ProfileMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/ShopMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/SignupMenu$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/SignupMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/TradeMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/UnitMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/commands/Command.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/commands/CommandHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/messages/BuildingMenuMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/enums/messages/BuildingMenuMessage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/messages/MapMenuMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/enums/messages/MapMenuMessage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/messages/TradeMenuMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/enums/messages/UnitMenuMessage.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,11 +177,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="phase0" />
@@ -202,7 +290,13 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۱۲" />
       <updated>1683929078032</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL‎−۰۰۰۱۳" summary="debug shop and trade">
+      <created>1683974945850</created>
+      <option name="number" value="LOCAL‎−۰۰۰۱۳" />
+      <option name="presentableId" value="LOCAL‎−۰۰۰۱۳" />
+      <updated>1683974945850</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -246,7 +340,8 @@
     <MESSAGE value="complete user save in json" />
     <MESSAGE value="unit menu" />
     <MESSAGE value="some for unit menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="some for unit menu" />
+    <MESSAGE value="debug shop and trade" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug shop and trade" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
