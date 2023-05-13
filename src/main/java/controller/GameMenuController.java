@@ -10,17 +10,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameMenuController {
-    public static int getPopularityFromFood(){
+    public static int getPopularityFromFood() {
         int foodPop = Game.getCurrentUser().getGovernment().getFoodRate() * 4;
         int addPopForDif = (hasApple() ? 1 : 0) + (hasMeet() ? 1 : 0) + (hasBread() ? 1 : 0) + (hasCheese() ? 1 : 0);
         return foodPop + addPopForDif;
     }
-    private static boolean hasApple(){
+
+    private static boolean hasApple() {
         for (Building building : Building.getBuildings()) {
-            if(building.getBuildingType().equals(BuildingType.GRANARY)){
+            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
-                    if(resource.equals(Resource.APPLE)){
+                    if (resource.equals(Resource.APPLE)) {
                         return true;
                     }
                 }
@@ -29,12 +30,13 @@ public class GameMenuController {
         }
         return false;
     }
-    private static boolean hasMeet(){
+
+    private static boolean hasMeet() {
         for (Building building : Building.getBuildings()) {
-            if(building.getBuildingType().equals(BuildingType.GRANARY)){
+            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
-                    if(resource.equals(Resource.MEAT)){
+                    if (resource.equals(Resource.MEAT)) {
                         return true;
                     }
                 }
@@ -43,12 +45,13 @@ public class GameMenuController {
         }
         return false;
     }
-    private static boolean hasCheese(){
+
+    private static boolean hasCheese() {
         for (Building building : Building.getBuildings()) {
-            if(building.getBuildingType().equals(BuildingType.GRANARY)){
+            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
-                    if(resource.equals(Resource.CHEESE)){
+                    if (resource.equals(Resource.CHEESE)) {
                         return true;
                     }
                 }
@@ -57,12 +60,13 @@ public class GameMenuController {
         }
         return false;
     }
-    private static boolean hasBread(){
+
+    private static boolean hasBread() {
         for (Building building : Building.getBuildings()) {
-            if(building.getBuildingType().equals(BuildingType.GRANARY)){
+            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
-                    if(resource.equals(Resource.BREAD)){
+                    if (resource.equals(Resource.BREAD)) {
                         return true;
                     }
                 }
@@ -71,29 +75,33 @@ public class GameMenuController {
         }
         return false;
     }
-    public static int getPopularityFromTax(){
+
+    public static int getPopularityFromTax() {
         int taxPop = 0;
         int gameTaxRate = Game.getCurrentUser().getGovernment().getTaxRate();
-        if(gameTaxRate >= -3 && gameTaxRate <= 0)
+        if (gameTaxRate >= -3 && gameTaxRate <= 0)
             taxPop = (gameTaxRate * -2) + 1;
-        else if(gameTaxRate >= 1 && gameTaxRate <= 4)
+        else if (gameTaxRate >= 1 && gameTaxRate <= 4)
             taxPop = gameTaxRate * -2;
-        else if(gameTaxRate >= 5 && gameTaxRate <= 8)
+        else if (gameTaxRate >= 5 && gameTaxRate <= 8)
             taxPop = (gameTaxRate * -3) + (8 - gameTaxRate);
         return taxPop;
     }
-    public static int getPopularityFromFear(){
+
+    public static int getPopularityFromFear() {
         return Game.getCurrentUser().getGovernment().getFearRate();
     }
-    public static int getPopularityFromReligion(){
+
+    public static int getPopularityFromReligion() {
         int religionBuildingCount = 0;
         for (Building building : Building.getBuildings()) {
-            if(building.getBuildingType().equals(BuildingType.CHURCH) || building.getBuildingType().equals(BuildingType.CATHEDRAL)){
+            if (building.getBuildingType().equals(BuildingType.CHURCH) || building.getBuildingType().equals(BuildingType.CATHEDRAL)) {
                 religionBuildingCount++;
             }
         }
         return Math.min(religionBuildingCount, 4);
     }
+
     public static int getPopularity() {
         return getPopularityFromFood() +
                 getPopularityFromTax() +
@@ -101,16 +109,19 @@ public class GameMenuController {
                 getPopularityFromReligion();
     }
 
-    public static double getAppleCount(){
+    public static double getAppleCount() {
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.APPLE);
     }
-    public static double getMeetCount(){
+
+    public static double getMeetCount() {
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.MEAT);
     }
-    public static double getCheeseCount(){
+
+    public static double getCheeseCount() {
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.CHEESE);
     }
-    public static double getBreadCount(){
+
+    public static double getBreadCount() {
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.BREAD);
     }
 
@@ -127,7 +138,7 @@ public class GameMenuController {
         return GameMenuMessage.SUCCESS;
     }
 
-    private static void killingPit(User user,Building building) {
+    private static void killingPit(User user, Building building) {
         for (int i = building.getX1Position(); i < building.getX2Position(); i++) {
             for (int j = building.getY1Position(); j < building.getY2Position(); j++) {
                 ArrayList<Unit> unitsTobeRemoved = new ArrayList<>();
@@ -141,16 +152,16 @@ public class GameMenuController {
         }
     }
 
-    public static void procedureBuildings(User user,Building building) {
-        if (((ProducerBuilding)building).getProducerType().isAddPopularity()) user.getGovernment().setPopularity2(1);
-        for (HashMap.Entry<HashMap<Resource, Double>,HashMap<Resource,Double>> input : ((ProducerBuilding)building).getProducerType().getPuts().entrySet()) {
+    public static void procedureBuildings(User user, Building building) {
+        if (((ProducerBuilding) building).getProducerType().isAddPopularity()) user.getGovernment().setPopularity2(1);
+        for (HashMap.Entry<HashMap<Resource, Double>, HashMap<Resource, Double>> input : ((ProducerBuilding) building).getProducerType().getPuts().entrySet()) {
             if (input.getKey() != null) {
-                for(Map.Entry<Resource,Double> input2 : input.getKey().entrySet()) {
+                for (Map.Entry<Resource, Double> input2 : input.getKey().entrySet()) {
                     if (user.getGovernment().getAllResources().get(input2.getKey()) < input2.getValue())
                         continue;
                     if (input.getValue() == null) {
-                        user.getGovernment().changeResourceAmount(input2.getKey(),-input2.getValue());
-                        user.getGovernment().removeFromStorage(input2.getKey(),-input2.getValue());
+                        user.getGovernment().changeResourceAmount(input2.getKey(), -input2.getValue());
+                        user.getGovernment().removeFromStorage(input2.getKey(), -input2.getValue());
                     } else {
                         for (Map.Entry<Resource, Double> input3 : input.getValue().entrySet()) {
                             if (!(user.getGovernment().hasStorageForItem(input3.getKey(), input3.getValue()))) continue;
@@ -162,10 +173,10 @@ public class GameMenuController {
                     }
                 }
             } else {
-                for(Map.Entry<Resource,Double> input3 : input.getValue().entrySet()) {
-                    if(!(user.getGovernment().hasStorageForItem(input3.getKey(),input3.getValue()))) continue;
-                    user.getGovernment().changeResourceAmount(input3.getKey(),input3.getValue());
-                    user.getGovernment().addToStorage(input3.getKey(),input3.getValue());
+                for (Map.Entry<Resource, Double> input3 : input.getValue().entrySet()) {
+                    if (!(user.getGovernment().hasStorageForItem(input3.getKey(), input3.getValue()))) continue;
+                    user.getGovernment().changeResourceAmount(input3.getKey(), input3.getValue());
+                    user.getGovernment().addToStorage(input3.getKey(), input3.getValue());
                 }
             }
         }
@@ -179,10 +190,12 @@ public class GameMenuController {
         for (Building building : buildings) {
             if (building.getBuildingType().equals(BuildingType.SMALL_STONE_GATE) || building.getBuildingType().equals(BuildingType.HOVEL))
                 user.getGovernment().setPopulation2(8);
-            else if (building.getBuildingType().equals(BuildingType.LARGE_STONE_GATE)) user.getGovernment().setPopulation2(10);
-            else if (building.getBuildingType().equals(BuildingType.KILLING_PIT)) killingPit(user,building);
+            else if (building.getBuildingType().equals(BuildingType.LARGE_STONE_GATE))
+                user.getGovernment().setPopulation2(10);
+            else if (building.getBuildingType().equals(BuildingType.KILLING_PIT)) killingPit(user, building);
             else if (building.getBuildingType().getBuildingGroup2().equals(BuildingGroup.PRODUCER_BUILDING) &&
-                    ((ProducerBuilding)building).getProducerType().getPuts() == null) procedureBuildings(user,building);
+                    ((ProducerBuilding) building).getProducerType().getPuts() == null)
+                procedureBuildings(user, building);
             else if (building.getBuildingType().equals(BuildingType.CHURCH) || building.getBuildingType().equals(BuildingType.CATHEDRAL))
                 user.getGovernment().setPopularity2(2);
         }
@@ -191,17 +204,19 @@ public class GameMenuController {
     public static void archersAttackRadios(Unit unit) {
         int fireRange = unit.getUnitType().getRange();
         switch (Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().getBuildingType()) {
-            case DEFENCE_TOWER,PERIMETER_TOWER,ROUND_TOWER,SQUARE_TOWER,LOOK_OUT_TOWER :
+            case DEFENCE_TOWER, PERIMETER_TOWER, ROUND_TOWER, SQUARE_TOWER, LOOK_OUT_TOWER:
                 fireRange *= 2;
                 break;
             default:
                 break;
         }
-        for (model.Map[] maps : Game.getGameMap()) {
-            for (model.Map map : maps) {
-                for (Unit unit1 : map.getUnit()) {
+        for (int i = unit.getxPosition(); i < unit.getxPosition()+fireRange; i++) {
+            for (int j = unit.getyPosition(); j < unit.getyPosition()+fireRange; j++) {
+                for (Unit unit1 : Game.getGameMap()[i][j].getUnit()) {
                     if (!unit1.getGovernment().equals(unit.getGovernment()))
-                        unit1.setHp2(unit.getUnitType().getDamage());
+                        unit1.setHp2(-unit.getUnitType().getDamage());
+                    if (Game.getGameMap()[i][j].getBuilding().getBuildingType().equals(BuildingType.PITCH_RIG))
+                        ((TrapBuilding)Game.getGameMap()[i][j].getBuilding()).firePitchDitch();
                 }
             }
         }
@@ -209,8 +224,11 @@ public class GameMenuController {
 
     public static void archersAttackSpecialHouse(Unit unit) {
         for (Unit unit1 : Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getUnit()) {
-            unit
+            if (!unit1.getGovernment().equals(unit.getGovernment()))
+                unit1.setHp2(-unit.getUnitType().getDamage());
         }
+        if (Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding().getBuildingType().equals(BuildingType.PITCH_RIG))
+            ((TrapBuilding)Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding()).firePitchDitch();
     }
 
     public static void archersAttack() {
