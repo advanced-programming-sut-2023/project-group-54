@@ -31,7 +31,7 @@ public class Government {
         this.gold = 4000;
 
         for (Resource value : Resource.values()) {
-            allResources.put(value, 0.0);
+            allResources.put(value, 0);
         }
     }
 
@@ -73,6 +73,10 @@ public class Government {
 
     public void setPopularity2(int popularity) {
         this.popularity += popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
     }
 
     public int getFoodRate() {
@@ -136,7 +140,7 @@ public class Government {
     }
 
     public boolean hasStorageForItem(Resource item, double amount) {
-        double capacity = 0d;
+        int capacity = 0;
         for (Building building : buildings) {
             if (building.getBuildingType().equals(item.getStorageType().getBuildingType())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
@@ -147,7 +151,7 @@ public class Government {
 
     }
 
-    public boolean hasEnoughItem(Resource item, int amount) {
+    public boolean hasEnoughItem(Resource item, double amount) {
         return allResources.get(item) >= amount;
     }
 
@@ -182,7 +186,7 @@ public class Government {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 if (storageBuilding.getStorage().containsKey(item)) {
                     if (storageBuilding.getStorage().get(item) >= amount) {
-                        storageBuilding.getStorage().remove(item);
+                        storageBuilding.getStorage().put(item, storageBuilding.getStorage().get(item) - amount);
                         return;
                     } else {
                         amount -= storageBuilding.getStorage().get(item);

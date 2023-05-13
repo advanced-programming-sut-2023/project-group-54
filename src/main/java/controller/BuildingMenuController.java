@@ -13,9 +13,10 @@ import java.util.ArrayList;
 public class BuildingMenuController {
     private static Building selectedBuilding;
 
-    public static void setSelectedBuilding(int x,int y) {
+    public static void setSelectedBuilding(int x, int y) {
         selectedBuilding = Game.getGameMap()[x][y].getBuilding();
     }
+
     public static BuildingMenuMessage repair() {
         if (selectedBuilding.getBuildingType().getBuildingGroup().equals(BuildingGroup.CASTLE))
             selectedBuilding.setHp(selectedBuilding.getBuildingType().getMaxHp());
@@ -36,6 +37,21 @@ public class BuildingMenuController {
         }
         ArrayList<Unit> units = new ArrayList<>();
         for (int i = 0; i < count; i++) {
+            if (Game.getCurrentUser().getGovernment().getGold() - unitType.getGoldNeeded() < 0)
+                return BuildingMenuMessage.NOT_ENOUGH_GOLD;
+
+            boolean enoughResource = true;
+            for (Resource resource : unitType.getResourcesNeeded())
+                if (!Game.getCurrentUser().getGovernment().hasEnoughItem(resource, 1)) enoughResource = false;
+
+            if(!enoughResource)
+                return BuildingMenuMessage.NOT_ENOUGH_RESOURCE;
+
+            Game.getCurrentUser().getGovernment().setGold(Game.getCurrentUser().getGovernment().getGold() - unitType.getGoldNeeded());
+            for (Resource resource : unitType.getResourcesNeeded()) {
+                Game.getCurrentUser().getGovernment().removeFromStorage(resource, 1);
+                Game.getCurrentUser().getGovernment().changeResourceAmount(resource, -1);
+            }
             if (!unitType.equals(UnitType.ENGINEER)) {
                 units.add(new Unit(unitType, selectedBuilding.getX1Position(), selectedBuilding.getY1Position()));
             } else {
@@ -62,7 +78,7 @@ public class BuildingMenuController {
     }
 
     public static BuildingMenuMessage openGate() {
-        if(selectedBuilding.getBuildingType().equals(BuildingType.GRANARY)){
+        if (selectedBuilding.getBuildingType().equals(BuildingType.GRANARY)) {
             DefenseBuilding defenseBuilding = (DefenseBuilding) selectedBuilding;
             defenseBuilding.setIsOpen(true);
         }
@@ -70,7 +86,7 @@ public class BuildingMenuController {
     }
 
     public static BuildingMenuMessage closeGate() {
-        if(selectedBuilding.getBuildingType().equals(BuildingType.GRANARY)){
+        if (selectedBuilding.getBuildingType().equals(BuildingType.GRANARY)) {
             DefenseBuilding defenseBuilding = (DefenseBuilding) selectedBuilding;
             defenseBuilding.setIsOpen(false);
         }
@@ -78,10 +94,10 @@ public class BuildingMenuController {
     }
 
     public static BuildingMenuMessage changeOutput(Resource resource) {
-        if(!(selectedBuilding instanceof ProducerBuilding))
+        if (!(selectedBuilding instanceof ProducerBuilding))
             return BuildingMenuMessage.INVALID_BUILDING;
         ProducerBuilding producerBuilding = (ProducerBuilding) selectedBuilding;
-        if(producerBuilding.changeOutput(resource))
+        if (producerBuilding.changeOutput(resource))
             return BuildingMenuMessage.SUCCESS;
         else return BuildingMenuMessage.INVALID_OUTPUT;
     }
