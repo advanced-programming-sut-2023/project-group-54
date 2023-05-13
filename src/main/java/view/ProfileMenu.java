@@ -1,5 +1,6 @@
 package view;
 import controller.*;
+import model.User;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
 import view.enums.messages.ProfileMenuMessage;
@@ -11,6 +12,7 @@ import java.util.regex.Matcher;
 
 public class ProfileMenu {
     private String run() {
+
         while (true) {
             String command;
             HashMap<String, ArrayList<String>> options;
@@ -30,12 +32,16 @@ public class ProfileMenu {
                      changeSlogan(options);
                 else if (CommandHandler.parsCommand(Command.REMOVE_SLOGAN, command) != null)
                     removeSlogan();
+                 else if (CommandHandler.parsCommand(Command.PROFILE_DISPLAY_HIGH_SCORE, command) != null)
+                     showHighScore();
+                 else if (CommandHandler.parsCommand(Command.PROFILE_DISPLAY_RANK, command) != null)
+                     showRank();
                  else if (CommandHandler.parsCommand(Command.DISPLAY_SLOGAN, command) != null)
                      displaySlogan();
                  else if (CommandHandler.parsCommand(Command.DISPLAY_PROFILE, command) != null)
                      displayProfile();
                 else
-                    System.out.println("Invalid command in profile up menu");
+                    System.out.println("Invalid command in sign up menu");
             }
         }
     }
@@ -145,6 +151,8 @@ public class ProfileMenu {
             case EMAIL_EXIST -> System.out.println("email already exists");
             case SUCCESS -> System.out.println("email changed successfully");
         }
+
+
     }
 
     public void changeSlogan(HashMap<String, ArrayList<String>> options) {
@@ -169,12 +177,14 @@ public class ProfileMenu {
         if(result.equals(ProfileMenuMessage.SUCCESS)) System.out.println("slogan removed successfully");
     }
 
-    public void showHighScore(Matcher matcher) {
-
+    public void showHighScore() {
+        int highScore=Controller.getLoggedInUser().getHighScore();
+        System.out.println(highScore);
     }
 
-    public void showRank(Matcher matcher) {
-
+    public void showRank() {
+    int rank= User.getUserRank(Controller.getLoggedInUser());
+        System.out.println(rank);
     }
 
     public void displaySlogan() {
