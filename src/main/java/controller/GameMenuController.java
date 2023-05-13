@@ -313,6 +313,7 @@ public class GameMenuController {
                 else if (unit.getxTarget() != -1)
                     archersAttackRadios(unit);
             } else if (unit.getPatrol()) setPlaceForAttackPatrolUnit(unit);
+            fightsInEachHouse(unit);
         }
     }
 
