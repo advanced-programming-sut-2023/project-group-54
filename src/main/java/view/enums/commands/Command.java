@@ -194,6 +194,32 @@ public enum Command {
     NEXT_TURN("next\\s+turn", new ArrayList<>(
     )),
 
+    //BuildingMenu,
+    SHOW_FOOD_LIST("show\\s+food\\s+list", new ArrayList<>(
+    )),
+    FOOD_RATE("food\\s+rate", new ArrayList<>(List.of(
+            new Option("r", 1, true)
+    ))),
+    FOOD_RATE_SHOW("food\\s+rate\\s+show", new ArrayList<>(
+    )),
+    TAX_RATE("tax\\s+rate", new ArrayList<>(List.of(
+            new Option("r", 1, true)
+    ))),
+    TAX_RATE_SHOW("tax\\s+rate\\s+show", new ArrayList<>(
+    )),
+    CREATE_UNIT("createunit", new ArrayList<>(List.of(
+            new Option("t", 1, false),
+            new Option("c", 1, false)
+    ))),
+    REPAIR("repair", new ArrayList<>(
+    )),
+    OPEN_GATE("open gate", new ArrayList<>(
+    )),
+    CLOSE_GATE("close gate", new ArrayList<>(
+    )),
+    CHANGE_OUTPUT("change output", new ArrayList<>(List.of(
+            new Option("r", 1, true)
+    ))),
 
     //UnitMenu
     MOVE_UNIT_TO("move\\s+unit\\s+to", new ArrayList<>(List.of(

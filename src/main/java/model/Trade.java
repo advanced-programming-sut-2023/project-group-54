@@ -12,9 +12,8 @@ public class Trade {
     private String senderMessage;
     private String receiverMessage;
 
-    public Trade(User senderUser, User receiverUser, Resource resource, int amount, int price, String senderMessage, String receiverMessage) {
+    public Trade(User senderUser, Resource resource, int amount, int price, String senderMessage, String receiverMessage) {
         this.senderUser = senderUser;
-        this.receiverUser = receiverUser;
         this.resource = resource;
         this.amount = amount;
         this.price = price;

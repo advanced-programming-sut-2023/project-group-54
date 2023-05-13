@@ -5,14 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="Archer attackers and pitch ditch and killing pit + clear +-(because of main house)">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/UnitMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/UnitMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Buildings/DefenseBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Buildings/DefenseBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/units/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/units/Unit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/UnitMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/UnitMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/enums/messages/UnitMenuMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/enums/messages/UnitMenuMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/controller/LoginMenuControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/TradeMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TradeMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Trade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Trade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/TradeMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TradeMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/enums/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/enums/commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/enums/messages/TradeMenuMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/enums/messages/TradeMenuMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Trade.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Trade.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/commands/CommonEnums.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/commands/outputs/BuildingMenuOutput.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/commands/outputs/MapMenuOutput.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/commands/outputs/UnitMenuOutput.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,5 +277,22 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Main_java$LoginMenuControllerTest.ic" NAME="LoginMenuControllerTest Coverage Results" MODIFIED="1684009572482" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Main_java$LoginTest_passwordCheckerTest__1_.ic" NAME="LoginTest.passwordCheckerTest (1) Coverage Results" MODIFIED="1684006246015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>Controller.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Main_java$LoginTest_passwordCheckerTest.ic" NAME="LoginTest.passwordCheckerTest Coverage Results" MODIFIED="1684006093714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Main_java$LoginMenuControllerTest_passwordCheckerTest.ic" NAME="LoginMenuControllerTest.passwordCheckerTest Coverage Results" MODIFIED="1684006605925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Main_java$LoginMenuControllerTest_checkQuestionAnswer.ic" NAME="LoginMenuControllerTest.checkQuestionAnswer Coverage Results" MODIFIED="1684009269926" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+    </SUITE>
   </component>
 </project>
