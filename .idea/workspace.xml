@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="update gitignore">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="save user and move troops">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/ShortestPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ShortestPath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/units/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/units/Unit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/GameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/GameMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/TrapType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/TrapType.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +65,11 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -210,7 +216,13 @@
       <option name="project" value="LOCAL" />
       <updated>1683984101277</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL‎−۰۰۰۱۵" summary="save user and move troops">
+      <created>1684043708688</created>
+      <option name="number" value="LOCAL‎−۰۰۰۱۵" />
+      <option name="presentableId" value="LOCAL‎−۰۰۰۱۵" />
+      <updated>1684043708688</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,7 +268,8 @@
     <MESSAGE value="some for unit menu" />
     <MESSAGE value="debug shop and trade" />
     <MESSAGE value="Archer attackers and pitch ditch and killing pit + clear +-(because of main house)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Archer attackers and pitch ditch and killing pit + clear +-(because of main house)" />
+    <MESSAGE value="save user and move troops" />
+    <option name="LAST_COMMIT_MESSAGE" value="save user and move troops" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

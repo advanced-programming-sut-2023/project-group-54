@@ -46,6 +46,7 @@ public class User implements Comparable{
         this.questionNumber = questionNumber;
         this.questionAnswer = questionAnswer;
         this.government = government;
+        users.add(this);
     }
 
     public String getUsername() {
