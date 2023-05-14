@@ -16,8 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
-public class
-GameMenu {
+public class GameMenu {
     private static int xOfMap;
     private static int yOfMap;
     private static MapType typeForTreeAndTexture = MapType.DEFAULT;
@@ -316,7 +315,7 @@ GameMenu {
         }
         boolean sign = true;
         Direction directionToSend = null;
-        for (Direction allDirections : Direction.R.getAllDirections()) {
+        for (Direction allDirections : Direction.values()) {
             if (allDirections.toString().equals(direction.toUpperCase()) &&
                     allDirections.isForRock()) {
                 sign = false;

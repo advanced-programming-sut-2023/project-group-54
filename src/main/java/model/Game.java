@@ -27,6 +27,11 @@ public class Game {
 
     public static void setGameMap(int x, int y) {
         Game.gameMap = new Map[x][y];
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                Game.gameMap[i][j] = new Map(i, j);
+            }
+        }
     }
 
     public static Map[][] getGameMap() {

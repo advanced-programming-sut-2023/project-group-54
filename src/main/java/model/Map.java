@@ -13,7 +13,7 @@ public class Map {
     private ArrayList<Unit> unit;
     private MapType mapType;
 
-    public Map(MapType mapType) {
+    public Map(MapType mapType, int x, int y) {
         this.mapType = mapType;
         this.unit = new ArrayList<>();
         this.tree = null;
@@ -22,11 +22,13 @@ public class Map {
         this.y = y;
     }
 
-    public Map() {
+    public Map(int x, int y) {
         this.mapType = MapType.EARTH;
         this.unit = new ArrayList<>();
         this.tree = null;
         this.building = null;
+        this.x = x;
+        this.y = y;
     }
 
     public int getX() {

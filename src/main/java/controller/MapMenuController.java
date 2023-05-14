@@ -1,10 +1,12 @@
 package controller;
 
-import model.*;
 import model.Buildings.*;
+import model.Direction;
+import model.Game;
+import model.Map;
+import model.MapType;
 import model.units.Engineer;
 import model.units.Unit;
-import view.BuildingMenu;
 import view.enums.messages.MapMenuMessage;
 
 import java.util.Collections;
@@ -42,6 +44,11 @@ public class MapMenuController {
             Game.setY(200);
         } else {
             Map[][] gameMap = new Map[400][400];
+            for (int i = 0; i < 400; i++) {
+                for (int j = 0; j < 400; j++) {
+                    gameMap[i][j] = new Map(i, j);
+                }
+            }
             for (int i = 0; i < 30; i++) {
                 for (int j = 0; j < 30; j++) {
                     gameMap[i][j].setMapType(IRON);
@@ -54,67 +61,67 @@ public class MapMenuController {
             }
             for (int i = 50; i < 100; i++) {
                 for (int j = 0; j < 50; j++) {
-                    Game.getGameMap()[i][j].setMapType(THICK_SCRUB);
+                    gameMap[i][j].setMapType(THICK_SCRUB);
                 }
             }
             for (int i = 30; i < 60; i++) {
                 for (int j = 30; j < 70; j++) {
-                    Game.getGameMap()[i][j].setMapType(BOULDERS);
+                    gameMap[i][j].setMapType(BOULDERS);
                 }
             }
             for (int i = 0; i < 100; i++) {
                 for (int j = 60; j < 100; j++) {
-                    Game.getGameMap()[i][j].setMapType(SEA);
+                    gameMap[i][j].setMapType(SEA);
                 }
             }
             for (int i = 50; i < 100; i++) {
                 for (int j = 120; j < 150; j++) {
-                    Game.getGameMap()[i][j].setMapType(SMALL_POND);
-                    Game.getGameMap()[i][j].setTree(OLIVE_TREE);
+                    gameMap[i][j].setMapType(SMALL_POND);
+                    gameMap[i][j].setTree(OLIVE_TREE);
                 }
             }
             for (int i = 200; i < 250; i++) {
                 for (int j = 0; j < 50; j++) {
-                    Game.getGameMap()[i][j].setMapType(EARTH_AND_STONE);
-                    Game.getGameMap()[i][j].setTree(COCONUT_PALM);
+                    gameMap[i][j].setMapType(EARTH_AND_STONE);
+                    gameMap[i][j].setTree(COCONUT_PALM);
                 }
             }
             for (int i = 150; i < 200; i++) {
                 for (int j = 120; j < 160; j++) {
-                    Game.getGameMap()[i][j].setMapType(IRON);
+                    gameMap[i][j].setMapType(IRON);
                 }
             }
             for (int i = 0; i < 50; i++) {
                 for (int j = 200; j < 280; j++) {
-                    Game.getGameMap()[i][j].setMapType(OASIS_GRASS);
+                    gameMap[i][j].setMapType(OASIS_GRASS);
                 }
             }
             for (int i = 220; i < 260; i++) {
                 for (int j = 150; j < 160; j++) {
-                    Game.getGameMap()[i][j].setMapType(RIVER);
+                    gameMap[i][j].setMapType(RIVER);
                 }
             }
             for (int i = 0; i < 50; i++) {
                 for (int j = 0; j < 80; j++) {
-                    Game.getGameMap()[i][j].setMapType(THICK_SCRUB);
+                    gameMap[i][j].setMapType(THICK_SCRUB);
                 }
             }
             for (int i = 200; i < 260; i++) {
                 for (int j = 250; j < 300; j++) {
-                    Game.getGameMap()[i][j].setMapType(OASIS_GRASS);
+                    gameMap[i][j].setMapType(OASIS_GRASS);
                 }
                 for (int j = 250; j < 270; j++) {
-                    Game.getGameMap()[i][j].setTree(CHERRY_PALM);
+                    gameMap[i][j].setTree(CHERRY_PALM);
                 }
             }
             for (int i = 280; i < 320; i++) {
                 for (int j = 0; j < 70; j++) {
-                    Game.getGameMap()[i][j].setMapType(OIL);
+                    gameMap[i][j].setMapType(OIL);
                 }
             }
             for (int i = 60; i < 100; i++) {
                 for (int j = 150; j < 200; j++) {
-                    Game.getGameMap()[i][j].setMapType(IRON);
+                    gameMap[i][j].setMapType(IRON);
                 }
             }
             Game.setX(400);
@@ -132,7 +139,8 @@ public class MapMenuController {
         else if (xCoordinate > Game.getX() - numberOfHousesToShow) xEndHome = Game.getX();
         if (yCoordinate < numberOfHousesToShow) yFirstHome = 0;
         else if (yCoordinate > Game.getY() - numberOfHousesToShow) yEndHome = Game.getY();
-        Map[][] gameMap = new Map[Game.getX()][Game.getY()];
+        System.out.println("xs: " + xFirstHome + " xe: " + xEndHome + "ys: " + yFirstHome + " ye: " + yEndHome);
+        Map[][] gameMap = Game.getGameMap();
         StringBuilder map = new StringBuilder();
         for (int i = xFirstHome; i < xEndHome; i++) {
             map.append(String.join("", Collections.nCopies((numberOfHousesToShow * 3) + 1, "-")) + "\n");
@@ -181,6 +189,7 @@ public class MapMenuController {
                 colors[1] = ANSI_TEXT_RED;
                 break;
             case IRON:
+                System.out.println("iron");
                 colors[0] = ANSI_YELLOW;
                 colors[1] = ANSI_TEXT_PURPLE;
                 break;

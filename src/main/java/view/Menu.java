@@ -21,7 +21,7 @@ public class Menu {
                 return;
             } else if ((options = CommandHandler.parsCommand(Command.START_GAME, command)) != null)
                 startGame(options);
-            if (CommandHandler.parsCommand(Command.PROFILE_MENU, command) != null)
+            else if (CommandHandler.parsCommand(Command.PROFILE_MENU, command) != null)
                 ProfileMenu.run();
             else System.out.println("invalid command in menu");
         }
@@ -51,24 +51,52 @@ public class Menu {
             switch (s) {
                 case "a":
                     a = User.findUserByUsername(options.get(s).get(0));
+                    if(a == null){
+                        System.out.println("username a is invalid");
+                        return;
+                    }
                     break;
                 case "b":
                     b = User.findUserByUsername(options.get(s).get(0));
+                    if(a == null){
+                        System.out.println("username b is invalid");
+                        return;
+                    }
                     break;
                 case "c":
                     c = User.findUserByUsername(options.get(s).get(0));
+                    if(a == null){
+                        System.out.println("username c is invalid");
+                        return;
+                    }
                     break;
                 case "d":
                     d = User.findUserByUsername(options.get(s).get(0));
+                    if(a == null){
+                        System.out.println("username d is invalid");
+                        return;
+                    }
                     break;
                 case "e":
                     e = User.findUserByUsername(options.get(s).get(0));
+                    if(a == null){
+                        System.out.println("username e is invalid");
+                        return;
+                    }
                     break;
                 case "f":
                     f = User.findUserByUsername(options.get(s).get(0));
+                    if(a == null){
+                        System.out.println("username f is invalid");
+                        return;
+                    }
                     break;
                 case "g":
                     g = User.findUserByUsername(options.get(s).get(0));
+                    if(a == null){
+                        System.out.println("username g is invalid");
+                        return;
+                    }
                     break;
             }
         }
@@ -97,7 +125,7 @@ public class Menu {
     }
 
     private static boolean setMap() {
-        System.out.println("choose your map :\n1- if you want a 400 by 400 map enter 1\n2- if you want a 200 by 200 map enter 2]\n3- if ypu want to use default map enter 3");
+        System.out.println("choose your map :\n1- if you want a 400 by 400 map enter 1\n2- if you want a 200 by 200 map enter 2\n3- if ypu want to use default map enter 3");
         String number = MainMenu.getScanner().nextLine();
         int mapNumber = 0;
         try {

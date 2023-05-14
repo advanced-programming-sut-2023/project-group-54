@@ -93,8 +93,6 @@ public class LoginMenu {
         System.out.println("please enter your password again");
         String command;
         for (int i = 0; i < 3; i++) {
-            System.out.println("please wait for " + (i + 1) * 5 + "seconds");
-            Controller.timer(i);
             command = MainMenu.getScanner().nextLine();
             if (LoginMenuController.passwordChecker(command).equals(LoginMenuMessage.SUCCESS)) {
                 if (!MainMenu.captchaChecker()) {
@@ -105,6 +103,8 @@ public class LoginMenu {
                 System.out.println("logged in with user with username: " + Controller.getLoggedInUser().getUsername());
                 return true;
             }
+            System.out.println("you have entered wrong password please wait for " + (i + 1) * 5 + " seconds");
+            Controller.timer(i);
         }
         System.out.println("you have entered wrong password for 3 times : login failed");
         return false;
