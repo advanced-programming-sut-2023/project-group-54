@@ -103,7 +103,8 @@ public enum BuildingType {
     FLETCHER(500, 4, 4, 100, "fletcher", null, 1, Resource.WOOD,
             20, false, BuildingGroup.WEAPONS,BuildingGroup.PRODUCER_BUILDING),
     POLETURNER(500, 4, 4, 100, "poleturner", null, 1, Resource.WOOD,
-            10, false, BuildingGroup.WEAPONS,BuildingGroup.PRODUCER_BUILDING);
+            10, false, BuildingGroup.WEAPONS,BuildingGroup.PRODUCER_BUILDING),
+    MAIN_HOUSE(6000,4,4,0,"main house",null,0,null,0,false,BuildingGroup.OTHERS,BuildingGroup.OTHERS);
 
     private int maxHp;
     private int width;
