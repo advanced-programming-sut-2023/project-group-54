@@ -19,16 +19,9 @@ public enum Direction {
         return isForRock;
     }
 
-    public ArrayList<Direction> getAllDirections() {
-        return allDirections;
-    }
     private boolean isForRock;
 
     Direction(boolean isForRock) {
         this.isForRock = isForRock;
     }
-
-    private final ArrayList<Direction> allDirections = new ArrayList<>(Arrays.asList(Direction.values()));
-
-
 }

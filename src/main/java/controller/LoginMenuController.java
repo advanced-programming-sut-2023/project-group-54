@@ -78,6 +78,13 @@ public class LoginMenuController {
 
     public static LoginMenuMessage logout() {
         Controller.setLoggedInUser(null);
+        String filePath = new File("").getAbsolutePath().concat("/src/main/java/model/data/stayLoggedInUser.json");
+        (new File(filePath)).delete();
+        try {
+            new FileWriter(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return LoginMenuMessage.SUCCESS;
     }
 }
