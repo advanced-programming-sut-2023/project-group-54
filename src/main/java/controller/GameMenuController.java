@@ -425,7 +425,7 @@ public class GameMenuController {
                 buildingsToBeRemoved.add(mainHouse);
                 for (Building building : Building.getBuildings()) {
                     if (building.getOwner().equals(mainHouse.getOwner())) {
-                        scoreToAdd += Math.floor((building.getHp()*1.0)/100);
+                        scoreToAdd += (int)(building.getHp()*1.0)/100;
                         buildingsToBeRemoved.add(building);
                     }
                 }
@@ -435,7 +435,7 @@ public class GameMenuController {
                         unitsToBeRemoved.add(unit);
                     }
                 }
-                scoreToAdd += Math.floor((mainHouse.getOwner().getGold() * 1.0)/10);
+                scoreToAdd += (int)(mainHouse.getOwner().getGold() * 1.0)/10;
                 doThingsForUserRemoved(mainHouse.getOwner().getUser(),scoreToAdd);
                 Game.getUsers().remove(mainHouse.getOwner().getUser());
             }
@@ -450,6 +450,9 @@ public class GameMenuController {
     }
 
     public static void doThingsForUserRemoved(User user,int scoreToAdd) {
+        for (User user1 : Game.getUsers()) {
+            user1.getGovernment().setGold2((int)(scoreToAdd * 1.0)/2);
+        }
         user.setHighScore(scoreToAdd);
         Game.setUserRemoved();
         Game.addUserRemoved(user);
@@ -466,6 +469,7 @@ public class GameMenuController {
 
     public static void doGameInEachTurn() {
         for (User user : Game.getUsers()) {
+            user.getGovernment().setGold2(user.getGovernment().getTaxRate() * user.getGovernment().getPopulation());
             nextTurnForBuildings(user);
         }
         unitsAttack();
