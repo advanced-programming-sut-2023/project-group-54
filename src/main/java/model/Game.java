@@ -11,6 +11,20 @@ public class Game {
     private static int x;
     private static int y;
     private static Map[][] gameMap;
+    private static ArrayList<User> userRemoved;
+    private static int turns;
+
+    public static int getTurns() {
+        return turns;
+    }
+
+    public static void setTurns(int turns) {
+        Game.turns = turns;
+    }
+
+    public static void setTurns2(int turns) {
+        Game.turns -= turns;
+    }
 
     public static ArrayList<Building> getMainHouses() {
         return mainHouses;
@@ -18,6 +32,17 @@ public class Game {
 
     public static void setMainHouses() {
         Game.mainHouses = new ArrayList<>();
+    }
+
+    public static ArrayList<User> getUserRemoved() {
+        return userRemoved;
+    }
+
+    public static void setUserRemoved() {
+        Game.userRemoved = new ArrayList<>();
+    }
+    public static void addUserRemoved(User userRemoved) {
+        Game.userRemoved.add(userRemoved);
     }
 
     public static void addMainHouses(Building mainHouses) {

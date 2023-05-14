@@ -598,7 +598,9 @@ public class GameMenu {
     }
 
     private static void nextTurn(){
-
+        if (Game.getUsers().indexOf(Game.getCurrentUser()) == Game.getUsers().size() - 1) {
+            GameMenuController.doGameInEachTurn();
+        }
         GameMenuController.setNextUser();
     }
 }
