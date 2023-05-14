@@ -194,7 +194,8 @@ public class GameMenu {
                     System.out.println("successfully changed the texture in house -x " + x + " -y " + y );
                 break;
             case "clear block":
-                clearOneBlock(x,y);
+                if (clearOneBlock(x,y,true))
+                    System.out.println("successfully cleared the block");
                 break;
             case "drop rock":
                 if (dropOneRock(x,y,options,true))
@@ -301,8 +302,11 @@ public class GameMenu {
         else return false;
     }
 
-    private static void clearOneBlock(int x,int y) {
-
+    private static boolean clearOneBlock(int x,int y,boolean change) {
+        if (MapMenuController.clearBlock(x,y,change).equals(MapMenuMessage.MAIN_HOUSE)) {
+            System.out.println("you can not clear the house which main house is placed on");
+            return false;
+        } return true;
     }
 
     private static Direction directionChecker(HashMap<String, ArrayList<String>> options) {
@@ -459,7 +463,17 @@ public class GameMenu {
                 System.out.println("successfully changed the texture from house x1 " + x1 + " y1 " + y1 + " to x2 " + x2 + " y2 " + y2);
                 break;
             case "clear block":
-
+                for (int i = x1; i < x2; i++) {
+                    for (int j = y1; j < y2; j++) {
+                        if (!clearOneBlock(i,j,false)) return;
+                    }
+                }
+                for (int i = x1; i < x2; i++) {
+                    for (int j = y1; j < y2; j++) {
+                        clearOneBlock(i,j,true);
+                    }
+                }
+                System.out.println("successfully cleared the block from house x1 " + x1 + " y1 " + y1 + " to x2 " + x2 + " y2 " + y2);
                 break;
             case "drop rock":
                 for (int i = x1; i < x2; i++) {

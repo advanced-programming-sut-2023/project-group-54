@@ -29,6 +29,10 @@ public class Building {
         return owner;
     }
 
+    public static void addBuildings(Building building) {
+        Building.buildings.add(building);
+    }
+
     public static ArrayList<Building> getBuildings() {
         return buildings;
     }

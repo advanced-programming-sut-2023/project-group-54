@@ -1,13 +1,28 @@
 package model;
 
+import model.Buildings.Building;
+
 import java.util.ArrayList;
 
 public class Game {
     private static ArrayList<User> users;
+    private static ArrayList<Building> mainHouses;
     private static User currentUser;
     private static int x;
     private static int y;
     private static Map[][] gameMap;
+
+    public static ArrayList<Building> getMainHouses() {
+        return mainHouses;
+    }
+
+    public static void setMainHouses() {
+        Game.mainHouses = new ArrayList<>();
+    }
+
+    public static void addMainHouses(Building mainHouses) {
+        Game.mainHouses.add(mainHouses);
+    }
 
     public static int getX() {
         return x;
