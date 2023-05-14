@@ -7,7 +7,7 @@ import model.Map;
 import java.util.ArrayList;
 
 public class Unit {
-    private static ArrayList<Unit> units;
+    private static ArrayList<Unit> units = new ArrayList<>();
     private final Government owner;
     private int xPosition;
     private int yPosition;

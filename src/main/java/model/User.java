@@ -44,6 +44,9 @@ public class User implements Comparable{
         ArrayList<User> allUsers = gson.fromJson(fileReader, new TypeToken<ArrayList<User>>() {}.getType());
         if (allUsers == null) allUsers = new ArrayList<>();
         users = allUsers;
+        for (User user : users) {
+            user.setGovernment(new Government());
+        }
     }
 
     public User(String username, String password, String nickname, String email, String slogan, int questionNumber, String questionAnswer, Government government) {

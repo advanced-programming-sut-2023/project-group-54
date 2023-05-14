@@ -4,12 +4,13 @@ import model.Game;
 import model.Government;
 import model.Map;
 import model.User;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Building {
-    private static ArrayList<Building> buildings;
+    private static ArrayList<Building> buildings = new ArrayList<>();
     private BuildingType buildingType;
     private int hp;
     private Government owner;

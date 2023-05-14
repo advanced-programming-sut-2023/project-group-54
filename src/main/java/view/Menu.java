@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import controller.MapMenuController;
 import model.Game;
 import model.User;
@@ -100,6 +101,7 @@ public class Menu {
                     break;
             }
         }
+        users.add(Controller.getLoggedInUser());
         users.add(a);
         if (b != null)
             users.add(b);
@@ -115,9 +117,14 @@ public class Menu {
             users.add(g);
 
         if(setMap()){
+
             Game.setCurrentUser(a);
             Game.setUsers(users);
             Game.setUserRemoved();
+//            if(Game.getX() == 400)
+//                MapMenuController.setMainHouse(75);
+//            else if(Game.getX() == 200)
+//                MapMenuController.setMainHouse(30);
             System.out.println("game started successfully");
             GameMenu.run();
         }else{

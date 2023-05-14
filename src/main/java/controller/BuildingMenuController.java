@@ -62,7 +62,9 @@ public class BuildingMenuController {
     }
 
     public static BuildingMenuMessage taxRateSet(int rateNumber) {
-        if (selectedBuilding.getBuildingType().equals(BuildingType.SMALL_STONE_GATE) || selectedBuilding.getBuildingType().equals(BuildingType.LARGE_STONE_GATE))
+        if (selectedBuilding.getBuildingType().equals(BuildingType.SMALL_STONE_GATE)
+                || selectedBuilding.getBuildingType().equals(BuildingType.LARGE_STONE_GATE)
+                || selectedBuilding.getBuildingType().equals(BuildingType.MAIN_HOUSE))
             Game.getCurrentUser().getGovernment().setTaxRate(rateNumber);
         else
             return BuildingMenuMessage.INVALID_BUILDING;

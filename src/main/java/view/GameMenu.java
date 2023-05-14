@@ -1,14 +1,13 @@
 package view;
+
 import controller.Controller;
 import controller.GameMenuController;
 import controller.MapMenuController;
 import model.Direction;
 import model.Game;
 import model.MapType;
-import model.User;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
-import view.enums.commands.Regexes;
 import view.enums.messages.GameMenuMessage;
 import view.enums.messages.MapMenuMessage;
 
@@ -40,54 +39,55 @@ public class GameMenu {
                 return;
             else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
                 System.out.println("login menu");
-            else if((options = CommandHandler.parsCommand(Command.SHOW_POPULARITY_FACTORS, command)) != null)
+            else if ((options = CommandHandler.parsCommand(Command.SHOW_POPULARITY_FACTORS, command)) != null)
                 popularityFactorsShow(options);
-            else if((options = CommandHandler.parsCommand(Command.SHOW_POPULARITY, command)) != null)
+            else if ((options = CommandHandler.parsCommand(Command.SHOW_POPULARITY, command)) != null)
                 popularityShow(options);
-            else if((options = CommandHandler.parsCommand(Command.SHOW_FOOD_LIST, command)) != null)
+            else if ((options = CommandHandler.parsCommand(Command.SHOW_FOOD_LIST, command)) != null)
                 foodListShow(options);
-            else if((options = CommandHandler.parsCommand(Command.FOOD_RATE_SHOW, command)) != null)
+            else if ((options = CommandHandler.parsCommand(Command.FOOD_RATE_SHOW, command)) != null)
                 foodRateShow(options);
-            else if((options = CommandHandler.parsCommand(Command.TAX_RATE_SHOW, command)) != null)
+            else if ((options = CommandHandler.parsCommand(Command.TAX_RATE_SHOW, command)) != null)
                 taxRateShow(options);
-            else if((options = CommandHandler.parsCommand(Command.FEAR_RATE, command)) != null)
+            else if ((options = CommandHandler.parsCommand(Command.FEAR_RATE, command)) != null)
                 fearRateSet(options);
-            else if ((options = CommandHandler.parsCommand(Command.SHOW_MAP,command)) != null)
-                setXYOfMapCommonErrors(options,"show map");
-            else if ((matcher = MainMenu.getMatcher(command, Regexes.MAP_SHOW_MOVE.getRegex())) != null)
-                showMapMove(matcher);
-            else if ((options = CommandHandler.parsCommand(Command.SHOW_DETAILS,command)) != null)
-                setXYOfMapCommonErrors(options,"details");
-            else if ((matcher = MainMenu.getMatcher(command,Regexes.MAP_DETAILS_MOVE.getRegex())) != null)
-                showMapDetailsMove(matcher);
-            else if ((options = CommandHandler.parsCommand(Command.SET_TEXTURE_FOR_ONE_HOUSE,command)) != null)
-                setXYOfMapCommonErrors(options,"texture");
-            else if ((options = CommandHandler.parsCommand(Command.SET_TEXTURE_FOR_RECTANGLE,command)) != null)
-                checkRectangleIsValid(options,"texture");
-            else if ((options = CommandHandler.parsCommand(Command.CLEAR,command)) != null)
-                setXYOfMapCommonErrors(options,"clear block");
-            else if ((options = CommandHandler.parsCommand(Command.CLEAR_FOR_RECTANGLE,command)) != null)
-                checkRectangleIsValid(options,"clear block");
-            else if ((options = CommandHandler.parsCommand(Command.DROP_ROCK,command)) != null)
-                setXYOfMapCommonErrors(options,"drop rock");
-            else if ((options = CommandHandler.parsCommand(Command.DROP_ROCK_FOR_RECTANGLE,command)) != null)
-                checkRectangleIsValid(options,"drop rock");
-            else if ((options = CommandHandler.parsCommand(Command.DROP_TREE,command)) != null)
-                setXYOfMapCommonErrors(options,"drop tree");
-            else if ((options = CommandHandler.parsCommand(Command.DROP_TREE_FOR_RECTANGLE,command)) != null)
-                checkRectangleIsValid(options,"drop tree");
-            else if ((options = CommandHandler.parsCommand(Command.DROP_BUILDING,command)) != null)
-                setXYOfMapCommonErrors(options,"drop building");
-            else if((options = CommandHandler.parsCommand(Command.SELECT_UNIT, command)) != null)
-                setXYOfMapCommonErrors(options,"select unit");
-            else if(CommandHandler.parsCommand(Command.NEXT_TURN, command) != null)
+            else if ((options = CommandHandler.parsCommand(Command.SHOW_MAP, command)) != null)
+                setXYOfMapCommonErrors(options, "show map");
+            else if ((options = CommandHandler.parsCommand(Command.MOVE_MAP, command)) != null)
+                showMapMove(options);
+            else if ((options = CommandHandler.parsCommand(Command.SHOW_DETAILS, command)) != null)
+                setXYOfMapCommonErrors(options, "details");
+//            else if ((matcher = MainMenu.getMatcher(command, Regexes.MAP_DETAILS_MOVE.getRegex())) != null)
+//                showMapDetailsMove(matcher);
+            else if ((options = CommandHandler.parsCommand(Command.SET_TEXTURE_FOR_ONE_HOUSE, command)) != null)
+                setXYOfMapCommonErrors(options, "texture");
+            else if ((options = CommandHandler.parsCommand(Command.SET_TEXTURE_FOR_RECTANGLE, command)) != null)
+                checkRectangleIsValid(options, "texture");
+            else if ((options = CommandHandler.parsCommand(Command.CLEAR, command)) != null)
+                setXYOfMapCommonErrors(options, "clear block");
+            else if ((options = CommandHandler.parsCommand(Command.CLEAR_FOR_RECTANGLE, command)) != null)
+                checkRectangleIsValid(options, "clear block");
+            else if ((options = CommandHandler.parsCommand(Command.DROP_ROCK, command)) != null)
+                setXYOfMapCommonErrors(options, "drop rock");
+            else if ((options = CommandHandler.parsCommand(Command.DROP_ROCK_FOR_RECTANGLE, command)) != null)
+                checkRectangleIsValid(options, "drop rock");
+            else if ((options = CommandHandler.parsCommand(Command.DROP_TREE, command)) != null)
+                setXYOfMapCommonErrors(options, "drop tree");
+            else if ((options = CommandHandler.parsCommand(Command.DROP_TREE_FOR_RECTANGLE, command)) != null)
+                checkRectangleIsValid(options, "drop tree");
+            else if ((options = CommandHandler.parsCommand(Command.DROP_BUILDING, command)) != null)
+                setXYOfMapCommonErrors(options, "drop building");
+            else if ((options = CommandHandler.parsCommand(Command.SELECT_UNIT, command)) != null)
+                setXYOfMapCommonErrors(options, "select unit");
+            else if (CommandHandler.parsCommand(Command.NEXT_TURN, command) != null)
                 nextTurn();
-            else if ((options = CommandHandler.parsCommand(Command.SELECT_BUILDING,command)) != null)
-                setXYOfMapCommonErrors(options,"select building");
+            else if ((options = CommandHandler.parsCommand(Command.SELECT_BUILDING, command)) != null)
+                setXYOfMapCommonErrors(options, "select building");
             else System.out.println("invalid command in game menu");
         }
     }
-    private static void popularityFactorsShow(HashMap<String, ArrayList<String>> options){
+
+    private static void popularityFactorsShow(HashMap<String, ArrayList<String>> options) {
         String s = "";
         int foodPop = GameMenuController.getPopularityFromFood();
         int taxPop = GameMenuController.getPopularityFromTax();
@@ -102,10 +102,12 @@ public class GameMenu {
         s += "\nPopularity: " + popularity;
         System.out.println(s);
     }
-    private static void popularityShow(HashMap<String, ArrayList<String>> options){
+
+    private static void popularityShow(HashMap<String, ArrayList<String>> options) {
         System.out.println(GameMenuController.getPopularity());
     }
-    private static void foodListShow(HashMap<String, ArrayList<String>> options){
+
+    private static void foodListShow(HashMap<String, ArrayList<String>> options) {
         String s = "";
         double appleCount = GameMenuController.getAppleCount();
         double meetCount = GameMenuController.getMeetCount();
@@ -119,30 +121,34 @@ public class GameMenu {
 
         System.out.println(s);
     }
-    private static void foodRateShow(HashMap<String, ArrayList<String>> options){
+
+    private static void foodRateShow(HashMap<String, ArrayList<String>> options) {
         System.out.println(GameMenuController.foodRateShow());
     }
-    private static void taxRateShow(HashMap<String, ArrayList<String>> options){
+
+    private static void taxRateShow(HashMap<String, ArrayList<String>> options) {
         System.out.println(GameMenuController.taxRateShow());
     }
-    private static void fearRateSet(HashMap<String, ArrayList<String>> options){
+
+    private static void fearRateSet(HashMap<String, ArrayList<String>> options) {
         int fearRate = 0;
         try {
             fearRate = Integer.parseInt(options.get("r").get(0));
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("invalid rate entered");
             return;
         }
-        if(fearRate < -5 || fearRate > 5){
+        if (fearRate < -5 || fearRate > 5) {
             System.out.println("fear rate must be lower than 5 and grater than -5");
             return;
         }
         GameMenuMessage result = GameMenuController.fearRateSet(fearRate);
-        if(result.equals(GameMenuMessage.SUCCESS))
+        if (result.equals(GameMenuMessage.SUCCESS))
             System.out.println("fear rate changed successfully");
     }
-    private static void setXYOfMapCommonErrors(HashMap<String, ArrayList<String>> options,String whichFunction) {
-        int x = 0,y=0;
+
+    private static void setXYOfMapCommonErrors(HashMap<String, ArrayList<String>> options, String whichFunction) {
+        int x = 0, y = 0;
         for (String s : options.keySet()) {
             switch (s) {
                 case "x":
@@ -163,91 +169,106 @@ public class GameMenu {
                     break;
             }
         }
-        setXYOfMap(x,y,whichFunction,options);
+        setXYOfMap(x, y, whichFunction, options);
     }
 
-    private static boolean checkXY(int x,int y) {
-        if (x < 0 || x >= Game.getX() ) {
+    private static boolean checkXY(int x, int y) {
+        if (x < 0 || x >= Game.getX()) {
             System.out.println("you have entered wrong number for x it has to be bigger than 0 and less than game x length");
             return false;
-        } else if (y < 0 ||  y >= Game.getY() ) {
+        } else if (y < 0 || y >= Game.getY()) {
             System.out.println("you have entered wrong number for y it has to be bigger than 0 and less than game y length");
             return false;
-        } return true;
+        }
+        return true;
     }
 
-    private static void setXYOfMap(int x,int y,String whichFunction,HashMap<String, ArrayList<String>> options) {
-        if (!checkXY(x,y)) return;
+    private static void setXYOfMap(int x, int y, String whichFunction, HashMap<String, ArrayList<String>> options) {
+        if (!checkXY(x, y)) return;
         switch (whichFunction) {
             case "show map":
                 xOfMap = x;
                 yOfMap = y;
-                showMap(x,y);
+                showMap(x, y);
                 break;
             case "details":
                 xOfMap = x;
                 yOfMap = y;
-                showMapDetails(x,y);
+                showMapDetails(x, y);
                 break;
             case "texture":
-                if (setTextureForOneHouse(x,y,options,true))
-                    System.out.println("successfully changed the texture in house -x " + x + " -y " + y );
+                if (setTextureForOneHouse(x, y, options, true))
+                    System.out.println("successfully changed the texture in house -x " + x + " -y " + y);
                 break;
             case "clear block":
-                if (clearOneBlock(x,y,true))
+                if (clearOneBlock(x, y, true))
                     System.out.println("successfully cleared the block");
                 break;
             case "drop rock":
-                if (dropOneRock(x,y,options,true))
-                    System.out.println("successfully dropped a rock in house -x " + x + " -y " + y );
+                if (dropOneRock(x, y, options, true))
+                    System.out.println("successfully dropped a rock in house -x " + x + " -y " + y);
                 break;
             case "drop tree":
-                if (dropOneTree(x,y,options,true))
-                    System.out.println("successfully dropped a tree in house -x " + x + " -y " + y );
+                if (dropOneTree(x, y, options, true))
+                    System.out.println("successfully dropped a tree in house -x " + x + " -y " + y);
                 break;
             case "drop building":
-                dropBuilding(x,y,options);
+                dropBuilding(x, y, options);
                 break;
             case "select building":
-                selectBuilding(x,y);
+                selectBuilding(x, y);
                 break;
             case "select unit":
-                selectUnit(x,y);
+                selectUnit(x, y);
                 break;
         }
     }
 
-    private static void showMap(int x,int y) {
-        System.out.println(MapMenuController.showMap(x,y));
+    private static void showMap(int x, int y) {
+        System.out.println(MapMenuController.showMap(x, y));
     }
 
-    private static void showMapDetails(int x,int y) {
-        System.out.println(MapMenuController.showMapDetails(x,y));
+    private static void showMapDetails(int x, int y) {
+        System.out.println(MapMenuController.showMapDetails(x, y));
     }
 
-    private static void moveMap(Matcher matcher) {
-        String upOrDown = matcher.group("upOrDown");
-        String leftOrRight = matcher.group("leftOrRight");
-        if (upOrDown != null) {
-            if(upOrDown.equals("up")) xOfMap++;
-            else xOfMap--;
+    private static void moveMap(int up, int down, int left, int right) {
+        yOfMap += right - left;
+        xOfMap += down - up;
+    }
+
+    private static void showMapMove(HashMap<String, ArrayList<String>> options) {
+        int up = 0;
+        int down = 0;
+        int left = 0;
+        int right = 0;
+        for (String s : options.keySet()) {
+            switch (s) {
+                case "u":
+                    up = Integer.parseInt(options.get(s).get(0));
+                    break;
+                case "d":
+                    down = Integer.parseInt(options.get(s).get(0));
+                    break;
+                case "l":
+                    left = Integer.parseInt(options.get(s).get(0));
+                    break;
+                case "r":
+                    right = Integer.parseInt(options.get(s).get(0));
+                    break;
+            }
         }
-        if (leftOrRight != null) {
-            if (leftOrRight.equals("right")) yOfMap++;
-            else yOfMap--;
-        }
-    }
 
-    private static void showMapMove(Matcher matcher) {
-        moveMap(matcher);
-        if (!checkXY(xOfMap,yOfMap)) return;
-        showMap(xOfMap,yOfMap);
+        moveMap(up, down, left, right);
+        if (!checkXY(xOfMap, yOfMap)) return;
+        System.out.println("x: " + xOfMap + " y: " + yOfMap);
+        showMap(xOfMap, yOfMap);
     }
 
     private static void showMapDetailsMove(Matcher matcher) {
-        moveMap(matcher);
-        if (!checkXY(xOfMap,yOfMap)) return;
-        showMapDetails(xOfMap,yOfMap);
+//        moveMap(1, 1, 1, 1);
+        if (!checkXY(xOfMap, yOfMap)) return;
+        showMapDetails(xOfMap, yOfMap);
     }
 
     private static String setTypeForTreeAndTextureAndBuilding(HashMap<String, ArrayList<String>> options) {
@@ -283,13 +304,13 @@ public class GameMenu {
         return mapToSend;
     }
 
-    private static boolean setTextureForOneHouse(int x, int y,HashMap<String, ArrayList<String>> options,boolean change) {
+    private static boolean setTextureForOneHouse(int x, int y, HashMap<String, ArrayList<String>> options, boolean change) {
         if (typeForTreeAndTexture.equals(MapType.DEFAULT)) typeForTreeAndTexture = typeChecker(options);
         MapMenuMessage mapMenuMessage;
         if (typeForTreeAndTexture != null) {
-            mapMenuMessage = MapMenuController.setTextureFinalTest(x,y);
+            mapMenuMessage = MapMenuController.setTextureFinalTest(x, y);
             if (!mapMenuMessage.equals(MapMenuMessage.SUCCESS)) {
-                System.out.println("a building exists int house -x "+ x + " -y "+ y + " you can not do this action");
+                System.out.println("a building exists int house -x " + x + " -y " + y + " you can not do this action");
                 return false;
             }
             if (change) {
@@ -298,15 +319,15 @@ public class GameMenu {
             }
             return true;
 
-        }
-        else return false;
+        } else return false;
     }
 
-    private static boolean clearOneBlock(int x,int y,boolean change) {
-        if (MapMenuController.clearBlock(x,y,change).equals(MapMenuMessage.MAIN_HOUSE)) {
+    private static boolean clearOneBlock(int x, int y, boolean change) {
+        if (MapMenuController.clearBlock(x, y, change).equals(MapMenuMessage.MAIN_HOUSE)) {
             System.out.println("you can not clear the house which main house is placed on");
             return false;
-        } return true;
+        }
+        return true;
     }
 
     private static Direction directionChecker(HashMap<String, ArrayList<String>> options) {
@@ -334,15 +355,15 @@ public class GameMenu {
         return directionToSend;
     }
 
-    private static boolean dropOneRock(int x,int y,HashMap<String, ArrayList<String>> options,boolean change) {
+    private static boolean dropOneRock(int x, int y, HashMap<String, ArrayList<String>> options, boolean change) {
         if (direction.equals(Direction.F)) direction = directionChecker(options);
-        if (direction != null ){
-            MapMenuMessage message = MapMenuController.dropRockFinalTest(x,y);
+        if (direction != null) {
+            MapMenuMessage message = MapMenuController.dropRockFinalTest(x, y);
             if (!message.equals(MapMenuMessage.SUCCESS)) {
-                System.out.println("a building exists int house -x "+ x + " -y "+ y + " you can not do this action");
+                System.out.println("a building exists int house -x " + x + " -y " + y + " you can not do this action");
                 return false;
             }
-            if (change ) {
+            if (change) {
                 MapMenuController.dropRock(x, y, direction);
                 direction = Direction.F;
             }
@@ -372,12 +393,13 @@ public class GameMenu {
         }
         return treeToSend;
     }
-    private static boolean dropOneTree(int x, int y, HashMap<String, ArrayList<String>> options,boolean change) {
+
+    private static boolean dropOneTree(int x, int y, HashMap<String, ArrayList<String>> options, boolean change) {
         if (typeForTreeAndTexture.equals(MapType.DEFAULT)) typeForTreeAndTexture = treeChecker(options);
-        if (typeForTreeAndTexture != null ){
-            MapMenuMessage message = MapMenuController.dropTreeFinalTest(x,y);
+        if (typeForTreeAndTexture != null) {
+            MapMenuMessage message = MapMenuController.dropTreeFinalTest(x, y);
             if (!message.equals(MapMenuMessage.SUCCESS)) {
-                System.out.println("a building exists in house -x "+ x + " -y "+ y + " you can not do this action");
+                System.out.println("a building exists in house -x " + x + " -y " + y + " you can not do this action");
                 return false;
             }
             if (change) {
@@ -389,8 +411,8 @@ public class GameMenu {
         return false;
     }
 
-    private static void checkRectangleIsValid(HashMap<String, ArrayList<String>> options,String whichFunction) {
-        int x1=0,y1=0,x2=0,y2=0;
+    private static void checkRectangleIsValid(HashMap<String, ArrayList<String>> options, String whichFunction) {
+        int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
         for (String s : options.keySet()) {
             switch (s) {
                 case "x1":
@@ -427,37 +449,37 @@ public class GameMenu {
                     break;
             }
         }
-        checkXYForRectangle(x1,y1,x2,y2,options,whichFunction);
+        checkXYForRectangle(x1, y1, x2, y2, options, whichFunction);
     }
 
-    private static void checkXYForRectangle(int x1,int y1,int x2,int y2,HashMap<String, ArrayList<String>> options,String whichFunction) {
+    private static void checkXYForRectangle(int x1, int y1, int x2, int y2, HashMap<String, ArrayList<String>> options, String whichFunction) {
         if (x1 < 0 || x1 >= Game.getX() || x2 < 0 || x2 > Game.getX()) {
             System.out.println("you have entered wrong number for x1 or x2 it has to be bigger than 0 and less than game map x length");
             return;
-        } else if (y1 < 0 ||  y1 >= Game.getY() || y2 < 0 || y2 > Game.getY()) {
+        } else if (y1 < 0 || y1 >= Game.getY() || y2 < 0 || y2 > Game.getY()) {
             System.out.println("you have entered wrong number for y1 or y2 it has to be bigger than 0 and less than game map y length");
             return;
-        } else if ( x2 < x1) {
+        } else if (x2 < x1) {
             System.out.println("x2 is less than x1 action failed");
             return;
-        } else if ( y2 < y1) {
+        } else if (y2 < y1) {
             System.out.println("y2 is less than y1 action failed");
             return;
         }
-        whichFunctionForRectangle(x1,y1,x2,y2,options,whichFunction);
+        whichFunctionForRectangle(x1, y1, x2, y2, options, whichFunction);
     }
 
-    private static void whichFunctionForRectangle(int x1,int y1,int x2,int y2,HashMap<String, ArrayList<String>> options,String whichFunction) {
+    private static void whichFunctionForRectangle(int x1, int y1, int x2, int y2, HashMap<String, ArrayList<String>> options, String whichFunction) {
         switch (whichFunction) {
             case "texture":
                 for (int i = x1; i < x2; i++) {
                     for (int j = y1; j < y2; j++) {
-                        if (!setTextureForOneHouse(i,j,options,false)) return;
+                        if (!setTextureForOneHouse(i, j, options, false)) return;
                     }
                 }
                 for (int i = x1; i < x2; i++) {
                     for (int j = y1; j < y2; j++) {
-                        setTextureForOneHouse(i,j,options,true);
+                        setTextureForOneHouse(i, j, options, true);
                     }
                 }
                 System.out.println("successfully changed the texture from house x1 " + x1 + " y1 " + y1 + " to x2 " + x2 + " y2 " + y2);
@@ -465,12 +487,12 @@ public class GameMenu {
             case "clear block":
                 for (int i = x1; i < x2; i++) {
                     for (int j = y1; j < y2; j++) {
-                        if (!clearOneBlock(i,j,false)) return;
+                        if (!clearOneBlock(i, j, false)) return;
                     }
                 }
                 for (int i = x1; i < x2; i++) {
                     for (int j = y1; j < y2; j++) {
-                        clearOneBlock(i,j,true);
+                        clearOneBlock(i, j, true);
                     }
                 }
                 System.out.println("successfully cleared the block from house x1 " + x1 + " y1 " + y1 + " to x2 " + x2 + " y2 " + y2);
@@ -478,12 +500,12 @@ public class GameMenu {
             case "drop rock":
                 for (int i = x1; i < x2; i++) {
                     for (int j = y1; j < y2; j++) {
-                        if (!dropOneRock(i,j,options,false)) return;
+                        if (!dropOneRock(i, j, options, false)) return;
                     }
                 }
                 for (int i = x1; i < x2; i++) {
                     for (int j = y1; j < y2; j++) {
-                        dropOneRock(i,j,options,true);
+                        dropOneRock(i, j, options, true);
                     }
                 }
                 System.out.println("successfully dropped a rock from house x1 " + x1 + " y1 " + y1 + " to x2 " + x2 + " y2 " + y2);
@@ -491,22 +513,22 @@ public class GameMenu {
             case "drop tree":
                 for (int i = x1; i < x2; i++) {
                     for (int j = y1; j < y2; j++) {
-                        if (!dropOneTree(i,j,options,false)) return;
+                        if (!dropOneTree(i, j, options, false)) return;
                     }
                 }
                 for (int i = x1; i < x2; i++) {
                     for (int j = y1; j < y2; j++) {
-                        dropOneTree(i,j,options,true);
+                        dropOneTree(i, j, options, true);
                     }
                 }
-                System.out.println("successfully dropped tree from house x1 " + x1 + " y1 " + y1 + " to x2 " + x2 + " y2 " + y2 );
+                System.out.println("successfully dropped tree from house x1 " + x1 + " y1 " + y1 + " to x2 " + x2 + " y2 " + y2);
                 break;
         }
     }
 
-    private static void dropBuilding(int x,int y,HashMap<String, ArrayList<String>> options) {
+    private static void dropBuilding(int x, int y, HashMap<String, ArrayList<String>> options) {
         String type = setTypeForTreeAndTextureAndBuilding(options);
-        MapMenuMessage message = MapMenuController.dropBuilding(x,y,type);
+        MapMenuMessage message = MapMenuController.dropBuilding(x, y, type);
         switch (message) {
             case NOT_VALID_TYPE_FOR_DROP_BUILDING:
                 System.out.println("enter a valid type for building");
@@ -568,8 +590,8 @@ public class GameMenu {
         }
     }
 
-    private static void selectBuilding(int x,int y){
-        switch (MapMenuController.selectBuilding(x,y)) {
+    private static void selectBuilding(int x, int y) {
+        switch (MapMenuController.selectBuilding(x, y)) {
             case HOUSE_IS_EMPTY:
                 System.out.println("the house you have entered is empty");
                 break;
@@ -578,12 +600,13 @@ public class GameMenu {
                 break;
             case SUCCESS:
                 System.out.println("successfully entered the building menu");
-                BuildingMenu.run(x,y);
+                BuildingMenu.run(x, y);
                 break;
         }
     }
-    private static void selectUnit(int x,int y){
-        switch (MapMenuController.selectUnit(x,y)) {
+
+    private static void selectUnit(int x, int y) {
+        switch (MapMenuController.selectUnit(x, y)) {
             case HOUSE_IS_EMPTY:
                 System.out.println("there is no soldier in that house");
                 break;
@@ -592,12 +615,12 @@ public class GameMenu {
                 break;
             case SUCCESS:
                 System.out.println("successfully entered the unit menu");
-               UnitMenu.run(x,y);
+                UnitMenu.run(x, y);
                 break;
         }
     }
 
-    private static void nextTurn(){
+    private static void nextTurn() {
         if (Game.getUsers().indexOf(Game.getCurrentUser()) == Game.getUsers().size() - 1) {
             GameMenuController.doGameInEachTurn();
         }

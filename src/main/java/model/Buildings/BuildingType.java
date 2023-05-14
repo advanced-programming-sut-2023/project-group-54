@@ -104,7 +104,7 @@ public enum BuildingType {
             20, false, BuildingGroup.WEAPONS,BuildingGroup.PRODUCER_BUILDING),
     POLETURNER(500, 4, 4, 100, "poleturner", null, 1, Resource.WOOD,
             10, false, BuildingGroup.WEAPONS,BuildingGroup.PRODUCER_BUILDING),
-    MAIN_HOUSE(6000,4,4,0,"main house",null,0,null,0,false,BuildingGroup.OTHERS,BuildingGroup.OTHERS);
+    MAIN_HOUSE(6000,7,7,0,"main house",null,0,null,0,false,BuildingGroup.OTHERS,BuildingGroup.OTHERS);
 
     private int maxHp;
     private int width;
@@ -132,6 +132,7 @@ public enum BuildingType {
         this.costAmount = costAmount;
         this.needEngineer = needEngineer;
         this.buildingGroup = buildingGroup;
+        this.buildingGroup2 = buildingGroup2;
     }
 
     public BuildingGroup getBuildingGroup2() {

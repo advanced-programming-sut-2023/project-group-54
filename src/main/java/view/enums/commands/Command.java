@@ -120,6 +120,12 @@ public enum Command {
             new Option("x",1,false),
             new Option("y",1,false)
     ))),
+    MOVE_MAP("move", new ArrayList<>(List.of(
+            new Option("u", 1, false),
+            new Option("d", 1, false),
+            new Option("l", 1, false),
+            new Option("r", 1, false)
+    ))),
     SHOW_DETAILS("show\\s+details",new ArrayList<>(List.of(
             new Option("x",1,false),
             new Option("y",1,false)
@@ -184,7 +190,7 @@ public enum Command {
     DROP_BUILDING("dropbuilding", new ArrayList<>(List.of(
             new Option("x", 1, false),
             new Option("y", 1, false),
-            new Option("type", 1, false)
+            new Option("t", 1, false)
     ))),
     SELECT_BUILDING("select\\s+building", new ArrayList<>(List.of(
             new Option("x", 1, false),

@@ -11,7 +11,6 @@ import model.units.Unit;
 import view.enums.messages.GameMenuMessage;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +18,9 @@ public class GameMenuController {
     public static int getPopularityFromFood() {
         int foodPop = Game.getCurrentUser().getGovernment().getFoodRate() * 4;
         int addPopForDif = (hasApple() ? 1 : 0) + (hasMeet() ? 1 : 0) + (hasBread() ? 1 : 0) + (hasCheese() ? 1 : 0);
+        if(!hasApple() && !hasMeet() && !hasBread() && !hasCheese()){
+            return -8;
+        }
         return foodPop + addPopForDif;
     }
 
@@ -193,7 +195,7 @@ public class GameMenuController {
             for (int j = setLowest(building.getY1Position()- 10); j < setHighest(building.getY2Position() + 10); j++) {
                 for (Unit unit : Game.getGameMap()[i][j].getUnit()) {
                     if (!unit.getGovernment().equals(building.getOwner()))
-                        unit.setHp(-600);
+                        unit.setHp2(-600);
                 }
             }
         }
@@ -213,8 +215,6 @@ public class GameMenuController {
             else if (building.getBuildingType().getBuildingGroup2().equals(BuildingGroup.PRODUCER_BUILDING) &&
                     ((ProducerBuilding) building).getProducerType().getPuts() == null)
                 procedureBuildings(user, building);
-            else if (building.getBuildingType().equals(BuildingType.CHURCH) || building.getBuildingType().equals(BuildingType.CATHEDRAL))
-                user.getGovernment().setPopularity2(2);
             else if (building.getBuildingType().equals(BuildingType.MANGONEL) || building.getBuildingType().equals(BuildingType.BALLISTAE))
                 mangonellBallistae(building);
         }
@@ -290,7 +290,7 @@ public class GameMenuController {
         return fireRange;
     }
 
-    public static void archersAttackRadios(Unit unit) {
+    public static void archersAttackRadius(Unit unit) {
         int fireRange = setFireRangeOnTowers(unit);
         for (int i = setLowest(unit.getxPosition() - fireRange); i < setHighest(unit.getxPosition() + fireRange); i++) {
             for (int j = setLowest(unit.getyPosition() - fireRange); j < setHighest(unit.getyPosition() + fireRange); j++) {
@@ -325,8 +325,10 @@ public class GameMenuController {
                 for (Unit unit1 : Game.getGameMap()[i][j].getUnit()) {
                     if (!unit1.getGovernment().equals(unit.getGovernment())) {
                         if (unit.getUnitType().getRange() != 1) {
+                            Game.getGameMapXY(unit.getxPosition(), unit.getyPosition()).getUnit().remove(unit);
                             unit.setxPosition(unit1.getxPosition() - unit.getUnitType().getRange() + 1);
                             unit.setyPosition(unit1.getyPosition() - unit.getUnitType().getRange() + 1);
+                            Game.getGameMapXY(unit.getxPosition(), unit.getyPosition()).getUnit().add(unit);
                             unit.setXTarget(i);
                             unit.setYTarget(j);
                             archersAttackSpecialHouse(unit);
@@ -339,6 +341,7 @@ public class GameMenuController {
                 }
             }
         }
+
     }
 
     public static void fightsInEachHouse(Unit unit) {
@@ -357,14 +360,14 @@ public class GameMenuController {
             if (unit instanceof Engineer) {
                 //to be complete
             }
-            if (unit.getUnitType().getRange() != -1 && !unit.getPatrol()) {
+            if (unit.getUnitType().getRange() != 1 && !unit.getPatrol()) {
                 if (unit.getxTarget() == -1) {
                     if (unit.getState().equals(State.DEFENSIVE)) setPlacesToFightInDifferentModes(unit, false);
                     else if (unit.getState().equals(State.AGGRESSIVE)) setPlacesToFightInDifferentModes(unit, true);
-                    archersAttackRadios(unit);
+                    archersAttackRadius(unit);
                 } else if (unit.getxTarget() != -1)
                     archersAttackSpecialHouse(unit);
-            } else if (unit.getPatrol() && unit.getxPosition() == unit.getPatrolXFrom() && unit.getyPosition() == unit.getyPosition()) setPlaceForAttackPatrolUnit(unit);
+            } else if (unit.getPatrol() && unit.getxPosition() == unit.getPatrolXFrom() && unit.getyPosition() == unit.getPatrolYFrom()) setPlaceForAttackPatrolUnit(unit);
             fightsInEachHouse(unit);
             removeDeadUnits();
             fightBuildings();
@@ -384,8 +387,8 @@ public class GameMenuController {
             if (enemyInThatHouse) continue;
             if (!Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().getOwner().equals(unit.getGovernment())) {
                 if (unit.getUnitType().getRange() == 1)
-                    Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().setHp2(unit.getUnitType().getDamage());
-                else Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().setHp2(unit.getUnitType().getDamage()/2);
+                    Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().setHp2(-unit.getUnitType().getDamage());
+                else Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().setHp2(-unit.getUnitType().getDamage()/2);
             }
         }
     }
@@ -395,8 +398,25 @@ public class GameMenuController {
         for (Building building : Building.getBuildings()) {
             if (building.getHp() < 0) buildingsToBeRemoved.add(building);
         }
-        for (Building building : buildingsToBeRemoved)
+        for (Building building : buildingsToBeRemoved){
+            if(building instanceof StorageBuilding){
+                StorageBuilding storageBuilding = (StorageBuilding) building;
+                for (Resource resource : storageBuilding.getStorage().keySet()) {
+                    storageBuilding.getOwner().getAllResources().put(resource, storageBuilding.getOwner().getAllResources().get(resource));
+                }
+            }
+            int x1 = building.getX1Position();
+            int y1 = building.getY1Position();
+            int x2 = building.getX2Position();
+            int y2 = building.getY2Position();
+            for (int i = x1; i < x2; i++) {
+                for (int j = y1; j < y2; j++) {
+                    Game.getGameMap()[i][j].setBuilding(null);
+                }
+            }
+
             Building.getBuildings().remove(building);
+        }
     }
     public static void moveUnits() {
         for (Unit unit : Unit.getUnits()) {
@@ -469,7 +489,45 @@ public class GameMenuController {
 
     public static void doGameInEachTurn() {
         for (User user : Game.getUsers()) {
+            moveUnits();
             user.getGovernment().setGold2(user.getGovernment().getTaxRate() * user.getGovernment().getPopulation());
+            user.getGovernment().setPopularity2(getPopularity());
+            if((getAppleCount() + getMeetCount() + getBreadCount() + getCheeseCount()) < ((double) (user.getGovernment().getFoodRate() + 2) / 2) * user.getGovernment().getPopulation()){
+                user.getGovernment().getAllResources().put(Resource.APPLE, (double) 0);
+                user.getGovernment().getAllResources().put(Resource.MEAT, (double) 0);
+                user.getGovernment().getAllResources().put(Resource.CHEESE, (double) 0);
+                user.getGovernment().getAllResources().put(Resource.BREAD, (double) 0);
+            }else{
+                double a = ((double) (user.getGovernment().getFoodRate() + 2) / 2) * user.getGovernment().getPopulation();
+                if(user.getGovernment().getAllResources().get(Resource.APPLE) < a){
+                    a -= user.getGovernment().getAllResources().get(Resource.APPLE);
+                    user.getGovernment().getAllResources().put(Resource.APPLE, (double) 0);
+                    if(user.getGovernment().getAllResources().get(Resource.MEAT) < a){
+                        a -= user.getGovernment().getAllResources().get(Resource.MEAT);
+                        user.getGovernment().getAllResources().put(Resource.MEAT, (double) 0);
+                        if(user.getGovernment().getAllResources().get(Resource.CHEESE) < a){
+                            a -= user.getGovernment().getAllResources().get(Resource.CHEESE);
+                            user.getGovernment().getAllResources().put(Resource.CHEESE, (double) 0);
+                            if(user.getGovernment().getAllResources().get(Resource.BREAD) < a){
+                                a -= user.getGovernment().getAllResources().get(Resource.BREAD);
+                                user.getGovernment().getAllResources().put(Resource.BREAD, (double) 0);
+                            }else {
+                                a = 0;
+                                user.getGovernment().getAllResources().put(Resource.BREAD, user.getGovernment().getAllResources().get(Resource.BREAD) - a);
+                            }
+                        } else {
+                            a = 0;
+                            user.getGovernment().getAllResources().put(Resource.CHEESE, user.getGovernment().getAllResources().get(Resource.CHEESE) - a);
+                        }
+                    } else {
+                        a = 0;
+                        user.getGovernment().getAllResources().put(Resource.MEAT, user.getGovernment().getAllResources().get(Resource.MEAT) - a);
+                    }
+                } else {
+                    a = 0;
+                    user.getGovernment().getAllResources().put(Resource.APPLE, user.getGovernment().getAllResources().get(Resource.APPLE) - a);
+                }
+            }
             nextTurnForBuildings(user);
         }
         unitsAttack();

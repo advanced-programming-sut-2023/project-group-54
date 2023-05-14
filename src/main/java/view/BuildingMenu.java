@@ -41,7 +41,7 @@ public class BuildingMenu {
     }
 
     private static void setSelectedBuilding(int x,int y) {
-        BuildingMenu.setSelectedBuilding(x,y);
+        BuildingMenuController.setSelectedBuilding(x,y);
     }
 
     private static void repair() {

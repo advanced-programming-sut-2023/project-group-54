@@ -12,11 +12,15 @@ public class ProducerBuilding extends Building {
     public ProducerBuilding(ProducerType producerType) {
         super(producerType.getBuildingType(), producerType.getBuildingType().getMaxHp(), Game.getCurrentUser().getGovernment());
         this.producerType = producerType;
-        for (HashMap<Resource, Double> input : producerType.getPuts().keySet()) {
-            for (Resource resource : producerType.getPuts().get(input).keySet()) {
-                currentOutput = resource;
-                return;
+        if(!(producerType.getPuts() == null)){
+            for (HashMap<Resource, Double> input : producerType.getPuts().keySet()) {
+                for (Resource resource : producerType.getPuts().get(input).keySet()) {
+                    currentOutput = resource;
+                    return;
+                }
             }
+        }else{
+            currentOutput = null;
         }
     }
 
