@@ -1,24 +1,20 @@
 package controller;
 
-import com.google.common.hash.Hashing;
 import model.Government;
 import model.User;
 import view.enums.messages.SignupMenuMessage;
-
-import java.nio.charset.StandardCharsets;
 
 public class SignupMenuController {
     private static String username;
     private static String password;
     private static String passwordConfirmation;
+    private static String nickname;
+    private static String email;
+    private static String slogan;
 
     public static String getUsername() {
         return username;
     }
-
-    private static String nickname;
-    private static String email;
-    private static String slogan;
 
     public static SignupMenuMessage setUser(String username, String password, String passwordConfirmation, String nickname, String email, String slogan) {
         SignupMenuController.username = username;
@@ -58,7 +54,7 @@ public class SignupMenuController {
         SignupMenuMessage usernameChecker = Controller.checkUsernameValidity(username);
         if (!usernameChecker.equals(SignupMenuMessage.SUCCESS))
             return usernameChecker;
-        if(!password.equals("random")){
+        if (!password.equals("random")) {
             SignupMenuMessage passwordChecker = Controller.checkPasswordValidity(password);
             if (!passwordChecker.equals(SignupMenuMessage.SUCCESS))
                 return passwordChecker;
@@ -72,7 +68,7 @@ public class SignupMenuController {
             return emailChecker;
         }
 
-        if (slogan != null &&slogan.equals("random"))
+        if (slogan != null && slogan.equals("random"))
             randomSloganSetter();
 
         if (password.equals("random"))

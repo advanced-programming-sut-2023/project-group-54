@@ -2,6 +2,7 @@ package model;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
 import controller.Controller;
 
 import java.io.File;
@@ -12,12 +13,19 @@ import java.util.Collections;
 
 public class User implements Comparable{
     private static final ArrayList<User> users;
+    @Expose
     private String username;
+    @Expose
     private String password;
+    @Expose
     private String nickname;
+    @Expose
     private String email;
+    @Expose
     private String slogan;
+    @Expose
     private int questionNumber;
+    @Expose
     private String questionAnswer;
     private Government government;
     private int highScore;
@@ -46,7 +54,6 @@ public class User implements Comparable{
         this.questionNumber = questionNumber;
         this.questionAnswer = questionAnswer;
         this.government = government;
-        users.add(this);
     }
 
     public String getUsername() {
