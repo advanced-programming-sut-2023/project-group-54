@@ -339,4 +339,15 @@ public class GameMenuController {
     public static GameMenuMessage nextTurn() {
         return GameMenuMessage.SUCCESS;
     }
+
+    public static void setNextUser() {
+        User nextUser = null;
+        for (User user : Game.getUsers()) {
+            if(user.equals(Game.getCurrentUser())){
+                nextUser = Game.getUsers().get(Game.getUsers().indexOf(user) + 1);
+                break;
+            }
+        }
+        Game.setCurrentUser(nextUser);
+    }
 }

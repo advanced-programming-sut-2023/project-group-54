@@ -4,14 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="update user">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="update user save">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SignupMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SignupMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/data/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/controller/GameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/GameMenuController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/SignupMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/SignupMenuController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/TrapType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/TrapType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/User.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +232,13 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۱۶" />
       <updated>1684043940047</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL‎−۰۰۰۱۷" summary="update user save">
+      <created>1684044462171</created>
+      <option name="number" value="LOCAL‎−۰۰۰۱۷" />
+      <option name="presentableId" value="LOCAL‎−۰۰۰۱۷" />
+      <updated>1684044462171</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,7 +286,8 @@
     <MESSAGE value="Archer attackers and pitch ditch and killing pit + clear +-(because of main house)" />
     <MESSAGE value="save user and move troops" />
     <MESSAGE value="update user" />
-    <option name="LAST_COMMIT_MESSAGE" value="update user" />
+    <MESSAGE value="update user save" />
+    <option name="LAST_COMMIT_MESSAGE" value="update user save" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

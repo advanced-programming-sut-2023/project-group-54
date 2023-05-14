@@ -5,6 +5,7 @@ import controller.MapMenuController;
 import model.Direction;
 import model.Game;
 import model.MapType;
+import model.User;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
 import view.enums.commands.Regexes;
@@ -80,8 +81,8 @@ GameMenu {
                 setXYOfMapCommonErrors(options,"drop building");
             else if((options = CommandHandler.parsCommand(Command.SELECT_UNIT, command)) != null)
                 setXYOfMapCommonErrors(options,"select unit");
-            else if((options = CommandHandler.parsCommand(Command.NEXT_TURN, command)) != null)
-                nextTurn(options);
+            else if(CommandHandler.parsCommand(Command.NEXT_TURN, command) != null)
+                nextTurn();
             else if ((options = CommandHandler.parsCommand(Command.SELECT_BUILDING,command)) != null)
                 setXYOfMapCommonErrors(options,"select building");
             else System.out.println("invalid command in game menu");
@@ -580,8 +581,10 @@ GameMenu {
         }
     }
 
+    private static void nextTurn(){
+        if(Game.getCurrentUser().equals(Game.getUsers().get(Game.getUsers().size() - 1))){
 
-    private static void nextTurn(HashMap<String, ArrayList<String>> options){
-
+        }
+        GameMenuController.setNextUser();
     }
 }

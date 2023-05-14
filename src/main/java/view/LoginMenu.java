@@ -132,10 +132,13 @@ public class LoginMenu {
         switch (questionNumber) {
             case 1:
                 System.out.println("What is your father’s name?");
+                break;
             case 2:
                 System.out.println("What was your first pet’s name?");
-            default:
+                break;
+            case 3:
                 System.out.println("What is your mother’s last name?");
+                break;
         }
         checkAnswer();
     }
@@ -143,6 +146,7 @@ public class LoginMenu {
     private void checkAnswer() {
         for (int i = 0; i < 3; i++) {
             if (LoginMenuController.checkAnswer(Controller.buildParameter(MainMenu.getScanner().nextLine()))) {
+                System.out.println("please enter new password for user");
                 for (int j = 0; j < 3; j++) {
                     String password = Controller.buildParameter(MainMenu.getScanner().nextLine());
                     SignupMenuMessage result = Controller.checkPasswordValidity(password);
