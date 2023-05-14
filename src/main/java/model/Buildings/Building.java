@@ -25,8 +25,16 @@ public class Building {
         buildings.add(this);
     }
 
+    public int getHp() {
+        return hp;
+    }
+
     public Government getOwner() {
         return owner;
+    }
+
+    public static void addBuildings(Building building) {
+        Building.buildings.add(building);
     }
 
     public static ArrayList<Building> getBuildings() {
@@ -39,6 +47,10 @@ public class Building {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public void setHp2(int hp) {
+        this.hp -= hp;
     }
 
     public int getX1Position() {

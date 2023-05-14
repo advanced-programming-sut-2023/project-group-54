@@ -117,6 +117,7 @@ public class Menu {
         if(setMap()){
             Game.setCurrentUser(a);
             Game.setUsers(users);
+            Game.setUserRemoved();
             System.out.println("game started successfully");
             GameMenu.run();
         }else{

@@ -5,11 +5,13 @@ import model.Game;
 import model.Resource;
 import model.ShortestPath;
 import model.User;
+import model.units.Engineer;
 import model.units.State;
 import model.units.Unit;
 import view.enums.messages.GameMenuMessage;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -187,8 +189,8 @@ public class GameMenuController {
     }
 
     public static void mangonellBallistae(Building building) {
-        for (int i = building.getX1Position(); i < building.getX2Position() + 10; i++) {
-            for (int j = building.getY1Position(); j < building.getY2Position() + 10; j++) {
+        for (int i = setLowest(building.getX1Position() - 10); i < setHighest(building.getX2Position() + 10); i++) {
+            for (int j = setLowest(building.getY1Position()- 10); j < setHighest(building.getY2Position() + 10); j++) {
                 for (Unit unit : Game.getGameMap()[i][j].getUnit()) {
                     if (!unit.getGovernment().equals(building.getOwner()))
                         unit.setHp(-600);
@@ -218,17 +220,39 @@ public class GameMenuController {
         }
     }
 
+    public static int setHighest(int whereYouWant) {
+        if(whereYouWant > Game.getX()) return Game.getX();
+        else return whereYouWant;
+    }
+    public static int setLowest(int whereYouWant) {
+        if (whereYouWant < 0) return 0;
+        return whereYouWant;
+    }
     public static void setPlacesToFightInDifferentModes(Unit unit, boolean aggressiveOrDefence) {
         int range = (5 * unit.getUnitType().getSpeed());
-        if (!aggressiveOrDefence) range /= 2;
         int fireRange = unit.getUnitType().getRange();
         if (fireRange == 1) fireRange = 0;
-        for (int i = unit.getxPosition(); i <= unit.getxPosition() + range - fireRange; i++) {
-            for (int j = unit.getyPosition(); j <= unit.getyPosition() + range - fireRange; j++) {
+        int whereToGoXHigh = unit.getxPosition() + range - fireRange + 1;
+        int whereToGoXLow = unit.getxPosition() - range + fireRange - 1;
+        int whereToGoYHigh = unit.getyPosition() + range - fireRange + 1;
+        int whereToGoYLow = unit.getyPosition() - range + fireRange - 1;
+        if (whereToGoXHigh >= Game.getX() || aggressiveOrDefence) whereToGoXHigh = Game.getX();
+        if (whereToGoXLow < 0 || aggressiveOrDefence) whereToGoXLow = 0;
+        if (whereToGoYHigh >= Game.getY() || aggressiveOrDefence) whereToGoYHigh = Game.getY();
+        if (whereToGoYLow < 0 || aggressiveOrDefence) whereToGoYLow = 0;
+        for (int i = whereToGoXLow; i < whereToGoXHigh; i++) {
+            for (int j = whereToGoYLow; j < whereToGoYHigh; j++) {
                 for (Unit unit1 : Game.getGameMap()[i][j].getUnit()) {
                     if (!unit1.getGovernment().equals(unit.getGovernment())) {
-                        unit.setxMoveTarget(unit1.getxPosition());
-                        unit.setyMoveTarget(unit1.getyPosition());
+                        if (unit.getUnitType().getRange() != 1) {
+                            unit.setxMoveTarget(unit1.getxPosition() - unit.getUnitType().getRange() + 1);
+                            unit.setYMoveTarget(unit1.getyPosition() - unit.getUnitType().getRange() + 1);
+                        } else {
+                            unit.setxMoveTarget(unit1.getxPosition());
+                            unit.setyMoveTarget(unit1.getyPosition());
+                        }
+                        unit.setXTarget(unit1.getxPosition());
+                        unit.setYTarget(unit1.getyPosition());
                         moveTroop(unit);
                         break;
                     }
@@ -253,18 +277,25 @@ public class GameMenuController {
         }
     }
 
-    public static void archersAttackRadios(Unit unit) {
+    public static int setFireRangeOnTowers(Unit unit) {
         int fireRange = unit.getUnitType().getRange();
         switch (Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().getBuildingType()) {
-            case DEFENCE_TOWER, PERIMETER_TOWER, ROUND_TOWER, SQUARE_TOWER, LOOK_OUT_TOWER:
-                if (fireRange != 1) fireRange *= 2;
+            case DEFENCE_TOWER, PERIMETER_TOWER, ROUND_TOWER, SQUARE_TOWER, LOOK_OUT_TOWER,SMALL_STONE_GATE,LARGE_STONE_GATE:
+                if (fireRange != 1) fireRange += ((DefenseBuilding)Game.getGameMap()[unit.getxPosition()][unit.getyPosition()]
+                        .getBuilding()).getDefenseType().getIncreaseAttackRange();
                 break;
             default:
                 break;
         }
-        for (int i = unit.getxPosition(); i < unit.getxPosition() + fireRange; i++) {
-            for (int j = unit.getyPosition(); j < unit.getyPosition() + fireRange; j++) {
+        return fireRange;
+    }
+
+    public static void archersAttackRadios(Unit unit) {
+        int fireRange = setFireRangeOnTowers(unit);
+        for (int i = setLowest(unit.getxPosition() - fireRange); i < setHighest(unit.getxPosition() + fireRange); i++) {
+            for (int j = setLowest(unit.getyPosition() - fireRange); j < setHighest(unit.getyPosition() + fireRange); j++) {
                 for (Unit unit1 : Game.getGameMap()[i][j].getUnit()) {
+                    if (i == unit.getxPosition() && j == unit.getyPosition()) continue;
                     if (!unit1.getGovernment().equals(unit.getGovernment()))
                         unit1.setHp2(-unit.getUnitType().getDamage());
                     if (Game.getGameMap()[i][j].getBuilding().getBuildingType().equals(BuildingType.PITCH_RIG))
@@ -275,12 +306,16 @@ public class GameMenuController {
     }
 
     public static void archersAttackSpecialHouse(Unit unit) {
-        for (Unit unit1 : Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getUnit()) {
-            if (!unit1.getGovernment().equals(unit.getGovernment()))
-                unit1.setHp2(-unit.getUnitType().getDamage());
+        int fireRange = setFireRangeOnTowers(unit);
+        if (unit.getxTarget() < unit.getxPosition() + fireRange && unit.getyTarget() < unit.getyPosition() + fireRange) {
+            for (Unit unit1 : Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getUnit()) {
+                if (!unit1.getGovernment().equals(unit.getGovernment()))
+                    unit1.setHp2(-unit.getUnitType().getDamage());
+            }
+            Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding().setHp2(unit.getUnitType().getDamage());
+            if (Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding().getBuildingType().equals(BuildingType.PITCH_RIG))
+                ((TrapBuilding) Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding()).firePitchDitch();
         }
-        if (Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding().getBuildingType().equals(BuildingType.PITCH_RIG))
-            ((TrapBuilding) Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding()).firePitchDitch();
     }
 
     public static void setPlaceForAttackPatrolUnit(Unit unit) {
@@ -290,20 +325,15 @@ public class GameMenuController {
                 for (Unit unit1 : Game.getGameMap()[i][j].getUnit()) {
                     if (!unit1.getGovernment().equals(unit.getGovernment())) {
                         if (unit.getUnitType().getRange() != 1) {
-                            if (unit1.getyPosition() > unit.getyPosition() + unit.getUnitType().getRange()) {
-//                                moveTroop(unit, unit.getxPosition(), unit.getyPosition() +
-//                                        unit1.getyPosition() - unit.getUnitType().getRange());
-                            }
-                            if (unit1.getyPosition() > unit.getyPosition() + unit.getUnitType().getRange()) {
-//                                moveTroop(unit, unit.getxPosition() +
-//                                        unit1.getxPosition() - unit.getUnitType().getRange(), unit.getyPosition());
-                            }
+                            unit.setxPosition(unit1.getxPosition() - unit.getUnitType().getRange() + 1);
+                            unit.setyPosition(unit1.getyPosition() - unit.getUnitType().getRange() + 1);
                             unit.setXTarget(i);
                             unit.setYTarget(j);
                             archersAttackSpecialHouse(unit);
                             return;
                         }
-//                        moveTroop(unit, i, j);
+                        unit.setxPosition(unit1.getxPosition());
+                        unit.setyPosition(unit1.getyPosition());
                         return;
                     }
                 }
@@ -322,24 +352,129 @@ public class GameMenuController {
         }
     }
 
-    public static void UnitsAttack() {
+    public static void unitsAttack() {
         for (Unit unit : Unit.getUnits()) {
+            if (unit instanceof Engineer) {
+                //to be complete
+            }
             if (unit.getUnitType().getRange() != -1 && !unit.getPatrol()) {
-                if (unit.getState().equals(State.DEFENSIVE)) setPlacesToFightInDifferentModes(unit, false);
-                else if (unit.getState().equals(State.AGGRESSIVE)) setPlacesToFightInDifferentModes(unit, true);
-                if (unit.getxTarget() == -1)
+                if (unit.getxTarget() == -1) {
+                    if (unit.getState().equals(State.DEFENSIVE)) setPlacesToFightInDifferentModes(unit, false);
+                    else if (unit.getState().equals(State.AGGRESSIVE)) setPlacesToFightInDifferentModes(unit, true);
                     archersAttackRadios(unit);
-                else if (unit.getxTarget() != -1)
-                    archersAttackRadios(unit);
-            } else if (unit.getPatrol()) setPlaceForAttackPatrolUnit(unit);
+                } else if (unit.getxTarget() != -1)
+                    archersAttackSpecialHouse(unit);
+            } else if (unit.getPatrol() && unit.getxPosition() == unit.getPatrolXFrom() && unit.getyPosition() == unit.getyPosition()) setPlaceForAttackPatrolUnit(unit);
             fightsInEachHouse(unit);
+            removeDeadUnits();
+            fightBuildings();
+            removeBuildings();
         }
     }
 
+    public static void fightBuildings() {
+        boolean enemyInThatHouse = false;
+        for (Unit unit : Unit.getUnits()) {
+            for (Unit unit1 : Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getUnit()) {
+                if (!unit1.getGovernment().equals(unit.getGovernment())) {
+                    enemyInThatHouse = true;
+                    break;
+                }
+            }
+            if (enemyInThatHouse) continue;
+            if (!Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().getOwner().equals(unit.getGovernment())) {
+                if (unit.getUnitType().getRange() == 1)
+                    Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().setHp2(unit.getUnitType().getDamage());
+                else Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().setHp2(unit.getUnitType().getDamage()/2);
+            }
+        }
+    }
+
+    public static void removeBuildings() {
+        ArrayList<Building> buildingsToBeRemoved = new ArrayList<>();
+        for (Building building : Building.getBuildings()) {
+            if (building.getHp() < 0) buildingsToBeRemoved.add(building);
+        }
+        for (Building building : buildingsToBeRemoved)
+            Building.getBuildings().remove(building);
+    }
+    public static void moveUnits() {
+        for (Unit unit : Unit.getUnits()) {
+            moveTroop(unit);
+        }
+    }
+
+    public static void removeDeadUnits() {
+        ArrayList<Unit> unitsToBeRemoved = new ArrayList<>();
+
+        for (Unit unit : Unit.getUnits()) {
+            if (unit.getHp() <= 0) unitsToBeRemoved.add(unit);
+        }
+        for (Unit unit : unitsToBeRemoved)
+            Unit.getUnits().remove(unit);
+    }
+
+    public static void checkGameConditions() {
+        ArrayList<Building> mainHousesToBeRemoved =new ArrayList<>();
+        ArrayList<Building> buildingsToBeRemoved = new ArrayList<>();
+        ArrayList<Unit> unitsToBeRemoved = new ArrayList<>();
+        for (Building mainHouse : Game.getMainHouses()) {
+            if (mainHouse.getHp() <= 0) {
+                int scoreToAdd = 0;
+                mainHousesToBeRemoved.add(mainHouse);
+                buildingsToBeRemoved.add(mainHouse);
+                for (Building building : Building.getBuildings()) {
+                    if (building.getOwner().equals(mainHouse.getOwner())) {
+                        scoreToAdd += (int)(building.getHp()*1.0)/100;
+                        buildingsToBeRemoved.add(building);
+                    }
+                }
+                for (Unit unit : Unit.getUnits()) {
+                    if (unit.getOwner().equals(mainHouse.getOwner())) {
+                        scoreToAdd += 1;
+                        unitsToBeRemoved.add(unit);
+                    }
+                }
+                scoreToAdd += (int)(mainHouse.getOwner().getGold() * 1.0)/10;
+                doThingsForUserRemoved(mainHouse.getOwner().getUser(),scoreToAdd);
+                Game.getUsers().remove(mainHouse.getOwner().getUser());
+            }
+        }
+        for (Building building : mainHousesToBeRemoved)
+            Game.getMainHouses().remove(building);
+        for (Building building : buildingsToBeRemoved)
+            Building.getBuildings().remove(building);
+        for (Unit unit : unitsToBeRemoved)
+            Unit.getUnits().remove(unit);
+
+    }
+
+    public static void doThingsForUserRemoved(User user,int scoreToAdd) {
+        for (User user1 : Game.getUsers()) {
+            user1.getGovernment().setGold2((int)(scoreToAdd * 1.0)/2);
+        }
+        user.setHighScore(scoreToAdd);
+        Game.setUserRemoved();
+        Game.addUserRemoved(user);
+    }
+
+    public static boolean checkIfGameIsOver() {
+        if (Game.getUsers().isEmpty()) return true;
+        if (Game.getTurns() == 0) return true;
+        return false;
+    }
     public static GameMenuMessage nextTurn() {
         return GameMenuMessage.SUCCESS;
     }
 
+    public static void doGameInEachTurn() {
+        for (User user : Game.getUsers()) {
+            user.getGovernment().setGold2(user.getGovernment().getTaxRate() * user.getGovernment().getPopulation());
+            nextTurnForBuildings(user);
+        }
+        unitsAttack();
+        checkGameConditions();
+    }
     public static void setNextUser() {
         User nextUser = null;
         for (User user : Game.getUsers()) {

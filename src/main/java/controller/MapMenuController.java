@@ -1,10 +1,7 @@
 package controller;
 
+import model.*;
 import model.Buildings.*;
-import model.Direction;
-import model.Game;
-import model.Map;
-import model.MapType;
 import model.units.Engineer;
 import model.units.Unit;
 import view.enums.messages.MapMenuMessage;
@@ -33,15 +30,46 @@ public class MapMenuController {
     private static final String ANSI_TEXT_LIGHT_BLUE = "\u001b[36m";
     private static final String ANSI_TEXT_WHITE = "\u001b[37m";
 
+    public static void setMainHouse(int whichMap) {
+        for (int i = 0; i < Game.getUsers().size(); i++) {
+            if (i < 4) {
+                for (int j = whichMap + i * whichMap; j < whichMap + i * whichMap + 4; j++) {
+                    for (int k = whichMap + 25; k < whichMap + 25 + 4; k++) {
+                        Game.getGameMap()[whichMap + i * whichMap +j][whichMap + 25 + k].setBuilding(new Building(BuildingType.MAIN_HOUSE
+                                ,BuildingType.MAIN_HOUSE.getMaxHp(),Game.getUsers().get(i).getGovernment()));
+                    }
+                }
+                dropBuilding(whichMap + i * whichMap + 4,whichMap + 25,"granary");
+                Building.addBuildings(Game.getGameMap()[whichMap + i * whichMap][whichMap + 25].getBuilding());
+            }
+            else {
+                for (int j = whichMap + (i-4) * whichMap; j < whichMap + (i-4) * whichMap + 4; j++) {
+                    for (int k = whichMap * 4; k < whichMap * 4 + 4; k++) {
+                        Game.getGameMap()[whichMap + (i-4) * whichMap + j][whichMap * 4 + k].setBuilding(new Building(BuildingType.MAIN_HOUSE
+                                ,BuildingType.MAIN_HOUSE.getMaxHp(),Game.getUsers().get(i).getGovernment()));
+                    }
+                }
+                dropBuilding(whichMap + (i -4) * whichMap + 4,whichMap * 4,"granary");
+                Building.addBuildings(Game.getGameMap()[whichMap + (i - 4) * whichMap][whichMap * 4].getBuilding());
+            }
+            Game.getUsers().get(i).getGovernment().setGold(4000);
+            Game.getUsers().get(i).getGovernment().addToStorage(Resource.WOOD, 100);
+            Game.getUsers().get(i).getGovernment().addToStorage(Resource.STONE, 100);
+            Game.getUsers().get(i).getGovernment().addToStorage(Resource.BREAD, 100);
+        }
+    }
     public static void setMap(int mapNumber) {
         if (mapNumber == 1) {
             Game.setGameMap(400, 400);
             Game.setX(400);
             Game.setY(400);
+            setMainHouse(75);
+
         } else if (mapNumber == 2) {
             Game.setGameMap(200, 200);
             Game.setX(200);
             Game.setY(200);
+            setMainHouse(30);
         } else {
             Map[][] gameMap = new Map[400][400];
             for (int i = 0; i < 400; i++) {
@@ -275,18 +303,20 @@ public class MapMenuController {
         Game.getGameMap()[xCoordinate][yCoordinate].setTree(null);
     }
 
-    public static MapMenuMessage clearBlock(int xCoordinate, int yCoordinate) {
-        //checking for not destroy the main house
-        int x1 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getX1Position();
-        int y1 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getY1Position();
-        int x2 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getX2Position();
-        int y2 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getY2Position();
-        for (int i = x1; i < x2; i++) {
-            for (int j = y1; j < y2; j++) {
-                Game.getGameMap()[i][j].setBuilding(null);
+    public static MapMenuMessage clearBlock(int xCoordinate, int yCoordinate,boolean change) {
+        if (Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getBuildingType().equals(BuildingType.MAIN_HOUSE)) return MapMenuMessage.MAIN_HOUSE;
+        if (change) {
+            int x1 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getX1Position();
+            int y1 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getY1Position();
+            int x2 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getX2Position();
+            int y2 = Game.getGameMap()[xCoordinate][yCoordinate].getBuilding().getY2Position();
+            for (int i = x1; i < x2; i++) {
+                for (int j = y1; j < y2; j++) {
+                    Game.getGameMap()[i][j].setBuilding(null);
+                }
             }
+            Game.getGameMap()[xCoordinate][yCoordinate].setUnit();
         }
-        Game.getGameMap()[xCoordinate][yCoordinate].setUnit();
         return MapMenuMessage.SUCCESS;
     }
 
@@ -387,6 +417,26 @@ public class MapMenuController {
                 if (!type.equals("quarry") &&
                         map.getMapType().equals(MapType.BOULDERS))
                     return MapMenuMessage.ONLY_QUARRY_ON_BOULDERS;
+                boolean sign = false;
+                if (type.equals("granary")) {
+                    if (!Game.getGameMap()[x - 1][y].getBuilding().getBuildingType().equals(BuildingType.MAIN_HOUSE)) {
+                        outer2:
+                        for (int k = x; k < x + buildingType.getLength(); k++) {
+                            for (int l = y; l < buildingType.getWidth(); l++) {
+                                if (Game.getGameMap()[k + 1][l].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+                                    sign = true;
+                                else if (Game.getGameMap()[k - 1][l].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+                                    sign = true;
+                                else if (Game.getGameMap()[k][l + 1].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+                                    sign = true;
+                                else if (Game.getGameMap()[k][l - 1].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+                                    sign = true;
+                                if (sign) break outer2;
+                            }
+                        }
+                        if (!sign) return MapMenuMessage.PUT_STORAGE_NEXT_TO_EACH_OTHER;
+                    }
+                }
             }
         }
         return checkCost(x, y, buildingType, length, width);
@@ -455,6 +505,7 @@ public class MapMenuController {
                             Game.getCurrentUser().getGovernment()));
             }
         }
+        Building.addBuildings(Game.getGameMap()[x][y].getBuilding());
         Game.getCurrentUser().getGovernment().setUnemployedWorker(buildingType.getWorkers());
         if (buildingType.isNeedEngineer()) {
             for (Unit unit : Unit.getUnits()) {

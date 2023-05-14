@@ -40,6 +40,7 @@ public class Government {
         }
     }
 
+
     public ArrayList<Trade> getNewTrades(){return newTrades;}
 
     public ArrayList<Trade> getReceivedTrades() {
@@ -163,6 +164,9 @@ public class Government {
         this.gold = gold;
     }
 
+    public void setGold2(int gold) {
+        this.gold += gold;
+    }
     public void changeResourceAmount(Resource Resource, double count) {
         allResources.put(Resource, allResources.get(Resource) + count);
     }

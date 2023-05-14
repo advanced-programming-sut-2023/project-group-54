@@ -29,6 +29,7 @@ public class User implements Comparable{
     private String questionAnswer;
     @Expose
     private int highScore;
+
     private Government government;
 
     static {
@@ -100,6 +101,11 @@ public class User implements Comparable{
     }
     public boolean isPasswordValid(String password){
         return this.getPassword().equals(Controller.hashString(password));
+    }
+
+
+    public void setHighScore(int highScore) {
+        this.highScore += highScore;
     }
 
     public void setUsername(String username) {
