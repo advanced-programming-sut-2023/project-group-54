@@ -24,7 +24,6 @@ public class Unit {
     private int patrolYFrom;
     private int xTarget;
     private int yTarget;
-
     public Unit(UnitType unitType, int xPosition, int yPosition) {
         this.owner = Game.getCurrentUser().getGovernment();
         this.unitType = unitType;
@@ -46,32 +45,16 @@ public class Unit {
         return units;
     }
 
+    public static void setUnits(ArrayList<Unit> units) {
+        Unit.units = units;
+    }
+
     public void setXTarget(int xTarget) {
         this.xTarget = xTarget;
     }
 
     public void setYTarget(int yTarget) {
         this.yTarget = yTarget;
-    }
-
-    public void setPatrolTF(int patrolTF) {
-        this.patrolTF = patrolTF;
-    }
-
-    public void setPatrolXTarget(int patrolXTarget) {
-        this.patrolXTarget = patrolXTarget;
-    }
-
-    public void setPatrolYTarget(int patrolYTarget) {
-        this.patrolYTarget = patrolYTarget;
-    }
-
-    public void setPatrolXFrom(int patrolXFrom) {
-        this.patrolXFrom = patrolXFrom;
-    }
-
-    public void setPatrolYFrom(int patrolYFrom) {
-        this.patrolYFrom = patrolYFrom;
     }
 
     public void setXMoveTarget(int xMoveTarget) {
@@ -98,8 +81,16 @@ public class Unit {
         return unitType;
     }
 
+    public void setUnitType(UnitType unitType) {
+        this.unitType = unitType;
+    }
+
     public int getHp() {
         return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
     public Boolean getPatrol() {
@@ -118,36 +109,72 @@ public class Unit {
         return xPosition;
     }
 
+    public void setxPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
     public int getyPosition() {
         return yPosition;
+    }
+
+    public void setyPosition(int yPosition) {
+        this.yPosition = yPosition;
     }
 
     public int getxMoveTarget() {
         return xMoveTarget;
     }
 
+    public void setxMoveTarget(int xMoveTarget) {
+        this.xMoveTarget = xMoveTarget;
+    }
+
     public int getyMoveTarget() {
         return yMoveTarget;
+    }
+
+    public void setyMoveTarget(int yMoveTarget) {
+        this.yMoveTarget = yMoveTarget;
     }
 
     public int getPatrolTF() {
         return patrolTF;
     }
 
+    public void setPatrolTF(int patrolTF) {
+        this.patrolTF = patrolTF;
+    }
+
     public int getPatrolXTarget() {
         return patrolXTarget;
+    }
+
+    public void setPatrolXTarget(int patrolXTarget) {
+        this.patrolXTarget = patrolXTarget;
     }
 
     public int getPatrolYTarget() {
         return patrolYTarget;
     }
 
+    public void setPatrolYTarget(int patrolYTarget) {
+        this.patrolYTarget = patrolYTarget;
+    }
+
     public int getPatrolXFrom() {
         return patrolXFrom;
     }
 
+    public void setPatrolXFrom(int patrolXFrom) {
+        this.patrolXFrom = patrolXFrom;
+    }
+
     public int getPatrolYFrom() {
         return patrolYFrom;
+    }
+
+    public void setPatrolYFrom(int patrolYFrom) {
+        this.patrolYFrom = patrolYFrom;
     }
 
     public int getxTarget() {
@@ -158,20 +185,8 @@ public class Unit {
         return yTarget;
     }
 
-    public static void setUnits(ArrayList<Unit> units) {
-        Unit.units = units;
-    }
-
-    public void setUnitType(UnitType unitType) {
-        this.unitType = unitType;
-    }
-
     public void setHp2(int hp) {
         this.hp += hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
     }
 
 }

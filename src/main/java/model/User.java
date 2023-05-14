@@ -1,12 +1,17 @@
 package model;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import controller.Controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class User implements Comparable{
-    private static final ArrayList<User> users = new ArrayList<>();
+    private static final ArrayList<User> users;
     private String username;
     private String password;
     private String nickname;
@@ -17,6 +22,20 @@ public class User implements Comparable{
     private Government government;
     private int highScore;
 
+    static {
+        Gson gson = new Gson();
+        String filePath = new File("").getAbsolutePath().concat("/src/main/java/model/data/users.json");
+        FileReader fileReader;
+        try {
+            fileReader = new FileReader(filePath);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<User> allUsers = gson.fromJson(fileReader, new TypeToken<ArrayList<User>>() {
+        }.getType());
+        if (allUsers == null) allUsers = new ArrayList<>();
+        users = allUsers;
+    }
 
     public User(String username, String password, String nickname, String email, String slogan, int questionNumber, String questionAnswer, Government government) {
         this.username = username;

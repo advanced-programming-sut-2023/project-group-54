@@ -21,7 +21,7 @@ public class ShortestPath {
         }
         return matrix;
     }
-    private static ArrayList<Map> getPath(Map[][] mapMatrix, int dx1, int dy1, int dx2, int dy2) {
+    public static ArrayList<Map> getPath(Map[][] mapMatrix, int dx1, int dy1, int dx2, int dy2) {
         char[][] matrix = map2dToChar2d(mapMatrix, dx2, dy2);
         Queue<Node> queue = new LinkedList<Node>();
 
