@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SignupMenu {
-    public void run() {
+    public static void run() {
         String command;
         HashMap<String, ArrayList<String>> options;
         System.out.println("you are in sign up menu");
@@ -29,7 +29,7 @@ public class SignupMenu {
         }
     }
 
-    private void createUser(HashMap<String, ArrayList<String>> options) {
+    private static void createUser(HashMap<String, ArrayList<String>> options) {
         String username = null;
         String password = null;
         String passwordConfirmation = null;
@@ -148,7 +148,7 @@ public class SignupMenu {
             System.out.println(secondResult);
     }
 
-    private SignupMenuMessage randomPasswordConfirmation() {
+    private static SignupMenuMessage randomPasswordConfirmation() {
         System.out.println("your random password is: " + SignupMenuController.getPassword() + "\n" + "please reenter your password: ");
         String passwordConfirmation = MainMenu.getScanner().nextLine();
         int i = 1;
@@ -165,7 +165,7 @@ public class SignupMenu {
             return SignupMenuMessage.PASSWORD_AND_PASSWORD_CON_NOT_EQUAL_FAILED;
     }
 
-    private String securityQuestion() {
+    private static String securityQuestion() {
         String command;
         HashMap<String, ArrayList<String>> options = new HashMap<>();
         boolean sign = true;
@@ -218,7 +218,7 @@ public class SignupMenu {
         return "";
     }
 
-    private SignupMenuMessage registrationAfterAnswerChecker(int securityQuestionNumber, String answer, String answerConfirmation) {
+    private static SignupMenuMessage registrationAfterAnswerChecker(int securityQuestionNumber, String answer, String answerConfirmation) {
         boolean sign = true;
         String command = "";
         for (int i = 0; i < 3; i++) {

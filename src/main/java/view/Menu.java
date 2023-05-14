@@ -30,7 +30,7 @@ public class Menu {
         try {
             count = Integer.parseInt(options.get("count").get(0));
         } catch (NumberFormatException e) {
-            System.out.println("format is wrong for x you have to enter a number");
+            System.out.println("format is wrong for count you have to enter a number");
             return;
         }
         if (count < 2 || count > 8) {
@@ -101,7 +101,7 @@ public class Menu {
         try {
             mapNumber = Integer.parseInt(number);
         } catch (NumberFormatException e) {
-            System.out.println("format is wrong for x you have to enter a number");
+            System.out.println("format is wrong for map number you have to enter a number");
             return false;
         }
         if (mapNumber < 1 || mapNumber > 3) {

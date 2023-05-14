@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class User implements Comparable{
@@ -27,8 +28,9 @@ public class User implements Comparable{
     private int questionNumber;
     @Expose
     private String questionAnswer;
-    private Government government;
+    @Expose
     private int highScore;
+    private Government government;
 
     static {
         Gson gson = new Gson();
@@ -39,8 +41,7 @@ public class User implements Comparable{
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        ArrayList<User> allUsers = gson.fromJson(fileReader, new TypeToken<ArrayList<User>>() {
-        }.getType());
+        ArrayList<User> allUsers = gson.fromJson(fileReader, new TypeToken<ArrayList<User>>() {}.getType());
         if (allUsers == null) allUsers = new ArrayList<>();
         users = allUsers;
     }
@@ -54,6 +55,7 @@ public class User implements Comparable{
         this.questionNumber = questionNumber;
         this.questionAnswer = questionAnswer;
         this.government = government;
+        this.highScore = 0;
     }
 
     public String getUsername() {
@@ -143,16 +145,10 @@ public class User implements Comparable{
     public int getHighScore() {
         return highScore;
     }
-    public static int getUserRank(User user) {
-        ArrayList<User> sortUsers = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++) {
-            sortUsers.add(users.get(i));
-        }
+    public int getUserRank() {
+        ArrayList<User> sortUsers = new ArrayList<>(users);
         Collections.sort(sortUsers);
-        for (int i = 0; i < sortUsers.size(); i++) {
-            if (sortUsers.get(i).getUsername().equals(user.getUsername())) return i + 1;
-        }
-        return -1;
+        return sortUsers.indexOf(this);
     }
 
     @Override

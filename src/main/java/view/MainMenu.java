@@ -46,8 +46,8 @@ public class MainMenu {
     }
 
     public void run() {
-        SignupMenu signupMenu = new SignupMenu();
-        LoginMenu loginMenu = new LoginMenu();
+//        SignupMenu signupMenu = new SignupMenu();
+//        LoginMenu loginMenu = new LoginMenu();
         if (Controller.checkIfStayLoggedIn()) {
             System.out.println("you are stay logged in");
             Menu.run();
@@ -58,9 +58,9 @@ public class MainMenu {
             System.out.println("please enter the menu you want");
             command = MainMenu.getScanner().nextLine();
             if (command.matches("\\s*sign\\s+up\\s+menu\\s*"))
-                signupMenu.run();
+                SignupMenu.run();
             else if (command.matches("\\s*login\\s+menu\\s*"))
-                loginMenu.run();
+                LoginMenu.run();
             else if (CommandHandler.parsCommand(Command.EXIT, command) != null){
                 Gson gson = new GsonBuilder()
                         .excludeFieldsWithoutExposeAnnotation()

@@ -1,6 +1,8 @@
 package controller;
 
 import com.google.common.hash.Hashing;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import model.Buildings.Building;
 import model.Buildings.StorageBuilding;
 import model.Buildings.StorageType;
@@ -12,6 +14,9 @@ import view.enums.messages.SignupMenuMessage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,7 +98,19 @@ public class Controller {
         return Hashing.sha256().hashString(str, StandardCharsets.UTF_8).toString();
     }
     public static boolean checkIfStayLoggedIn() {
-        return false;
+        Gson gson = new Gson();
+        String filePath = new File("").getAbsolutePath().concat("/src/main/java/model/data/stayLoggedInUser.json");
+        FileReader fileReader;
+        try {
+            fileReader = new FileReader(filePath);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        User user = gson.fromJson(fileReader, new TypeToken<User>() {}.getType());
+        if(user == null)
+            return false;
+        setLoggedInUser(user);
+        return true;
     }
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {

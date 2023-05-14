@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LoginMenu {
-    private boolean inMenu = false;
+    private static boolean inMenu = false;
 
     public static void logout() {
         LoginMenuMessage result = LoginMenuController.logout();
@@ -20,7 +20,7 @@ public class LoginMenu {
         }
     }
 
-    public void run() {
+    public static void run() {
         String command;
         HashMap<String, ArrayList<String>> options;
         System.out.println("you are in login menu");
@@ -41,7 +41,7 @@ public class LoginMenu {
         }
     }
 
-    private void loginUser(HashMap<String, ArrayList<String>> options) {
+    private static void loginUser(HashMap<String, ArrayList<String>> options) {
         String username = null;
         String password = null;
         boolean stayLoggedIn = false;
@@ -89,7 +89,7 @@ public class LoginMenu {
         }
     }
 
-    public boolean wrongPassword(boolean stayLoggedIn) {
+    public static boolean wrongPassword(boolean stayLoggedIn) {
         System.out.println("please enter your password again");
         String command;
         for (int i = 0; i < 3; i++) {
@@ -110,7 +110,7 @@ public class LoginMenu {
         return false;
     }
 
-    private void forgetPassword(HashMap<String, ArrayList<String>> options) {
+    private static void forgetPassword(HashMap<String, ArrayList<String>> options) {
         String username = null;
         for (String s : options.keySet()) {
             switch (s) {
@@ -143,7 +143,7 @@ public class LoginMenu {
         checkAnswer();
     }
 
-    private void checkAnswer() {
+    private static void checkAnswer() {
         for (int i = 0; i < 3; i++) {
             if (LoginMenuController.checkAnswer(Controller.buildParameter(MainMenu.getScanner().nextLine()))) {
                 System.out.println("please enter new password for user");
@@ -171,7 +171,7 @@ public class LoginMenu {
         System.out.println("failed because of multiple wrong answers for captcha");
     }
 
-    private void passwordErrorsPrint(SignupMenuMessage signupMenuMessage) {
+    private static void passwordErrorsPrint(SignupMenuMessage signupMenuMessage) {
         switch (signupMenuMessage) {
             case WRONG_FORMAT_PASSWORD_LENGTH:
                 System.out.println("password length is too low at least 6 is needed");
