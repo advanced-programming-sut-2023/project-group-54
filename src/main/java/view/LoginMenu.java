@@ -180,7 +180,7 @@ public class LoginMenu {
                 System.out.println("your password should contain uppercase and lowercase letters and numbers");
                 break;
             case WRONG_FORMAT_PASSWORD_SPECIAL:
-                System.out.println("WRONG_FORMAT_PASSWORD_SPECIAL");
+                System.out.println("your password should have at least a special character");
                 break;
         }
     }
