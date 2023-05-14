@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="update user save">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="fix forgot password">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/GameMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/GameMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/SignupMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/SignupMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Buildings/TrapType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Buildings/TrapType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/LoginMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LoginMenuController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -238,7 +231,13 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۱۷" />
       <updated>1684044462171</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL‎−۰۰۰۱۸" summary="fix forgot password">
+      <created>1684045809975</created>
+      <option name="number" value="LOCAL‎−۰۰۰۱۸" />
+      <option name="presentableId" value="LOCAL‎−۰۰۰۱۸" />
+      <updated>1684045809975</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,7 +286,8 @@
     <MESSAGE value="save user and move troops" />
     <MESSAGE value="update user" />
     <MESSAGE value="update user save" />
-    <option name="LAST_COMMIT_MESSAGE" value="update user save" />
+    <MESSAGE value="fix forgot password" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix forgot password" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

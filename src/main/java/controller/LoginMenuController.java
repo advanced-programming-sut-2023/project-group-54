@@ -48,7 +48,7 @@ public class LoginMenuController {
     }
 
     public static void setNewPassword(String password) {
-        user.setPassword(password);
+        user.setPassword(Controller.hashString(password));
     }
 
     public static LoginMenuMessage logout() {
