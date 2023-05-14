@@ -53,7 +53,7 @@ public class TradeMenu {
         ArrayList<Trade> newTrades = government.getNewTrades();
         String notifications = null;
         for (Trade trade : newTrades) {
-            notifications += "resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getMessage();
+            notifications += "resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
             notifications += " sender: " + trade.getSenderUser().getUsername() + "\n";
         }
         if (notifications == null) {
@@ -70,7 +70,7 @@ public class TradeMenu {
 
         for (int i = 0; i < government.getAllTrades().size(); i++) {
             Trade trade = government.getAllTrades().get(i);
-            result += i + 1 + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getMessage();
+            result += i + 1 + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
             result += " sender: " + trade.getSenderUser().getUsername() + "\n";
         }
         if (result == null)
@@ -85,13 +85,13 @@ public class TradeMenu {
         String result = null;
         for (int i = 0; i < government.getSentTrades().size(); i++) {
             Trade trade = government.getSentTrades().get(i);
-            result += i + 1 + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getMessage();
+            result += i + 1 + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
             result += " sender: " + trade.getSenderUser().getUsername() + "\n";
         }
         for (int i = 0; i < government.getReceivedTrades().size(); i++) {
             Trade trade = government.getReceivedTrades().get(i);
-            result += i + 1 + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getMessage();
-            result += " sender: " + trade.getSenderUser().getUsername() + "\n";
+            result += i + 1 + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
+            result += " acceptMessage: "+trade.getReceiverMessage()+" sender: " + trade.getSenderUser().getUsername() + "\n";
         }
         if (result == null) {
             System.out.println("your history is empty");
@@ -171,8 +171,10 @@ public class TradeMenu {
             System.out.println("message not entered");
             return;
         }
+
         TradeMenuMessage result = TradeMenuController.acceptTrade(id, message);
         switch (result) {
+            case INVALID_INDEX -> System.out.println("index is invalid");
             case NOT_ENOUGH_GOLD -> System.out.println("you don't have enough gold to accept this trade");
             case NOT_ENOUGH_CAPACITY -> System.out.println("you don't have enough capacity to accept this trade");
             case SUCCESS -> System.out.println("your acceptation has been successfully done");
