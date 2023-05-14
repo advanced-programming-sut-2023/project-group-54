@@ -22,7 +22,7 @@ public class ProfileMenuController {
     }
 
     public static ProfileMenuMessage changePassword(String oldPassword, String newPassword) {
-        if (!(oldPassword.equals(user.getPassword()))) {
+        if (!(user.isPasswordValid(oldPassword))) {
             return ProfileMenuMessage.PASSWORD_IS_NOT_CORRECT;
         }
         if (oldPassword.equals(newPassword)) {
@@ -89,7 +89,8 @@ public class ProfileMenuController {
     public static String displayProfile() {
         String result = "your Profile:\n";
         result += "username : " + user.getUsername() + "\n";
-        result += "password : " + user.getPassword() + "\n";
+        result += "highScore : "+ user.getHighScore()+"\n";
+        result += "rank : "+ user.getUserRank()+"\n";
         result += "nickname : " + user.getNickname() + "\n";
         result += "email : " + user.getEmail() + "\n";
         if (user.getSlogan() != null) {

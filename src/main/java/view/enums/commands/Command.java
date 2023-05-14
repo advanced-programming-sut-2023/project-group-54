@@ -12,6 +12,9 @@ public enum Command {
     )),
     SHOW_MENU("show\\s+current\\s+menu", new ArrayList<>(
     )),
+    PROFILE_MENU("profile\\s+menu",new ArrayList<>(
+
+    )),
 
     //SignupMenu
     REGISTER("user\\s+create", new ArrayList<>(List.of(

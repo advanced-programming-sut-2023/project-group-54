@@ -143,16 +143,11 @@ public class User implements Comparable{
     public int getHighScore() {
         return highScore;
     }
-    public static int getUserRank(User user) {
-        ArrayList<User> sortUsers = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++) {
-            sortUsers.add(users.get(i));
-        }
+    public  int getUserRank() {
+        ArrayList<User> sortUsers = new ArrayList<>(users);
         Collections.sort(sortUsers);
-        for (int i = 0; i < sortUsers.size(); i++) {
-            if (sortUsers.get(i).getUsername().equals(user.getUsername())) return i + 1;
-        }
-        return -1;
+        return sortUsers.indexOf(this);
+
     }
 
     @Override

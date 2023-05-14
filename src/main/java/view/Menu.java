@@ -21,6 +21,8 @@ public class Menu {
                 return;
             } else if ((options = CommandHandler.parsCommand(Command.START_GAME, command)) != null)
                 startGame(options);
+            if (CommandHandler.parsCommand(Command.PROFILE_MENU, command) != null)
+                ProfileMenu.run();
             else System.out.println("invalid command in menu");
         }
     }

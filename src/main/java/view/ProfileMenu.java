@@ -11,15 +11,18 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 
 public class ProfileMenu {
-    private String run() {
+    public static void run() {
 
-        while (true) {
-            String command;
-            HashMap<String, ArrayList<String>> options;
+        System.out.println("you are in profile menu");
             while (true) {
+                String command;
+                HashMap<String, ArrayList<String>> options;
+
                 command = MainMenu.getScanner().nextLine();
                  if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
                     System.out.println("profile menu");
+                if (CommandHandler.parsCommand(Command.BACK, command) != null)
+                    return;
                 else if ((options = CommandHandler.parsCommand(Command.CHANGE_USERNAME, command)) != null)
                      changeUsername(options);
                 else if ((options = CommandHandler.parsCommand(Command.CHANGE_NICKNAME, command)) != null)
@@ -44,10 +47,10 @@ public class ProfileMenu {
                     System.out.println("Invalid command in sign up menu");
             }
         }
-    }
 
 
-    private void changeUsername(HashMap<String, ArrayList<String>> options){
+
+    private static void changeUsername(HashMap<String, ArrayList<String>> options){
         String username=null;
         for (String s : options.keySet()) {
             switch (s) {
@@ -68,7 +71,7 @@ public class ProfileMenu {
         }
 
     }
-    private void changeNickname(HashMap<String, ArrayList<String>> options) {
+    private static void changeNickname(HashMap<String, ArrayList<String>> options) {
         String nickname=null;
         for (String s : options.keySet()) {
             switch (s) {
@@ -86,7 +89,7 @@ public class ProfileMenu {
 
     }
 
-    public void changePassword(HashMap<String, ArrayList<String>> options) {
+    public static void changePassword(HashMap<String, ArrayList<String>> options) {
         String oldPassword=null;
         String newPassword=null;
         for (String s : options.keySet()) {
@@ -111,9 +114,6 @@ public class ProfileMenu {
         switch (result){
             case PASSWORD_IS_NOT_CORRECT -> System.out.println("Current password is incorrect");
             case PASSWORD_IS_NOT_NEW -> System.out.println("Please enter a new password");
-            case WRONG_FORMAT_PASSWORD_LENGTH -> System.out.println("password length is too low at least 6 is needed");
-            case WRONG_FORMAT_PASSWORD_LETTERS -> System.out.println("your password should contain uppercase and lowercase letters and numbers");
-            case WRONG_FORMAT_PASSWORD_SPECIAL -> System.out.println("your password should contain special letters");
             case SUCCESS -> {
                 if (!MainMenu.captchaChecker()) {
                     System.out.println("failed because of multiple wrong answers for captcha please try again from beginning");
@@ -128,11 +128,25 @@ public class ProfileMenu {
 
                 }
             }
+            default -> passwordErrorsPrint(result);
         }
 
     }
 
-    public void changeEmail(HashMap<String, ArrayList<String>> options) {
+    private static void passwordErrorsPrint(ProfileMenuMessage profileMenuMessage) {
+        switch (profileMenuMessage) {
+            case WRONG_FORMAT_PASSWORD_LENGTH:
+                System.out.println("password length is too low at least 6 is needed");
+                break;
+            case WRONG_FORMAT_PASSWORD_LETTERS:
+                System.out.println("your password should contain uppercase and lowercase letters and numbers");
+                break;
+            case WRONG_FORMAT_PASSWORD_SPECIAL:
+                System.out.println("your password should have at least a special character");
+                break;
+        }
+    }
+    public static void changeEmail(HashMap<String, ArrayList<String>> options) {
         String email=null;
         for (String s : options.keySet()) {
             switch (s) {
@@ -155,7 +169,7 @@ public class ProfileMenu {
 
     }
 
-    public void changeSlogan(HashMap<String, ArrayList<String>> options) {
+    public static void changeSlogan(HashMap<String, ArrayList<String>> options) {
         String slogan=null;
         for (String s : options.keySet()) {
             switch (s) {
@@ -172,29 +186,29 @@ public class ProfileMenu {
         if(result.equals(ProfileMenuMessage.SUCCESS)) System.out.println("slogan changed successfully");
     }
 
-    public void removeSlogan() {
+    public static void removeSlogan() {
         ProfileMenuMessage result=ProfileMenuController.removeSlogan();
         if(result.equals(ProfileMenuMessage.SUCCESS)) System.out.println("slogan removed successfully");
     }
 
-    public void showHighScore() {
+    public static void showHighScore() {
         int highScore=Controller.getLoggedInUser().getHighScore();
         System.out.println(highScore);
     }
 
-    public void showRank() {
-    int rank= User.getUserRank(Controller.getLoggedInUser());
+    public static void showRank() {
+    int rank= Controller.getLoggedInUser().getUserRank();
         System.out.println(rank);
     }
 
-    public void displaySlogan() {
+    public static void displaySlogan() {
        String result=ProfileMenuController.displaySlogan();
         System.out.println(result);
 
     }
 
-    public void displayProfile() {
+    public static void displayProfile() {
         String result=ProfileMenuController.displayProfile();
-        System.out.println(result);
+        System.out.println(result.trim());
     }
 }
