@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="Archer attackers and pitch ditch and killing pit + clear +-(because of main house) changed patrol unit unit menu controller +patrol attack + attack +-">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="Archer attackers and pitch ditch and killing pit + clear +-(because of main house) changed patrol unit unit menu controller +patrol attack + attack +-2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/UnitMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/UnitMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/enums/messages/MapMenuMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/enums/messages/MapMenuMessage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,7 +240,14 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۱۹" />
       <updated>1684046319516</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Archer attackers and pitch ditch and killing pit + clear +-(because of main house) changed patrol unit unit menu controller +patrol attack + attack +-2">
+      <created>1684059552583</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1684059552583</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,7 +298,8 @@
     <MESSAGE value="update user save" />
     <MESSAGE value="fix forgot password" />
     <MESSAGE value="fix forgot pass" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix forgot pass" />
+    <MESSAGE value="Archer attackers and pitch ditch and killing pit + clear +-(because of main house) changed patrol unit unit menu controller +patrol attack + attack +-2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Archer attackers and pitch ditch and killing pit + clear +-(because of main house) changed patrol unit unit menu controller +patrol attack + attack +-2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

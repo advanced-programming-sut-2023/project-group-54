@@ -382,6 +382,23 @@ public class MapMenuController {
                 if (!type.equals("quarry") &&
                         map.getMapType().equals(MapType.BOULDERS))
                     return MapMenuMessage.ONLY_QUARRY_ON_BOULDERS;
+                boolean sign = false;
+                if (type.equals("granary")) {
+                    outer2 :for (int k = x; k < x + buildingType.getLength(); k++) {
+                        for (int l = y; l < buildingType.getWidth(); l++) {
+                            if (Game.getGameMap()[k+1][l].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+                                sign = true;
+                            else if (Game.getGameMap()[k-1][l].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+                                sign = true;
+                            else if (Game.getGameMap()[k][l+1].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+                                sign = true;
+                            else if (Game.getGameMap()[k][l-1].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+                                sign = true;
+                            if (sign) break outer2;
+                        }
+                    }
+                    if (!sign) return MapMenuMessage.PUT_STORAGE_NEXT_TO_EACH_OTHER;
+                }
             }
         }
         return checkCost(x, y, buildingType, length, width);

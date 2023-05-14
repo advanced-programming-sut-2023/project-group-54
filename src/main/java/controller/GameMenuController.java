@@ -5,6 +5,7 @@ import model.Game;
 import model.Resource;
 import model.ShortestPath;
 import model.User;
+import model.units.Engineer;
 import model.units.State;
 import model.units.Unit;
 import view.enums.messages.GameMenuMessage;
@@ -304,13 +305,14 @@ public class GameMenuController {
 
     public static void archersAttackSpecialHouse(Unit unit) {
         int fireRange = setFireRangeOnTowers(unit);
-
-        for (Unit unit1 : Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getUnit()) {
-            if (!unit1.getGovernment().equals(unit.getGovernment()))
-                unit1.setHp2(-unit.getUnitType().getDamage());
+        if (unit.getxTarget() < unit.getxPosition() + fireRange && unit.getyTarget() < unit.getyPosition() + fireRange) {
+            for (Unit unit1 : Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getUnit()) {
+                if (!unit1.getGovernment().equals(unit.getGovernment()))
+                    unit1.setHp2(-unit.getUnitType().getDamage());
+            }
+            if (Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding().getBuildingType().equals(BuildingType.PITCH_RIG))
+                ((TrapBuilding) Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding()).firePitchDitch();
         }
-        if (Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding().getBuildingType().equals(BuildingType.PITCH_RIG))
-            ((TrapBuilding) Game.getGameMap()[unit.getxTarget()][unit.getyTarget()].getBuilding()).firePitchDitch();
     }
 
     public static void setPlaceForAttackPatrolUnit(Unit unit) {
@@ -320,20 +322,15 @@ public class GameMenuController {
                 for (Unit unit1 : Game.getGameMap()[i][j].getUnit()) {
                     if (!unit1.getGovernment().equals(unit.getGovernment())) {
                         if (unit.getUnitType().getRange() != 1) {
-                            if (unit1.getyPosition() > unit.getyPosition() + unit.getUnitType().getRange()) {
-//                                moveTroop(unit, unit.getxPosition(), unit.getyPosition() +
-//                                        unit1.getyPosition() - unit.getUnitType().getRange());
-                            }
-                            if (unit1.getyPosition() > unit.getyPosition() + unit.getUnitType().getRange()) {
-//                                moveTroop(unit, unit.getxPosition() +
-//                                        unit1.getxPosition() - unit.getUnitType().getRange(), unit.getyPosition());
-                            }
+                            unit.setxPosition(unit1.getxPosition() - unit.getUnitType().getRange() + 1);
+                            unit.setyPosition(unit1.getyPosition() - unit.getUnitType().getRange() + 1);
                             unit.setXTarget(i);
                             unit.setYTarget(j);
                             archersAttackSpecialHouse(unit);
                             return;
                         }
-//                        moveTroop(unit, i, j);
+                        unit.setxPosition(unit1.getxPosition());
+                        unit.setyPosition(unit1.getyPosition());
                         return;
                     }
                 }
@@ -354,6 +351,9 @@ public class GameMenuController {
 
     public static void UnitsAttack() {
         for (Unit unit : Unit.getUnits()) {
+            if (unit instanceof Engineer) {
+                //to be complete
+            }
             if (unit.getUnitType().getRange() != -1 && !unit.getPatrol()) {
                 if (unit.getxTarget() == -1) {
                     if (unit.getState().equals(State.DEFENSIVE)) setPlacesToFightInDifferentModes(unit, false);
@@ -361,11 +361,17 @@ public class GameMenuController {
                     archersAttackRadios(unit);
                 } else if (unit.getxTarget() != -1)
                     archersAttackSpecialHouse(unit);
-            } else if (unit.getPatrol()) setPlaceForAttackPatrolUnit(unit);
+            } else if (unit.getPatrol() && unit.getxPosition() == unit.getPatrolXFrom() && unit.getyPosition() == unit.getyPosition()) setPlaceForAttackPatrolUnit(unit);
             fightsInEachHouse(unit);
         }
     }
 
+
+    public static void moveUnits() {
+        for (Unit unit : Unit.getUnits()) {
+            moveTroop(unit);
+        }
+    }
     public static GameMenuMessage nextTurn() {
         return GameMenuMessage.SUCCESS;
     }

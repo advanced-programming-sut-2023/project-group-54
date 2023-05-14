@@ -534,6 +534,9 @@ GameMenu {
             case ONLY_QUARRY_ON_BOULDERS:
                 System.out.println("only quarry can be placed on boulders");
                 return;
+            case PUT_STORAGE_NEXT_TO_EACH_OTHER:
+                System.out.println("you have to put granary storages next to each other");
+                break;
             case NOT_ENOUGH_RESOURCE:
                 System.out.println("you dont have enough resources to build that building");
                 return;
@@ -582,9 +585,7 @@ GameMenu {
     }
 
     private static void nextTurn(){
-        if(Game.getCurrentUser().equals(Game.getUsers().get(Game.getUsers().size() - 1))){
 
-        }
         GameMenuController.setNextUser();
     }
 }
