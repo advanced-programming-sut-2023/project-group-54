@@ -4,23 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="profile">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="map menu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/LoginMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LoginMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MapMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Direction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/data/stayLoggedInUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/data/stayLoggedInUser.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/data/users.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MapMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/ProfileMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/ProfileMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Direction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/User.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,7 +257,13 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۲۱" />
       <updated>1684050741681</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL‎−۰۰۰۲۲" summary="map menu">
+      <created>1684061901218</created>
+      <option name="number" value="LOCAL‎−۰۰۰۲۲" />
+      <option name="presentableId" value="LOCAL‎−۰۰۰۲۲" />
+      <updated>1684061901218</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,7 +316,8 @@
     <MESSAGE value="fix forgot pass" />
     <MESSAGE value="stayloggedin and profile" />
     <MESSAGE value="profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="profile" />
+    <MESSAGE value="map menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="map menu" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -335,6 +330,11 @@
           <properties class="java.lang.RuntimeException" package="java.lang" />
           <option name="timeStamp" value="5" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/Game.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

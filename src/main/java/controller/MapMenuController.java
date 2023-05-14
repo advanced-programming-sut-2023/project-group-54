@@ -101,11 +101,6 @@ public class MapMenuController {
                     gameMap[i][j].setMapType(RIVER);
                 }
             }
-            for (int i = 0; i < 50; i++) {
-                for (int j = 0; j < 80; j++) {
-                    gameMap[i][j].setMapType(THICK_SCRUB);
-                }
-            }
             for (int i = 200; i < 260; i++) {
                 for (int j = 250; j < 300; j++) {
                     gameMap[i][j].setMapType(OASIS_GRASS);
@@ -139,12 +134,13 @@ public class MapMenuController {
         else if (xCoordinate > Game.getX() - numberOfHousesToShow) xEndHome = Game.getX();
         if (yCoordinate < numberOfHousesToShow) yFirstHome = 0;
         else if (yCoordinate > Game.getY() - numberOfHousesToShow) yEndHome = Game.getY();
-        System.out.println("xs: " + xFirstHome + " xe: " + xEndHome + "ys: " + yFirstHome + " ye: " + yEndHome);
+//        System.out.println("xs: " + xFirstHome + " xe: " + xEndHome + "ys: " + yFirstHome + " ye: " + yEndHome);
         Map[][] gameMap = Game.getGameMap();
         StringBuilder map = new StringBuilder();
         for (int i = xFirstHome; i < xEndHome; i++) {
-            map.append(String.join("", Collections.nCopies((numberOfHousesToShow * 3) + 1, "-")) + "\n");
+            map.append(String.join("", Collections.nCopies((xEndHome- xFirstHome) * 3 + 1, "-")) + "\n");
             for (int i1 = yFirstHome; i1 < yEndHome; i1++) {
+//                System.out.println(gameMap[i][i1].getMapType());
                 String[] color = backgroundColor(gameMap[i][i1].getMapType());
                 map.append("|" + color[0] + color[1] + ((gameMap[i][i1].getBuilding() != null) ? ((gameMap[i][i1].getBuilding() instanceof DefenseBuilding) ? "W" : "B") : "#")
                         + ((gameMap[i][i1].getTree() != null) ? "T" : "#") + ANSI_RESET);
@@ -252,7 +248,7 @@ public class MapMenuController {
         StringBuilder details = new StringBuilder();
         int i = 1;
         details.append("Map type is :" + house.getMapType().toString() + "\nUnits in this house are : \n");
-        details.append(((house.getUnit() != null) ? "we have a " + house.getBuilding().getBuildingType().getName() +
+        details.append(((house.getBuilding() != null) ? "we have a " + house.getBuilding().getBuildingType().getName() +
                 " building " + ((house.getBuilding().getBuildingType().getWorkers() != 0) ? "which has " +
                 house.getBuilding().getBuildingType().getWorkers() + " workers" : "") : "there is no building here") + "\n");
         details.append(((house.getTree() != null) ? "we have tree with type " + house.getTree().toString() : "no tree in this house") + "\n");
@@ -264,7 +260,7 @@ public class MapMenuController {
                     " - unit owner is : " + unit.getGovernment().getUser().getUsername() + "\n");
             i++;
         }
-        return details.toString();
+        return details.toString().trim();
     }
 
     public static MapMenuMessage setTextureFinalTest(int xCoordinate, int yCoordinate) {
