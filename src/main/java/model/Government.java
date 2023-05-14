@@ -40,6 +40,7 @@ public class Government {
         }
     }
 
+
     public ArrayList<Trade> getNewTrades(){return newTrades;}
 
     public ArrayList<Trade> getReceivedTrades() {

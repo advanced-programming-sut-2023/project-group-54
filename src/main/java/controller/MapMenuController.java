@@ -1,10 +1,7 @@
 package controller;
 
+import model.*;
 import model.Buildings.*;
-import model.Direction;
-import model.Game;
-import model.Map;
-import model.MapType;
 import model.units.Engineer;
 import model.units.Unit;
 import view.enums.messages.MapMenuMessage;
@@ -55,6 +52,10 @@ public class MapMenuController {
                 dropBuilding(whichMap + (i -4) * whichMap + 4,whichMap * 4,"granary");
                 Building.addBuildings(Game.getGameMap()[whichMap + (i - 4) * whichMap][whichMap * 4].getBuilding());
             }
+            Game.getUsers().get(i).getGovernment().setGold(4000);
+            Game.getUsers().get(i).getGovernment().addToStorage(Resource.WOOD, 100);
+            Game.getUsers().get(i).getGovernment().addToStorage(Resource.STONE, 100);
+            Game.getUsers().get(i).getGovernment().addToStorage(Resource.BREAD, 100);
         }
     }
     public static void setMap(int mapNumber) {
