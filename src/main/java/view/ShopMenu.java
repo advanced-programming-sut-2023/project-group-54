@@ -27,6 +27,7 @@ public class ShopMenu {
                 buyItem(options);
             else if ((options = CommandHandler.parsCommand(Command.SHOP_SELL, command)) != null)
                 sellItem(options);
+            else System.out.println("invalid command in shop menu");
         }
     }
 
