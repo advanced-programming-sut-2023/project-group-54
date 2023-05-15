@@ -89,6 +89,10 @@ public enum Command {
             new Option("i",1,false),
             new Option("a",1,false)
     ))),
+    SHOP_SELL("sell",new ArrayList<>(List.of(
+            new Option("i",1,false),
+            new Option("a",1,false)
+    ))),
 
     //TradeMenu
     TRADE("trade",new ArrayList<>(Arrays.asList(

@@ -25,8 +25,8 @@ public class TradeMenuController {
         user.getGovernment().addToStorage(resource, amount);
         senderUser.getGovernment().removeFromStorage(resource, amount);
         user.getGovernment().getReceivedTrades().add(trade);
-        user.getGovernment().setGold(-(amount*trade.getPrice()));
-        senderUser.getGovernment().setGold((amount*trade.getPrice()));
+        user.getGovernment().setGold2(-(amount*trade.getPrice()));
+        senderUser.getGovernment().setGold2((amount*trade.getPrice()));
         return TradeMenuMessage.SUCCESS;
     }
 

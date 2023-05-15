@@ -25,7 +25,7 @@ public class ShopMenu {
                 showPriceList();
             else if ((options = CommandHandler.parsCommand(Command.SHOP_BUY, command)) != null)
                 buyItem(options);
-            else if ((options = CommandHandler.parsCommand(Command.SHOP_BUY, command)) != null)
+            else if ((options = CommandHandler.parsCommand(Command.SHOP_SELL, command)) != null)
                 sellItem(options);
         }
     }

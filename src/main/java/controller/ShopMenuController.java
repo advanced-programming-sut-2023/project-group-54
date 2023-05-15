@@ -13,7 +13,7 @@ public class ShopMenuController {
     public static String showItemList() {
         String result = "";
         int counter = 1;
-        HashMap<Resource, Double> AllResources = user.getGovernment().getAllResources();
+
         for (Resource item : Resource.values()) {
             result += (counter++) + "- itemName:" + item.getName() +
                     " Buy Price: " + item.getBuyPrice() + " Sell Price: " + item.getSellPrice() +
@@ -56,7 +56,7 @@ public class ShopMenuController {
     public static ShopMenuMessage sellItemConfirm(String confirmAnswer, String itemName, int amount) {
         Resource item = Resource.getResourceByName(itemName);
         if (confirmAnswer.matches("\\s+[Yy]\\s+")) {
-            int finalGold = user.getGovernment().getGold() + item.getSellPrice();
+            int finalGold = user.getGovernment().getGold() + item.getSellPrice()*amount;
             user.getGovernment().setGold(finalGold);
             user.getGovernment().changeResourceAmount(item, -amount);
             user.getGovernment().removeFromStorage(item, amount);
