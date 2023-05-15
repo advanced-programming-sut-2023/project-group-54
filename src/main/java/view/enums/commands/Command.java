@@ -85,21 +85,21 @@ public enum Command {
     //ShopMenu
     SHOW_PRICE_LIST("show\\s+price\\s+list",new ArrayList<>(
     )),
-    SHOP_BUY("buy\\s+",new ArrayList<>(List.of(
+    SHOP_BUY("buy",new ArrayList<>(List.of(
             new Option("i",1,false),
             new Option("a",1,false)
     ))),
 
     //TradeMenu
-    TRADE("trade\\s+",new ArrayList<>(Arrays.asList(
-            new Option("-t",1,false),
-            new Option("-a",1,false),
-            new Option("-p",1,false),
-            new Option("-m",1,false)
+    TRADE("trade",new ArrayList<>(Arrays.asList(
+            new Option("t",1,false),
+            new Option("a",1,false),
+            new Option("p",1,false),
+            new Option("m",1,false)
     ))),
-    TRADE_LIST("trade//s+list",new ArrayList<>(
+    TRADE_LIST("trade\\s+list",new ArrayList<>(
     )),
-    TRADE_ACCEPT("trade\\s+accept\\s+",new ArrayList<>(Arrays.asList(
+    TRADE_ACCEPT("trade\\s+accept",new ArrayList<>(Arrays.asList(
             new Option("i",1,false),
             new Option("m",1,false)
     ))),
@@ -114,6 +114,9 @@ public enum Command {
     FEAR_RATE("fear\\s+rate", new ArrayList<>(List.of(
             new Option("r", 1, true)
     ))),
+    TRADE_MENU("trade\\s+menu",new ArrayList<>(
+
+    )),
     EXIT_OF_GAME_MENU("exit\\s+from\\s+game\\s+menu",new ArrayList<>(
     )),
     SHOW_MAP("show\\s+map",new ArrayList<>(List.of(

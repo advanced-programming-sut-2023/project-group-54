@@ -39,6 +39,8 @@ public class GameMenu {
                 return;
             else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
                 System.out.println("login menu");
+            else if (CommandHandler.parsCommand(Command.TRADE_MENU, command) != null)
+                TradeMenu.run();
             else if ((options = CommandHandler.parsCommand(Command.SHOW_POPULARITY_FACTORS, command)) != null)
                 popularityFactorsShow(options);
             else if ((options = CommandHandler.parsCommand(Command.SHOW_POPULARITY, command)) != null)

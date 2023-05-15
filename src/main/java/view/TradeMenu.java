@@ -15,13 +15,14 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 
 public class TradeMenu {
-    public void run() {
+    public static void run() {
         String command;
         Matcher matcher;
         HashMap<String, ArrayList<String>> options;
+        showAllPlayer();
+        showNotifications();
         while (true) {
-            showAllPlayer();
-            showNotifications();
+
             command = MainMenu.getScanner().nextLine();
             if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
                 System.out.println("trade menu");
@@ -29,18 +30,19 @@ public class TradeMenu {
                 return;
             else if ((options = CommandHandler.parsCommand(Command.TRADE, command)) != null)
                 trade(options);
-            else if ((options = CommandHandler.parsCommand(Command.TRADE_LIST, command)) != null)
+            else if (CommandHandler.parsCommand(Command.TRADE_LIST, command) != null)
                 tradeListShow();
             else if ((options = CommandHandler.parsCommand(Command.TRADE_ACCEPT, command)) != null)
                 acceptTrade(options);
-            else if ((options = CommandHandler.parsCommand(Command.TRADE_HISTORY, command)) != null)
+            else if (CommandHandler.parsCommand(Command.TRADE_HISTORY, command) != null)
                 historyShow();
+            else System.out.println("invalid command in trade menu");
         }
     }
 
-    private void showAllPlayer() {
+    private static void showAllPlayer() {
         ArrayList<User> allUsers = User.getUsers();
-        String result = null;
+        String result = "";
         for (int i = 0; i < allUsers.size(); i++) {
             User user = allUsers.get(i);
             result += i + 1 + ". " + user.getUsername() + "\n";
@@ -48,15 +50,15 @@ public class TradeMenu {
         System.out.println(result.trim());
     }
 
-    private void showNotifications() {
+    private static void showNotifications() {
         Government government = Game.getCurrentUser().getGovernment();
         ArrayList<Trade> newTrades = government.getNewTrades();
-        String notifications = null;
+        String notifications = "";
         for (Trade trade : newTrades) {
             notifications += "resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
             notifications += " sender: " + trade.getSenderUser().getUsername() + "\n";
         }
-        if (notifications == null) {
+        if (notifications.equals("")) {
             System.out.println("you don't have any new notification");
             return;
         }
@@ -64,25 +66,25 @@ public class TradeMenu {
         government.getNewTrades().clear();
     }
 
-    public void tradeListShow() {
+    public static void tradeListShow() {
         Government government = Game.getCurrentUser().getGovernment();
-        String result = null;
+        String result = "";
 
         for (int i = 0; i < government.getAllTrades().size(); i++) {
             Trade trade = government.getAllTrades().get(i);
             result += i + 1 + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
             result += " sender: " + trade.getSenderUser().getUsername() + "\n";
         }
-        if (result == null)
+        if (result.equals(""))
             System.out.println("you don't have any request or donation");
         else {
             System.out.println(result.trim());
         }
     }
 
-    public void historyShow() {
+    public static void historyShow() {
         Government government = Game.getCurrentUser().getGovernment();
-        String result = null;
+        String result = "";
         for (int i = 0; i < government.getSentTrades().size(); i++) {
             Trade trade = government.getSentTrades().get(i);
             result += i + 1 + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
@@ -93,7 +95,7 @@ public class TradeMenu {
             result += i + 1 + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
             result += " acceptMessage: "+trade.getReceiverMessage()+" sender: " + trade.getSenderUser().getUsername() + "\n";
         }
-        if (result == null) {
+        if (result.equals("")) {
             System.out.println("your history is empty");
             return;
         }
@@ -102,7 +104,7 @@ public class TradeMenu {
 
     }
 
-    public void trade(HashMap<String, ArrayList<String>> options) {
+    public static void trade(HashMap<String, ArrayList<String>> options) {
         String resourceType = null;
         String amount = null;
         String price = null;
@@ -112,7 +114,7 @@ public class TradeMenu {
                 case "t" -> resourceType = Controller.buildParameter(options.get(s).get(0));
                 case "a" -> amount = Controller.buildParameter(options.get(s).get(0));
                 case "p" -> price = Controller.buildParameter(options.get(s).get(0));
-                case "message" -> message = Controller.buildParameter(options.get(s).get(0));
+                case "m" -> message = Controller.buildParameter(options.get(s).get(0));
             }
         }
         if (resourceType == null) {
@@ -143,6 +145,7 @@ public class TradeMenu {
         switch (result) {
             case INVALID_ITEM -> System.out.println("item is invalid we don't have this item in our game");
             case INVALID_AMOUNT -> System.out.println("amount is invalid it should be at least 1");
+            case NOT_ENOUGH_ITEM -> System.out.println("you don't have enough item for this trade request");
             case INVALID_PRICE -> System.out.println("price is invalid price should be grater than 0");
             case SUCCESS -> System.out.println("your trade request has been sent successfully");
         }
@@ -150,7 +153,7 @@ public class TradeMenu {
 
     }
 
-    public void acceptTrade(HashMap<String, ArrayList<String>> options) {
+    public static void acceptTrade(HashMap<String, ArrayList<String>> options) {
         String id = null;
         String message = null;
         for (String s : options.keySet()) {

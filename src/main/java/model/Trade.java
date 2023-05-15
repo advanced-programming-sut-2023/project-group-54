@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Trade {
-    private static ArrayList<Trade> trades;
+    private static ArrayList<Trade> trades=new ArrayList<>();
     private User senderUser;
     private User receiverUser;
     private Resource resource;

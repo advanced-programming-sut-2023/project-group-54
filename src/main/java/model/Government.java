@@ -38,6 +38,9 @@ public class Government {
         for (Resource value : Resource.values()) {
             allResources.put(value, (double) 0);
         }
+        allResources.put(Resource.WOOD,(double)100);
+        allResources.put(Resource.STONE,(double)50);
+        allResources.put(Resource.BREAD,(double)60);
     }
 
 
