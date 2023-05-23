@@ -1,13 +1,11 @@
 package controller;
 
+import model.*;
 import model.Buildings.*;
-import model.Game;
-import model.Resource;
-import model.ShortestPath;
-import model.User;
 import model.units.Engineer;
 import model.units.State;
 import model.units.Unit;
+import model.units.UnitType;
 import org.checkerframework.checker.units.qual.A;
 import view.enums.messages.GameMenuMessage;
 
@@ -115,6 +113,9 @@ public class GameMenuController {
         return Game.getCurrentUser().getGovernment().getPopularity();
     }
 
+    public static int getPopularity2() {
+        return getPopularityFromTax()+getPopularityFromFear()+getPopularityFromReligion()+getPopularityFromFood();
+    }
     public static double getAppleCount() {
         return Game.getCurrentUser().getGovernment().getResourceCount(Resource.APPLE);
     }
@@ -386,7 +387,8 @@ public class GameMenuController {
     public static void unitsAttack() {
         for (Unit unit : Unit.getUnits()) {
             if (unit instanceof Engineer) {
-                //to be complete
+                ((Engineer) unit).setHasOil(false);
+                killUnit((Engineer) unit, ((Engineer) unit).getPour());
             }
             if (unit.getUnitType().getRange() != 1 && !unit.getPatrol()) {
                 if (unit.getxTarget() == -1) {
@@ -400,6 +402,19 @@ public class GameMenuController {
             removeDeadUnits();
             fightBuildings();
             removeBuildings();
+        }
+    }
+
+    private static void killUnit(Engineer unit, Direction pour) {
+        switch (pour){
+            case UP:
+                Game.getGameMap()[unit.getxPosition() - 1][unit.getyPosition()].setUnit();
+            case DOWN:
+                Game.getGameMap()[unit.getxPosition() + 1][unit.getyPosition()].setUnit();
+            case RIGHT:
+                Game.getGameMap()[unit.getxPosition()][unit.getyPosition() + 1].setUnit();
+            case LEFT:
+                Game.getGameMap()[unit.getxPosition()][unit.getyPosition() - 1].setUnit();
         }
     }
 
@@ -520,7 +535,7 @@ public class GameMenuController {
         moveUnits();
         for (User user : Game.getUsers()) {
             user.getGovernment().setGold2(user.getGovernment().getTaxRate() * user.getGovernment().getPopulation());
-            user.getGovernment().setPopularity2(getPopularity());
+            user.getGovernment().setPopularity2(getPopularity2());
             if((getAppleCount() + getMeetCount() + getBreadCount() + getCheeseCount()) <
                     ((double) (user.getGovernment().getFoodRate() + 2) / 2) * user.getGovernment().getPopulation()){
                 user.getGovernment().getAllResources().put(Resource.APPLE, (double) 0);
@@ -584,5 +599,27 @@ public class GameMenuController {
             }
         }
         Game.setCurrentUser(nextUser);
+    }
+
+    public static GameMenuMessage dropUnit(int x, int y, String t, int c) {
+        UnitType unitType = null;
+        for (UnitType value : UnitType.values()) {
+            if(value.getType().equals(t)){
+                unitType = value;
+                break;
+            }
+        }
+        if(unitType != null){
+            System.out.println("not null");
+            for(int i = 0; i < c; i++){
+                if(unitType.equals(UnitType.ENGINEER)){
+                    new Engineer(x, y);
+                }else{
+                    new Unit(unitType, x, y);
+                    System.out.println("created");
+                }
+            }
+        }
+        return GameMenuMessage.SUCCESS;
     }
 }

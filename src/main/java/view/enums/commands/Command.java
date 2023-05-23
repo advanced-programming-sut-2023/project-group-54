@@ -1,5 +1,7 @@
 package view.enums.commands;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -271,7 +273,12 @@ public enum Command {
     DISBAND_UNIT("disband\\s+unit",  new ArrayList<>(
     )),
 
-    ;
+    DROP_UNIT("drop\\s+unit", new ArrayList<>(Arrays.asList(
+            new Option("x", 1, false),
+            new Option("y", 1, false),
+            new Option("t", 1, false),
+            new Option("c", 1, false)
+    )));
 
     private final String commandRegex;
     private final ArrayList<Option> options;

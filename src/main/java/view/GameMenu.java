@@ -80,11 +80,24 @@ public class GameMenu {
                 setXYOfMapCommonErrors(options, "drop building");
             else if ((options = CommandHandler.parsCommand(Command.SELECT_UNIT, command)) != null)
                 setXYOfMapCommonErrors(options, "select unit");
+            else if ((options = CommandHandler.parsCommand(Command.DROP_UNIT, command)) != null)
+                dropUnit(options);
             else if (CommandHandler.parsCommand(Command.NEXT_TURN, command) != null)
                 nextTurn();
             else if ((options = CommandHandler.parsCommand(Command.SELECT_BUILDING, command)) != null)
                 setXYOfMapCommonErrors(options, "select building");
             else System.out.println("invalid command in game menu");
+        }
+    }
+
+    private static void dropUnit(HashMap<String, ArrayList<String>> options) {
+        String x = options.get("x").get(0);
+        String y = options.get("y").get(0);
+        String t = Controller.buildParameter(options.get("t").get(0));
+        String c = options.get("c").get(0);
+
+        if(GameMenuController.dropUnit(Integer.parseInt(x), Integer.parseInt(y), t, Integer.parseInt(c)).equals(GameMenuMessage.SUCCESS)){
+            System.out.println("drop unit successfully");
         }
     }
 
