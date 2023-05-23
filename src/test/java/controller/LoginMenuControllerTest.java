@@ -17,7 +17,6 @@ class LoginMenuControllerTest {
     public void passwordCheckerTest() {
         User user = new User("beckham", Controller.hashString("elisa1@ARR"), "becki", "beckhamp@gmail.com", "shoot is the best way",
                 1, "alibaba", new Government());
-        User.addUser(user);
         assertEquals(LoginMenuMessage.WRONG_PASSWORD, LoginMenuController.loginUser("beckham", "Elisa1@ARR", true));
     }
 
@@ -26,29 +25,25 @@ class LoginMenuControllerTest {
     public void userFoundTest() {
         User user = new User("beckham", Controller.hashString("elisa1@ARR"), "becki", "beckhamp@gmail.com", "shoot is the best way",
                 1, "alibaba", new Government());
-        User.addUser(user);
-        assertEquals(LoginMenuMessage.USER_NOT_FOUND,LoginMenuController.loginUser("beham","elisa1@ARR",true));
+                assertEquals(LoginMenuMessage.USER_NOT_FOUND,LoginMenuController.loginUser("beham","elisa1@ARR",true));
     }
     @Test
     public void forgotPassword(){
         User user = new User("beckham", Controller.hashString("elisa1@ARR"), "becki", "beckhamp@gmail.com", "shoot is the best way",
                 1, "alibaba", new Government());
-        User.addUser(user);
-        assertEquals(LoginMenuMessage.SUCCESS,LoginMenuController.forgetPasswordUsernameCheck("beckham"));
+                assertEquals(LoginMenuMessage.SUCCESS,LoginMenuController.forgetPasswordUsernameCheck("beckham"));
     }
     @Test
     public void checkQuestion(){
         User user = new User("beckham", Controller.hashString("elisa1@ARR"), "becki", "beckhamp@gmail.com", "shoot is the best way",
                 1, "alibaba", new Government());
-        User.addUser(user);
-        assertEquals(1,LoginMenuController.getQuestion("beckham"));
+                assertEquals(1,LoginMenuController.getQuestion("beckham"));
     }
     @Test
     public void checkQuestionAnswer(){
         User user = new User("beckham", Controller.hashString("elisa1@ARR"), "becki", "beckhamp@gmail.com", "shoot is the best way",
                 1, "alibaba", new Government());
-        User.addUser(user);
-        LoginMenuController.forgetPasswordUsernameCheck("beckham");
+                LoginMenuController.forgetPasswordUsernameCheck("beckham");
         assertEquals(true,LoginMenuController.checkAnswer("alibaba"));
     }
     @Test

@@ -38,10 +38,6 @@ public class SignupMenuController {
         passwordToHash();
         User user = new User(username, password, nickname, email, slogan, questionNumber, questionAnswer, new Government());
         user.getGovernment().setUser(user);
-        User.addUser(user);
-//        Controller.setLoggedInUser(user);
-
-        //add to file
         return SignupMenuMessage.SUCCESS;
     }
 

@@ -1,6 +1,7 @@
 package model.Buildings;
 
 import model.Game;
+import model.Government;
 import model.Resource;
 
 import java.util.HashMap;
@@ -9,8 +10,8 @@ public class ProducerBuilding extends Building {
     private ProducerType producerType;
     private Resource currentOutput;
 
-    public ProducerBuilding(ProducerType producerType) {
-        super(producerType.getBuildingType(), producerType.getBuildingType().getMaxHp(), Game.getCurrentUser().getGovernment());
+    public ProducerBuilding(ProducerType producerType, int x1Position, int x2Position, int y1Position, int y2Position, Government government) {
+        super(producerType.getBuildingType(), producerType.getBuildingType().getMaxHp(), government, x1Position, x2Position, y1Position, y2Position);
         this.producerType = producerType;
         if(!(producerType.getPuts() == null)){
             for (HashMap<Resource, Double> input : producerType.getPuts().keySet()) {

@@ -13,7 +13,7 @@ import static model.MapType.*;
 
 public class MapMenuController {
     private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_BLACK = "\\u001B[40m";
+    private static final String ANSI_BLACK = "\u001B[40m";
     private static final String ANSI_RED = "\u001B[41m";
     private static final String ANSI_GREEN = "\u001B[42m";
     private static final String ANSI_YELLOW = "\u001B[43m";
@@ -30,36 +30,36 @@ public class MapMenuController {
     private static final String ANSI_TEXT_LIGHT_BLUE = "\u001b[36m";
     private static final String ANSI_TEXT_WHITE = "\u001b[37m";
 
-    public static void setMainHouse(int whichMap) {
-        for (int i = 0; i < Game.getUsers().size(); i++) {
-            if (i < 4) {
-                for (int j = whichMap + i * whichMap; j < whichMap + i * whichMap + 4; j++) {
-                    for (int k = whichMap + 25; k < whichMap + 25 + 4; k++) {
-                        Game.getGameMap()[whichMap + i * whichMap + j][whichMap + 25 + k].setBuilding(new Building(BuildingType.MAIN_HOUSE
-                                , BuildingType.MAIN_HOUSE.getMaxHp(), Game.getUsers().get(i).getGovernment()));
-                    }
-                }
-                dropBuilding(whichMap + i * whichMap + 4, whichMap + 25, "granary");
-                Building.addBuildings(Game.getGameMap()[whichMap + i * whichMap][whichMap + 25].getBuilding());
-            } else {
-                for (int j = whichMap + (i - 4) * whichMap; j < whichMap + (i - 4) * whichMap + 4; j++) {
-                    for (int k = whichMap * 4; k < whichMap * 4 + 4; k++) {
-                        Game.getGameMap()[whichMap + (i - 4) * whichMap + j][whichMap * 4 + k].setBuilding(new Building(BuildingType.MAIN_HOUSE
-                                , BuildingType.MAIN_HOUSE.getMaxHp(), Game.getUsers().get(i).getGovernment()));
-                    }
-                }
-                dropBuilding(whichMap + (i - 4) * whichMap + 4, whichMap * 4, "granary");
-                Building.addBuildings(Game.getGameMap()[whichMap + (i - 4) * whichMap][whichMap * 4].getBuilding());
-            }
-            Game.getUsers().get(i).getGovernment().setGold(4000);
-            Game.getUsers().get(i).getGovernment().addToStorage(Resource.WOOD, 100);
-            Game.getUsers().get(i).getGovernment().addToStorage(Resource.STONE, 100);
-            Game.getUsers().get(i).getGovernment().addToStorage(Resource.BREAD, 100);
-            Game.getUsers().get(i).getGovernment().changeResourceAmount(Resource.WOOD, 100);
-            Game.getUsers().get(i).getGovernment().changeResourceAmount(Resource.STONE, 100);
-            Game.getUsers().get(i).getGovernment().changeResourceAmount(Resource.BREAD, 100);
-        }
-    }
+//    public static void setMainHouse(int whichMap) {
+//        for (int i = 0; i < Game.getUsers().size(); i++) {
+//            if (i < 4) {
+//                for (int j = whichMap + i * whichMap; j < whichMap + i * whichMap + 4; j++) {
+//                    for (int k = whichMap + 25; k < whichMap + 25 + 4; k++) {
+//                        Game.getGameMap()[whichMap + i * whichMap + j][whichMap + 25 + k].setBuilding(new Building(BuildingType.MAIN_HOUSE
+//                                , BuildingType.MAIN_HOUSE.getMaxHp(), Game.getUsers().get(i).getGovernment()));
+//                    }
+//                }
+//                dropBuilding(whichMap + i * whichMap + 4, whichMap + 25, "granary");
+//                Building.addBuildings(Game.getGameMap()[whichMap + i * whichMap][whichMap + 25].getBuilding());
+//            } else {
+//                for (int j = whichMap + (i - 4) * whichMap; j < whichMap + (i - 4) * whichMap + 4; j++) {
+//                    for (int k = whichMap * 4; k < whichMap * 4 + 4; k++) {
+//                        Game.getGameMap()[whichMap + (i - 4) * whichMap + j][whichMap * 4 + k].setBuilding(new Building(BuildingType.MAIN_HOUSE
+//                                , BuildingType.MAIN_HOUSE.getMaxHp(), Game.getUsers().get(i).getGovernment()));
+//                    }
+//                }
+//                dropBuilding(whichMap + (i - 4) * whichMap + 4, whichMap * 4, "granary");
+//                Building.addBuildings(Game.getGameMap()[whichMap + (i - 4) * whichMap][whichMap * 4].getBuilding());
+//            }
+//            Game.getUsers().get(i).getGovernment().setGold(4000);
+//            Game.getUsers().get(i).getGovernment().addToStorage(Resource.WOOD, 100);
+//            Game.getUsers().get(i).getGovernment().addToStorage(Resource.STONE, 100);
+//            Game.getUsers().get(i).getGovernment().addToStorage(Resource.BREAD, 100);
+//            Game.getUsers().get(i).getGovernment().changeResourceAmount(Resource.WOOD, 100);
+//            Game.getUsers().get(i).getGovernment().changeResourceAmount(Resource.STONE, 100);
+//            Game.getUsers().get(i).getGovernment().changeResourceAmount(Resource.BREAD, 100);
+//        }
+//    }
 
     public static void setMap(int mapNumber) {
         if (mapNumber == 1) {
@@ -105,7 +105,7 @@ public class MapMenuController {
             for (int i = 50; i < 100; i++) {
                 for (int j = 120; j < 150; j++) {
                     gameMap[i][j].setMapType(SMALL_POND);
-                    gameMap[i][j].setTree(OLIVE_TREE);
+//                    gameMap[i][j].setTree(OLIVE_TREE);
                 }
             }
             for (int i = 200; i < 250; i++) {
@@ -147,6 +147,7 @@ public class MapMenuController {
                     gameMap[i][j].setMapType(IRON);
                 }
             }
+
             Game.setX(400);
             Game.setY(400);
             Game.setGameMap(gameMap);
@@ -176,7 +177,7 @@ public class MapMenuController {
             map.append("|\n");
             for (int j = yFirstHome; j < yEndHome; j++) {
                 String[] color = backgroundColor(gameMap[i][j].getMapType());
-                int numberOfSoldiers = 0;
+                int numberOfSoldiers = gameMap[i][j].getUnit().size();
                 if (gameMap[i][j].getUnit().size() > 99) numberOfSoldiers = 99;
                 map.append("|" + color[0] + color[1] + ((!gameMap[i][j].getUnit().isEmpty()) ? ((numberOfSoldiers > 9) ? numberOfSoldiers : numberOfSoldiers + "#") : "##") + ANSI_RESET);
             }
@@ -319,8 +320,9 @@ public class MapMenuController {
             if (building instanceof StorageBuilding) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
-                    storageBuilding.getOwner().getAllResources().put(resource, storageBuilding.getOwner().getAllResources().get(resource));
+                    storageBuilding.getOwner().getAllResources().put(resource, storageBuilding.getOwner().getAllResources().get(resource) - storageBuilding.getStorage().get(resource));
                 }
+                storageBuilding.getOwner().getBuildings().remove(building);
             }
             Game.getGameMap()[xCoordinate][yCoordinate].setUnit();
             Building.getBuildings().remove(building);
@@ -379,7 +381,7 @@ public class MapMenuController {
         Game.getGameMap()[xCoordinate][yCoordinate].setTree(tree);
     }
 
-    public static MapMenuMessage dropBuilding(int x, int y, String type) {
+    public static MapMenuMessage dropBuilding(int x, int y, String type, Government government) {
         BuildingType buildingType = null;
         for (BuildingType allBuildingType : BuildingType.values()) {
             if (allBuildingType.getName().equals(type)) {
@@ -426,32 +428,32 @@ public class MapMenuController {
                 if (!type.equals("quarry") &&
                         map.getMapType().equals(MapType.BOULDERS))
                     return MapMenuMessage.ONLY_QUARRY_ON_BOULDERS;
-                boolean sign = false;
-                if (type.equals("granary")) {
-                    if (!Game.getGameMap()[x - 1][y].getBuilding().getBuildingType().equals(BuildingType.MAIN_HOUSE)) {
-                        outer2:
-                        for (int k = x; k < x + buildingType.getLength(); k++) {
-                            for (int l = y; l < buildingType.getWidth(); l++) {
-                                if (Game.getGameMap()[k + 1][l].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
-                                    sign = true;
-                                else if (Game.getGameMap()[k - 1][l].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
-                                    sign = true;
-                                else if (Game.getGameMap()[k][l + 1].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
-                                    sign = true;
-                                else if (Game.getGameMap()[k][l - 1].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
-                                    sign = true;
-                                if (sign) break outer2;
-                            }
-                        }
-                        if (!sign) return MapMenuMessage.PUT_STORAGE_NEXT_TO_EACH_OTHER;
-                    }
-                }
+//                boolean sign = false;
+//                if (type.equals("granary")) {
+//                    if (!Game.getGameMap()[x - 1][y].getBuilding().getBuildingType().equals(BuildingType.MAIN_HOUSE)) {
+//                        outer2:
+//                        for (int k = x; k < x + buildingType.getLength(); k++) {
+//                            for (int l = y; l < buildingType.getWidth(); l++) {
+//                                if (Game.getGameMap()[k + 1][l].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+//                                    sign = true;
+//                                else if (Game.getGameMap()[k - 1][l].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+//                                    sign = true;
+//                                else if (Game.getGameMap()[k][l + 1].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+//                                    sign = true;
+//                                else if (Game.getGameMap()[k][l - 1].getBuilding().getBuildingType().equals(BuildingType.GRANARY))
+//                                    sign = true;
+//                                if (sign) break outer2;
+//                            }
+//                        }
+//                        if (!sign) return MapMenuMessage.PUT_STORAGE_NEXT_TO_EACH_OTHER;
+//                    }
+//                }
             }
         }
-        return checkCost(x, y, buildingType, length, width);
+        return checkCost(x, y, buildingType, length, width, government);
     }
 
-    private static MapMenuMessage checkCost(int x, int y, BuildingType buildingType, int length, int width) {
+    private static MapMenuMessage checkCost(int x, int y, BuildingType buildingType, int length, int width, Government government) {
         if (buildingType.getCostType() != null) {
             if (Game.getCurrentUser().getGovernment().getAllResources().get(buildingType.getCostType()) < buildingType.getCostAmount())
                 return MapMenuMessage.NOT_ENOUGH_RESOURCE;
@@ -467,10 +469,10 @@ public class MapMenuController {
                     !((Engineer) unit).isWorking()) engineer = ((Engineer) unit);
         }
         if (buildingType.isNeedEngineer() && engineer == null) return MapMenuMessage.NOT_ENOUGH_ENGINEER;
-        return findClassDropBuilding(x, y, buildingType, length, width);
+        return findClassDropBuilding(x, y, buildingType, length, width, government);
     }
 
-    private static MapMenuMessage findClassDropBuilding(int x, int y, BuildingType buildingType, int length, int width) {
+    private static MapMenuMessage findClassDropBuilding(int x, int y, BuildingType buildingType, int length, int width, Government government) {
         BuildingGroup buildingGroup = buildingType.getBuildingGroup2();
         DefenseType defenseType = null;
         ProducerType producerType = null;
@@ -509,20 +511,65 @@ public class MapMenuController {
         StorageBuilding storageBuilding = null;
         TrapBuilding trapBuilding = null;
         Building building = null;
-        if (defenseType != null) defenseBuilding = new DefenseBuilding(defenseType);
-        else if (producerType != null) producerBuilding = new ProducerBuilding(producerType);
-        else if (siegeType != null) siegeBuilding = new SiegeBuilding(siegeType);
-        else if (storageType != null) storageBuilding = new StorageBuilding(storageType);
-        else if (trapType != null) trapBuilding = new TrapBuilding(trapType);
-        else building = new Building(buildingType, buildingType.getMaxHp(), Game.getCurrentUser().getGovernment());
+        if (defenseType != null){
+            defenseBuilding = new DefenseBuilding(defenseType, x, x+length, y, y+width, government);
+            government.addBuilding(defenseBuilding);
+        }
+        else if (producerType != null){
+            producerBuilding = new ProducerBuilding(producerType, x, x+length, y, y+width, government);
+            government.addBuilding(producerBuilding);
+        }
+        else if (siegeType != null){
+            siegeBuilding = new SiegeBuilding(siegeType, x, x+length, y, y+width, government);
+            government.addBuilding(siegeBuilding);
+        }
+        else if (storageType != null){
+            storageBuilding = new StorageBuilding(storageType, x, x+length, y, y+width, government);
+            government.addBuilding(storageBuilding);
+        }
+        else if (trapType != null){
+            trapBuilding = new TrapBuilding(trapType, x, x+length, y, y+width, government);
+            government.addBuilding(trapBuilding);
+        }
+        else{
+            building = new Building(buildingType, buildingType.getMaxHp(), government, x, x+length, y, y+width);
+            government.addBuilding(building);
+        }
         for (int i = x; i < x + length; i++) {
             for (int j = y; j < y + width; j++) {
-                if (defenseType != null) Game.getGameMap()[i][j].setBuilding(defenseBuilding);
-                else if (producerType != null) Game.getGameMap()[i][j].setBuilding(producerBuilding);
-                else if (siegeType != null) Game.getGameMap()[i][j].setBuilding(siegeBuilding);
-                else if (storageType != null) Game.getGameMap()[i][j].setBuilding(storageBuilding);
-                else if (trapType != null) Game.getGameMap()[i][j].setBuilding(trapBuilding);
-                else Game.getGameMap()[i][j].setBuilding(building);
+                if (defenseType != null){
+//                    System.out.println("defense");
+                    Game.getGameMap()[i][j].setBuilding(defenseBuilding);
+                    Game.getCurrentUser().getGovernment().getBuildings().add(defenseBuilding);
+                }
+                else if (producerType != null){
+//                    System.out.println("producer");
+                    Game.getGameMap()[i][j].setBuilding(producerBuilding);
+                    Game.getCurrentUser().getGovernment().getBuildings().add(producerBuilding);
+                }
+                else if (siegeType != null){
+//                    System.out.println("siege");
+                    Game.getGameMap()[i][j].setBuilding(siegeBuilding);
+                    Game.getCurrentUser().getGovernment().getBuildings().add(siegeBuilding);
+                }
+                else if (storageType != null){
+//                    System.out.println("storage");
+                    Game.getGameMap()[i][j].setBuilding(storageBuilding);
+                    Game.getCurrentUser().getGovernment().getBuildings().add(storageBuilding);
+                }
+                else if (trapType != null){
+//                    System.out.println("trap");
+                    Game.getGameMap()[i][j].setBuilding(trapBuilding);
+                    Game.getCurrentUser().getGovernment().getBuildings().add(trapBuilding);
+                }
+                else{
+//                    if(building.getBuildingType().equals(BuildingType.HOVEL)){
+//                        Game.getCurrentUser().getGovernment().setPopulation2(8);
+//                        Game.getCurrentUser().getGovernment().addUnemployedWorker(8);
+//                    }
+                    Game.getGameMap()[i][j].setBuilding(building);
+                    Game.getCurrentUser().getGovernment().getBuildings().add(building);
+                }
             }
         }
         Game.getCurrentUser().getGovernment().setUnemployedWorker(buildingType.getWorkers());
@@ -549,22 +596,92 @@ public class MapMenuController {
         if (Game.getGameMap()[x][y].getBuilding() == null) return MapMenuMessage.HOUSE_IS_EMPTY;
         if (!Game.getGameMap()[x][y].getBuilding().getOwner().equals(Game.getCurrentUser().getGovernment()))
             return MapMenuMessage.BUILDING_OR_SOLDIER_DOESNT_BELONG_TO_YOU;
+        else if(Game.getGameMap()[x][y].getBuilding().getBuildingType().equals(BuildingType.MARKET))
+            return MapMenuMessage.SHOP_MENU_BUILDING;
         return MapMenuMessage.SUCCESS;
     }
 
     public static MapMenuMessage selectUnit(int x, int y) {
-        boolean sign = true;
+//        boolean sign = true;
         int numberOfSoldiers = 0;
         for (Unit unit : Game.getGameMap()[x][y].getUnit()) {
-            numberOfSoldiers++;
             if (unit.getGovernment().equals(Game.getCurrentUser().getGovernment())) {
-                sign = false;
-                break;
+                numberOfSoldiers++;
+//                sign = false;
+//                break;
             }
         }
         if (numberOfSoldiers == 0) return MapMenuMessage.HOUSE_IS_EMPTY;
-        if (sign) return MapMenuMessage.BUILDING_OR_SOLDIER_DOESNT_BELONG_TO_YOU;
+//        if (sign) return MapMenuMessage.BUILDING_OR_SOLDIER_DOESNT_BELONG_TO_YOU;
         return MapMenuMessage.SUCCESS;
     }
 
+    public static void setDefaultBuilding(int count) {
+        Game.setMainHouses();
+        dropBuilding(20, 130, "main house", Game.getCurrentUser().getGovernment());
+        Game.addMainHouses(Game.getGameMap()[20][130].getBuilding());
+        dropBuilding(20, 137, "stock pile", Game.getCurrentUser().getGovernment());
+        dropBuilding(30, 130, "granary", Game.getCurrentUser().getGovernment());
+        Game.getUsers().get(0).getGovernment().addToStorage(Resource.WOOD, 100);
+        Game.getUsers().get(0).getGovernment().addToStorage(Resource.STONE, 50);
+        Game.getUsers().get(0).getGovernment().addToStorage(Resource.BREAD, 100);
+
+        dropBuilding(120, 15, "main house", Game.getUsers().get(1).getGovernment());
+        Game.addMainHouses(Game.getGameMap()[120][15].getBuilding());
+        dropBuilding(120, 22, "stock pile", Game.getUsers().get(1).getGovernment());
+        dropBuilding(130, 15, "granary", Game.getUsers().get(1).getGovernment());
+        Game.getUsers().get(1).getGovernment().addToStorage(Resource.WOOD, 100);
+        Game.getUsers().get(1).getGovernment().addToStorage(Resource.STONE, 50);
+        Game.getUsers().get(1).getGovernment().addToStorage(Resource.BREAD, 100);
+        switch (count){
+            case 8:
+                dropBuilding(300, 250, "main house", Game.getUsers().get(7).getGovernment());
+                Game.addMainHouses(Game.getGameMap()[300][250].getBuilding());
+                dropBuilding(300, 257, "stock pile", Game.getUsers().get(7).getGovernment());
+                dropBuilding(310, 250, "granary", Game.getUsers().get(7).getGovernment());
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.WOOD, 100);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.STONE, 50);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.BREAD, 100);
+            case 7:
+                dropBuilding(300, 160, "main house", Game.getUsers().get(6).getGovernment());
+                Game.addMainHouses(Game.getGameMap()[300][160].getBuilding());
+                dropBuilding(300, 167, "stock pile", Game.getUsers().get(6).getGovernment());
+                dropBuilding(310, 160, "granary", Game.getUsers().get(6).getGovernment());
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.WOOD, 100);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.STONE, 50);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.BREAD, 100);
+            case 6:
+                dropBuilding(300, 90, "main house", Game.getUsers().get(5).getGovernment());
+                Game.addMainHouses(Game.getGameMap()[300][90].getBuilding());
+                dropBuilding(300, 97, "stock pile", Game.getUsers().get(5).getGovernment());
+                dropBuilding(310, 90, "granary", Game.getUsers().get(5).getGovernment());
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.WOOD, 100);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.STONE, 50);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.BREAD, 100);
+            case 5:
+                dropBuilding(220, 180, "main house", Game.getUsers().get(4).getGovernment());
+                Game.addMainHouses(Game.getGameMap()[220][180].getBuilding());
+                dropBuilding(220, 187, "stock pile", Game.getUsers().get(4).getGovernment());
+                dropBuilding(230, 180, "granary", Game.getUsers().get(4).getGovernment());
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.WOOD, 100);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.STONE, 50);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.BREAD, 100);
+            case 4:
+                dropBuilding(220, 90, "main house", Game.getUsers().get(3).getGovernment());
+                Game.addMainHouses(Game.getGameMap()[220][90].getBuilding());
+                dropBuilding(220, 97, "stock pile", Game.getUsers().get(3).getGovernment());
+                dropBuilding(230, 90, "granary", Game.getUsers().get(3).getGovernment());
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.WOOD, 100);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.STONE, 50);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.BREAD, 100);
+            case 3:
+                dropBuilding(150, 250, "main house", Game.getUsers().get(2).getGovernment());
+                Game.addMainHouses(Game.getGameMap()[150][250].getBuilding());
+                dropBuilding(150, 257, "stock pile", Game.getUsers().get(2).getGovernment());
+                dropBuilding(160, 250, "granary", Game.getUsers().get(2).getGovernment());
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.WOOD, 100);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.STONE, 50);
+                Game.getUsers().get(count - 1).getGovernment().addToStorage(Resource.BREAD, 100);
+        }
+    }
 }

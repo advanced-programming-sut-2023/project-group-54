@@ -9,6 +9,7 @@
         <module name="StrongHold" />
         <module name="strongHold" />
         <module name="phase0" />
+        <module name="project-group-54" />
       </profile>
     </annotationProcessing>
   </component>

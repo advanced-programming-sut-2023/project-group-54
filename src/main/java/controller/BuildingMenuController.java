@@ -35,7 +35,6 @@ public class BuildingMenuController {
         if (!unitType.getProducerBuilding().getBuildingType().equals(selectedBuilding.getBuildingType())) {
             return BuildingMenuMessage.INVALID_BUILDING;
         }
-        ArrayList<Unit> units = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             if (Game.getCurrentUser().getGovernment().getGold() - unitType.getGoldNeeded() < 0)
                 return BuildingMenuMessage.NOT_ENOUGH_GOLD;
@@ -53,9 +52,9 @@ public class BuildingMenuController {
                 Game.getCurrentUser().getGovernment().changeResourceAmount(resource, -1);
             }
             if (!unitType.equals(UnitType.ENGINEER)) {
-                units.add(new Unit(unitType, selectedBuilding.getX1Position(), selectedBuilding.getY1Position()));
+                new Unit(unitType, selectedBuilding.getX1Position(), selectedBuilding.getY1Position());
             } else {
-                units.add(new Engineer(selectedBuilding.getX1Position(), selectedBuilding.getY1Position()));
+                new Engineer(selectedBuilding.getX1Position(), selectedBuilding.getY1Position());
             }
         }
         return BuildingMenuMessage.SUCCESS;

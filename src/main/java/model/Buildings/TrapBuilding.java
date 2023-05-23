@@ -1,13 +1,14 @@
 package model.Buildings;
 
 import model.Game;
+import model.Government;
 import model.units.Unit;
 
 public class TrapBuilding extends Building {
     private TrapType trapType;
 
-    public TrapBuilding(TrapType trapType) {
-        super(trapType.getBuildingType(), trapType.getBuildingType().getMaxHp(), Game.getCurrentUser().getGovernment());
+    public TrapBuilding(TrapType trapType, int x1Position, int x2Position, int y1Position, int y2Position, Government government) {
+        super(trapType.getBuildingType(), trapType.getBuildingType().getMaxHp(), government, x1Position, x2Position, y1Position, y2Position);
         this.trapType = trapType;
     }
 

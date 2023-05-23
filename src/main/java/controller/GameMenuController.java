@@ -8,6 +8,7 @@ import model.User;
 import model.units.Engineer;
 import model.units.State;
 import model.units.Unit;
+import org.checkerframework.checker.units.qual.A;
 import view.enums.messages.GameMenuMessage;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class GameMenuController {
     public static int getPopularityFromFood() {
         int foodPop = Game.getCurrentUser().getGovernment().getFoodRate() * 4;
-        int addPopForDif = (hasApple() ? 1 : 0) + (hasMeet() ? 1 : 0) + (hasBread() ? 1 : 0) + (hasCheese() ? 1 : 0);
+        int addPopForDif = (hasApple() ? 1 : 0) + (hasMeet() ? 1 : 0) + (hasBread() ? 1 : 0) + (hasCheese() ? 1 : 0) - 1;
         if(!hasApple() && !hasMeet() && !hasBread() && !hasCheese()){
             return -8;
         }
@@ -111,10 +112,7 @@ public class GameMenuController {
     }
 
     public static int getPopularity() {
-        return getPopularityFromFood() +
-                getPopularityFromTax() +
-                getPopularityFromFear() +
-                getPopularityFromReligion();
+        return Game.getCurrentUser().getGovernment().getPopularity();
     }
 
     public static double getAppleCount() {
@@ -143,6 +141,7 @@ public class GameMenuController {
 
     public static GameMenuMessage fearRateSet(int rateNumber) {
         Game.getCurrentUser().getGovernment().setFearRate(rateNumber);
+        Game.getCurrentUser().getGovernment().setEfficiency(100 - rateNumber * 10);
         return GameMenuMessage.SUCCESS;
     }
 
@@ -151,7 +150,7 @@ public class GameMenuController {
             for (int j = building.getY1Position(); j < building.getY2Position(); j++) {
                 ArrayList<Unit> unitsTobeRemoved = new ArrayList<>();
                 for (Unit unit : Game.getGameMap()[i][j].getUnit()) {
-                    if (unit.getGovernment().equals(user.getGovernment())) unitsTobeRemoved.add(unit);
+                    if (!unit.getGovernment().equals(user.getGovernment())) unitsTobeRemoved.add(unit);
                 }
                 for (Unit unit : unitsTobeRemoved) {
                     Game.getGameMap()[i][j].getUnit().remove(unit);
@@ -162,17 +161,25 @@ public class GameMenuController {
 
     public static void procedureBuildings(User user, Building building) {
         if (((ProducerBuilding) building).getProducerType().isAddPopularity()) user.getGovernment().setPopularity2(1);
-        for (HashMap.Entry<HashMap<Resource, Double>, HashMap<Resource, Double>> input : ((ProducerBuilding) building).getProducerType().getPuts().entrySet()) {
+        for (Map.Entry<HashMap<Resource, Double>, HashMap<Resource, Double>> input : ((ProducerBuilding) building).getProducerType().getPuts().entrySet()) {
+            boolean sign = false;
+            for (Resource resource : input.getValue().keySet()) {
+                if(resource.equals(((ProducerBuilding) building).getCurrentOutput())){
+                    sign = true;
+                }
+            }
+            if(!sign)
+                continue;
             if (input.getKey() != null) {
                 for (Map.Entry<Resource, Double> input2 : input.getKey().entrySet()) {
                     if (user.getGovernment().getAllResources().get(input2.getKey()) < input2.getValue())
-                        continue;
+                        return;
                     if (input.getValue() == null) {
                         user.getGovernment().changeResourceAmount(input2.getKey(), -input2.getValue());
                         user.getGovernment().removeFromStorage(input2.getKey(), -input2.getValue());
                     } else {
                         for (Map.Entry<Resource, Double> input3 : input.getValue().entrySet()) {
-                            if (!(user.getGovernment().hasStorageForItem(input3.getKey(), input3.getValue()))) continue;
+                            if (!(user.getGovernment().hasStorageForItem(input3.getKey(), input3.getValue()))) return;
                             user.getGovernment().changeResourceAmount(input2.getKey(), -input2.getValue());
                             user.getGovernment().removeFromStorage(input2.getKey(), -input2.getValue());
                             user.getGovernment().changeResourceAmount(input3.getKey(), input3.getValue());
@@ -182,7 +189,7 @@ public class GameMenuController {
                 }
             } else {
                 for (Map.Entry<Resource, Double> input3 : input.getValue().entrySet()) {
-                    if (!(user.getGovernment().hasStorageForItem(input3.getKey(), input3.getValue()))) continue;
+                    if (!(user.getGovernment().hasStorageForItem(input3.getKey(), input3.getValue()))) return;
                     user.getGovernment().changeResourceAmount(input3.getKey(), input3.getValue());
                     user.getGovernment().addToStorage(input3.getKey(), input3.getValue());
                 }
@@ -207,13 +214,15 @@ public class GameMenuController {
             if (building.getOwner().equals(user.getGovernment())) buildings.add(building);
         }
         for (Building building : buildings) {
-            if (building.getBuildingType().equals(BuildingType.SMALL_STONE_GATE) || building.getBuildingType().equals(BuildingType.HOVEL))
+            if (building.getBuildingType().equals(BuildingType.SMALL_STONE_GATE) || building.getBuildingType().equals(BuildingType.HOVEL)){
                 user.getGovernment().setPopulation2(8);
+                Game.getCurrentUser().getGovernment().addUnemployedWorker(8);
+            }
             else if (building.getBuildingType().equals(BuildingType.LARGE_STONE_GATE))
                 user.getGovernment().setPopulation2(10);
             else if (building.getBuildingType().equals(BuildingType.KILLING_PIT)) killingPit(user, building);
-            else if (building.getBuildingType().getBuildingGroup2().equals(BuildingGroup.PRODUCER_BUILDING) &&
-                    ((ProducerBuilding) building).getProducerType().getPuts() == null)
+            else if (building.getBuildingType().getBuildingGroup2().equals(BuildingGroup.PRODUCER_BUILDING) && (
+                    ((ProducerBuilding) building).getProducerType().getPuts() != null || ((ProducerBuilding) building).getProducerType().isAddPopularity()))
                 procedureBuildings(user, building);
             else if (building.getBuildingType().equals(BuildingType.MANGONEL) || building.getBuildingType().equals(BuildingType.BALLISTAE))
                 mangonellBallistae(building);
@@ -262,7 +271,7 @@ public class GameMenuController {
     }
 
     public static void moveTroop(Unit unit) {
-        if (unit.getxPosition() != unit.getxMoveTarget() || unit.getyPosition() != unit.getyMoveTarget()) {
+        if ((unit.getxPosition() != unit.getxMoveTarget() || unit.getyPosition() != unit.getyMoveTarget())) {
             ArrayList<model.Map> path = ShortestPath.getPath(Game.getGameMap(), unit.getxPosition(), unit.getyPosition(), unit.getxMoveTarget(), unit.getyMoveTarget());
             path.remove(path.get(0));
             Game.getGameMapXY(unit.getxPosition(), unit.getyPosition()).getUnit().remove(unit);
@@ -274,18 +283,37 @@ public class GameMenuController {
                 unit.setyPosition(path.get(path.size() - 1).getY());
             }
             Game.getGameMapXY(unit.getxPosition(), unit.getyPosition()).getUnit().add(unit);
+        }else if(unit.getPatrol()){
+            ArrayList<model.Map> path = null;
+            if(unit.getxPosition() == unit.getPatrolXTarget()){
+                path = ShortestPath.getPath(Game.getGameMap(), unit.getxPosition(), unit.getyPosition(), unit.getPatrolXFrom(), unit.getPatrolYFrom());
+            }else if(unit.getxPosition() == unit.getPatrolXFrom()){
+                path = ShortestPath.getPath(Game.getGameMap(), unit.getxPosition(), unit.getyPosition(), unit.getPatrolXTarget(), unit.getPatrolYTarget());
+            }
+            path.remove(path.get(0));
+            Game.getGameMapXY(unit.getxPosition(), unit.getyPosition()).getUnit().remove(unit);
+            if ((path.size()) > unit.getUnitType().getSpeed() * 5) {
+                unit.setxPosition(path.get((unit.getUnitType().getSpeed() * 5) - 1).getX());
+                unit.setyPosition(path.get((unit.getUnitType().getSpeed() * 5) - 1).getY());
+            }else{
+                unit.setxPosition(path.get(path.size() - 1).getX());
+                unit.setyPosition(path.get(path.size() - 1).getY());
+            }
+            Game.getGameMapXY(unit.getxPosition(), unit.getyPosition()).getUnit().add(unit);
         }
     }
 
     public static int setFireRangeOnTowers(Unit unit) {
         int fireRange = unit.getUnitType().getRange();
-        switch (Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().getBuildingType()) {
-            case DEFENCE_TOWER, PERIMETER_TOWER, ROUND_TOWER, SQUARE_TOWER, LOOK_OUT_TOWER,SMALL_STONE_GATE,LARGE_STONE_GATE:
-                if (fireRange != 1) fireRange += ((DefenseBuilding)Game.getGameMap()[unit.getxPosition()][unit.getyPosition()]
-                        .getBuilding()).getDefenseType().getIncreaseAttackRange();
-                break;
-            default:
-                break;
+        if(Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding() != null){
+            switch (Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().getBuildingType()) {
+                case DEFENCE_TOWER, PERIMETER_TOWER, ROUND_TOWER, SQUARE_TOWER, LOOK_OUT_TOWER,SMALL_STONE_GATE,LARGE_STONE_GATE:
+                    if (fireRange != 1) fireRange += ((DefenseBuilding)Game.getGameMap()[unit.getxPosition()][unit.getyPosition()]
+                            .getBuilding()).getDefenseType().getIncreaseAttackRange();
+                    break;
+                default:
+                    break;
+            }
         }
         return fireRange;
     }
@@ -385,10 +413,13 @@ public class GameMenuController {
                 }
             }
             if (enemyInThatHouse) continue;
-            if (!Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().getOwner().equals(unit.getGovernment())) {
-                if (unit.getUnitType().getRange() == 1)
-                    Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().setHp2(-unit.getUnitType().getDamage());
-                else Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().setHp2(-unit.getUnitType().getDamage()/2);
+            if (unit.getUnitType().getRange() == 1){
+                if (Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding() != null){
+                    if (!Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().getOwner().equals(unit.getGovernment()))
+                        Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().setHp2(-unit.getUnitType().getDamage());
+                    else
+                        Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getBuilding().setHp2(-unit.getUnitType().getDamage()/2);
+                }
             }
         }
     }
@@ -483,16 +514,14 @@ public class GameMenuController {
         if (Game.getTurns() == 0) return true;
         return false;
     }
-    public static GameMenuMessage nextTurn() {
-        return GameMenuMessage.SUCCESS;
-    }
 
     public static void doGameInEachTurn() {
+        moveUnits();
         for (User user : Game.getUsers()) {
-            moveUnits();
             user.getGovernment().setGold2(user.getGovernment().getTaxRate() * user.getGovernment().getPopulation());
             user.getGovernment().setPopularity2(getPopularity());
-            if((getAppleCount() + getMeetCount() + getBreadCount() + getCheeseCount()) < ((double) (user.getGovernment().getFoodRate() + 2) / 2) * user.getGovernment().getPopulation()){
+            if((getAppleCount() + getMeetCount() + getBreadCount() + getCheeseCount()) <
+                    ((double) (user.getGovernment().getFoodRate() + 2) / 2) * user.getGovernment().getPopulation()){
                 user.getGovernment().getAllResources().put(Resource.APPLE, (double) 0);
                 user.getGovernment().getAllResources().put(Resource.MEAT, (double) 0);
                 user.getGovernment().getAllResources().put(Resource.CHEESE, (double) 0);
@@ -502,30 +531,42 @@ public class GameMenuController {
                 if(user.getGovernment().getAllResources().get(Resource.APPLE) < a){
                     a -= user.getGovernment().getAllResources().get(Resource.APPLE);
                     user.getGovernment().getAllResources().put(Resource.APPLE, (double) 0);
+                    user.getGovernment().removeFromStorage(Resource.APPLE,
+                            user.getGovernment().getAllResources().get(Resource.APPLE));
                     if(user.getGovernment().getAllResources().get(Resource.MEAT) < a){
                         a -= user.getGovernment().getAllResources().get(Resource.MEAT);
                         user.getGovernment().getAllResources().put(Resource.MEAT, (double) 0);
+                        user.getGovernment().removeFromStorage(Resource.MEAT,
+                                user.getGovernment().getAllResources().get(Resource.MEAT));
                         if(user.getGovernment().getAllResources().get(Resource.CHEESE) < a){
                             a -= user.getGovernment().getAllResources().get(Resource.CHEESE);
+                            user.getGovernment().removeFromStorage(Resource.CHEESE,
+                                    user.getGovernment().getAllResources().get(Resource.CHEESE));
                             user.getGovernment().getAllResources().put(Resource.CHEESE, (double) 0);
                             if(user.getGovernment().getAllResources().get(Resource.BREAD) < a){
                                 a -= user.getGovernment().getAllResources().get(Resource.BREAD);
                                 user.getGovernment().getAllResources().put(Resource.BREAD, (double) 0);
+                                user.getGovernment().removeFromStorage(Resource.BREAD,
+                                        user.getGovernment().getAllResources().get(Resource.BREAD));
                             }else {
-                                a = 0;
                                 user.getGovernment().getAllResources().put(Resource.BREAD, user.getGovernment().getAllResources().get(Resource.BREAD) - a);
+                                user.getGovernment().removeFromStorage(Resource.BREAD, a);
+                                a = 0;
                             }
                         } else {
-                            a = 0;
                             user.getGovernment().getAllResources().put(Resource.CHEESE, user.getGovernment().getAllResources().get(Resource.CHEESE) - a);
+                            user.getGovernment().removeFromStorage(Resource.CHEESE, a);
+                            a = 0;
                         }
                     } else {
-                        a = 0;
                         user.getGovernment().getAllResources().put(Resource.MEAT, user.getGovernment().getAllResources().get(Resource.MEAT) - a);
+                        user.getGovernment().removeFromStorage(Resource.MEAT, a);
+                        a = 0;
                     }
                 } else {
-                    a = 0;
                     user.getGovernment().getAllResources().put(Resource.APPLE, user.getGovernment().getAllResources().get(Resource.APPLE) - a);
+                    user.getGovernment().removeFromStorage(Resource.APPLE, a);
+                    a = 0;
                 }
             }
             nextTurnForBuildings(user);
@@ -537,7 +578,7 @@ public class GameMenuController {
         User nextUser = null;
         for (User user : Game.getUsers()) {
             if(user.equals(Game.getCurrentUser())){
-                nextUser = Game.getUsers().get(Game.getUsers().indexOf(user) + 1);
+                nextUser = Game.getUsers().get((Game.getUsers().indexOf(user) + 1) % Game.getUsers().size());
                 break;
             }
         }

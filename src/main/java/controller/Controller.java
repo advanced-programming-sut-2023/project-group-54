@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 public class Controller {
     private static User loggedInUser;
+    private static boolean exit;
 
     public static void setLoggedInUser(User loggedInUser) {
         Controller.loggedInUser = loggedInUser;
@@ -109,8 +110,10 @@ public class Controller {
         User user = gson.fromJson(fileReader, new TypeToken<User>() {}.getType());
         if(user == null)
             return false;
-        setLoggedInUser(user);
-        return true;
+        if(User.findUserByUsername(user.getUsername()) != null){
+            setLoggedInUser(User.findUserByUsername(user.getUsername()));
+            return true;
+        }else return false;
     }
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
@@ -122,5 +125,13 @@ public class Controller {
             return false;
         }
         return true;
+    }
+
+    public static void setExit(boolean exit) {
+        Controller.exit = exit;
+    }
+
+    public static boolean isExit() {
+        return exit;
     }
 }

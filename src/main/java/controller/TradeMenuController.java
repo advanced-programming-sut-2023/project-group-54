@@ -4,29 +4,31 @@ import model.*;
 import view.enums.messages.TradeMenuMessage;
 
 public class TradeMenuController {
-    private static User user = Game.getCurrentUser();
-
     public static TradeMenuMessage trade(String username, Resource resource, int amount, int price, String message) {
         return TradeMenuMessage.SUCCESS;
     }
 
     public static TradeMenuMessage acceptTrade(String id, String message) {
-        if(!(Integer.parseInt(id) <=1 && Integer.parseInt(id)<=user.getGovernment().getAllTrades().size() ))
+        if(Integer.parseInt(id) < 1 || Integer.parseInt(id) > Game.getCurrentUser().getGovernment().getAllTrades().size())
             return TradeMenuMessage.INVALID_INDEX;
-        Trade trade = user.getGovernment().getAllTrades().get(Integer.parseInt(id));
+        Trade trade = Game.getCurrentUser().getGovernment().getAllTrades().get(Integer.parseInt(id) - 1);
         trade.setReceiverMessage(message);
         Resource resource = trade.getResource();
         int amount = trade.getAmount();
         User senderUser = trade.getSenderUser();
-        if (user.getGovernment().getGold() < trade.getPrice() * amount)
+        if (Game.getCurrentUser().getGovernment().getGold() < trade.getPrice() * amount)
             return TradeMenuMessage.NOT_ENOUGH_GOLD;
-        if (!user.getGovernment().hasStorageForItem(resource, amount))
+        if (!Game.getCurrentUser().getGovernment().hasStorageForItem(resource, amount))
             return TradeMenuMessage.NOT_ENOUGH_CAPACITY;
-        user.getGovernment().addToStorage(resource, amount);
+        Game.getCurrentUser().getGovernment().addToStorage(resource, amount);
         senderUser.getGovernment().removeFromStorage(resource, amount);
-        user.getGovernment().getReceivedTrades().add(trade);
-        user.getGovernment().setGold2(-(amount*trade.getPrice()));
+        Game.getCurrentUser().getGovernment().getReceivedTrades().add(trade);
+        Game.getCurrentUser().getGovernment().setGold2(-(amount*trade.getPrice()));
         senderUser.getGovernment().setGold2((amount*trade.getPrice()));
+        for (User user : Game.getUsers()) {
+            user.getGovernment().getAllTrades().remove(trade);
+            user.getGovernment().getNewTrades().remove(trade);
+        }
         return TradeMenuMessage.SUCCESS;
     }
 
@@ -38,11 +40,11 @@ public class TradeMenuController {
             return TradeMenuMessage.INVALID_ITEM;
         if (intAmount <= 0) return TradeMenuMessage.INVALID_AMOUNT;
         if (intPrice < 0) return TradeMenuMessage.INVALID_PRICE;
-        if (user.getGovernment().getAllResources().get(resource) < intAmount) return TradeMenuMessage.NOT_ENOUGH_ITEM;
-        Trade trade = new Trade(user, resource, intAmount, intPrice, message,null);
-        user.getGovernment().getSentTrades().add(trade);
+        if (Game.getCurrentUser().getGovernment().getAllResources().get(resource) < intAmount) return TradeMenuMessage.NOT_ENOUGH_ITEM;
+        Trade trade = new Trade(Game.getCurrentUser(), resource, intAmount, intPrice, message,null);
+        Game.getCurrentUser().getGovernment().getSentTrades().add(trade);
         for (int i = 0; i < Game.getUsers().size(); i++) {
-            if (!Game.getUsers().get(i).getUsername().equals(user.getUsername())) {
+            if (!Game.getUsers().get(i).getUsername().equals(Game.getCurrentUser().getUsername())) {
                 Government government = Game.getUsers().get(i).getGovernment();
                 government.getNewTrades().add(trade);
                 government.getAllTrades().add(trade);

@@ -4,6 +4,7 @@ import controller.Controller;
 import controller.MapMenuController;
 import model.Game;
 import model.User;
+import org.checkerframework.checker.units.qual.C;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
 
@@ -20,10 +21,17 @@ public class Menu {
             if (CommandHandler.parsCommand(Command.USER_LOGOUT, command) != null) {
                 LoginMenu.logout();
                 return;
-            } else if ((options = CommandHandler.parsCommand(Command.START_GAME, command)) != null)
+            } else if ((options = CommandHandler.parsCommand(Command.START_GAME, command)) != null) {
                 startGame(options);
-            else if (CommandHandler.parsCommand(Command.PROFILE_MENU, command) != null)
+                System.out.println("you are in menu");
+            }
+            else if (CommandHandler.parsCommand(Command.PROFILE_MENU, command) != null){
                 ProfileMenu.run();
+                System.out.println("you are in menu");
+            }else if(CommandHandler.parsCommand(Command.EXIT, command) != null){
+                Controller.setExit(true);
+                return;
+            }
             else System.out.println("invalid command in menu");
         }
     }
@@ -117,10 +125,10 @@ public class Menu {
             users.add(g);
 
         if(setMap()){
-
-            Game.setCurrentUser(a);
+            Game.setCurrentUser(Controller.getLoggedInUser());
             Game.setUsers(users);
             Game.setUserRemoved();
+            MapMenuController.setDefaultBuilding(count);
 //            if(Game.getX() == 400)
 //                MapMenuController.setMainHouse(75);
 //            else if(Game.getX() == 200)

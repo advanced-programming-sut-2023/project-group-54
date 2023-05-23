@@ -4,15 +4,14 @@ import java.util.*;
 
 public class ShortestPath {
     private static char[][] map2dToChar2d(Map[][] gameMap, int dX, int dY) {
-        int rows = gameMap.length;
-        int columns = gameMap[0].length;
+        int rows = Game.getY();
+        int columns = Game.getX();
         char[][] matrix = new char[rows][columns];
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
                 if(x == dX && y == dY){
                     matrix[x][y] = 'D';
-                }
-                if(gameMap[x][y].getMapType().isCanBePassed()){
+                }else if(gameMap[x][y].getMapType().isCanBePassed()){
                     matrix[x][y] = '1';
                 }else{
                     matrix[x][y] = '0';

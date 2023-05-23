@@ -55,7 +55,7 @@ public class ShopMenuController {
 
     public static ShopMenuMessage sellItemConfirm(String confirmAnswer, String itemName, int amount) {
         Resource item = Resource.getResourceByName(itemName);
-        if (confirmAnswer.matches("\\s+[Yy]\\s+")) {
+        if (confirmAnswer.matches("\\s*[Yy]\\s*")) {
             int finalGold = user.getGovernment().getGold() + item.getSellPrice()*amount;
             user.getGovernment().setGold(finalGold);
             user.getGovernment().changeResourceAmount(item, -amount);

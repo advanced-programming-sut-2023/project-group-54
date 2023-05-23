@@ -32,13 +32,12 @@ public class GameMenu {
     public static void run() {
         String command;
         HashMap<String, ArrayList<String>> options;
-        Matcher matcher;
         while (true) {
             command = MainMenu.getScanner().nextLine();
             if (CommandHandler.parsCommand(Command.EXIT, command) != null)
                 return;
             else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
-                System.out.println("login menu");
+                System.out.println("game menu");
             else if (CommandHandler.parsCommand(Command.TRADE_MENU, command) != null)
                 TradeMenu.run();
             else if ((options = CommandHandler.parsCommand(Command.SHOW_POPULARITY_FACTORS, command)) != null)
@@ -341,7 +340,7 @@ public class GameMenu {
             }
         }
         boolean sign = true;
-        Direction directionToSend = null;
+        Direction directionToSend = Direction.F;
         for (Direction allDirections : Direction.values()) {
             if (allDirections.toString().equals(direction.toUpperCase()) &&
                     allDirections.isForRock()) {
@@ -530,7 +529,7 @@ public class GameMenu {
 
     private static void dropBuilding(int x, int y, HashMap<String, ArrayList<String>> options) {
         String type = setTypeForTreeAndTextureAndBuilding(options);
-        MapMenuMessage message = MapMenuController.dropBuilding(x, y, type);
+        MapMenuMessage message = MapMenuController.dropBuilding(x, y, type, Game.getCurrentUser().getGovernment());
         switch (message) {
             case NOT_VALID_TYPE_FOR_DROP_BUILDING:
                 System.out.println("enter a valid type for building");
@@ -599,6 +598,10 @@ public class GameMenu {
                 break;
             case BUILDING_OR_SOLDIER_DOESNT_BELONG_TO_YOU:
                 System.out.println("building in that house doesnt belong to you");
+                break;
+            case SHOP_MENU_BUILDING:
+                System.out.println("successfully entered the shop menu");
+                ShopMenu.run();
                 break;
             case SUCCESS:
                 System.out.println("successfully entered the building menu");

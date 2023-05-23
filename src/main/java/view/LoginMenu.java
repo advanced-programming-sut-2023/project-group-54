@@ -13,18 +13,14 @@ import java.util.HashMap;
 public class LoginMenu {
     private static boolean inMenu = false;
 
-    public static void logout() {
-        LoginMenuMessage result = LoginMenuController.logout();
-        if (result.equals(LoginMenuMessage.SUCCESS)) {
-            System.out.println("logged out");
-        }
-    }
-
     public static void run() {
         String command;
         HashMap<String, ArrayList<String>> options;
         System.out.println("you are in login menu");
         while (true) {
+            if(Controller.isExit()){
+                return;
+            }
             command = MainMenu.getScanner().nextLine();
             if (CommandHandler.parsCommand(Command.BACK, command) != null)
                 return;
@@ -38,6 +34,13 @@ public class LoginMenu {
                 forgetPassword(options);
             else
                 System.out.println("Invalid command in login menu");
+        }
+    }
+
+    public static void logout() {
+        LoginMenuMessage result = LoginMenuController.logout();
+        if (result.equals(LoginMenuMessage.SUCCESS)) {
+            System.out.println("logged out");
         }
     }
 

@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 
 public class ShopMenu {
-    public void run() {
+    public static void run() {
         String command;
 
         HashMap<String, ArrayList<String>> options;
@@ -31,12 +31,12 @@ public class ShopMenu {
         }
     }
 
-    public void showPriceList() {
+    public static void showPriceList() {
         String result = ShopMenuController.showItemList();
         System.out.println(result);
     }
 
-    public void buyItem(HashMap<String, ArrayList<String>> options) {
+    public static void buyItem(HashMap<String, ArrayList<String>> options) {
         String name = null;
         String amount = null;
         for (String s : options.keySet()) {
@@ -75,7 +75,7 @@ public class ShopMenu {
         }
     }
 
-    public void sellItem(HashMap<String, ArrayList<String>> options) {
+    public static void sellItem(HashMap<String, ArrayList<String>> options) {
         String name = null;
         String amount = null;
         for (String s : options.keySet()) {

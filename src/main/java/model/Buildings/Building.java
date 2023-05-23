@@ -19,10 +19,14 @@ public class Building {
     int y1Position;
     int y2Position;
 
-    public Building(BuildingType buildingType, int maxHp,Government owner) {
+    public Building(BuildingType buildingType, int maxHp, Government owner, int x1Position, int x2Position, int y1Position, int y2Position) {
         this.buildingType=buildingType;
         this.hp=maxHp;
         this.owner=owner;
+        this.x1Position = x1Position;
+        this.x2Position = x2Position;
+        this.y1Position = y1Position;
+        this.y2Position = y2Position;
         buildings.add(this);
     }
 

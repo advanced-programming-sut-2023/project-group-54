@@ -26,12 +26,12 @@ public enum Resource {
     HORSE("horse",null, 0, 0),
     COW("cow",null, 0, 0);
 
-    private StorageType storageType;
-    private int buyPrice;
-    private int sellPrice;
-    private String name;
+    private final StorageType storageType;
+    private final int buyPrice;
+    private final int sellPrice;
+    private final String name;
 
-    private Resource(String name,StorageType storageType, int buyPrice, int sellPrice){
+    Resource(String name,StorageType storageType, int buyPrice, int sellPrice){
         this.storageType = storageType;
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;

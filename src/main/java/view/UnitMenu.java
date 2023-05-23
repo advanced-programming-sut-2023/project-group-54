@@ -15,12 +15,15 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class UnitMenu {
+    private static boolean isDisband = false;
     public static void run(int x,int y) {
         UnitMenuController.setSelectedUnit(x,y);
         String command;
         HashMap<String, ArrayList<String>> options;
-        System.out.println("you are in unit up menu");
-//        while (true) {
+        System.out.println("you are in unit menu");
+        while (true) {
+            if(isDisband)
+                return;
             command = MainMenu.getScanner().nextLine();
             if (CommandHandler.parsCommand(Command.BACK, command) != null)
                 return;
@@ -42,8 +45,9 @@ public class UnitMenu {
                 pourOil(options);
             else if ((options = CommandHandler.parsCommand(Command.BUILD, command)) != null)
                 buildEquipment(options);
-            //if command is buildEquipment
-//        }
+            else
+                System.out.println("invalid command in unit menu");
+        }
     }
 
     private static void moveUnit(HashMap<String, ArrayList<String>> options) {
@@ -143,7 +147,7 @@ public class UnitMenu {
         UnitMenuMessage result = UnitMenuController.patrolUnit(xFrom, yFrom, xTo, yTo);
         switch (result) {
             case THATS_TOO_FAR_FROM_COORDINATE:
-                System.out.println("selected unit is too far rom that coordinate action failed");
+                System.out.println("selected unit is too far from that coordinate action failed");
                 break;
             case CAN_NOT_PASS_THAT_MAP_TYPE:
                 System.out.println("there is a type of map in the way which can not be passed");
@@ -171,6 +175,10 @@ public class UnitMenu {
             if(value.getName().equals(state)){
                 stateType = value;
             }
+        }
+        if(stateType == null){
+            System.out.println("invalid state");
+            return;
         }
         UnitMenuMessage result = UnitMenuController.setState(stateType);
         switch (result){
@@ -270,6 +278,7 @@ public class UnitMenu {
         UnitMenuMessage result = UnitMenuController.disbandUnit();
         if (Objects.requireNonNull(result) == UnitMenuMessage.SUCCESS) {
             System.out.println("unit(s) disbanded successfully");
+            isDisband = true;
         }
     }
 }

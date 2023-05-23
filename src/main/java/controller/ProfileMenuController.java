@@ -1,8 +1,13 @@
 package controller;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.User;
 import view.enums.messages.ProfileMenuMessage;
 import view.enums.messages.SignupMenuMessage;
+
+import java.io.*;
 
 public class ProfileMenuController {
     private static User user = Controller.getLoggedInUser();
@@ -11,13 +16,43 @@ public class ProfileMenuController {
     public static SignupMenuMessage changeUsername(String username) {
         SignupMenuMessage result = Controller.checkUsernameValidity(username);
         if (result.equals(SignupMenuMessage.SUCCESS)) {
+            Gson gson = new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .create();
+            String filePath = new File("").getAbsolutePath().concat("/src/main/java/model/data/stayLoggedInUser.json");
+            FileReader fileReader;
+            try {
+                fileReader = new FileReader(filePath);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            User user1 = gson.fromJson(fileReader, new TypeToken<User>() {}.getType());
+            String oldUsername = user.getUsername();
             user.setUsername(username);
+            if(user1 != null){
+                if(oldUsername.equals(user1.getUsername())){
+                    FileWriter fileWriter;
+                    try {
+                        fileWriter = new FileWriter(filePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    gson.toJson(user, fileWriter);
+                    try {
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
         }
+        User.saveUser();
         return result;
     }
 
     public static ProfileMenuMessage changeNickname(String newNickname) {
         user.setNickname(newNickname);
+        User.saveUser();
         return ProfileMenuMessage.SUCCESS;
     }
 
@@ -48,7 +83,8 @@ public class ProfileMenuController {
 
     public static ProfileMenuMessage changePasswordConfirmation(String newPassword, String newPasswordConfirmation) {
         if (newPassword.equals(newPasswordConfirmation)) {
-            user.setPassword(newPassword);
+            user.setPassword(Controller.hashString(newPassword));
+            User.saveUser();
             return ProfileMenuMessage.SUCCESS;
         } else return ProfileMenuMessage.PASSWORD_CONFIRMATION_FAILED;
 
@@ -58,6 +94,7 @@ public class ProfileMenuController {
         SignupMenuMessage result = Controller.checkEmailValidity(newEmail);
         if (result.equals(SignupMenuMessage.SUCCESS)) {
             user.setEmail(newEmail);
+            User.saveUser();
         }
         return result;
 
@@ -65,11 +102,13 @@ public class ProfileMenuController {
 
     public static ProfileMenuMessage changeSlogan(String newSlogan) {
         user.setSlogan(newSlogan);
+        User.saveUser();
         return ProfileMenuMessage.SUCCESS;
     }
 
     public static ProfileMenuMessage removeSlogan() {
         user.setSlogan(null);
+        User.saveUser();
         return ProfileMenuMessage.SUCCESS;
     }
 

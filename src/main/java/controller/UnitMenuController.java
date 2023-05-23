@@ -6,12 +6,17 @@ import model.Game;
 import model.units.Engineer;
 import model.units.State;
 import model.units.Unit;
+import org.checkerframework.checker.units.qual.A;
 import view.enums.messages.UnitMenuMessage;
 
 import java.util.ArrayList;
 
 public class UnitMenuController {
-    private static ArrayList<Unit> selectedUnit;
+    private static final ArrayList<Unit> selectedUnit = new ArrayList<>();
+
+    public static ArrayList<Unit> getSelectedUnit() {
+        return selectedUnit;
+    }
 
     public static void setSelectedUnit(int x, int y) {
         for (Unit unit : Game.getGameMap()[x][y].getUnit()) {
@@ -87,8 +92,10 @@ public class UnitMenuController {
     public static UnitMenuMessage pourOil(Direction direction) {
         boolean isEngineer = true;
         for (Unit unit : selectedUnit) {
-            if(!(unit instanceof Engineer))
+            if(!(unit instanceof Engineer)){
                 isEngineer = false;
+                break;
+            }
         }
         if(!isEngineer)
             return UnitMenuMessage.INVALID_UNIT;
@@ -102,23 +109,31 @@ public class UnitMenuController {
     public static UnitMenuMessage buildEquipment(SiegeType siegeType) {
         boolean isEngineer = true;
         for (Unit unit : selectedUnit) {
-            if(!(unit instanceof Engineer))
+            if(!(unit instanceof Engineer)){
                 isEngineer = false;
+                break;
+            }
         }
         if(!isEngineer)
             return UnitMenuMessage.INVALID_UNIT;
-
+        int count = 0;
         for (Unit unit : selectedUnit) {
             Engineer engineer = (Engineer) unit;
             engineer.setSiegeTypeToBuild(siegeType);
+            count++;
+            if(count == siegeType.getEngineerNeeded()){
+                break;
+            }
         }
         return UnitMenuMessage.SUCCESS;
     }
 
     public static UnitMenuMessage disbandUnit() {
         for (Unit unit : selectedUnit) {
+            Game.getGameMap()[unit.getxPosition()][unit.getyPosition()].getUnit().remove(unit);
             Unit.getUnits().remove(unit);
-            Game.getCurrentUser().getGovernment().setPopulation(Game.getCurrentUser().getGovernment().getPopulation() + 1);
+            Game.getCurrentUser().getGovernment().setPopulation2(1);
+            Game.getCurrentUser().getGovernment().addUnemployedWorker(1);
         }
         return UnitMenuMessage.SUCCESS;
     }

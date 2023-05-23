@@ -19,10 +19,10 @@ public class Government {
     private int gold;
     private User user;
     private ArrayList<Building> buildings = new ArrayList<>();
-    private ArrayList<Trade> receivedTrades=new ArrayList<>();
-    private ArrayList<Trade> sentTrades=new ArrayList<>();
-    private ArrayList<Trade> newTrades=new ArrayList<>();
-    private ArrayList<Trade> AllTrades=new ArrayList<>();
+    private ArrayList<Trade> receivedTrades = new ArrayList<>();
+    private ArrayList<Trade> sentTrades = new ArrayList<>();
+    private ArrayList<Trade> newTrades = new ArrayList<>();
+    private ArrayList<Trade> AllTrades = new ArrayList<>();
 
     public Government() {
         this.popularity = 100;
@@ -38,13 +38,19 @@ public class Government {
         for (Resource value : Resource.values()) {
             allResources.put(value, (double) 0);
         }
-        allResources.put(Resource.WOOD,(double)100);
-        allResources.put(Resource.STONE,(double)50);
-        allResources.put(Resource.BREAD,(double)60);
+        allResources.put(Resource.WOOD, (double) 100);
+        allResources.put(Resource.STONE, (double) 50);
+        allResources.put(Resource.BREAD, (double) 60);
     }
 
 
-    public ArrayList<Trade> getNewTrades(){return newTrades;}
+    public ArrayList<Trade> getNewTrades() {
+        return newTrades;
+    }
+
+    public void setNewTrades(ArrayList<Trade> newTrades) {
+        this.newTrades = newTrades;
+    }
 
     public ArrayList<Trade> getReceivedTrades() {
         return receivedTrades;
@@ -53,6 +59,9 @@ public class Government {
     public void setReceivedTrades(ArrayList<Trade> receivedTrades) {
         this.receivedTrades = receivedTrades;
     }
+    public void addReceivedTrades(Trade receivedTrades) {
+        this.receivedTrades.add(receivedTrades);
+    }
 
     public ArrayList<Trade> getSentTrades() {
         return sentTrades;
@@ -60,10 +69,6 @@ public class Government {
 
     public void setSentTrades(ArrayList<Trade> sentTrades) {
         this.sentTrades = sentTrades;
-    }
-
-    public void setNewTrades(ArrayList<Trade> newTrades) {
-        this.newTrades = newTrades;
     }
 
     public ArrayList<Trade> getAllTrades() {
@@ -79,8 +84,8 @@ public class Government {
         return maxPopulation;
     }
 
-    public void setMaxPopulation(int maxPopulation) {
-        this.maxPopulation = maxPopulation;
+    public void setMaxPopulation2(int maxPopulation) {
+        this.maxPopulation += maxPopulation;
     }
 
     public User getUser() {
@@ -111,12 +116,15 @@ public class Government {
         return popularity;
     }
 
-    public void setPopularity2(int popularity) {
-        this.popularity += popularity;
-    }
-
     public void setPopularity(int popularity) {
         this.popularity = popularity;
+    }
+
+    public void setPopularity2(int popularity) {
+        if(this.popularity >= 100)
+            this.popularity = 100;
+        else
+            this.popularity += popularity;
     }
 
     public int getFoodRate() {
@@ -159,6 +167,14 @@ public class Government {
         this.unemployedWorker -= unemployedWorker;
     }
 
+    public void addUnemployedWorker(int unemployedWorker) {
+        this.unemployedWorker += unemployedWorker;
+    }
+
+    public ArrayList<Building> getBuildings() {
+        return buildings;
+    }
+
     public int getGold() {
         return gold;
     }
@@ -170,8 +186,9 @@ public class Government {
     public void setGold2(int gold) {
         this.gold += gold;
     }
-    public void changeResourceAmount(Resource Resource, double count) {
-        allResources.put(Resource, allResources.get(Resource) + count);
+
+    public void changeResourceAmount(Resource resource, double count) {
+        allResources.put(resource, allResources.get(resource) + count);
     }
 
     public HashMap<Resource, Double> getAllResources() {

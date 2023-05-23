@@ -1,6 +1,7 @@
 package view;
 
 import controller.BuildingMenuController;
+import controller.Controller;
 import model.Resource;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
@@ -14,7 +15,7 @@ public class BuildingMenu {
         setSelectedBuilding(x,y);
         String command;
         HashMap<String, ArrayList<String>> options;
-        System.out.println("you are in building up menu");
+        System.out.println("you are in building menu");
         while (true) {
             command = MainMenu.getScanner().nextLine();
             if (CommandHandler.parsCommand(Command.BACK, command) != null)
@@ -58,7 +59,7 @@ public class BuildingMenu {
         for (String q : options.keySet()) {
             switch (q){
                 case "t":
-                    unit = options.get(q).get(0);
+                    unit = Controller.buildParameter(options.get(q).get(0));
                     break;
                 case "c":
                     try {
@@ -85,6 +86,9 @@ public class BuildingMenu {
         BuildingMenuMessage result = BuildingMenuController.createUnit(unit, count);
         switch (result){
             case SUCCESS -> System.out.println("units created successfully");
+            case INVALID_TYPE -> System.out.println("invalid type entered");
+            case NOT_ENOUGH_GOLD -> System.out.println("not enough gold");
+            case NOT_ENOUGH_RESOURCE -> System.out.println("not enough resource");
             case INVALID_BUILDING -> System.out.println("you have selected invalid building to use this command");
         }
     }

@@ -1,15 +1,13 @@
 package model.Buildings;
 
 public enum StorageType {
-    GRANARY(BuildingType.GRANARY, 250), // انبار غذا
-    STOCK_PILE(BuildingType.STOCK_PILE, 200), //انبار
-    ARMOURY(BuildingType.ARMOURY, 50); //اسلحه خانه
+    GRANARY(250), // انبار غذا
+    STOCK_PILE(200), //انبار
+    ARMOURY(50); //اسلحه خانه
     private final double capacity;
-    private BuildingType buildingType;
 
-    StorageType(BuildingType buildingType, double capacity) {
+    StorageType(double capacity) {
         this.capacity = capacity;
-        this.buildingType = buildingType;
     }
 
     public double getCapacity() {
@@ -17,6 +15,11 @@ public enum StorageType {
     }
 
     public BuildingType getBuildingType() {
-        return buildingType;
+        for (BuildingType value : BuildingType.values()) {
+            if(value.name().equals(this.name())){
+                return value;
+            }
+        }
+        return null;
     }
 }

@@ -2,17 +2,16 @@ package model;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import controller.Controller;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class User implements Comparable{
-    private static final ArrayList<User> users;
+public class User implements Comparable<User>{
+    private static ArrayList<User> users;
     @Expose
     private String username;
     @Expose
@@ -32,8 +31,22 @@ public class User implements Comparable{
 
     private Government government;
 
-    static {
-        Gson gson = new Gson();
+    public User(String username, String password, String nickname, String email, String slogan, int questionNumber, String questionAnswer, Government government) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.email = email;
+        this.slogan = slogan;
+        this.questionNumber = questionNumber;
+        this.questionAnswer = questionAnswer;
+        this.government = government;
+        this.highScore = 0;
+        users.add(this);
+    }
+    public static void loadUser(){
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
         String filePath = new File("").getAbsolutePath().concat("/src/main/java/model/data/users.json");
         FileReader fileReader;
         try {
@@ -45,22 +58,30 @@ public class User implements Comparable{
         if (allUsers == null) allUsers = new ArrayList<>();
         users = allUsers;
         for (User user : users) {
-            user.setGovernment(new Government());
+            Government government = new Government();
+            user.setGovernment(government);
+            government.setUser(user);
         }
     }
 
-    public User(String username, String password, String nickname, String email, String slogan, int questionNumber, String questionAnswer, Government government) {
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-        this.email = email;
-        this.slogan = slogan;
-        this.questionNumber = questionNumber;
-        this.questionAnswer = questionAnswer;
-        this.government = government;
-        this.highScore = 0;
+    public static void saveUser(){
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
+        String filePath = new File("").getAbsolutePath().concat("/src/main/java/model/data/users.json");
+        FileWriter fileWriter;
+        try {
+            fileWriter = new FileWriter(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        gson.toJson(User.getUsers(), fileWriter);
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-
     public String getUsername() {
         return username;
     }
@@ -146,9 +167,6 @@ public class User implements Comparable{
     public static ArrayList<User> getUsers() {
         return users;
     }
-    public static void addUser(User user){
-        users.add(user);
-    }
 
     public int getHighScore() {
         return highScore;
@@ -156,13 +174,23 @@ public class User implements Comparable{
     public int getUserRank() {
         ArrayList<User> sortUsers = new ArrayList<>(users);
         Collections.sort(sortUsers);
-        return sortUsers.indexOf(this);
+        for (User sortUser : sortUsers) {
+            if(sortUser.getUsername().equals(this.getUsername())){
+                return sortUsers.indexOf(sortUser) + 1;
+            }
+        }
+        return -1;
     }
 
     @Override
-    public int compareTo(Object a) {
-        if (this.highScore < ((User) a).highScore) return 1;
-        else if (this.highScore > ((User) a).highScore) return -1;
-        else return this.username.compareTo(((User) a).username);
+    public int compareTo(User a) {
+        if (this.highScore < a.highScore) return 1;
+        else if (this.highScore > a.highScore) return -1;
+        else return this.username.compareTo(a.username);
+    }
+
+    @Override
+    public String toString() {
+        return this.username;
     }
 }

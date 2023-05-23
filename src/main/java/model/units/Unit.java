@@ -24,6 +24,7 @@ public class Unit {
     private int patrolYFrom;
     private int xTarget;
     private int yTarget;
+
     public Unit(UnitType unitType, int xPosition, int yPosition) {
         this.owner = Game.getCurrentUser().getGovernment();
         this.unitType = unitType;

@@ -17,12 +17,6 @@ import java.util.regex.Pattern;
 
 public class MainMenu {
     private static final Scanner scanner = new Scanner(System.in);
-    private GameMenu gameMenu;
-
-    public static Matcher getMatcher(String command, String regex) {
-        Matcher matcher = Pattern.compile(regex).matcher(command);
-        return matcher.matches() ? matcher : null;
-    }
 
     public static boolean captchaChecker() {
         for (int i = 0; i < 10; i++) {
@@ -55,6 +49,9 @@ public class MainMenu {
 
         String command;
         while (true) {
+            if(Controller.isExit()){
+                User.saveUser();
+            }
             System.out.println("please enter the menu you want");
             command = MainMenu.getScanner().nextLine();
             if (command.matches("\\s*sign\\s+up\\s+menu\\s*"))
@@ -62,22 +59,7 @@ public class MainMenu {
             else if (command.matches("\\s*login\\s+menu\\s*"))
                 LoginMenu.run();
             else if (CommandHandler.parsCommand(Command.EXIT, command) != null){
-                Gson gson = new GsonBuilder()
-                        .excludeFieldsWithoutExposeAnnotation()
-                        .create();
-                String filePath = new File("").getAbsolutePath().concat("/src/main/java/model/data/users.json");
-                FileWriter fileWriter;
-                try {
-                    fileWriter = new FileWriter(filePath);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                gson.toJson(User.getUsers(), fileWriter);
-                try {
-                    fileWriter.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                User.saveUser();
                 return;
             }
             else

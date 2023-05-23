@@ -22,7 +22,6 @@ public class TradeMenu {
         showAllPlayer();
         showNotifications();
         while (true) {
-
             command = MainMenu.getScanner().nextLine();
             if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
                 System.out.println("trade menu");
@@ -149,8 +148,6 @@ public class TradeMenu {
             case INVALID_PRICE -> System.out.println("price is invalid price should be grater than 0");
             case SUCCESS -> System.out.println("your trade request has been sent successfully");
         }
-
-
     }
 
     public static void acceptTrade(HashMap<String, ArrayList<String>> options) {
@@ -159,7 +156,7 @@ public class TradeMenu {
         for (String s : options.keySet()) {
             switch (s) {
                 case "i" -> id = Controller.buildParameter(options.get(s).get(0));
-                case "message" -> message = Controller.buildParameter(options.get(s).get(0));
+                case "m" -> message = Controller.buildParameter(options.get(s).get(0));
             }
         }
         if (id == null) {
