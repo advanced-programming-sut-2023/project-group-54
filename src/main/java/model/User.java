@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class User implements Comparable<User>{
-    private static ArrayList<User> users;
+    private static ArrayList<User> users = new ArrayList<>();
     @Expose
     private String username;
     @Expose

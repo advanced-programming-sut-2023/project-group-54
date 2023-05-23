@@ -50,10 +50,6 @@ public class LoginMenuController {
         Controller.setLoggedInUser(user);
     }
 
-    public static void setLoggedInUser(User user) {
-        Controller.setLoggedInUser(user);
-    }
-
     public static LoginMenuMessage passwordChecker(String password) {
         if (user.isPasswordValid(password)) return LoginMenuMessage.SUCCESS;
         return LoginMenuMessage.WRONG_PASSWORD;
