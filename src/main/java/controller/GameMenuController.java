@@ -447,6 +447,7 @@ public class GameMenuController {
             }
 
             Building.getBuildings().remove(building);
+            building.getOwner().getBuildings().remove(building);
         }
     }
     public static void moveUnits() {
