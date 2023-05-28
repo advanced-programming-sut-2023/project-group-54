@@ -2,6 +2,8 @@ package view;
 
 import controller.Controller;
 import controller.MapMenuController;
+import javafx.application.Application;
+import javafx.stage.Stage;
 import model.Game;
 import model.User;
 import org.checkerframework.checker.units.qual.C;
@@ -10,8 +12,11 @@ import view.enums.commands.CommandHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Menu {
+
     public static void run() {
         String command;
         HashMap<String, ArrayList<String>> options;

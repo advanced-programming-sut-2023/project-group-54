@@ -3,6 +3,12 @@ package view;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.Controller;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import model.User;
 import view.enums.commands.Command;
 import view.enums.commands.CommandHandler;
@@ -10,13 +16,15 @@ import view.enums.commands.CommandHandler;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainMenu {
+public class MainMenu extends Application {
     private static final Scanner scanner = new Scanner(System.in);
+    public static Stage stage;
 
     public static boolean captchaChecker() {
         for (int i = 0; i < 10; i++) {
@@ -39,7 +47,8 @@ public class MainMenu {
         return scanner;
     }
 
-    public void run() {
+    public void run(String[] args) {
+        launch(args);
 //        SignupMenu signupMenu = new SignupMenu();
 //        LoginMenu loginMenu = new LoginMenu();
         if (Controller.checkIfStayLoggedIn()) {
@@ -65,5 +74,16 @@ public class MainMenu {
             else
                 System.out.println("Invalid command");
         }
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        MainMenu.stage = stage;
+        URL url = MainMenu.class.getResource("/FXML/MainMenu.fxml");
+        Pane pane = FXMLLoader.load(url);
+        Scene scene = new Scene(pane);
+        stage.setTitle("Stronghold");
+        stage.setScene(scene);
+        stage.show();
     }
 }
