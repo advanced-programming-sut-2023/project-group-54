@@ -2,6 +2,7 @@ package com.ap.stronghold.view;
 
 import com.ap.stronghold.controller.Controller;
 import com.ap.stronghold.controller.SignupMenuController;
+import com.ap.stronghold.model.User;
 import com.ap.stronghold.view.enums.commands.Command;
 import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.SignupMenuMessage;
@@ -141,6 +142,7 @@ public class SignupMenu {
         }
         if (secondResult.equals("success")) {
             System.out.println("user created successfully with username " + username);
+            User.saveUser();
 //            chooseMap();
             secondResult = "";
         }

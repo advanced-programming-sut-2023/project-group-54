@@ -2,6 +2,7 @@ package com.ap.stronghold.view;
 
 import com.ap.stronghold.controller.Controller;
 import com.ap.stronghold.controller.ProfileMenuController;
+import com.ap.stronghold.model.User;
 import com.ap.stronghold.view.enums.commands.Command;
 import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.ProfileMenuMessage;
@@ -68,7 +69,7 @@ public class ProfileMenu {
             case USERNAME_EXIST -> System.out.println("username already exists");
             case SUCCESS -> System.out.println("username changed successfully");
         }
-
+        User.saveUser();
     }
 
     private static void changeNickname(HashMap<String, ArrayList<String>> options) {
@@ -86,7 +87,7 @@ public class ProfileMenu {
         }
         ProfileMenuMessage result = ProfileMenuController.changeNickname(nickname);
         if (result.equals(ProfileMenuMessage.SUCCESS)) System.out.println("nickname changed successfully");
-
+        User.saveUser();
     }
 
     public static void changePassword(HashMap<String, ArrayList<String>> options) {
@@ -129,7 +130,7 @@ public class ProfileMenu {
             }
             default -> passwordErrorsPrint(result);
         }
-
+        User.saveUser();
     }
 
     private static void passwordErrorsPrint(ProfileMenuMessage profileMenuMessage) {
@@ -165,8 +166,7 @@ public class ProfileMenu {
             case EMAIL_EXIST -> System.out.println("email already exists");
             case SUCCESS -> System.out.println("email changed successfully");
         }
-
-
+        User.saveUser();
     }
 
     public static void changeSlogan(HashMap<String, ArrayList<String>> options) {
@@ -184,11 +184,13 @@ public class ProfileMenu {
         }
         ProfileMenuMessage result = ProfileMenuController.changeSlogan(slogan);
         if (result.equals(ProfileMenuMessage.SUCCESS)) System.out.println("slogan changed successfully");
+        User.saveUser();
     }
 
     public static void removeSlogan() {
         ProfileMenuMessage result = ProfileMenuController.removeSlogan();
         if (result.equals(ProfileMenuMessage.SUCCESS)) System.out.println("slogan removed successfully");
+        User.saveUser();
     }
 
     public static void showHighScore() {

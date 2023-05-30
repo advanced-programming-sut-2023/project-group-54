@@ -272,7 +272,7 @@ public class GameMenuController {
 
     public static void moveTroop(Unit unit) {
         if ((unit.getxPosition() != unit.getxMoveTarget() || unit.getyPosition() != unit.getyMoveTarget())) {
-            ArrayList<com.ap.stronghold.model.Map> path = ShortestPath.getPath(Game.getGameMap(), unit.getxPosition(), unit.getyPosition(), unit.getxMoveTarget(), unit.getyMoveTarget());
+            ArrayList<com.ap.stronghold.model.Map> path = AStarShortestPath.findPath(Game.getGameMap(), unit.getxPosition(), unit.getyPosition(), unit.getxMoveTarget(), unit.getyMoveTarget());
             path.remove(path.get(0));
             Game.getGameMapXY(unit.getxPosition(), unit.getyPosition()).getUnit().remove(unit);
             if ((path.size()) > unit.getUnitType().getSpeed() * 5) {
@@ -286,9 +286,9 @@ public class GameMenuController {
         }else if(unit.getPatrol()){
             ArrayList<com.ap.stronghold.model.Map> path = null;
             if(unit.getxPosition() == unit.getPatrolXTarget()){
-                path = ShortestPath.getPath(Game.getGameMap(), unit.getxPosition(), unit.getyPosition(), unit.getPatrolXFrom(), unit.getPatrolYFrom());
+                path = AStarShortestPath.findPath(Game.getGameMap(), unit.getxPosition(), unit.getyPosition(), unit.getPatrolXFrom(), unit.getPatrolYFrom());
             }else if(unit.getxPosition() == unit.getPatrolXFrom()){
-                path = ShortestPath.getPath(Game.getGameMap(), unit.getxPosition(), unit.getyPosition(), unit.getPatrolXTarget(), unit.getPatrolYTarget());
+                path = AStarShortestPath.findPath(Game.getGameMap(), unit.getxPosition(), unit.getyPosition(), unit.getPatrolXTarget(), unit.getPatrolYTarget());
             }
             path.remove(path.get(0));
             Game.getGameMapXY(unit.getxPosition(), unit.getyPosition()).getUnit().remove(unit);
@@ -609,13 +609,11 @@ public class GameMenuController {
             }
         }
         if(unitType != null){
-            System.out.println("not null");
             for(int i = 0; i < c; i++){
                 if(unitType.equals(UnitType.ENGINEER)){
                     new Engineer(x, y);
                 }else{
                     new Unit(unitType, x, y);
-                    System.out.println("created");
                 }
             }
         }
