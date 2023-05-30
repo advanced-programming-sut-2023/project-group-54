@@ -60,7 +60,7 @@ assignees: Arman17Babaei
 </details>
 
 <details>
-  <summary>طراحی UML برای منطق پروژه قسمت model</summary>
+  <summary>طراحی UML برای منطق پروژه قسمت com.ap.stronghold.model</summary>
   
   <div  dir="ltr" align='right'>
   
@@ -83,7 +83,7 @@ assignees: Arman17Babaei
 3. [x] تمام شده     </div>
 </details>
   <details>
-  <summary>طراحی UML برای منطق پروژه قسمت view , controller</summary>
+  <summary>طراحی UML برای منطق پروژه قسمت com.ap.stronghold.view , com.ap.stronghold.controller</summary>
   
   <div  dir="ltr" align='right'>
   
@@ -97,7 +97,7 @@ assignees: Arman17Babaei
 
   **نام و نام خانوادگی:** مبین باقریان
   <details>
-  <summary>طراحی UML برای منطق پروژه قسمت view , controller</summary>
+  <summary>طراحی UML برای منطق پروژه قسمت com.ap.stronghold.view , com.ap.stronghold.controller</summary>
   
   <div  dir="ltr" align='right'>
   
