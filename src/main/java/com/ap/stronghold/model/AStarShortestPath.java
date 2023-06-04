@@ -18,7 +18,7 @@ public class AStarShortestPath {
         boolean[][] matrix = new boolean[rows][columns];
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
-                matrix[x][y] = gameMap[x][y].getMapType().isCanBePassed();
+                matrix[x][y] = gameMap[x][y].getMapType().isCanBePassed() && (gameMap[x][y].getBuilding() == null || gameMap[x][y].getBuilding().getBuildingType().isCanBePassed());
             }
         }
         cell = new Node[rows][columns];
@@ -43,6 +43,7 @@ public class AStarShortestPath {
      * @param additionalPath Boolean to decide whether to calculate the cost of through the diagonal path
      * @param h              int value which decides the correct method to choose to calculate the Heuristic value
      */
+
     public static void generateHValue(boolean matrix[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath, int h) {
         for (int y = 0; y < matrix.length; y++) {
             for (int x = 0; x < matrix.length; x++) {
@@ -281,7 +282,7 @@ public class AStarShortestPath {
         //Clears the openList
         openList.clear();
 
-        System.out.println();
+//        System.out.println();
 
     }
 }

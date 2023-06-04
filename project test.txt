@@ -1,0 +1,14 @@
+login menu
+user login -u mfamin -p Mfamsh.83 --stay-logged-in
+
+start game -count 2 -a ali
+3
+drop unit -x 30 -y 140 -t "arabian bow" -c 5
+select unit -x 30 -y 140
+move unit to -x 20 -y 129
+back
+next turn
+next turn
+next turn
+drop unit -x 20 -y 120 -t slave -c 5
+next turn

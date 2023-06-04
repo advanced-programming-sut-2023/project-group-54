@@ -94,7 +94,7 @@ public class Unit {
         this.hp = hp;
     }
 
-    public Boolean getPatrol() {
+    public Boolean isPatrol() {
         return isPatrol;
     }
 

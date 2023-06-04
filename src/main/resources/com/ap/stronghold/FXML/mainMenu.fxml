@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox id="MainMenu" prefHeight="700.0" prefWidth="1100.0"
+      stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ap.stronghold.view.MainMenu"
+      alignment="CENTER" spacing="15">
+
+    <Button text="login" styleClass="button2" onAction="#enterLoginMenu"/>
+    <Button text="sign up" styleClass="button2" onAction="#enterSignUpMenu"/>
+</VBox>

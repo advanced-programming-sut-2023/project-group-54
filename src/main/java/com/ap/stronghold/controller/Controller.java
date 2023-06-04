@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Controller {
     private static User loggedInUser;
@@ -41,6 +42,11 @@ public class Controller {
         return SignupMenuMessage.SUCCESS;
     }
 
+    public static SignupMenuMessage checkUsernameNew(String username) {
+
+        return SignupMenuMessage.SUCCESS;
+    }
+
     public static SignupMenuMessage checkEmailValidity(String email) {
         if (!email.matches("^[A-Za-z_.0-9]+@(?<u>[A-Za-z_0-9]+)\\.(?<a>[A-Za-z_0-9]+)$"))
             return SignupMenuMessage.WRONG_FORMAT_EMAIL;
@@ -57,30 +63,21 @@ public class Controller {
         return loggedInUser;
     }
 
-    public static ArrayList<String> captcha() {
-        char[] randomCaptcha = new char[4];
-        randomCaptcha[0] = (char) Math.floor(Math.random() * (90 - 65 + 1) + 65);
-        randomCaptcha[1] = (char) Math.floor(Math.random() * (90 - 65 + 1) + 65);
-        randomCaptcha[2] = (char) Math.floor(Math.random() * (90 - 65 + 1) + 65);
-        randomCaptcha[3] = (char) Math.floor(Math.random() * (90 - 65 + 1) + 65);
-        String captcha = new String(randomCaptcha);
-        BufferedImage image = new BufferedImage(144, 32, BufferedImage.TYPE_INT_RGB);
-        Graphics g = image.getGraphics();
-        g.setFont(new Font("Dialog", Font.PLAIN, 11));
-        Graphics2D graphics = (Graphics2D) g;
-        graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        graphics.drawString(captcha, 6, 24);
-        ArrayList<String> captchaArt = new ArrayList<>();
-        captchaArt.add(captcha);
-        for (int y = 0; y < 32; y++) {
-            StringBuilder asciiArt = new StringBuilder();
-            for (int x = 0; x < 144; x++)
-                asciiArt.append(image.getRGB(x, y) == -16777216 ? " " : image.getRGB(x, y) == -1 ? "#" : "*");
-            if (asciiArt.toString().trim().isEmpty()) continue;
-            captchaArt.add(String.valueOf(asciiArt));
+    public static int captcha() {
+        File file = new File(Controller.class.getResource("/com/ap/stronghold/Media/Captcha").getPath());
+        int ran = new Random().nextInt(1, 50);
+        int i = 1;
+        if(file.listFiles() != null){
+            for (File listFile : file.listFiles()) {
+                if(listFile.getName().split("\\.")[1].equals("png")){
+                    if(i == ran){
+                        return Integer.parseInt(listFile.getName().split("\\.")[0]);
+                    }
+                    i++;
+                }
+            }
         }
-        return captchaArt;
+        return 0;
     }
 
     public static void timer(int seconds) {

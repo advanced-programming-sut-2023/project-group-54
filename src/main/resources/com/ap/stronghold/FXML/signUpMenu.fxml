@@ -1,0 +1,61 @@
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.layout.VBox?>
+<VBox id="SignUpMenu" prefHeight="700.0" prefWidth="1100.0"
+      stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ap.stronghold.view.SignupMenu"
+      alignment="CENTER" spacing="15">
+
+    <TextField promptText="username" fx:id="username"/>
+    <Text fx:id="usernameCheck"/>
+    <PasswordField promptText="password" fx:id="password"/>
+    <Text fx:id="passwordCheck"/>
+    <TextField promptText="nickname" fx:id="nickname"/>
+    <Text fx:id="nicknameCheck"/>
+    <TextField promptText="email" fx:id="email"/>
+    <Text fx:id="emailCheck"/>
+    <!--    <ChoiceBox value="1" fx:id="recoveryQuestion">-->
+<!--        <items>-->
+<!--            <FXCollections fx:factory="observableArrayList">-->
+<!--                <String fx:value="What is your father’s name?" value="1"/>-->
+<!--                <String fx:value="What was your first pet’s name?" value="2"/>-->
+<!--                <String fx:value="What is your mother’s last name?" value="3"/>-->
+<!--            </FXCollections>-->
+<!--        </items>-->
+<!--    </ChoiceBox>-->
+    <HBox spacing="10" alignment="CENTER">
+        <CheckBox text="have slogan?" fx:id="haveSlogan" selected="true" onAction="#changeHaveSlogan"/>
+        <TextField promptText="slogan" fx:id="slogan"/>
+        <Button text="random slogan" fx:id="randomSlogan" onAction="#changeRandomSlogan"/>
+    </HBox>
+    <HBox spacing="10" alignment="CENTER">
+        <fx:define>
+            <ToggleGroup fx:id="commonSlogan"/>
+        </fx:define>
+        <HBox alignment="BASELINE_CENTER" spacing="5">
+            <RadioButton text="a very small man can cast a very large shadow"
+                         userData="a very small man can cast a very large shadow" toggleGroup="$commonSlogan" onAction="#commonSloganSelect"/>
+            <RadioButton text="Leave one wold alive and sheep are never safe"
+                         userData="Leave one wold alive and sheep are never safe" toggleGroup="$commonSlogan" onAction="#commonSloganSelect"/>
+            <RadioButton text="Winter is coming..."
+                         userData="Winter is coming..." toggleGroup="$commonSlogan" onAction="#commonSloganSelect"/>
+        </HBox>
+    </HBox>
+    <Text fx:id="message"/>
+    <HBox alignment="CENTER" spacing="10">
+        <Button text="back" styleClass="button1" onAction="#back"/>
+        <Button text="sign up" styleClass="button1" onAction="#signUp"/>
+    </HBox>
+
+</VBox>

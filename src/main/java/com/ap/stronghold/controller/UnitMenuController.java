@@ -101,7 +101,7 @@ public class UnitMenuController {
         for (Unit unit : selectedUnit) {
             Engineer engineer = (Engineer) unit;
             engineer.setPour(direction);
-            engineer.setHasOil(true);
+//            engineer.setHasOil(true);
         }
         return UnitMenuMessage.SUCCESS;
     }

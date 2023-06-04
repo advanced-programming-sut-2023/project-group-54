@@ -4,6 +4,8 @@ import com.ap.stronghold.model.Government;
 import com.ap.stronghold.model.User;
 import com.ap.stronghold.view.enums.messages.SignupMenuMessage;
 
+import java.util.Random;
+
 public class SignupMenuController {
     private static String username;
     private static String password;
@@ -16,10 +18,9 @@ public class SignupMenuController {
         return username;
     }
 
-    public static SignupMenuMessage setUser(String username, String password, String passwordConfirmation, String nickname, String email, String slogan) {
+    public static SignupMenuMessage setUser(String username, String password, String nickname, String email, String slogan) {
         SignupMenuController.username = username;
         SignupMenuController.password = password;
-        SignupMenuController.passwordConfirmation = passwordConfirmation;
         SignupMenuController.nickname = nickname;
         SignupMenuController.email = email;
         SignupMenuController.slogan = slogan;
@@ -50,30 +51,18 @@ public class SignupMenuController {
         SignupMenuMessage usernameChecker = Controller.checkUsernameValidity(username);
         if (!usernameChecker.equals(SignupMenuMessage.SUCCESS))
             return usernameChecker;
-        if (!password.equals("random")) {
-            SignupMenuMessage passwordChecker = Controller.checkPasswordValidity(password);
-            if (!passwordChecker.equals(SignupMenuMessage.SUCCESS))
-                return passwordChecker;
-        }
 
-        if (!password.equals("random") && !password.equals(passwordConfirmation))
-            return SignupMenuMessage.PASSWORD_AND_PASSWORD_CON_NOT_EQUAL_FAILED;
-
+        SignupMenuMessage passwordChecker = Controller.checkPasswordValidity(password);
+        if (!passwordChecker.equals(SignupMenuMessage.SUCCESS))
+            return passwordChecker;
         SignupMenuMessage emailChecker = Controller.checkEmailValidity(email);
-        if (!emailChecker.equals(SignupMenuMessage.SUCCESS)) {
+        if (!emailChecker.equals(SignupMenuMessage.SUCCESS))
             return emailChecker;
-        }
-
-        if (slogan != null && slogan.equals("random"))
-            randomSloganSetter();
-
-        if (password.equals("random"))
-            return createRandomPassword();
 
         return SignupMenuMessage.SECURITY_QUESTION;
     }
 
-    public static SignupMenuMessage createRandomPassword() {
+    public static String createRandomPassword() {
         char[] randomPassword = new char[15];
         randomPassword[0] = (char) Math.floor(Math.random() * (90 - 65 + 1) + 65);
         randomPassword[1] = (char) Math.floor(Math.random() * (122 - 97 + 1) + 97);
@@ -81,12 +70,14 @@ public class SignupMenuController {
         randomPassword[3] = (char) Math.floor(Math.random() * (47 - 33 + 1) + 33);
         for (int i = 4; i < 15; i++)
             randomPassword[i] = (char) Math.floor(Math.random() * (126 - 33 + 1) + 33);
-        password = new String(randomPassword);
-        return SignupMenuMessage.RANDOM_PASSWORD_BUILT;
+//        password = new String(randomPassword);
+        return new String(randomPassword);
+//        return SignupMenuMessage.RANDOM_PASSWORD_BUILT;
     }
 
-    public static void randomSloganSetter() {
-        int random = (int) Math.floor(Math.random() * (5 + 1));
+    public static String getRandomSlogan() {
+        int random = new Random().nextInt(1, 5);
+        String slogan = "";
         switch (random) {
             case 0 -> slogan = "Leave one wold alive and sheep are never safe";
             case 1 -> slogan = "Some battles are won with swords and spears, others with quills and ravens";
@@ -95,6 +86,7 @@ public class SignupMenuController {
             case 4 -> slogan = "Winter is coming...";
             case 5 -> slogan = "Fear cuts deeper than swords";
         }
+        return slogan;
     }
 
     private static void passwordToHash() {

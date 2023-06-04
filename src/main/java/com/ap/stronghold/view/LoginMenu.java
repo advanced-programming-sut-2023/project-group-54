@@ -6,36 +6,31 @@ import com.ap.stronghold.view.enums.commands.Command;
 import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.LoginMenuMessage;
 import com.ap.stronghold.view.enums.messages.SignupMenuMessage;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import org.checkerframework.checker.units.qual.A;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
-public class LoginMenu {
-    private static boolean inMenu = false;
+public class LoginMenu extends Application{
+    public TextField username;
+    public PasswordField password;
+    public Text error;
+    public CheckBox stayLoggedIn;
 
-    public static void run() {
-        String command;
-        HashMap<String, ArrayList<String>> options;
-        System.out.println("you are in login menu");
-        while (true) {
-            if(Controller.isExit()){
-                return;
-            }
-            command = MainMenu.getScanner().nextLine();
-            if (CommandHandler.parsCommand(Command.BACK, command) != null)
-                return;
-            else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
-                System.out.println("login menu");
-            else if ((options = CommandHandler.parsCommand(Command.LOGIN, command)) != null) {
-                loginUser(options);
-                if (inMenu)
-                    return;
-            } else if ((options = CommandHandler.parsCommand(Command.FORGET_PASSWORD, command)) != null)
-                forgetPassword(options);
-            else
-                System.out.println("Invalid command in login menu");
-        }
-    }
 
     public static void logout() {
         LoginMenuMessage result = LoginMenuController.logout();
@@ -44,147 +39,132 @@ public class LoginMenu {
         }
     }
 
-    private static void loginUser(HashMap<String, ArrayList<String>> options) {
-        String username = null;
-        String password = null;
-        boolean stayLoggedIn = false;
-        for (String s : options.keySet()) {
-            switch (s) {
-                case "u":
-                    username = Controller.buildParameter(options.get(s).get(0));
-                    break;
-
-                case "p":
-                    password = Controller.buildParameter(options.get(s).get(0));
-                    break;
-
-                case "-stay-logged-in":
-                    stayLoggedIn = true;
-                    break;
-            }
-        }
-        if (username == null) {
-            System.out.println("username not entered");
-            return;
-        } else if (password == null) {
-            System.out.println("password not entered");
-            return;
-        }
-        LoginMenuMessage result = LoginMenuController.loginUser(username, password, stayLoggedIn);
-        switch (result) {
-            case SUCCESS:
-                System.out.println("logged in with user with username: " + username);
-                Menu.run();
-                inMenu = true;
-                return;
-            case WRONG_PASSWORD:
-                if (wrongPassword(stayLoggedIn)) {
-                    Menu.run();
-                    inMenu = true;
-                }
-                return;
-            case USER_NOT_FOUND:
-                System.out.println("no user with this id exists");
-                return;
-            case FAILED_DURING_CAPTCHA:
-                System.out.println("failed because of multiple wrong answers for captcha");
-                return;
-        }
-    }
-
-    public static boolean wrongPassword(boolean stayLoggedIn) {
-        System.out.println("please enter your password again");
-        String command;
-        for (int i = 0; i < 3; i++) {
-            command = MainMenu.getScanner().nextLine();
-            if (LoginMenuController.passwordChecker(command).equals(LoginMenuMessage.SUCCESS)) {
-                if (!MainMenu.captchaChecker()) {
-                    System.out.println("failed because of multiple wrong answers for captcha");
-                    return false;
-                }
-                LoginMenuController.setLoggedInUser(stayLoggedIn);
-                System.out.println("logged in with user with username: " + Controller.getLoggedInUser().getUsername());
-                return true;
-            }
-            System.out.println("you have entered wrong password please wait for " + (i + 1) * 5 + " seconds");
-            Controller.timer(i);
-        }
-        System.out.println("you have entered wrong password for 3 times : login failed");
-        return false;
-    }
-
-    private static void forgetPassword(HashMap<String, ArrayList<String>> options) {
-        String username = null;
-        for (String s : options.keySet()) {
-            switch (s) {
-                case "u":
-                    username = Controller.buildParameter(options.get(s).get(0));
-                    break;
-            }
-        }
-        LoginMenuMessage result = LoginMenuController.forgetPasswordUsernameCheck(username);
-        int questionNumber = 0;
-        switch (result) {
-            case SUCCESS:
-                questionNumber = LoginMenuController.getQuestion(username);
-                break;
-            case USER_NOT_FOUND:
-                System.out.println("no user with this id exists");
-                return;
-        }
-        switch (questionNumber) {
-            case 1:
-                System.out.println("What is your father’s name?");
-                break;
-            case 2:
-                System.out.println("What was your first pet’s name?");
-                break;
-            case 3:
-                System.out.println("What is your mother’s last name?");
-                break;
-        }
-        checkAnswer();
-    }
-
-    private static void checkAnswer() {
-        for (int i = 0; i < 3; i++) {
-            if (LoginMenuController.checkAnswer(Controller.buildParameter(MainMenu.getScanner().nextLine()))) {
-                System.out.println("please enter new password for user");
-                for (int j = 0; j < 3; j++) {
-                    String password = Controller.buildParameter(MainMenu.getScanner().nextLine());
-                    SignupMenuMessage result = Controller.checkPasswordValidity(password);
-                    if (result.equals(SignupMenuMessage.SUCCESS)) {
-                        if (!MainMenu.captchaChecker()) {
-                            System.out.println("failed because of multiple wrong answers for captcha");
-                            return;
-                        }
-                        LoginMenuController.setNewPassword(password);
-                        System.out.println("new password has been set");
-                        return;
-                    } else {
-                        passwordErrorsPrint(result);
-                    }
-                }
-                System.out.println("setting new password failed you have entered 3 wrong formats for password");
-                return;
-            }
-            System.out.println("you have entered wrong answer for security question please wait for " + (5 * (i + 1)) + " seconds");
-            Controller.timer(i);
-        }
-        System.out.println("failed because of multiple wrong answers for captcha");
-    }
-
-    private static void passwordErrorsPrint(SignupMenuMessage signupMenuMessage) {
+    private String passwordErrorsGet(SignupMenuMessage signupMenuMessage) {
         switch (signupMenuMessage) {
-            case WRONG_FORMAT_PASSWORD_LENGTH:
-                System.out.println("password length is too low at least 6 is needed");
+            case WRONG_FORMAT_PASSWORD_LENGTH -> {
+                return "password length is too low at least 6 is needed";
+            }
+            case WRONG_FORMAT_PASSWORD_LETTERS -> {
+                return "your password should contain uppercase and lowercase letters and numbers";
+            }
+            case WRONG_FORMAT_PASSWORD_SPECIAL -> {
+                return "your password should have at least a special character";
+            }
+        }
+        return "wrong password format";
+    }
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        Pane pane = FXMLLoader.load(LoginMenu.class.getResource("/com/ap/stronghold/FXML/loginMenu.fxml"));
+        Scene scene = new Scene(pane);
+
+        stage.setScene(scene);
+    }
+
+    public void signIn() throws Exception {
+        LoginMenuMessage result = LoginMenuController.loginUser(username.getText(), password.getText(), stayLoggedIn.isSelected());
+        switch (result) {
+            case SUCCESS:
+                (new Menu()).start(MainMenu.stage);
                 break;
-            case WRONG_FORMAT_PASSWORD_LETTERS:
-                System.out.println("your password should contain uppercase and lowercase letters and numbers");
+            case WRONG_PASSWORD:
+                error.setText("wrong password");
                 break;
-            case WRONG_FORMAT_PASSWORD_SPECIAL:
-                System.out.println("your password should have at least a special character");
+            case USER_NOT_FOUND:
+                error.setText("no user with this id exists");
+                break;
+            case FAILED_DURING_CAPTCHA:
+                error.setText("failed because of multiple wrong answers for captcha");
                 break;
         }
     }
+
+    public void back() throws Exception {
+        (new MainMenu()).start(MainMenu.stage);
+    }
+
+    public void forgotPassword() {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Forgot Password");
+        dialog.setHeaderText("Enter Username");
+        dialog.setContentText("Enter Your Username Inside Field");
+
+        Optional<String> result = dialog.showAndWait();
+
+        result:
+        while (result.isPresent()){
+            LoginMenuMessage checkUsername = LoginMenuController.forgetPasswordUsernameCheck(result.get());
+            int questionNumber = 0;
+            switch (checkUsername) {
+                case SUCCESS -> {
+                    questionNumber = LoginMenuController.getQuestion(result.get());
+                    askQuestion(questionNumber);
+                    return;
+                }
+                case USER_NOT_FOUND -> {
+                    dialog.setHeaderText("username not found");
+                    result = dialog.showAndWait();
+                }
+            }
+        }
+    }
+
+    private void askQuestion(int questionNumber) {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Forgot Password");
+        dialog.setHeaderText("Enter Answer To Question Below");
+        switch (questionNumber) {
+            case 1 -> dialog.setContentText("What is your father’s name?");
+            case 2 -> dialog.setContentText("What was your first pet’s name?");
+            case 3 -> dialog.setContentText("What is your mother’s last name?");
+        }
+        Optional<String> result = dialog.showAndWait();
+        while (result.isPresent()){
+            if (LoginMenuController.checkAnswer(result.get())) {
+                askNewPassword();
+                return;
+            }else{
+                dialog.setHeaderText("wrong answer");
+                result = dialog.showAndWait();
+            }
+        }
+    }
+
+    private void askNewPassword() {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Forgot Password");
+        dialog.setHeaderText("Enter New Password");
+//        dialog.setContentText("Enter New Password Inside Field");
+
+        PasswordField pwd = new PasswordField();
+        HBox content = new HBox();
+        content.setSpacing(10);
+        content.getChildren().addAll(new Label("Enter New Password Inside Field"), pwd);
+        dialog.getDialogPane().setContent(content);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                return pwd.getText();
+            }
+            return null;
+        });
+
+        Optional<String> result = dialog.showAndWait();
+
+        while (result.isPresent()){
+            if (Controller.checkPasswordValidity(result.get()) == SignupMenuMessage.SUCCESS) {
+                LoginMenuController.setNewPassword(result.get());
+                return;
+            }else{
+                dialog.setHeaderText(passwordErrorsGet(Controller.checkPasswordValidity(result.get())));
+                result = dialog.showAndWait();
+            }
+        }
+    }
+
+    public void initialize(){
+        error.setFill(Color.RED);
+    }
+
 }

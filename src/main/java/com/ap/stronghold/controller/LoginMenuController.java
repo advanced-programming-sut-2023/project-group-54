@@ -13,10 +13,17 @@ import java.io.IOException;
 public class LoginMenuController {
     private static User user;
 
-    public static LoginMenuMessage loginUser(String username, String password, boolean stayLoggedIn) {
+    public static LoginMenuMessage findUsername(String username){
         user = User.findUserByUsername(username);
         if (user == null) return LoginMenuMessage.USER_NOT_FOUND;
-        LoginMenuMessage result = passwordChecker(password);
+        return LoginMenuMessage.SUCCESS;
+    }
+    public static LoginMenuMessage loginUser(String username, String password, boolean stayLoggedIn) {
+        LoginMenuMessage result = findUsername(username);
+         if(result != LoginMenuMessage.SUCCESS)
+             return result;
+
+        result = passwordChecker(password);
         if (result.equals(LoginMenuMessage.SUCCESS)) {
             if (MainMenu.captchaChecker()) {
                 setLoggedInUser(stayLoggedIn);
@@ -56,9 +63,7 @@ public class LoginMenuController {
     }
 
     public static LoginMenuMessage forgetPasswordUsernameCheck(String username) {
-        user = User.findUserByUsername(username);
-        if (user == null) return LoginMenuMessage.USER_NOT_FOUND;
-        return LoginMenuMessage.SUCCESS;
+        return findUsername(username);
     }
     public static int getQuestion(String username){
         user = User.findUserByUsername(username);
@@ -70,6 +75,7 @@ public class LoginMenuController {
 
     public static void setNewPassword(String password) {
         user.setPassword(Controller.hashString(password));
+        User.saveUser();
     }
 
     public static LoginMenuMessage logout() {
@@ -83,4 +89,5 @@ public class LoginMenuController {
         }
         return LoginMenuMessage.SUCCESS;
     }
+
 }

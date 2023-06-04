@@ -284,7 +284,7 @@ public class MapMenuController {
             if (unit instanceof Engineer)
                 details.append(i + ") engineer owner : " + unit.getOwner().getUser().getUsername());
             else details.append(i + ") troop name : " + unit.getUnitType().getType() + " - troop hp : " + unit.getHp() +
-                    "- unit " + ((unit.getPatrol()) ? "is" : "is not") + " patrol\n\t- troop state : " + unit.getState() +
+                    "- unit " + ((unit.isPatrol()) ? "is" : "is not") + " patrol\n\t- troop state : " + unit.getState() +
                     " - unit owner is : " + unit.getGovernment().getUser().getUsername() + "\n");
             i++;
         }

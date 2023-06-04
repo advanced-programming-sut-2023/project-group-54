@@ -1,6 +1,0 @@
-<?import javafx.scene.layout.Pane?>
-<Pane id="GameMenu" prefHeight="400.0" prefWidth="600.0"
-      stylesheets="@../CSS/style1.css" xmlns="http://javafx.com/javafx/8"
-      xmlns:fx="http://javafx.com/fxml/1" fx:com.ap.stronghold.controller="com.ap.stronghold.view.GameMenu">
-
-</Pane>

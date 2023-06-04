@@ -6,11 +6,16 @@ import com.ap.stronghold.model.Game;
 import com.ap.stronghold.model.User;
 import com.ap.stronghold.view.enums.commands.Command;
 import com.ap.stronghold.view.enums.commands.CommandHandler;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Menu {
+public class Menu extends Application {
 
     public static void run() {
         String command;
@@ -157,6 +162,15 @@ public class Menu {
         MapMenuController.setMap(mapNumber);
         System.out.println("successfully done");
         return true;
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Pane pane = FXMLLoader.load(Menu.class.getResource("/com/ap/stronghold/FXML/menu.fxml"));
+
+        Scene scene = new Scene(pane);
+        stage.setScene(scene);
+        stage.show();
     }
 }
 

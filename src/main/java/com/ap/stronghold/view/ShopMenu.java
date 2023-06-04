@@ -5,12 +5,19 @@ import com.ap.stronghold.controller.ShopMenuController;
 import com.ap.stronghold.view.enums.commands.Command;
 import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.ShopMenuMessage;
+import javafx.event.ActionEvent;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class ShopMenu {
+
     public static void run() {
         String command;
 
@@ -111,4 +118,5 @@ public class ShopMenu {
             }
         }
     }
+
 }

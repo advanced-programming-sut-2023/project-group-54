@@ -58,9 +58,4 @@ public class Engineer extends Unit {
     public void setWorking(boolean working) {
         isWorking = working;
     }
-
-
-    public void makeSiege(SiegeType siegeType) {
-
-    }
 }
