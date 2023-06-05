@@ -4,43 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="AStarShortestPath complated">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="login complete and some of singUp">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/GameMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/GameMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/LoginMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/LoginMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/MapMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/MapMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/SignupMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/SignupMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/UnitMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/UnitMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/AStarShortestPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/AStarShortestPath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Buildings/BuildingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Buildings/BuildingType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/users.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/units/Engineer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/units/Engineer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/units/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/units/Unit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/LoginMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ShopMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ShopMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/SignupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/SignupMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/CSS/style1.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/FXML/buildingMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/FXML/gameMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/FXML/loginMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/FXML/mainMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/FXML/menu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/FXML/profileMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/FXML/shopMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/FXML/signUpMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/FXML/tradeMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/FXML/unitMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/Media/background1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/Media/background2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/Media/background3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/Media/background4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/Media/background5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com.ap.stronghold/Media/background6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/signUpMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/signUpMenu.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +197,7 @@
       <workItem from="1685434330430" duration="4910000" />
       <workItem from="1685452649587" duration="3418000" />
       <workItem from="1685515065087" duration="30622000" />
-      <workItem from="1685826931276" duration="21278000" />
+      <workItem from="1685826931276" duration="27118000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="phase0">
       <created>1681498802040</created>
@@ -409,7 +379,13 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۲۹" />
       <updated>1685457503405</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL‎−۰۰۰۳۰" summary="login complete and some of singUp">
+      <created>1685913693816</created>
+      <option name="number" value="LOCAL‎−۰۰۰۳۰" />
+      <option name="presentableId" value="LOCAL‎−۰۰۰۳۰" />
+      <updated>1685913693816</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -442,7 +418,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="change Command" />
     <MESSAGE value="resolve Some Mistake" />
     <MESSAGE value="connect menus" />
     <MESSAGE value="debug allBuilding" />
@@ -467,7 +442,8 @@
     <MESSAGE value="debug unit test" />
     <MESSAGE value="first change for phase 2" />
     <MESSAGE value="AStarShortestPath complated" />
-    <option name="LAST_COMMIT_MESSAGE" value="AStarShortestPath complated" />
+    <MESSAGE value="login complete and some of singUp" />
+    <option name="LAST_COMMIT_MESSAGE" value="login complete and some of singUp" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

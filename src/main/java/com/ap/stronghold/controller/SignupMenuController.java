@@ -2,6 +2,7 @@ package com.ap.stronghold.controller;
 
 import com.ap.stronghold.model.Government;
 import com.ap.stronghold.model.User;
+import com.ap.stronghold.view.MainMenu;
 import com.ap.stronghold.view.enums.messages.SignupMenuMessage;
 
 import java.util.Random;
@@ -9,14 +10,9 @@ import java.util.Random;
 public class SignupMenuController {
     private static String username;
     private static String password;
-    private static String passwordConfirmation;
     private static String nickname;
     private static String email;
     private static String slogan;
-
-    public static String getUsername() {
-        return username;
-    }
 
     public static SignupMenuMessage setUser(String username, String password, String nickname, String email, String slogan) {
         SignupMenuController.username = username;
@@ -27,25 +23,16 @@ public class SignupMenuController {
         return createUserChecker();
     }
 
-    public static String getPassword() {
-        return password;
-    }
-
-    public static String getSlogan() {
-        return slogan;
-    }
-
     public static SignupMenuMessage createUser(int questionNumber, String questionAnswer) {
-        passwordToHash();
-        User user = new User(username, password, nickname, email, slogan, questionNumber, questionAnswer, new Government());
-        user.getGovernment().setUser(user);
-        return SignupMenuMessage.SUCCESS;
+        if(MainMenu.captchaChecker()){
+            passwordToHash();
+            User user = new User(username, password, nickname, email, slogan, questionNumber, questionAnswer, new Government());
+            user.getGovernment().setUser(user);
+            User.saveUser();
+            return SignupMenuMessage.SUCCESS;
+        }
+        return SignupMenuMessage.FAILED_DURING_CAPTCHA;
     }
-
-//    public static SignupMenuMessage chooseMap(int mapNumber) {
-//        // to complete
-//        return SignupMenuMessage.MAP_SELECTED;
-//    }
 
     public static SignupMenuMessage createUserChecker() {
         SignupMenuMessage usernameChecker = Controller.checkUsernameValidity(username);

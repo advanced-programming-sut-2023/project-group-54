@@ -75,7 +75,7 @@ public class LoginMenu extends Application{
                 error.setText("no user with this id exists");
                 break;
             case FAILED_DURING_CAPTCHA:
-                error.setText("failed because of multiple wrong answers for captcha");
+                error.setText("failed because wrong answers for captcha");
                 break;
         }
     }
