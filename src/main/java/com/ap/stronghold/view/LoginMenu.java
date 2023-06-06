@@ -32,13 +32,6 @@ public class LoginMenu extends Application{
     public CheckBox stayLoggedIn;
 
 
-    public static void logout() {
-        LoginMenuMessage result = LoginMenuController.logout();
-        if (result.equals(LoginMenuMessage.SUCCESS)) {
-            System.out.println("logged out");
-        }
-    }
-
     private String passwordErrorsGet(SignupMenuMessage signupMenuMessage) {
         switch (signupMenuMessage) {
             case WRONG_FORMAT_PASSWORD_LENGTH -> {

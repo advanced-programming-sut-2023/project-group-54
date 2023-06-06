@@ -1,9 +1,13 @@
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 <VBox id="Menu" prefHeight="700.0" prefWidth="1100.0"
       stylesheets="@../CSS/style.css"
       xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.ap.stronghold.view.Menu">
+      fx:controller="com.ap.stronghold.view.Menu"
+      spacing="15" alignment="CENTER">
 
+    <Button text="new game" styleClass="button3" onAction="#startGame"/>
+    <Button text="profile" styleClass="button3" onAction="#enterProfileMenu"/>
+    <Button text="logout" styleClass="button3" onAction="#logout"/>
+    <Button text="exit" styleClass="button3" onAction="#exit"/>
 </VBox>

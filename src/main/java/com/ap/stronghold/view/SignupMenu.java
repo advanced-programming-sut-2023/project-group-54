@@ -6,7 +6,9 @@ import com.ap.stronghold.view.enums.commands.Command;
 import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.SignupMenuMessage;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -24,6 +26,8 @@ public class SignupMenu extends Application {
 
     public TextField nickname;
     public PasswordField password;
+    public TextField passwordText;
+    private static boolean visiblePassword = false;
     public TextField username;
     public TextField email;
     public ChoiceBox recoveryQuestion;
@@ -39,10 +43,11 @@ public class SignupMenu extends Application {
     public HBox commonSloganHBox;
     public int questionNumber = 0;
     public String questionAnswer = "";
+    private static Pane pane;
 
     @Override
     public void start(Stage stage) throws IOException {
-        Pane pane = FXMLLoader.load(LoginMenu.class.getResource("/com/ap/stronghold/FXML/signUpMenu.fxml"));
+        pane = FXMLLoader.load(LoginMenu.class.getResource("/com/ap/stronghold/FXML/signUpMenu.fxml"));
         Scene scene = new Scene(pane);
 
         stage.setScene(scene);
@@ -235,6 +240,48 @@ public class SignupMenu extends Application {
         Optional<ButtonType> option = alert.showAndWait();
         if(ButtonType.OK.equals(option.get())){
             password.setText(randomPassword);
+        }
+    }
+
+    public void togglePasswordVisible() {
+        if(!visiblePassword){
+            visiblePassword = true;
+            int index = 0;
+            int index2 = 0;
+            for (Node child : pane.getChildren()) {
+                if(child instanceof HBox){
+                    index = ((HBox) child).getChildren().indexOf(password);
+                    if(index != -1){
+                        index2 = pane.getChildren().indexOf(child);
+                        break;
+                    }
+                }
+            }
+            String passwordVal = password.getText();
+            ((HBox) pane.getChildren().get(index2)).getChildren().remove(password);
+            passwordText = new TextField();
+            passwordText.setText(passwordVal);
+            passwordText.setPromptText("password");
+            ((HBox) pane.getChildren().get(index2)).getChildren().add(index, passwordText);
+        }else{
+            visiblePassword = false;
+            int index = 0;
+            int index2 = 0;
+            for (Node child : pane.getChildren()) {
+                if(child instanceof HBox){
+                    index = ((HBox) child).getChildren().indexOf(passwordText);
+                    if(index != -1){
+                        index2 = pane.getChildren().indexOf(child);
+                        break;
+                    }
+                }
+            }
+            String passwordVal = passwordText.getText();
+            ((HBox) pane.getChildren().get(index2)).getChildren().remove(passwordText);
+            password = new PasswordField();
+            password.setText(passwordVal);
+            password.setPromptText("password");
+            ((HBox) pane.getChildren().get(index2)).getChildren().add(index, password);
         }
     }
 }

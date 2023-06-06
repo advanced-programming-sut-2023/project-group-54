@@ -1,6 +1,7 @@
-<?import javafx.scene.layout.Pane?>
-<Pane id="GameMenu" prefHeight="400.0" prefWidth="600.0"
+<?import javafx.scene.layout.VBox?>
+<VBox id="GameMenu" prefHeight="700.0" prefWidth="1100.0"
       stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/8"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ap.stronghold.view.GameMenu">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ap.stronghold.view.GameMenu"
+      alignment="CENTER" spacing="15">
 
-</Pane>
+</VBox>

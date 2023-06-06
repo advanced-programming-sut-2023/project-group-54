@@ -4,12 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="login complete and some of singUp">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="sign up complete">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/SignupMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/SignupMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/GameMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/LoginMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ProfileMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/SignupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/SignupMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/CSS/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/CSS/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/gameMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/gameMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/menu.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/signUpMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/signUpMenu.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -197,7 +203,7 @@
       <workItem from="1685434330430" duration="4910000" />
       <workItem from="1685452649587" duration="3418000" />
       <workItem from="1685515065087" duration="30622000" />
-      <workItem from="1685826931276" duration="27118000" />
+      <workItem from="1685826931276" duration="34972000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="phase0">
       <created>1681498802040</created>
@@ -385,7 +391,13 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۳۰" />
       <updated>1685913693816</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL‎−۰۰۰۳۱" summary="sign up complete">
+      <created>1685995917084</created>
+      <option name="number" value="LOCAL‎−۰۰۰۳۱" />
+      <option name="presentableId" value="LOCAL‎−۰۰۰۳۱" />
+      <updated>1685995917084</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -418,7 +430,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="resolve Some Mistake" />
     <MESSAGE value="connect menus" />
     <MESSAGE value="debug allBuilding" />
     <MESSAGE value="drop completed -" />
@@ -443,7 +454,8 @@
     <MESSAGE value="first change for phase 2" />
     <MESSAGE value="AStarShortestPath complated" />
     <MESSAGE value="login complete and some of singUp" />
-    <option name="LAST_COMMIT_MESSAGE" value="login complete and some of singUp" />
+    <MESSAGE value="sign up complete" />
+    <option name="LAST_COMMIT_MESSAGE" value="sign up complete" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -494,6 +506,21 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/LoginMenuController.java</url>
           <line>72</line>
           <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/Menu.java</url>
+          <line>261</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/SignupMenu.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/SignupMenu.java</url>
+          <line>246</line>
+          <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

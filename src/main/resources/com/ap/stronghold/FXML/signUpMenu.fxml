@@ -22,6 +22,7 @@
     <HBox spacing="10" alignment="CENTER">
         <PasswordField promptText="password" fx:id="password"/>
         <Button text="random password" onAction="#getRandomPassword"/>
+        <Button text="show/hide password" onAction="#togglePasswordVisible"/>
     </HBox>
     <Text fx:id="passwordCheck"/>
     <TextField promptText="nickname" fx:id="nickname"/>

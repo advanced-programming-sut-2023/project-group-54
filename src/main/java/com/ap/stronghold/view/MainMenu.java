@@ -52,11 +52,11 @@ public class MainMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        MainMenu.stage = stage;
         if (Controller.checkIfStayLoggedIn()){
             (new Menu()).start(stage);
             return;
         }
-        MainMenu.stage = stage;
         URL url = MainMenu.class.getResource("/com/ap/stronghold/FXML/mainMenu.fxml");
         Pane pane = FXMLLoader.load(url);
         Scene scene = new Scene(pane);

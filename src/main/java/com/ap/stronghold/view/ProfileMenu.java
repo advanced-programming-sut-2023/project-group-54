@@ -7,11 +7,13 @@ import com.ap.stronghold.view.enums.commands.Command;
 import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.ProfileMenuMessage;
 import com.ap.stronghold.view.enums.messages.SignupMenuMessage;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ProfileMenu {
+public class ProfileMenu extends Application {
     public static void run() {
 
         System.out.println("you are in profile menu");
@@ -212,5 +214,10 @@ public class ProfileMenu {
     public static void displayProfile() {
         String result = ProfileMenuController.displayProfile();
         System.out.println(result.trim());
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
     }
 }

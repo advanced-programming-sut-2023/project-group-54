@@ -130,7 +130,7 @@ PasswordField{
     -fx-background-size: 1100 700;
 }
 
-#Setting{
+#GameMenu{
     -fx-background-image: url("../Media/background5.jpg");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
