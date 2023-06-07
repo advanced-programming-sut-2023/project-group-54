@@ -8,6 +8,7 @@ import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.SignupMenuMessage;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +38,8 @@ public class SignupMenu extends Application {
     public Button randomSlogan;
     public Text nicknameCheck;
     public Text emailCheck;
+    public Button visible;
+    private boolean passShow = false;
 
     public static void run() {
         String command;
@@ -300,6 +304,7 @@ public class SignupMenu extends Application {
             slogan.setText("");
             randomSlogan.setVisible(false);
             commonSlogan.selectToggle(null);
+
         }else{
             slogan.setVisible(true);
             randomSlogan.setVisible(true);
@@ -314,7 +319,7 @@ public class SignupMenu extends Application {
     public void commonSloganSelect() {
         slogan.setText(commonSlogan.getSelectedToggle().getUserData().toString());
     }
-
+    @FXML
     public void initialize(){
         emailCheck.setFill(Color.RED);
         nicknameCheck.setFill(Color.RED);
@@ -360,7 +365,7 @@ public class SignupMenu extends Application {
         });
     }
 
-    public String getError(SignupMenuMessage result){
+    public static String getError(SignupMenuMessage result){
         String message = "";
 
         switch (result){
@@ -388,4 +393,24 @@ public class SignupMenu extends Application {
         }
         return message;
     }
+
+    public void showPassword(ActionEvent actionEvent) {
+//            if (password.getEchoChar() == '\u2022') {
+//                password.setEchoChar((char) 0);
+//                showPasswordButton.setText("Hide Password");
+//            } else {
+//                passwordField.setEchoChar('\u2022');
+//                showPasswordButton.setText("Show Password");
+//
+//                if (!passShow){
+//            passwordString = password.getText();
+//            password.clear();
+//            password.setPromptText(passwordString);
+//            passShow = true;
+//
+//        }else {
+//            password.setText(passwordString);
+//            passShow = false;
+//        }
+   }
 }

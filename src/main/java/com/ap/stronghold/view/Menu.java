@@ -31,7 +31,7 @@ public class Menu extends Application {
                 System.out.println("you are in menu");
             }
             else if (CommandHandler.parsCommand(Command.PROFILE_MENU, command) != null){
-                ProfileMenu.run();
+                //ProfileMenu.run();
                 System.out.println("you are in menu");
             }else if(CommandHandler.parsCommand(Command.EXIT, command) != null){
                 Controller.setExit(true);

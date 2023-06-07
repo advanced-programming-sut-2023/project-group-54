@@ -1,17 +1,18 @@
-<?import javafx.scene.layout.Pane?>
+
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.Hyperlink?>
+
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
+
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <VBox id="SignUpMenu" prefHeight="700.0" prefWidth="1100.0"
       stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ap.stronghold.view.SignupMenu"
@@ -21,11 +22,13 @@
     <Text fx:id="usernameCheck"/>
     <PasswordField promptText="password" fx:id="password"/>
     <Text fx:id="passwordCheck"/>
+<!--    <Button fx:id="visible" text="show password" onAction="#showPassword" prefWidth="40" prefHeight="40">-->
+<!--    </Button>-->
     <TextField promptText="nickname" fx:id="nickname"/>
     <Text fx:id="nicknameCheck"/>
     <TextField promptText="email" fx:id="email"/>
     <Text fx:id="emailCheck"/>
-    <!--    <ChoiceBox value="1" fx:id="recoveryQuestion">-->
+<!--        <ChoiceBox value="1" fx:id="recoveryQuestion">-->
 <!--        <items>-->
 <!--            <FXCollections fx:factory="observableArrayList">-->
 <!--                <String fx:value="What is your father’s name?" value="1"/>-->
@@ -46,7 +49,7 @@
         <HBox alignment="BASELINE_CENTER" spacing="5">
             <RadioButton text="a very small man can cast a very large shadow"
                          userData="a very small man can cast a very large shadow" toggleGroup="$commonSlogan" onAction="#commonSloganSelect"/>
-            <RadioButton text="Leave one wold alive and sheep are never safe"
+            <RadioButton text="Leave one wolf alive and sheep are never safe"
                          userData="Leave one wold alive and sheep are never safe" toggleGroup="$commonSlogan" onAction="#commonSloganSelect"/>
             <RadioButton text="Winter is coming..."
                          userData="Winter is coming..." toggleGroup="$commonSlogan" onAction="#commonSloganSelect"/>

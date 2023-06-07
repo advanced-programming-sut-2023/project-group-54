@@ -98,40 +98,40 @@ PasswordField{
 }
 
 #SignUpMenu{
-    -fx-background-image: url("../Media/background3.jpg");
+    -fx-background-image: url("../Media/backgrounds/27.jpg");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
     -fx-background-size: 1100 700;
 }
 
 #LoginMenu{
-    -fx-background-image: url("../Media/background2.jpg");
+    -fx-background-image: url("../Media/backgrounds/05.jpg");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
     -fx-background-size: 1100 700;
 }
 #MainMenu{
-    -fx-background-image: url("../Media/background4.jpg");
+    -fx-background-image: url("../Media/backgrounds/04.jpg");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
     -fx-background-size: 1100 700;
 }
 
 #ProfileMenu{
-    -fx-background-image: url("../Media/background5.jpg");
+    -fx-background-image: url("../Media/backgrounds/Backgrounds For Menus - yac/IMG_6047.PNG");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
     -fx-background-size: 1100 700;
 }
 #ScoreBoard{
-    -fx-background-image: url("../Media/background6.jpg");
+    -fx-background-image: url("../Media/backgrounds/24.jpg");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
     -fx-background-size: 1100 700;
 }
 
 #Setting{
-    -fx-background-image: url("../Media/background5.jpg");
+    -fx-background-image: url("../Media/backgrounds/07.jpg");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
     -fx-background-size: 1100 700;

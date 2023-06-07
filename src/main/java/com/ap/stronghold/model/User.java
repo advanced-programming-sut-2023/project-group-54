@@ -28,6 +28,8 @@ public class User implements Comparable<User>{
     private String questionAnswer;
     @Expose
     private int highScore;
+    @Expose
+    private int avatarNumber;
 
     private Government government;
 
@@ -41,6 +43,7 @@ public class User implements Comparable<User>{
         this.questionAnswer = questionAnswer;
         this.government = government;
         this.highScore = 0;
+        this.avatarNumber = 5;
         users.add(this);
     }
     public static void loadUser(){
@@ -82,6 +85,19 @@ public class User implements Comparable<User>{
             throw new RuntimeException(e);
         }
     }
+
+    public static void setUsers(ArrayList<User> users) {
+        User.users = users;
+    }
+
+    public int getAvatarNumber() {
+        return avatarNumber;
+    }
+
+    public void setAvatarNumber(int avatarNumber) {
+        this.avatarNumber = avatarNumber;
+    }
+
     public String getUsername() {
         return username;
     }
