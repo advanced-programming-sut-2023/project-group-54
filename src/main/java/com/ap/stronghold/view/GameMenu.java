@@ -12,8 +12,11 @@ import com.ap.stronghold.view.enums.messages.GameMenuMessage;
 import com.ap.stronghold.view.enums.messages.MapMenuMessage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -21,17 +24,44 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 
 public class GameMenu extends Application {
+    public static GridPane pane;
     private static int xOfMap;
     private static int yOfMap;
     private static MapType typeForTreeAndTexture = MapType.DEFAULT;
     private static Direction direction = Direction.F;
+    private Scene scene;
+    private static HashMap<MapType, Image> images;
+    private static ImageView[][] imageViews;
+    private double startDragX;
+    private double startDragY;
 
-    public static int getXOfMap() {
-        return xOfMap;
-    }
+    static {
+        images = new HashMap<>();
+        images.put(MapType.EARTH, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/earth.png").toExternalForm()));
+        images.put(MapType.EARTH_AND_STONE, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/earth_and_stone.png").toExternalForm()));
+        images.put(MapType.BOULDERS, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/boulders.png").toExternalForm()));
+        images.put(MapType.ROCK_N, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_n.png").toExternalForm()));
+        images.put(MapType.ROCK_S, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_s.png").toExternalForm()));
+        images.put(MapType.ROCK_E, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_e.png").toExternalForm()));
+        images.put(MapType.ROCK_W, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_w.png").toExternalForm()));
+        images.put(MapType.IRON, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/iron.png").toExternalForm()));
+        images.put(MapType.OASIS_GRASS, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/oasis_grass.png").toExternalForm()));
+        images.put(MapType.SCRUB, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/scrub.png").toExternalForm()));
+        images.put(MapType.THICK_SCRUB, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/thick_scrub.png").toExternalForm()));
+        images.put(MapType.OIL, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/oil.png").toExternalForm()));
+        images.put(MapType.SHALLOW_WATER, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/shallow_water.png").toExternalForm()));
+        images.put(MapType.RIVER, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/river.png").toExternalForm()));
+        images.put(MapType.SMALL_POND, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/small_pond.png").toExternalForm()));
+        images.put(MapType.BIG_POUND, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/big_pound.png").toExternalForm()));
+        images.put(MapType.BEACH, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/beach.png").toExternalForm()));
+        images.put(MapType.SEA, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/sea.png").toExternalForm()));
 
-    public static int getYOfMap() {
-        return yOfMap;
+        imageViews = new ImageView[38][20];
+        for(int i = 0; i < 38; i++){
+            for (int j = 0; j < 20; j++){
+                imageViews[i][j] = new ImageView();
+            }
+        }
     }
 
     public static void run() {
@@ -101,7 +131,7 @@ public class GameMenu extends Application {
         String t = Controller.buildParameter(options.get("t").get(0));
         String c = options.get("c").get(0);
 
-        if(GameMenuController.dropUnit(Integer.parseInt(x), Integer.parseInt(y), t, Integer.parseInt(c)).equals(GameMenuMessage.SUCCESS)){
+        if (GameMenuController.dropUnit(Integer.parseInt(x), Integer.parseInt(y), t, Integer.parseInt(c)).equals(GameMenuMessage.SUCCESS)) {
             System.out.println("drop unit successfully");
         }
     }
@@ -652,10 +682,69 @@ public class GameMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Pane pane = FXMLLoader.load(Menu.class.getResource("/com/ap/stronghold/FXML/gameMenu.fxml"));
+        pane = FXMLLoader.load(Menu.class.getResource("/com/ap/stronghold/FXML/gameMenu.fxml"));
+        xOfMap = 10;
+        yOfMap = 19;
 
-        Scene scene = new Scene(pane);
+        for (int i = 0; i < 38; i++){
+            for (int j = 0; j < 20; j++){
+                pane.add(imageViews[i][j], i, j);
+            }
+        }
+
+        showMap();
+
+        scene = new Scene(pane);
+
+        scene.setOnMousePressed(mouseEvent -> {
+            startDragX = mouseEvent.getSceneX();
+            startDragY = mouseEvent.getSceneY();
+        });
+
+        scene.setOnMouseDragged(event -> {
+            boolean moved = false;
+            if ((int) (startDragX - event.getSceneX()) / 50 > 0) {
+                yOfMap += (startDragX - event.getSceneX()) / 50;
+                yOfMap = Math.min(yOfMap, 381);
+                moved = true;
+            } else if ((int) (event.getSceneX() - startDragX) / 50 > 0) {
+                yOfMap -= (event.getSceneX() - startDragX) / 50;
+                yOfMap = Math.max(yOfMap, 19);
+                moved = true;
+            }
+            if ((int) (startDragY - event.getSceneY()) / 50 > 0) {
+                xOfMap += (startDragY - event.getSceneY()) / 50;
+                xOfMap = Math.min(xOfMap, 381);
+                moved = true;
+            } else if ((int) (event.getSceneY() - startDragY) / 50 > 0) {
+                xOfMap -= (event.getSceneY() - startDragY) / 50;
+                xOfMap = Math.max(xOfMap, 10);
+                moved = true;
+            }
+            if(moved){
+                startDragX = event.getSceneX();
+                startDragY = event.getSceneY();
+                showMap();
+            }
+        });
+
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void showMap() {
+        int xMin = xOfMap < 10 ? 0 : xOfMap - 10;
+        int xMax = xOfMap < 10 ? 20 : xOfMap + 10;
+        int yMin = yOfMap < 19 ? 0 : yOfMap - 19;
+        int yMax = yOfMap < 19 ? 38 : yOfMap + 19;
+        for (int i = yMin; i < yMax; i++) {
+            for (int j = xMin; j < xMax; j++) {
+                imageViews[i-yMin][j-xMin].setImage(images.get(Game.getGameMap()[j][i].getMapType()));
+            }
+        }
+    }
+
+    public void initialize(){
+
     }
 }

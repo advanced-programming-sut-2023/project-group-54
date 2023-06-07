@@ -41,6 +41,8 @@ Button{
     -fx-color: white;
 }
 TextField{
+    -fx-font-family: "Book Antiqua";
+    -fx-font-size: 13px;
     -fx-text-fill: -fx-text-inner-color;
     -fx-highlight-fill: derive(-fx-control-inner-background,-20%);
     -fx-highlight-text-fill: -fx-text-inner-color;
@@ -130,7 +132,7 @@ PasswordField{
     -fx-background-size: 1100 700;
 }
 
-#GameMenu{
+#ScoreBoard{
     -fx-background-image: url("../Media/background5.jpg");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;

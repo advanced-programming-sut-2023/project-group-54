@@ -27,7 +27,7 @@ public class SignupMenu extends Application {
     public TextField nickname;
     public PasswordField password;
     public TextField passwordText;
-    private static boolean visiblePassword = false;
+    public boolean visiblePassword;
     public TextField username;
     public TextField email;
     public ChoiceBox recoveryQuestion;
@@ -43,11 +43,12 @@ public class SignupMenu extends Application {
     public HBox commonSloganHBox;
     public int questionNumber = 0;
     public String questionAnswer = "";
-    private static Pane pane;
+    public static Pane pane;
 
     @Override
     public void start(Stage stage) throws IOException {
         pane = FXMLLoader.load(LoginMenu.class.getResource("/com/ap/stronghold/FXML/signUpMenu.fxml"));
+        visiblePassword = false;
         Scene scene = new Scene(pane);
 
         stage.setScene(scene);
