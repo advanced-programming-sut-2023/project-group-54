@@ -4,15 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="sign up menu show or hide password">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="menu and game menu start a game">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/MapMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/MapMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/MapType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/MapType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/SignupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/SignupMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ProfileMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/CSS/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/CSS/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/gameMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/gameMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/loginMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/loginMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/profileMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/profileMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/signUpMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/signUpMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/103-1030913_game-of-thrones-erie.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/103-1030913_game-of-thrones-erie.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/493585.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/493585.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/5559468.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/5559468.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/Carach-Angren-Shadow-of-mordor,-Middle-earth-shadow,-Hd-.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/Carach-Angren-Shadow-of-mordor,-Middle-earth-shadow,-Hd-.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/IMG_6047.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/IMG_6047.PNG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/IMG_6064.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/IMG_6064.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/SAuOBQ.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/SAuOBQ.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/X09MFw.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/X09MFw.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/desktop-wallpaper-crusader-kings-2-ck2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/desktop-wallpaper-crusader-kings-2-ck2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/desktop-wallpaper-diablo-3-crusader-armor-iphone-8-7-6s-crusaders-thumbnail.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/desktop-wallpaper-diablo-3-crusader-armor-iphone-8-7-6s-crusaders-thumbnail.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/sword-templar-mail-knight-crusader-hd-wallpaper-preview.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/sword-templar-mail-knight-crusader-hd-wallpaper-preview.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/wp2534578.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/wp2534578.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/wp2811277.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/wp2811277.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/wp5298309.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/wp5298309.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds For Menus - yac/z3qbm9.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/backgrounds/Backgrounds_For_Menus_yac/z3qbm9.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +213,7 @@
       <workItem from="1685434330430" duration="4910000" />
       <workItem from="1685452649587" duration="3418000" />
       <workItem from="1685515065087" duration="30622000" />
-      <workItem from="1685826931276" duration="57039000" />
+      <workItem from="1685826931276" duration="62287000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="phase0">
       <created>1681498802040</created>
@@ -399,7 +413,13 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۳۲" />
       <updated>1686049786533</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL‎−۰۰۰۳۳" summary="menu and game menu start a game">
+      <created>1686126993774</created>
+      <option name="number" value="LOCAL‎−۰۰۰۳۳" />
+      <option name="presentableId" value="LOCAL‎−۰۰۰۳۳" />
+      <updated>1686126993774</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -432,7 +452,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="debug allBuilding" />
     <MESSAGE value="drop completed -" />
     <MESSAGE value="complete user save in json" />
     <MESSAGE value="unit menu" />
@@ -457,7 +476,8 @@
     <MESSAGE value="login complete and some of singUp" />
     <MESSAGE value="sign up complete" />
     <MESSAGE value="sign up menu show or hide password" />
-    <option name="LAST_COMMIT_MESSAGE" value="sign up menu show or hide password" />
+    <MESSAGE value="menu and game menu start a game" />
+    <option name="LAST_COMMIT_MESSAGE" value="menu and game menu start a game" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -504,16 +524,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/LoginMenuController.java</url>
           <line>72</line>
           <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/GameMenu.java</url>
-          <line>723</line>
-          <option name="timeStamp" value="65" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/GameMenu.java</url>
-          <line>704</line>
-          <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/GameMenu.java</url>

@@ -4,12 +4,9 @@ import com.ap.stronghold.controller.Controller;
 import com.ap.stronghold.controller.ProfileMenuController;
 import com.ap.stronghold.controller.SignupMenuController;
 import com.ap.stronghold.model.User;
-import com.ap.stronghold.view.enums.commands.Command;
-import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.ProfileMenuMessage;
 import com.ap.stronghold.view.enums.messages.SignupMenuMessage;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,14 +14,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,6 +42,7 @@ public class ProfileMenu extends Application {
     public TextField newPassword;
     public Text passwordCheck;
     public Text highScore;
+    public HBox commonSloganHBox;
     @FXML
     private RadioButton avatar0;
     @FXML
@@ -59,7 +56,7 @@ public class ProfileMenu extends Application {
     @FXML
     private RadioButton avatar5;
     @FXML
-    private ToggleGroup group = new ToggleGroup();
+    private ToggleGroup avatar;
 
     private Image[] avatars = new Image[6];
     private ImageView[] view = new ImageView[6];
@@ -275,7 +272,7 @@ public class ProfileMenu extends Application {
     public void start(Stage stage) throws Exception {
         Pane pane = FXMLLoader.load(LoginMenu.class.getResource("/com/ap/stronghold/FXML/profileMenu.fxml"));
         Scene scene = new Scene(pane);
-        setAvatars(pane);
+
         stage.setScene(scene);
     }
 
@@ -292,7 +289,11 @@ public class ProfileMenu extends Application {
                 usernameCheck.setText("username not entered");
             else {
                 SignupMenuMessage result = Controller.checkUsernameValidity(username.getText());
-                usernameCheck.setText(SignupMenu.getError(result));
+                if(!result.equals(SignupMenuMessage.USERNAME_EXIST) || !username.getText().equals(Controller.getLoggedInUser().getUsername())){
+                    usernameCheck.setText(SignupMenu.getError(result));
+                }else {
+                    usernameCheck.setText("");
+                }
             }
         });
 
@@ -305,17 +306,16 @@ public class ProfileMenu extends Application {
                 emailCheck.setText("email not entered");
             else {
                 SignupMenuMessage result = Controller.checkEmailValidity(email.getText());
-                emailCheck.setText(SignupMenu.getError(result));
+                if(!result.equals(SignupMenuMessage.EMAIL_EXIST) || !email.getText().equals(Controller.getLoggedInUser().getEmail())){
+                    emailCheck.setText(SignupMenu.getError(result));
+                }else{
+                    emailCheck.setText("");
+                }
             }
         });
         highScore.setText("high score is : " +Controller.getLoggedInUser().getHighScore());
-        avatar0.setToggleGroup(group);
-        avatar1.setToggleGroup(group);
-        avatar2.setToggleGroup(group);
-        avatar3.setToggleGroup(group);
-        avatar4.setToggleGroup(group);
-        avatar5.setToggleGroup(group);
         selectImage().setSelected(true);
+        setAvatars();
     }
 
     public RadioButton selectImage() {
@@ -339,7 +339,7 @@ public class ProfileMenu extends Application {
         }
     }
 
-    public void setAvatars(Pane pane) {
+    public void setAvatars() {
         for (int i = 0; i < 6; i++) {
             avatars[i] = new Image(ProfileMenu.class.getResource("/com/ap/stronghold/Media/Avatars/"+ i + ".png").toExternalForm());
             view[i] = new ImageView(avatars[i]);
@@ -349,8 +349,14 @@ public class ProfileMenu extends Application {
             view[i].setY(340);
             view[i].setFitWidth(50);
             view[i].setPreserveRatio(true);
-            pane.getChildren().add(view[i]);
         }
+
+        avatar0.setGraphic(view[0]);
+        avatar1.setGraphic(view[1]);
+        avatar2.setGraphic(view[2]);
+        avatar3.setGraphic(view[3]);
+        avatar4.setGraphic(view[4]);
+        avatar5.setGraphic(view[5]);
     }
 
     public void changePassword(MouseEvent mouseEvent) throws Exception {
@@ -362,8 +368,9 @@ public class ProfileMenu extends Application {
             slogan.setText("");
             randomSlogan.setVisible(false);
             commonSlogan.selectToggle(null);
-
+            commonSloganHBox.setVisible(false);
         }else{
+            commonSloganHBox.setVisible(true);
             slogan.setVisible(true);
             randomSlogan.setVisible(true);
         }

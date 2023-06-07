@@ -17,7 +17,7 @@
     <TextField promptText="username" fx:id="username"/>
     <PasswordField promptText="password" fx:id="password"/>
     <Hyperlink text="forgot your password" onAction="#forgotPassword"/>
-    <CheckBox text="stay logged in?" fx:id="stayLoggedIn"/>
+    <CheckBox text="stay logged in?" fx:id="stayLoggedIn" textFill="white"/>
     <Text fx:id="error"/>
     <HBox alignment="CENTER" spacing="10">
         <Button text="back" styleClass="button1" onAction="#back"/>
