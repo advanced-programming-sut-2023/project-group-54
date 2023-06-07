@@ -203,7 +203,7 @@ public class SignupMenu extends Application {
         });
     }
 
-    public String getError(SignupMenuMessage result){
+    public static String getError(SignupMenuMessage result){
         String message = "";
 
         switch (result){

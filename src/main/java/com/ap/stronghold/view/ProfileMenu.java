@@ -104,6 +104,9 @@ public class ProfileMenu extends Application {
 //    }
 
 
+//    public static void main(String[] args) {
+//        launch();
+//    }
     private static void changeUsername(HashMap<String, ArrayList<String>> options) {
         String username = null;
         for (String s : options.keySet()) {
@@ -391,6 +394,10 @@ public class ProfileMenu extends Application {
     }
 
     public void scoreBoard(MouseEvent mouseEvent) throws Exception {
-        (new ScoreBoard()).start(MainMenu.stage);
+        new ScoreBoard();
+    }
+
+    public void saveChanges() {
+
     }
 }

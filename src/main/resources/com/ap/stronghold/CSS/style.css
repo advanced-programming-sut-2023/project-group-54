@@ -91,7 +91,7 @@ PasswordField{
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
 }
 #Menu{
-    -fx-background-image: url("../Media/background1.jpg");
+    -fx-background-image: url("../Media/backgrounds/23.jpg");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
     -fx-background-size: 1100 700;
@@ -123,12 +123,12 @@ PasswordField{
     -fx-background-position: center center;
     -fx-background-size: 1100 700;
 }
-#ScoreBoard{
-    -fx-background-image: url("../Media/backgrounds/24.jpg");
-    -fx-background-repeat: stretch;
-    -fx-background-position: center center;
-    -fx-background-size: 1100 700;
-}
+/*#ScoreBoard{*/
+/*    -fx-background-image: url("../Media/backgrounds/24.jpg");*/
+/*    -fx-background-repeat: stretch;*/
+/*    -fx-background-position: center center;*/
+/*    -fx-background-size: 1100 700;*/
+/*}*/
 
 #GameMenu{
     -fx-background-image: url("../Media/background5.jpg");

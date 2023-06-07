@@ -187,6 +187,13 @@ public class User implements Comparable<User>{
     public int getHighScore() {
         return highScore;
     }
+
+    public static ArrayList<User> getUsersSorted() {
+        ArrayList<User> sortUsers = new ArrayList<>(users);
+        Collections.sort(sortUsers);
+        return sortUsers;
+    }
+
     public int getUserRank() {
         ArrayList<User> sortUsers = new ArrayList<>(users);
         Collections.sort(sortUsers);
