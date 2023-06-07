@@ -20,7 +20,11 @@
 
     <TextField promptText="username" fx:id="username"/>
     <Text fx:id="usernameCheck"/>
-    <PasswordField promptText="password" fx:id="password"/>
+    <HBox spacing="10" alignment="CENTER">
+        <PasswordField promptText="password" fx:id="password"/>
+        <Button text="random password" onAction="#getRandomPassword"/>
+        <Button text="show/hide password" onAction="#togglePasswordVisible"/>
+    </HBox>
     <Text fx:id="passwordCheck"/>
 <!--    <Button fx:id="visible" text="show password" onAction="#showPassword" prefWidth="40" prefHeight="40">-->
 <!--    </Button>-->
@@ -42,7 +46,7 @@
         <TextField promptText="slogan" fx:id="slogan"/>
         <Button text="random slogan" fx:id="randomSlogan" onAction="#changeRandomSlogan"/>
     </HBox>
-    <HBox spacing="10" alignment="CENTER">
+    <HBox spacing="10" alignment="CENTER" fx:id="commonSloganHBox">
         <fx:define>
             <ToggleGroup fx:id="commonSlogan"/>
         </fx:define>
