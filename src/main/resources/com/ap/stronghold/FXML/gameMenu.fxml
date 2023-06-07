@@ -1,7 +1,8 @@
 <?import javafx.scene.layout.VBox?>
-<VBox id="GameMenu" prefHeight="700.0" prefWidth="1100.0"
-      stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/8"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ap.stronghold.view.GameMenu"
-      alignment="CENTER" spacing="15">
+<?import javafx.scene.layout.GridPane?>
+<GridPane id="GameMenu" prefHeight="1080.0" prefWidth="1920.0"
+          stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/8"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ap.stronghold.view.GameMenu"
+          alignment="CENTER">
 
-</VBox>
+</GridPane>
