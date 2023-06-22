@@ -201,6 +201,9 @@ public class Menu extends Application {
     public void enterProfileMenu() throws Exception {
         (new ProfileMenu()).start(MainMenu.stage);
     }
+    public void enterShopMenu() throws Exception{
+        (new ShopMenu()).start(MainMenu.stage);
+    }
 
     public void exit() {
         User.saveUser();

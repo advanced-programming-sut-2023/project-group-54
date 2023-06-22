@@ -4,15 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="add invalid command">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="add hover and rectangle(not debugged)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/users.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/gameMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/gameMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ShopMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ShopMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/CSS/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/CSS/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/menu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/shopMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/shopMenu.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,13 +92,26 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ap.stronghold.Main" />
       <module name="StrongHold" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.ap.stronghold.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShopMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.ap.stronghold.view.ShopMenu" />
+      <module name="StrongHold" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ap.stronghold.view.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -123,6 +135,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.ShopMenu" />
       </list>
     </recent_temporary>
   </component>
@@ -302,7 +315,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684154937125</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="add hover and rectangle(not debugged)">
+      <created>1687204675738</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1687204675738</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -359,7 +379,8 @@
     <MESSAGE value="set lorfs in 2 maps and clear block + added first resources" />
     <MESSAGE value="set lorfs in 2 maps and clear block + added first resources next turn +-" />
     <MESSAGE value="trade showing debug" />
-    <option name="LAST_COMMIT_MESSAGE" value="trade showing debug" />
+    <MESSAGE value="add hover and rectangle(not debugged)" />
+    <option name="LAST_COMMIT_MESSAGE" value="add hover and rectangle(not debugged)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -372,10 +393,28 @@
           <properties class="java.lang.RuntimeException" package="java.lang" />
           <option name="timeStamp" value="5" />
         </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="13" />
+        </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/controller/MapMenuController.java</url>
           <line>541</line>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ShopMenu.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ShopMenu.java</url>
+          <line>33</line>
+          <properties class="com.ap.stronghold.view.ShopMenu" method="run">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
