@@ -10,12 +10,10 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -24,7 +22,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.print.attribute.standard.Media;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -204,7 +204,8 @@ public class ShopMenu extends Application {
                 StackPane stackPane = new StackPane();
                 stackPane.getChildren().add(createGroup(imageView));
                 hbox.getChildren().add(stackPane);
-                ;
+
+
             }
         }
         return hbox;
@@ -245,8 +246,44 @@ public class ShopMenu extends Application {
         Group group = new Group(imageView, border);
         group.setOnMouseEntered(e -> border.setStroke(Color.RED));
         group.setOnMouseExited(e -> border.setStroke(Color.BLACK));
+        group.setOnMouseClicked(e -> {
+            ImageView selectedImageView = new ImageView(imageView.getImage());
+            selectedImageView.setFitWidth(imageView.getFitWidth());
+            selectedImageView.setFitHeight(imageView.getFitHeight());
 
-        return group;
+
+            Button buyButton = new Button("Buy");
+            buyButton.setOnAction(event -> {
+
+                System.out.println("Buy button clicked");
+            });
+
+            Button sellButton = new Button("Sell");
+            sellButton.setOnAction(event -> {
+                Stage stage = (Stage) sellButton.getScene().getWindow();
+                stage.close();
+            });
+
+            HBox buttonBox = new HBox(buyButton, sellButton);
+            buttonBox.setSpacing(10);
+            buttonBox.setAlignment(Pos.CENTER);
+
+            VBox pageBox = new VBox(selectedImageView, buttonBox);
+
+            pageBox.setSpacing(10);
+            pageBox.setPadding(new Insets(10));
+
+
+
+            Pane pane = new Pane( pageBox);
+            Scene pageScene = new Scene(pane, 400, 300);
+            URL url = getClass().getResource("/com/ap/stronghold/CSS/style1.css");
+            pageScene.getStylesheets().add(url.toExternalForm());
+            Stage pageStage = new Stage();
+            pageStage.setScene(pageScene);
+            pageStage.show();
+        });
+    return group;
     }
 
 
