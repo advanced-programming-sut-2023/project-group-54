@@ -4,7 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<Pane id="ShopMenu" prefHeight="400.0" prefWidth="600.0"
+<Pane id="ShopMenu" prefHeight="700" prefWidth="1100"
       stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ap.stronghold.view.ShopMenu">
 
