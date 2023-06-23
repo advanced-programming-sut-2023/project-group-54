@@ -6,60 +6,63 @@ import com.ap.stronghold.controller.MapMenuController;
 import com.ap.stronghold.model.Direction;
 import com.ap.stronghold.model.Game;
 import com.ap.stronghold.model.MapType;
-import com.ap.stronghold.model.Node;
 import com.ap.stronghold.view.enums.commands.Command;
 import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.GameMenuMessage;
 import com.ap.stronghold.view.enums.messages.MapMenuMessage;
 import javafx.application.Application;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import javafx.scene.shape.Rectangle;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 
-import static com.ap.stronghold.view.MainMenu.stage;
-
 public class GameMenu extends Application {
-    private Rectangle selectionRectangle;
-    private boolean isSelectingTiles = false;
-    private HashMap<Integer, ArrayList<Integer>> selectedTiles = new HashMap<>();
-    private static int tilesLength = 50;
     public static GridPane pane;
     private static int xOfMap;
     private static int yOfMap;
     private static MapType typeForTreeAndTexture = MapType.DEFAULT;
     private static Direction direction = Direction.F;
-    private static final HashMap<MapType, Image> images;
-    private static ImageView[][] imageViews;
-
-    private static int x;
-    private static int y;
     private Scene scene;
+    private static HashMap<MapType, Image> images;
+    private static ImageView[][] imageViews;
     private double startDragX;
     private double startDragY;
-    private int xPressed=0;
-    private int yPressed=0;
-    private int yDragged=0;
-    private int xDragged=0;
 
+    static {
+        images = new HashMap<>();
+        images.put(MapType.EARTH, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/earth.png").toExternalForm()));
+        images.put(MapType.EARTH_AND_STONE, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/earth_and_stone.png").toExternalForm()));
+        images.put(MapType.BOULDERS, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/boulders.png").toExternalForm()));
+        images.put(MapType.ROCK_N, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_n.png").toExternalForm()));
+        images.put(MapType.ROCK_S, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_s.png").toExternalForm()));
+        images.put(MapType.ROCK_E, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_e.png").toExternalForm()));
+        images.put(MapType.ROCK_W, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_w.png").toExternalForm()));
+        images.put(MapType.IRON, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/iron.png").toExternalForm()));
+        images.put(MapType.OASIS_GRASS, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/oasis_grass.png").toExternalForm()));
+        images.put(MapType.SCRUB, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/scrub.png").toExternalForm()));
+        images.put(MapType.THICK_SCRUB, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/thick_scrub.png").toExternalForm()));
+        images.put(MapType.OIL, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/oil.png").toExternalForm()));
+        images.put(MapType.SHALLOW_WATER, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/shallow_water.png").toExternalForm()));
+        images.put(MapType.RIVER, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/river.png").toExternalForm()));
+        images.put(MapType.SMALL_POND, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/small_pond.png").toExternalForm()));
+        images.put(MapType.BIG_POUND, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/big_pound.png").toExternalForm()));
+        images.put(MapType.BEACH, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/beach.png").toExternalForm()));
+        images.put(MapType.SEA, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/sea.png").toExternalForm()));
+
+        imageViews = new ImageView[38][20];
+        for(int i = 0; i < 38; i++){
+            for (int j = 0; j < 20; j++){
+                imageViews[i][j] = new ImageView();
+            }
+        }
+    }
 
     public static void run() {
         String command;
@@ -632,6 +635,7 @@ public class GameMenu extends Application {
                 return;
             case SUCCESS:
                 System.out.println("you successfully dropped your building on position x " + x + " y " + y);
+                return;
         }
     }
 
@@ -676,172 +680,71 @@ public class GameMenu extends Application {
         GameMenuController.setNextUser();
     }
 
-    //----------------------------------------------------------graphics--------------------------------------------
-    static {
-        images = new HashMap<>();
-        images.put(MapType.EARTH, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/earth.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.EARTH_AND_STONE, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/earth_and_stone.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.BOULDERS, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/boulders.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.ROCK_N, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_n.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.ROCK_S, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_s.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.ROCK_E, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_e.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.ROCK_W, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_w.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.IRON, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/iron.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.OASIS_GRASS, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/oasis_grass.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.SCRUB, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/scrub.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.THICK_SCRUB, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/thick_scrub.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.OIL, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/oil.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.SHALLOW_WATER, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/shallow_water.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.RIVER, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/river.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.SMALL_POND, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/small_pond.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.BIG_POUND, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/big_pound.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.BEACH, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/beach.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.SEA, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/sea.png").toExternalForm(), tilesLength, tilesLength, false, false));
-
-    }
-    private static void reload(){
-        x = ((900 / tilesLength) - (200 / tilesLength));
-        y = (1800 / tilesLength);
-
-
-        imageViews = new ImageView[y][x];
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                imageViews[i][j] = new ImageView();
-            }
-        }
-
-        pane.getChildren().clear();
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                pane.add(imageViews[i][j], i, j);
-            }
-        }
-        pane.add(new ImageView(new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/backgrounds/01.jpg")
-                .toExternalForm(), 1800, 200, false, false)), 0, x, y, (200 / tilesLength));
-    }
     @Override
     public void start(Stage stage) throws Exception {
         pane = FXMLLoader.load(Menu.class.getResource("/com/ap/stronghold/FXML/gameMenu.fxml"));
-        reload();
-        xOfMap = x / 2;
-        yOfMap = y / 2;
+        xOfMap = 10;
+        yOfMap = 19;
+
+        for (int i = 0; i < 38; i++){
+            for (int j = 0; j < 20; j++){
+                pane.add(imageViews[i][j], i, j);
+            }
+        }
+
         showMap();
+
         scene = new Scene(pane);
+
+        scene.setOnMousePressed(mouseEvent -> {
+            startDragX = mouseEvent.getSceneX();
+            startDragY = mouseEvent.getSceneY();
+        });
+
+        scene.setOnMouseDragged(event -> {
+            boolean moved = false;
+            if ((int) (startDragX - event.getSceneX()) / 50 > 0) {
+                yOfMap += (startDragX - event.getSceneX()) / 50;
+                yOfMap = Math.min(yOfMap, 381);
+                moved = true;
+            } else if ((int) (event.getSceneX() - startDragX) / 50 > 0) {
+                yOfMap -= (event.getSceneX() - startDragX) / 50;
+                yOfMap = Math.max(yOfMap, 19);
+                moved = true;
+            }
+            if ((int) (startDragY - event.getSceneY()) / 50 > 0) {
+                xOfMap += (startDragY - event.getSceneY()) / 50;
+                xOfMap = Math.min(xOfMap, 381);
+                moved = true;
+            } else if ((int) (event.getSceneY() - startDragY) / 50 > 0) {
+                xOfMap -= (event.getSceneY() - startDragY) / 50;
+                xOfMap = Math.max(xOfMap, 10);
+                moved = true;
+            }
+            if(moved){
+                startDragX = event.getSceneX();
+                startDragY = event.getSceneY();
+                showMap();
+            }
+        });
+
         stage.setScene(scene);
         stage.show();
     }
 
-
-
-
-
     public void showMap() {
-        reload();
-        int xMin = xOfMap < x / 2 ? 0 : xOfMap - x / 2;
-        int xMax = xOfMap < x / 2 ? x : xOfMap + x / 2;
-        int yMin = yOfMap < y / 2 ? 0 : yOfMap - y / 2;
-        int yMax = yOfMap < y / 2 ? y : yOfMap + y / 2;
+        int xMin = xOfMap < 10 ? 0 : xOfMap - 10;
+        int xMax = xOfMap < 10 ? 20 : xOfMap + 10;
+        int yMin = yOfMap < 19 ? 0 : yOfMap - 19;
+        int yMax = yOfMap < 19 ? 38 : yOfMap + 19;
         for (int i = yMin; i < yMax; i++) {
             for (int j = xMin; j < xMax; j++) {
-                imageViews[i - yMin][j - xMin].setImage(images.get(Game.getGameMap()[j][i].getMapType()));
+                imageViews[i-yMin][j-xMin].setImage(images.get(Game.getGameMap()[j][i].getMapType()));
             }
         }
-
-
-
-
     }
-    public void press(MouseEvent mouseEvent){
-        if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-            System.out.println("clicked");
-            isSelectingTiles = true;
-            selectedTiles = new HashMap<>();
-            yPressed = (int) (mouseEvent.getSceneX() / tilesLength);
-            xPressed = (int) (mouseEvent.getSceneY() / tilesLength);
-            System.out.println(yPressed +" "+ xPressed);
-            imageViews[yPressed][xPressed].setStyle("-fx-border-color: red; -fx-border-width: 3px;");
-            showMap();
 
-        }
-        else {
-            startDragX = mouseEvent.getSceneX();
-            startDragY = mouseEvent.getSceneY();
-        }
-    }
-    public void drag(MouseEvent event){
-        if (isSelectingTiles && event.getButton().equals(MouseButton.MIDDLE)) {
-            if ((int) (xPressed - event.getSceneX()) / tilesLength > 0){
-                xDragged = (int) (event.getSceneX() / tilesLength);
-                yDragged = (int) (event.getSceneY() / tilesLength);
-
-                // Update the size of the selectionRectangle
-                selectionRectangle.setWidth(Math.abs((yDragged - yPressed) * tilesLength));
-                selectionRectangle.setHeight(Math.abs((xDragged - xPressed) * tilesLength));
-
-                // Update the position of the selectionRectangle
-                selectionRectangle.setX(Math.min(yPressed, yDragged) * tilesLength);
-                selectionRectangle.setY(Math.min(xPressed, xDragged) * tilesLength);
-            }
-        showMap();
-        }
-        if (event.getButton().equals(MouseButton.SECONDARY)) {
-            if (startDragY <= 700) {
-                boolean moved = false;
-                if ((int) (startDragX - event.getSceneX()) / tilesLength > 0) {
-                    yOfMap += (startDragX - event.getSceneX()) / tilesLength;
-                    yOfMap = Math.min(yOfMap, 400 - y / 2);
-                    moved = true;
-                } else if ((int) (event.getSceneX() - startDragX) / tilesLength > 0) {
-                    yOfMap -= (event.getSceneX() - startDragX) / tilesLength;
-                    yOfMap = Math.max(yOfMap, y / 2);
-                    moved = true;
-                }
-                if ((int) (startDragY - event.getSceneY()) / tilesLength > 0) {
-                    xOfMap += (startDragY - event.getSceneY()) / tilesLength;
-                    xOfMap = Math.min(xOfMap, 400 - x / 2);
-                    moved = true;
-                } else if ((int) (event.getSceneY() - startDragY) / tilesLength > 0) {
-                    xOfMap -= (event.getSceneY() - startDragY) / tilesLength;
-                    xOfMap = Math.max(xOfMap, x / 2);
-                    moved = true;
-                }
-                if (moved) {
-                    startDragX = event.getSceneX();
-                    startDragY = event.getSceneY();
-                    showMap();
-                }
-            }
-        }
-
-    }
-    public void scroll(ScrollEvent scrollEvent){
-        double deltaY = scrollEvent.getDeltaY();
-        if (deltaY < 0) {
-            tilesLength -= 5;
-            tilesLength = Math.max(tilesLength, 10);
-        } else {
-            tilesLength += 5;
-            tilesLength = Math.min(tilesLength, 60);
-        }
-        showMap();
-    }
-public void hover(MouseEvent mouseEvent){
-    int xMin = xOfMap < x / 2 ? 0 : xOfMap - x / 2;
-    int xMax = xOfMap < x / 2 ? x : xOfMap + x / 2;
-    int yMin = yOfMap < y / 2 ? 0 : yOfMap - y / 2;
-    int yMax = yOfMap < y / 2 ? y : yOfMap + y / 2;
-    //TODO fix x and y with controller
-        Tooltip tooltip=new Tooltip("salam");
-        tooltip.setShowDelay(Duration.seconds(1));
-        tooltip.setShowDuration(Duration.seconds(3));
-        tooltip.setWrapText(true);
-        Tooltip.install(pane,tooltip);
-}
-
-
-
-    public void initialize() {
+    public void initialize(){
 
     }
 }
