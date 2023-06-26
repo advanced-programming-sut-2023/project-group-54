@@ -10,21 +10,25 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
+import javax.print.attribute.standard.Media;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -42,7 +46,7 @@ public class ShopMenu extends Application {
             else if (CommandHandler.parsCommand(Command.BACK, command) != null)
                 return;
             else if (CommandHandler.parsCommand(Command.SHOW_PRICE_LIST, command) != null)
-                showPriceList();
+                return;
             else if ((options = CommandHandler.parsCommand(Command.SHOP_BUY, command)) != null)
                 buyItem(options);
             else if ((options = CommandHandler.parsCommand(Command.SHOP_SELL, command)) != null)
@@ -52,10 +56,6 @@ public class ShopMenu extends Application {
     }
 
 
-    public static void showPriceList() {
-        String result = ShopMenuController.showItemList();
-        System.out.println(result);
-    }
 
     public static void buyItem(HashMap<String, ArrayList<String>> options) {
         String name = null;
@@ -149,7 +149,7 @@ public class ShopMenu extends Application {
         HBox hbox3 = createHBox3();
         HBox hbox4 = createHBox4();
         VBox vbox = new VBox(hbox1, hbox2, hbox3, hbox4);
-        vbox.setLayoutX(550);
+        vbox.setLayoutX(450);
         vbox.setLayoutY(150);
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10));
@@ -170,7 +170,7 @@ public class ShopMenu extends Application {
             || item.getName().equals("spear")){
                 ImageView imageView = createImageView("/Media/"+item.getName()+".png");
                 StackPane stackPane = new StackPane();
-                stackPane.getChildren().add(createGroup(imageView));
+                stackPane.getChildren().add(createGroup(imageView, item.getName()));
                 hbox.getChildren().add(stackPane);;
             }
         }
@@ -187,7 +187,7 @@ public class ShopMenu extends Application {
                     || item.getName().equals("mace")) {
                 ImageView imageView = createImageView("/Media/" + item.getName() + ".png");
                 StackPane stackPane = new StackPane();
-                stackPane.getChildren().add(createGroup(imageView));
+                stackPane.getChildren().add(createGroup(imageView, item.getName()));
                 hbox.getChildren().add(stackPane);
                 ;
             }
@@ -202,9 +202,10 @@ public class ShopMenu extends Application {
                     || item.getName().equals("crossbow")) {
                 ImageView imageView = createImageView("/Media/" + item.getName() + ".png");
                 StackPane stackPane = new StackPane();
-                stackPane.getChildren().add(createGroup(imageView));
+                stackPane.getChildren().add(createGroup(imageView, item.getName()));
                 hbox.getChildren().add(stackPane);
-                ;
+
+
             }
         }
         return hbox;
@@ -217,7 +218,7 @@ public class ShopMenu extends Application {
                     || item.getName().equals("ale")) {
                 ImageView imageView = createImageView("/Media/" + item.getName() + ".png");
                 StackPane stackPane = new StackPane();
-                stackPane.getChildren().add(createGroup(imageView));
+                stackPane.getChildren().add(createGroup(imageView, item.getName()));
                 hbox.getChildren().add(stackPane);
                 ;
             }
@@ -236,8 +237,8 @@ public class ShopMenu extends Application {
 
         return imageView;
     }
-    private Group createGroup(ImageView imageView) {
-
+    private Group createGroup(ImageView imageView,String itemName) {
+        Resource resource=Resource.getResourceByName(itemName);
         Rectangle border = new Rectangle(imageView.getFitWidth(), imageView.getFitHeight());
         border.setStroke(Color.BLACK);
         border.setFill(null);
@@ -245,8 +246,171 @@ public class ShopMenu extends Application {
         Group group = new Group(imageView, border);
         group.setOnMouseEntered(e -> border.setStroke(Color.RED));
         group.setOnMouseExited(e -> border.setStroke(Color.BLACK));
+        group.setOnMouseClicked(e -> {
+            ImageView selectedImageView = new ImageView(imageView.getImage());
+            selectedImageView.setFitWidth(imageView.getFitWidth()*2);
+            selectedImageView.setFitHeight(imageView.getFitHeight()*2);
+            selectedImageView.setLayoutY(0);
+            Label buyPriceLabel = new Label("Buy Price: $" +resource.getBuyPrice() );
+            buyPriceLabel.setStyle("-fx-font-size: 22px;\n" +
+                    "    -fx-font-family: \"Arial Black\";\n" +
+                    "    -fx-fill: #818181;\n" +
+                    "    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );");
+            buyPriceLabel.setLayoutX(10);
+            buyPriceLabel.setLayoutY(selectedImageView.getFitHeight() + 10);
 
-        return group;
+            Label sellPriceLabel = new Label("Sell Price: $" + resource.getSellPrice());
+            sellPriceLabel.setLayoutX(10);
+            sellPriceLabel.setLayoutY(selectedImageView.getFitHeight() + 30);
+            sellPriceLabel.setStyle("-fx-font-size: 22px;\n" +
+                    "    -fx-font-family: \"Arial Black\";\n" +
+                    "    -fx-fill: #818181;\n" +
+                    "    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );");
+
+
+            Label amountLabel = new Label("Amount: " +ShopMenuController.getAmount(itemName) );
+            amountLabel.setLayoutX(10);
+            amountLabel.setLayoutY(selectedImageView.getFitHeight() + 30);
+            amountLabel.setStyle("-fx-font-size: 22px;\n" +
+                    "    -fx-font-family: \"Arial Black\";\n" +
+                    "    -fx-fill: #818181;\n" +
+                    "    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );");
+            TextField textField = new TextField();
+            textField.setLayoutX(10);
+            textField.setLayoutY(10);
+            textField.setScaleX(1.5);
+            textField.setStyle("-fx-prompt-text-fill: grey; -fx-font-size: 14px; -fx-font-family: Arial;-fx-background-color: black; -fx-text-fill: white;");
+            textField.setPromptText("amount of "+itemName);
+            Button buyButton = new Button("Buy");
+
+
+            buyButton.setOnAction(event -> {
+                String input = textField.getText();
+                if (!input.isEmpty()) {
+                    Popup popup1 = new Popup();
+                    int amount = Integer.parseInt(input);
+                    // Do something with the amount, such as add it to the user's inventory
+                    Text message = new Text("Buy button clicked with amount: " + amount);
+                    message.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+                    message.setFill(Color.WHITE);
+                    message.setTextAlignment(TextAlignment.CENTER);
+
+                    Button closeButton = new Button("Close");
+                    closeButton.setOnAction(event1 -> popup1.hide());
+
+                    VBox layout = new VBox(10, message, closeButton);
+                    layout.setAlignment(Pos.CENTER);
+                    layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px;");
+
+
+                    popup1.getContent().add(layout);
+                    popup1.setAutoHide(true);
+                    popup1.show(buyButton.getScene().getWindow());
+                } else {
+                    Popup popup1 = new Popup();
+                    // Handle empty input
+                    Text message = new Text("Please enter an amount.");
+                    message.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+                    message.setFill(Color.WHITE);
+                    message.setTextAlignment(TextAlignment.CENTER);
+
+                    Button closeButton = new Button("Close");
+                    closeButton.setOnAction(event1 -> popup1.hide());
+
+                    VBox layout = new VBox(10, message, closeButton);
+                    layout.setAlignment(Pos.CENTER);
+                    layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px;");
+
+
+                    popup1.getContent().add(layout);
+                    popup1.setAutoHide(true);
+                    popup1.show(buyButton.getScene().getWindow());
+                }
+            });
+
+            Button sellButton = new Button("Sell");
+            sellButton.setOnAction(event -> {
+                String input = textField.getText();
+                if (!input.isEmpty()) {
+                    Popup popup1 = new Popup();
+                    int amount = Integer.parseInt(input);
+                    // Do something with the amount, such as add it to the user's inventory
+                    Text message = new Text("Sell button clicked with amount: " + amount);
+                    message.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+                    message.setFill(Color.WHITE);
+                    message.setTextAlignment(TextAlignment.CENTER);
+
+                    Button closeButton = new Button("Close");
+                    closeButton.setOnAction(event1 -> popup1.hide());
+
+                    VBox layout = new VBox(10, message, closeButton);
+                    layout.setAlignment(Pos.CENTER);
+                    layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px;");
+
+
+                    popup1.getContent().add(layout);
+                    popup1.setAutoHide(true);
+                    popup1.show(buyButton.getScene().getWindow());
+                } else {
+                    Popup popup1 = new Popup();
+                    // Handle empty input
+                    Text message = new Text("Please enter an amount.");
+                    message.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+                    message.setFill(Color.WHITE);
+                    message.setTextAlignment(TextAlignment.CENTER);
+
+                    Button closeButton = new Button("Close");
+                    closeButton.setOnAction(event1 -> popup1.hide());
+
+                    VBox layout = new VBox(10, message, closeButton);
+                    layout.setAlignment(Pos.CENTER);
+                    layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px;");
+
+
+                    popup1.getContent().add(layout);
+                    popup1.setAutoHide(true);
+                    popup1.show(buyButton.getScene().getWindow());
+                }
+            });
+            Button backButton=new Button("Back");
+            backButton.setOnAction(event -> {
+                Stage stage = (Stage) backButton.getScene().getWindow();
+                stage.close();
+            });
+
+
+
+            HBox buttonBox = new HBox(buyButton, sellButton,backButton);
+            buttonBox.setSpacing(20);
+            buttonBox.setAlignment(Pos.CENTER);
+
+            VBox pageBox = new VBox(selectedImageView, buyPriceLabel, sellPriceLabel,amountLabel, buttonBox);
+            pageBox.setLayoutY(150);
+            pageBox.setLayoutX(350);
+            pageBox.setSpacing(20);
+            pageBox.setPadding(new Insets(10));
+
+            pageBox.getChildren().add(1, textField);
+
+
+
+            Pane pane = new Pane( pageBox);
+            Label itemNameLabel = new Label(itemName);
+            itemNameLabel.setStyle("-fx-font-size: 30px;\n" +
+                    "    -fx-font-family: \"Arial Black\";\n" +
+                    "    -fx-fill: #818181;\n" +
+                    "    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );");
+            itemNameLabel.setLayoutY(50);
+            itemNameLabel.setLayoutX(450);
+            pane.getChildren().add(itemNameLabel);
+            Scene pageScene = new Scene(pane, 1100,700 );
+            URL url = getClass().getResource("/com/ap/stronghold/CSS/style1.css");
+            pageScene.getStylesheets().add(url.toExternalForm());
+            Stage pageStage = new Stage();
+            pageStage.setScene(pageScene);
+            pageStage.show();
+        });
+    return group;
     }
 
 
