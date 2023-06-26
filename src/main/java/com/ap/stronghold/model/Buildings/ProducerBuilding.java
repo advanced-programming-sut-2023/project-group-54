@@ -33,6 +33,28 @@ public class ProducerBuilding extends Building {
         return currentOutput;
     }
 
+    public Double getProductionRate(){
+        HashMap<Resource, Double> inputs = null;
+        HashMap<Resource, Double> outputs = null;
+        for (HashMap<Resource, Double> resourceDoubleHashMap : producerType.getPuts().keySet()) {
+            for (Resource resource : producerType.getPuts().get(resourceDoubleHashMap).keySet()) {
+                if(resource.equals(currentOutput)){
+                    inputs = resourceDoubleHashMap;
+                    outputs = producerType.getPuts().get(resourceDoubleHashMap);
+                }
+            }
+        }
+        double rateUp = 0;
+        double rateDown = 0;
+        for (Resource resource : inputs.keySet()) {
+            rateUp += inputs.get(resource);
+        }
+        for (Resource resource : outputs.keySet()) {
+            rateDown += outputs.get(resource);
+        }
+        return rateUp/rateDown;
+    }
+
     public boolean changeOutput(Resource resource) {
         boolean canProduceResource = false;
         for (HashMap<Resource, Double> input : producerType.getPuts().keySet()) {

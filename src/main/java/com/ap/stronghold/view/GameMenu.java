@@ -1,39 +1,59 @@
 package com.ap.stronghold.view;
 
-import com.ap.stronghold.controller.Controller;
-import com.ap.stronghold.controller.GameMenuController;
-import com.ap.stronghold.controller.MapMenuController;
+import com.ap.stronghold.controller.*;
+import com.ap.stronghold.model.Buildings.Building;
+import com.ap.stronghold.model.Buildings.ProducerBuilding;
 import com.ap.stronghold.model.Direction;
 import com.ap.stronghold.model.Game;
 import com.ap.stronghold.model.MapType;
+import com.ap.stronghold.model.units.State;
+import com.ap.stronghold.model.units.Unit;
 import com.ap.stronghold.view.enums.commands.Command;
 import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.GameMenuMessage;
 import com.ap.stronghold.view.enums.messages.MapMenuMessage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.regex.Matcher;
 
 public class GameMenu extends Application {
-    public static GridPane pane;
+    public static GridPane gridePane;
+    public static Pane pane;
+    private static int tilesLength = 50;
     private static int xOfMap;
     private static int yOfMap;
     private static MapType typeForTreeAndTexture = MapType.DEFAULT;
     private static Direction direction = Direction.F;
-    private Scene scene;
     private static HashMap<MapType, Image> images;
     private static ImageView[][] imageViews;
-    private double startDragX;
-    private double startDragY;
+    private static int x;
+    private static int y;
+    private static Tooltip tooltip;
+    private static Rectangle rectangle = new Rectangle();
+    private static int rectangleYIn;
+    private static int rectangleXIn;
+    private static int rectangleYOut;
+    private static int rectangleXOut;
+
+    ArrayList<Unit> unitsInRectangle = new ArrayList<>();
+    HashSet<Building> buildingsInRectangle = new HashSet<>();
 
     static {
         images = new HashMap<>();
@@ -56,13 +76,17 @@ public class GameMenu extends Application {
         images.put(MapType.BEACH, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/beach.png").toExternalForm()));
         images.put(MapType.SEA, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/sea.png").toExternalForm()));
 
-        imageViews = new ImageView[38][20];
-        for(int i = 0; i < 38; i++){
-            for (int j = 0; j < 20; j++){
+        imageViews = new ImageView[180][70];
+        for (int i = 0; i < 180; i++) {
+            for (int j = 0; j < 70; j++) {
                 imageViews[i][j] = new ImageView();
             }
         }
     }
+
+    private Scene scene;
+    private double startDragX;
+    private double startDragY;
 
     public static void run() {
         String command;
@@ -680,51 +704,59 @@ public class GameMenu extends Application {
         GameMenuController.setNextUser();
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        pane = FXMLLoader.load(Menu.class.getResource("/com/ap/stronghold/FXML/gameMenu.fxml"));
-        xOfMap = 10;
-        yOfMap = 19;
+    private static void reload() {
+        x = ((900 / tilesLength) - (200 / tilesLength));
+        y = (1800 / tilesLength);
 
-        for (int i = 0; i < 38; i++){
-            for (int j = 0; j < 20; j++){
-                pane.add(imageViews[i][j], i, j);
+        xOfMap = xOfMap < x / 2 ? x / 2 : xOfMap;
+        yOfMap = yOfMap < y / 2 ? y / 2 : yOfMap;
+
+        gridePane.getChildren().clear();
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                imageViews[i][j].setFitWidth(tilesLength);
+                imageViews[i][j].setFitHeight(tilesLength);
+                gridePane.add(imageViews[i][j], i, j);
             }
         }
 
+        gridePane.add(new ImageView(new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/backgrounds/01.jpg")
+                .toExternalForm(), 1800, (200 / tilesLength) * tilesLength, false, false)), 0, x, y, (200 / tilesLength));
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        pane = FXMLLoader.load(Menu.class.getResource("/com/ap/stronghold/FXML/gameMenu.fxml"));
+        gridePane = (GridPane) pane.getChildren().get(0);
+        reload();
+
+        xOfMap = x / 2;
+        yOfMap = y / 2;
+
         showMap();
+
+        pane.getChildren().add(rectangle);
 
         scene = new Scene(pane);
 
-        scene.setOnMousePressed(mouseEvent -> {
-            startDragX = mouseEvent.getSceneX();
-            startDragY = mouseEvent.getSceneY();
-        });
-
-        scene.setOnMouseDragged(event -> {
-            boolean moved = false;
-            if ((int) (startDragX - event.getSceneX()) / 50 > 0) {
-                yOfMap += (startDragX - event.getSceneX()) / 50;
-                yOfMap = Math.min(yOfMap, 381);
-                moved = true;
-            } else if ((int) (event.getSceneX() - startDragX) / 50 > 0) {
-                yOfMap -= (event.getSceneX() - startDragX) / 50;
-                yOfMap = Math.max(yOfMap, 19);
-                moved = true;
-            }
-            if ((int) (startDragY - event.getSceneY()) / 50 > 0) {
-                xOfMap += (startDragY - event.getSceneY()) / 50;
-                xOfMap = Math.min(xOfMap, 381);
-                moved = true;
-            } else if ((int) (event.getSceneY() - startDragY) / 50 > 0) {
-                xOfMap -= (event.getSceneY() - startDragY) / 50;
-                xOfMap = Math.max(xOfMap, 10);
-                moved = true;
-            }
-            if(moved){
-                startDragX = event.getSceneX();
-                startDragY = event.getSceneY();
-                showMap();
+        scene.setOnKeyPressed(keyEvent -> {
+            KeyCode keyCode = keyEvent.getCode();
+            switch (keyCode){
+                case M:
+                    moveSelectedUnit();
+                    break;
+                case S:
+                    setStateSelectedUnit();
+                    break;
+                case A:
+                    attackSelectedUnit();
+                    break;
+                case D:
+                    disbandSelectedUnit();
+                    break;
+                case R:
+                    repairSelectedBuilding();
+                    break;
             }
         });
 
@@ -732,19 +764,333 @@ public class GameMenu extends Application {
         stage.show();
     }
 
-    public void showMap() {
-        int xMin = xOfMap < 10 ? 0 : xOfMap - 10;
-        int xMax = xOfMap < 10 ? 20 : xOfMap + 10;
-        int yMin = yOfMap < 19 ? 0 : yOfMap - 19;
-        int yMax = yOfMap < 19 ? 38 : yOfMap + 19;
-        for (int i = yMin; i < yMax; i++) {
-            for (int j = xMin; j < xMax; j++) {
-                imageViews[i-yMin][j-xMin].setImage(images.get(Game.getGameMap()[j][i].getMapType()));
+    private void repairSelectedBuilding() {
+        if(buildingsInRectangle.size() < 1){
+            return;
+        }
+        for (Building building : buildingsInRectangle) {
+            BuildingMenuController.setSelectedBuilding(building);
+            BuildingMenuController.repair();
+        }
+    }
+
+    private void disbandSelectedUnit() {
+        if(unitsInRectangle.size() < 1){
+            return;
+        }
+        UnitMenuController.setSelectedUnit(unitsInRectangle);
+        UnitMenuController.disbandUnit();
+    }
+
+    private void attackSelectedUnit() {
+        if(unitsInRectangle.size() < 1){
+            return;
+        }
+        int destinationX = 0;
+        int destinationY = 0;
+
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("attack to");
+        dialog.setHeaderText("attack coordinates");
+        dialog.setContentText("what is X coordinates of attack?");
+        Optional<String> result = dialog.showAndWait();
+        while (result.isPresent()){
+            try {
+                int x = Integer.parseInt(result.get());
+                if(x < 0 || x > Game.getX()){
+                    dialog.setHeaderText("X must lower than " + Game.getX());
+                    result = dialog.showAndWait();
+                }else{
+                    destinationX = x;
+                    break;
+                }
+            } catch (NumberFormatException e){
+                dialog.setHeaderText("X must be a number");
+                result = dialog.showAndWait();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (!result.isPresent()){
+            return;
+        }
+
+        dialog.setHeaderText("attack coordinates");
+        dialog.setContentText("what is Y coordinates of attack?");
+        result = dialog.showAndWait();
+        while (result.isPresent()){
+            try {
+                int y = Integer.parseInt(result.get());
+                if(y < 0 || y > Game.getY()){
+                    dialog.setHeaderText("Y must lower than " + Game.getY());
+                    result = dialog.showAndWait();
+                }else{
+                    destinationY = y;
+                    break;
+                }
+            } catch (NumberFormatException e){
+                dialog.setHeaderText("Y must be a number");
+                result = dialog.showAndWait();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (!result.isPresent()){
+            return;
+        }
+
+        UnitMenuController.setSelectedUnit(unitsInRectangle);
+        UnitMenuController.attack(destinationX, destinationY);
+    }
+
+    private void setStateSelectedUnit() {
+        if(unitsInRectangle.size() < 1){
+            return;
+        }
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("state");
+        dialog.setHeaderText("select unit state");
+
+        ChoiceBox<String> order = new ChoiceBox<String>();
+        order.getItems().add("standing");
+        order.getItems().add("defensive");
+        order.getItems().add("offensive");
+        order.setValue("standing");
+        HBox content = new HBox();
+        content.setSpacing(10);
+        content.getChildren().addAll(new Label("select units state: "), order);
+        dialog.getDialogPane().setContent(content);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                return order.getValue();
+            }
+            return null;
+        });
+
+        Optional<String> result = dialog.showAndWait();
+
+        if(result.isPresent()){
+            State state = null;
+            switch (result.get()){
+                case "standing":
+                    state = State.STATIC;
+                    break;
+                case "defensive":
+                    state = State.DEFENSIVE;
+                    break;
+                case "offensive":
+                    state = State.AGGRESSIVE;
+                    break;
+            }
+            UnitMenuController.setSelectedUnit(unitsInRectangle);
+            UnitMenuController.setState(state);
+        }
+    }
+
+    private void moveSelectedUnit() {
+        if(unitsInRectangle.size() < 1){
+            return;
+        }
+        int destinationX = 0;
+        int destinationY = 0;
+
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("move to");
+        dialog.setHeaderText("destination coordinates");
+        dialog.setContentText("what is X coordinates of destination?");
+        Optional<String> result = dialog.showAndWait();
+        while (result.isPresent()){
+            try {
+                int x = Integer.parseInt(result.get());
+                if(x < 0 || x > Game.getX()){
+                    dialog.setHeaderText("X must lower than " + Game.getX());
+                    result = dialog.showAndWait();
+                }else{
+                    destinationX = x;
+                    break;
+                }
+            } catch (NumberFormatException e){
+                dialog.setHeaderText("X must be a number");
+                result = dialog.showAndWait();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (!result.isPresent()){
+            return;
+        }
+
+        dialog.setHeaderText("destination coordinates");
+        dialog.setContentText("what is Y coordinates of destination?");
+        result = dialog.showAndWait();
+        while (result.isPresent()){
+            try {
+                int y = Integer.parseInt(result.get());
+                if(y < 0 || y > Game.getY()){
+                    dialog.setHeaderText("Y must lower than " + Game.getY());
+                    result = dialog.showAndWait();
+                }else{
+                    destinationY = y;
+                    break;
+                }
+            } catch (NumberFormatException e){
+                dialog.setHeaderText("Y must be a number");
+                result = dialog.showAndWait();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (!result.isPresent()){
+            return;
+        }
+
+        UnitMenuController.setSelectedUnit(unitsInRectangle);
+        UnitMenuController.moveUnit(destinationX, destinationY);
+    }
+
+    public void press(MouseEvent mouseEvent) {
+        startDragX = mouseEvent.getSceneX();
+        startDragY = mouseEvent.getSceneY();
+        rectangle.setWidth(0);
+        rectangle.setHeight(0);
+    }
+
+    public void drag(MouseEvent event) {
+        if (event.getButton().equals(MouseButton.SECONDARY)) {
+            if (startDragY <= 700) {
+                boolean moved = false;
+                if ((int) (startDragX - event.getSceneX()) / tilesLength > 0) {
+                    yOfMap += (startDragX - event.getSceneX()) / tilesLength;
+                    yOfMap = Math.min(yOfMap, 400 - y / 2);
+                    moved = true;
+                } else if ((int) (event.getSceneX() - startDragX) / tilesLength > 0) {
+                    yOfMap -= (event.getSceneX() - startDragX) / tilesLength;
+                    yOfMap = Math.max(yOfMap, y / 2);
+                    moved = true;
+                }
+                if ((int) (startDragY - event.getSceneY()) / tilesLength > 0) {
+                    xOfMap += (startDragY - event.getSceneY()) / tilesLength;
+                    xOfMap = Math.min(xOfMap, 400 - x / 2);
+                    moved = true;
+                } else if ((int) (event.getSceneY() - startDragY) / tilesLength > 0) {
+                    xOfMap -= (event.getSceneY() - startDragY) / tilesLength;
+                    xOfMap = Math.max(xOfMap, x / 2);
+                    moved = true;
+                }
+                if (moved) {
+                    startDragX = event.getSceneX();
+                    startDragY = event.getSceneY();
+                    showRectAngle();
+                    showMap();
+                }
+            }
+        }
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (startDragY <= 700) {
+                rectangleYIn = (int) ((startDragX / 1800) * y) + yOfMap - y / 2;
+                rectangleXIn = (int) ((startDragY / (900 - ((200 / tilesLength) * tilesLength))) * x) + xOfMap - x / 2;
+                rectangleYOut = (int) ((event.getX() / 1800) * y) + yOfMap - y / 2;
+                rectangleXOut = (int) ((event.getY() / (900 - ((200 / tilesLength) * tilesLength))) * x) + xOfMap - x / 2;
+                if (rectangleYIn > rectangleYOut) {
+                    int tmp = rectangleYIn;
+                    rectangleYIn = rectangleYOut;
+                    rectangleYOut = tmp;
+                }
+                if (rectangleXIn > rectangleXOut) {
+                    int tmp = rectangleXIn;
+                    rectangleXIn = rectangleXOut;
+                    rectangleXOut = tmp;
+                }
+                showRectAngle();
             }
         }
     }
 
-    public void initialize(){
+    private void showRectAngle() {
+        int xMin = xOfMap < x / 2 ? 0 : xOfMap - x / 2;
+        int yMin = yOfMap < y / 2 ? 0 : yOfMap - y / 2;
+        rectangle.setX((rectangleYIn - yMin) * tilesLength);
+        rectangle.setY((rectangleXIn - xMin) * tilesLength);
+        rectangle.setWidth((rectangleYOut - rectangleYIn + 1) * tilesLength);
+        rectangle.setHeight((rectangleXOut - rectangleXIn + 1) * tilesLength);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(Color.RED);
+        for (int i = rectangleXIn; i < rectangleXOut; i++) {
+            for (int j = rectangleYIn; j < rectangleYOut; j++) {
+                unitsInRectangle.addAll(Game.getGameMap()[i][j].getUnit());
+                buildingsInRectangle.add(Game.getGameMap()[i][j].getBuilding());
+            }
+        }
+        int numberOfUnit = unitsInRectangle.size();
+        double avRate = 0;
+        double rateSize = 0;
+        double rateMax = 0;
+        double rateMin = 0;
+        for (Building building : buildingsInRectangle) {
+            if(building instanceof ProducerBuilding){
+                avRate += ((ProducerBuilding) building).getProductionRate();
+                rateSize++;
+                if(rateMax < ((ProducerBuilding) building).getProductionRate()){
+                    rateMax = ((ProducerBuilding) building).getProductionRate();
+                }
+                if(rateMin > ((ProducerBuilding) building).getProductionRate() || rateMin == 0){
+                    rateMin = ((ProducerBuilding) building).getProductionRate();
+                }
+            }
+        }
+        avRate = avRate == 0 ? 0 : avRate/rateSize;
+        System.out.println("units: " + numberOfUnit + "\navRate: " + avRate + "\nrateMax : " + rateMax + "\nrateMin : " + rateMin);
+    }
 
+    public void scroll(ScrollEvent scrollEvent) {
+        double deltaY = scrollEvent.getDeltaY();
+        if (deltaY < 0) {
+            tilesLength -= 1;
+            tilesLength = Math.max(tilesLength, 10);
+        } else {
+            tilesLength += 1;
+            tilesLength = Math.min(tilesLength, 60);
+        }
+        showMap();
+        showRectAngle();
+    }
+
+    public void showMap() {
+        reload();
+        int xMin = xOfMap < x / 2 ? 0 : xOfMap - x / 2;
+        int xMax = xOfMap < x / 2 ? x : xOfMap + x / 2;
+        int yMin = yOfMap < y / 2 ? 0 : yOfMap - y / 2;
+        int yMax = yOfMap < y / 2 ? y : yOfMap + y / 2;
+        if (x % 2 == 1) {
+            xMax++;
+        }
+        if (y % 2 == 1) {
+            yMax++;
+        }
+        for (int i = yMin; i < yMax; i++) {
+            for (int j = xMin; j < xMax; j++) {
+                imageViews[i - yMin][j - xMin].setImage(images.get(Game.getGameMap()[j][i].getMapType()));
+            }
+        }
+    }
+
+    public void hover(MouseEvent mouseEvent) {
+        int yIn = (int) ((mouseEvent.getX() / 1800) * y) + yOfMap - y / 2;
+        int xIn = (int) ((mouseEvent.getY() / (900 - ((200 / tilesLength) * tilesLength))) * x) + xOfMap - x / 2;
+        tooltip = new Tooltip("x: " + xIn + " y: " + yIn + "\n" + MapMenuController.showMapDetails(xIn, yIn));
+        String unitData = "";
+        for (Unit unit : Game.getGameMap()[xIn][yIn].getUnit()) {
+            unitData += (unit.getxTarget() == -1 ? "" : "attacking...") + "type: " + unit.getUnitType().name() + " health: " + unit.getHp() + " damage: " + unit.getUnitType().getDamage() + "\n";
+        }
+        tooltip = new Tooltip(unitData);
+        tooltip.setShowDelay(Duration.seconds(1));
+        tooltip.setShowDuration(Duration.seconds(4));
+        tooltip.setWrapText(true);
+        Tooltip.install(gridePane, tooltip);
     }
 }

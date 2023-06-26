@@ -24,6 +24,11 @@ public class UnitMenuController {
         }
     }
 
+    public static void setSelectedUnit(ArrayList<Unit> units) {
+        selectedUnit.clear();
+        selectedUnit.addAll(units);
+    }
+
     public static UnitMenuMessage moveUnit(int xCoordinate, int yCoordinate) {
         //check if out of range
         for (Unit unit : selectedUnit) {

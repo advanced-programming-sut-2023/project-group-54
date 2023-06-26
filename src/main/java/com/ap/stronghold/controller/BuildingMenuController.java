@@ -14,6 +14,9 @@ public class BuildingMenuController {
     public static void setSelectedBuilding(int x, int y) {
         selectedBuilding = Game.getGameMap()[x][y].getBuilding();
     }
+    public static void setSelectedBuilding(Building building) {
+        selectedBuilding = building;
+    }
 
     public static BuildingMenuMessage repair() {
         if (selectedBuilding.getBuildingType().getBuildingGroup().equals(BuildingGroup.CASTLE))
