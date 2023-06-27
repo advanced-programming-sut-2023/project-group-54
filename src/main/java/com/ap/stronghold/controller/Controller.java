@@ -126,4 +126,7 @@ public class Controller {
     public static boolean isExit() {
         return exit;
     }
+
+    public static void setNewAvatar(Object object) {
+    }
 }

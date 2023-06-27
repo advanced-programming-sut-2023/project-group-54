@@ -137,4 +137,18 @@ public class ProfileMenuController {
         }
         return result;
     }
+
+    public static boolean checkAnswer(String answer) {
+        if (answer.equals(Controller.getLoggedInUser().getQuestionAnswer())) return true;
+        return false;
+    }
+
+    public static void setSecurityQuestion(int questionNumber, String questionAnswer) {
+        Controller.getLoggedInUser().setQuestionNumber(questionNumber);
+        Controller.getLoggedInUser().setQuestionAnswer(questionAnswer);
+    }
+
+    public static void setPhoto(String string) {
+        Controller.getLoggedInUser().setAvatarPath(string);
+    }
 }

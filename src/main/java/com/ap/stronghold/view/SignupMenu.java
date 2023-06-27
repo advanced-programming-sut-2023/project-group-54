@@ -7,6 +7,7 @@ import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.SignupMenuMessage;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -59,8 +60,10 @@ public class SignupMenu extends Application {
     }
 
     public void signUp() {
+        String sloganText = "";
+        if (haveSlogan.isSelected()) sloganText = slogan.getText();
         SignupMenuMessage result = SignupMenuController.setUser(username.getText()
-                , password.getText(), nickname.getText(), email.getText(), slogan.getText());
+                , password.getText(), nickname.getText(), email.getText(),sloganText);
         switch (result) {
             case SECURITY_QUESTION:
                 setSecurityQuestion();
@@ -156,7 +159,13 @@ public class SignupMenu extends Application {
         slogan.setText(commonSlogan.getSelectedToggle().getUserData().toString());
     }
 
+    @FXML
     public void initialize(){
+        username.setText("");
+        password.setText("");
+        nickname.setText("");
+        email.setText("");
+        slogan.setText("");
         emailCheck.setFill(Color.RED);
         nicknameCheck.setFill(Color.RED);
         passwordCheck.setFill(Color.RED);
