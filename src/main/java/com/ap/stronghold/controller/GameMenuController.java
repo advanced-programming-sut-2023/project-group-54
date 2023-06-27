@@ -20,7 +20,7 @@ public class GameMenuController {
 
     private static boolean hasApple() {
         for (Building building : Building.getBuildings()) {
-            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
+            if (building.getBuildingType().equals(BuildingType.GRANARY) && building.getOwner().equals(Game.getCurrentUser().getGovernment())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
                     if (resource.equals(Resource.APPLE)) {
@@ -35,7 +35,7 @@ public class GameMenuController {
 
     private static boolean hasMeet() {
         for (Building building : Building.getBuildings()) {
-            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
+            if (building.getBuildingType().equals(BuildingType.GRANARY) && building.getOwner().equals(Game.getCurrentUser().getGovernment())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
                     if (resource.equals(Resource.MEAT)) {
@@ -50,7 +50,7 @@ public class GameMenuController {
 
     private static boolean hasCheese() {
         for (Building building : Building.getBuildings()) {
-            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
+            if (building.getBuildingType().equals(BuildingType.GRANARY) && building.getOwner().equals(Game.getCurrentUser().getGovernment())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
                     if (resource.equals(Resource.CHEESE)) {
@@ -65,7 +65,7 @@ public class GameMenuController {
 
     private static boolean hasBread() {
         for (Building building : Building.getBuildings()) {
-            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
+            if (building.getBuildingType().equals(BuildingType.GRANARY) && building.getOwner().equals(Game.getCurrentUser().getGovernment())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
                     if (resource.equals(Resource.BREAD)) {

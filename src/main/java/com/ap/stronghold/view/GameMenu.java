@@ -6,6 +6,7 @@ import com.ap.stronghold.model.Buildings.ProducerBuilding;
 import com.ap.stronghold.model.Direction;
 import com.ap.stronghold.model.Game;
 import com.ap.stronghold.model.MapType;
+import com.ap.stronghold.model.User;
 import com.ap.stronghold.model.units.State;
 import com.ap.stronghold.model.units.Unit;
 import com.ap.stronghold.view.enums.commands.Command;
@@ -33,6 +34,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,18 +52,44 @@ public class GameMenu extends Application {
     private static Direction direction = Direction.F;
     private static HashMap<String, Image> images;
     private static ImageView[][] imageViews;
+    private static ImageView[] faceN;
+    private static ImageView[] faceP;
+    private static ImageView[] faceM;
     private static int x;
     private static int y;
     private static Tooltip tooltip;
     private static Rectangle rectangle = new Rectangle();
     private static VBox rectangleVBox;
     private static VBox popularityVBox;
+    private static VBox anotherVBox;
+    private static VBox buttonVBox;
+    private static Slider slider = new Slider();
     private static int rectangleYIn = -1;
     private static int rectangleXIn = -1;
     private static int rectangleYOut = -1;
     private static int rectangleXOut = -1;
     private static ArrayList<Unit> unitsInRectangle = new ArrayList<>();
     private static HashSet<Building> buildingsInRectangle = new HashSet<>();
+    private static Text numberOfUnitsText;
+    private static Text avRateText;
+    private static Text rateMinText;
+    private static Text rateMaxText;
+    private static Text foodText;
+    private static Text taxText;
+    private static Text fearText;
+    private static Text religionText;
+    private static Text rateText;
+    private static Text popularityText;
+    private static HBox foodHBox;
+    private static HBox taxHBox;
+    private static HBox fearHBox;
+    private static HBox religionHBox;
+    private static HBox rateHBox;
+    private static HBox popularityHBox;
+    private static Text treasuryText;
+    private static Text populationText;
+
+
 
     static {
         images = new HashMap<>();
@@ -130,57 +158,110 @@ public class GameMenu extends Application {
         images.put("POLETURNER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/POLETURNER.png").toExternalForm()));
         images.put("MAIN_HOUSE", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/MAIN_HOUSE.png").toExternalForm()));
 
+        faceN = new ImageView[6];
+        faceP = new ImageView[6];
+        faceM = new ImageView[6];
+
+        for (int i = 0; i < 6; i++) {
+            ImageView imageView = new ImageView();
+            imageView.setImage(new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Face/n.png").toExternalForm()));
+            imageView.setFitWidth(20);
+            imageView.setFitHeight(20);
+            faceN[i] = imageView;
+        }
+        for (int i = 0; i < 6; i++) {
+            ImageView imageView = new ImageView();
+            imageView.setImage(new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Face/p.png").toExternalForm()));
+            imageView.setFitWidth(20);
+            imageView.setFitHeight(20);
+            faceP[i] = imageView;
+        }
+        for (int i = 0; i < 6; i++) {
+            ImageView imageView = new ImageView();
+            imageView.setImage(new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Face/m.png").toExternalForm()));
+            imageView.setFitWidth(20);
+            imageView.setFitHeight(20);
+            faceM[i] = imageView;
+        }
+
         imageViews = new ImageView[180][70];
         for (int i = 0; i < 180; i++) {
             for (int j = 0; j < 70; j++) {
                 imageViews[i][j] = new ImageView();
             }
         }
-    }
 
+        numberOfUnitsText = new Text();
+        avRateText = new Text();
+        rateMinText = new Text();
+        rateMaxText = new Text();
+
+        foodText = new Text();
+        taxText = new Text();
+        fearText = new Text();
+        religionText = new Text();
+        rateText = new Text();
+        popularityText = new Text();
+        foodHBox = new HBox();
+        taxHBox = new HBox();
+        fearHBox = new HBox();
+        religionHBox = new HBox();
+        rateHBox = new HBox();
+        popularityHBox = new HBox();
+
+        slider.setMin(-5);
+        slider.setMax(5);
+        slider.setShowTickLabels(true);
+        slider.setSnapToTicks(true);
+        slider.setMinorTickCount(0);
+        slider.setMajorTickUnit(1);
+        slider.setBlockIncrement(1);
+        treasuryText = new Text();
+        populationText = new Text();
+    }
     private Scene scene;
-    private double startDragX;
-    private double startDragY;
+    private double startDragX = -1;
+    private double startDragY = -1;
 
     public static void run() {
         String command;
         HashMap<String, ArrayList<String>> options;
         while (true) {
             command = MainMenu.getScanner().nextLine();
-            if (CommandHandler.parsCommand(Command.EXIT, command) != null)
-                return;
-            else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
-                System.out.println("game menu");
-            else if (CommandHandler.parsCommand(Command.TRADE_MENU, command) != null)
+//            if (CommandHandler.parsCommand(Command.EXIT, command) != null)
+//                return;
+//            else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
+//                System.out.println("game menu");
+            if (CommandHandler.parsCommand(Command.TRADE_MENU, command) != null)
                 TradeMenu.run();
-            else if ((options = CommandHandler.parsCommand(Command.SHOW_POPULARITY_FACTORS, command)) != null)
-                popularityFactorsShow(options);
-            else if ((options = CommandHandler.parsCommand(Command.SHOW_POPULARITY, command)) != null)
-                popularityShow(options);
-            else if ((options = CommandHandler.parsCommand(Command.SHOW_FOOD_LIST, command)) != null)
-                foodListShow(options);
-            else if ((options = CommandHandler.parsCommand(Command.FOOD_RATE_SHOW, command)) != null)
-                foodRateShow(options);
-            else if ((options = CommandHandler.parsCommand(Command.TAX_RATE_SHOW, command)) != null)
-                taxRateShow(options);
+//            else if ((options = CommandHandler.parsCommand(Command.SHOW_POPULARITY_FACTORS, command)) != null)
+//                popularityFactorsShow(options);
+//            else if ((options = CommandHandler.parsCommand(Command.SHOW_POPULARITY, command)) != null)
+//                popularityShow(options);
+//            else if ((options = CommandHandler.parsCommand(Command.SHOW_FOOD_LIST, command)) != null)
+//                foodListShow(options);
+//            else if ((options = CommandHandler.parsCommand(Command.FOOD_RATE_SHOW, command)) != null)
+//                foodRateShow(options);
+//            else if ((options = CommandHandler.parsCommand(Command.TAX_RATE_SHOW, command)) != null)
+//                taxRateShow(options);
             else if ((options = CommandHandler.parsCommand(Command.FEAR_RATE, command)) != null)
                 fearRateSet(options);
-            else if ((options = CommandHandler.parsCommand(Command.SHOW_MAP, command)) != null)
-                setXYOfMapCommonErrors(options, "show map");
-            else if ((options = CommandHandler.parsCommand(Command.MOVE_MAP, command)) != null)
-                showMapMove(options);
-            else if ((options = CommandHandler.parsCommand(Command.SHOW_DETAILS, command)) != null)
-                setXYOfMapCommonErrors(options, "details");
+//            else if ((options = CommandHandler.parsCommand(Command.SHOW_MAP, command)) != null)
+//                setXYOfMapCommonErrors(options, "show map");
+//            else if ((options = CommandHandler.parsCommand(Command.MOVE_MAP, command)) != null)
+//                showMapMove(options);
+//            else if ((options = CommandHandler.parsCommand(Command.SHOW_DETAILS, command)) != null)
+//                setXYOfMapCommonErrors(options, "details");
 //            else if ((matcher = MainMenu.getMatcher(command, Regexes.MAP_DETAILS_MOVE.getRegex())) != null)
 //                showMapDetailsMove(matcher);
             else if ((options = CommandHandler.parsCommand(Command.SET_TEXTURE_FOR_ONE_HOUSE, command)) != null)
                 setXYOfMapCommonErrors(options, "texture");
             else if ((options = CommandHandler.parsCommand(Command.SET_TEXTURE_FOR_RECTANGLE, command)) != null)
                 checkRectangleIsValid(options, "texture");
-            else if ((options = CommandHandler.parsCommand(Command.CLEAR, command)) != null)
-                setXYOfMapCommonErrors(options, "clear block");
-            else if ((options = CommandHandler.parsCommand(Command.CLEAR_FOR_RECTANGLE, command)) != null)
-                checkRectangleIsValid(options, "clear block");
+//            else if ((options = CommandHandler.parsCommand(Command.CLEAR, command)) != null)
+//                setXYOfMapCommonErrors(options, "clear block");
+//            else if ((options = CommandHandler.parsCommand(Command.CLEAR_FOR_RECTANGLE, command)) != null)
+//                checkRectangleIsValid(options, "clear block");
             else if ((options = CommandHandler.parsCommand(Command.DROP_ROCK, command)) != null)
                 setXYOfMapCommonErrors(options, "drop rock");
             else if ((options = CommandHandler.parsCommand(Command.DROP_ROCK_FOR_RECTANGLE, command)) != null)
@@ -758,7 +839,7 @@ public class GameMenu extends Application {
         GameMenuController.setNextUser();
     }
 
-    private static void reload() {
+    private void reload() {
         x = ((900 / tilesLength) - (200 / tilesLength));
         y = (1800 / tilesLength);
 
@@ -767,7 +848,28 @@ public class GameMenu extends Application {
         yOfMap = Math.max(yOfMap, y / 2);
         yOfMap = Math.min(yOfMap, (Game.getY() - y / 2));
 
-        gridePane.getChildren().clear();
+        ArrayList<Node> nodesToRemove = new ArrayList<>();
+        for (Node child : gridePane.getChildren()) {
+            if (child instanceof ImageView) {
+                nodesToRemove.add(child);
+            }
+        }
+        gridePane.getChildren().removeAll(nodesToRemove);
+//        gridePane.getChildren().clear();
+        setImageViews();
+
+        rectangleVBoxShow();
+        popularityVBoxShow();
+        anotherVBoxShow();
+    }
+
+    private void anotherVBoxShow() {
+        treasuryText.setText("Treasury: " + Game.getCurrentUser().getGovernment().getGold());
+        populationText.setText("Population: " + Game.getCurrentUser().getGovernment().getPopulation() +
+                "/" + Game.getCurrentUser().getGovernment().getMaxPopulation());
+    }
+
+    private void setImageViews() {
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 imageViews[i][j].setFitWidth(tilesLength);
@@ -775,7 +877,9 @@ public class GameMenu extends Application {
                 gridePane.add(imageViews[i][j], i, j);
             }
         }
+    }
 
+    private void rectangleVBoxShow() {
         int numberOfUnit = unitsInRectangle.size();
         double avRate = 0;
         double rateSize = 0;
@@ -795,68 +899,103 @@ public class GameMenu extends Application {
         }
         avRate = avRate == 0 ? 0 : avRate / rateSize;
 
-        rectangleVBox.getChildren().clear();
-        rectangleVBox.getChildren().add(new Text("Rectangle Info"));
-        rectangleVBox.getChildren().add(new Text("units: " + numberOfUnit));
-        rectangleVBox.getChildren().add(new Text("avRate: " + avRate));
-        rectangleVBox.getChildren().add(new Text("rateMax: " + rateMax));
-        rectangleVBox.getChildren().add(new Text("rateMin: " + rateMin));
+        numberOfUnitsText.setText("units: " + numberOfUnit);
+        avRateText.setText("avRate: " + avRate);
+        rateMaxText.setText("rateMax: " + rateMax);
+        rateMinText.setText("rateMin: " + rateMin);
+    }
 
-        gridePane.add(rectangleVBox, 0, x, (200 / tilesLength), (200 / tilesLength));
-
-
+    private void popularityVBoxShow() {
         int foodPop = GameMenuController.getPopularityFromFood();
         int taxPop = GameMenuController.getPopularityFromTax();
         int fearPop = GameMenuController.getPopularityFromFear();
         int religionPop = GameMenuController.getPopularityFromReligion();
         int popularity = GameMenuController.getPopularity();
 
-        Text foodText = new Text("Food: " + foodPop);
-        if (foodPop > 0)
+        foodHBox.getChildren().clear();
+        taxHBox.getChildren().clear();
+        fearHBox.getChildren().clear();
+        religionHBox.getChildren().clear();
+        popularityHBox.getChildren().clear();
+        rateHBox.getChildren().clear();
+
+        foodText.setText("Food: " + foodPop);
+        foodHBox.getChildren().add(foodText);
+        if (foodPop > 0) {
             foodText.setFill(Color.GREEN);
-        else if (foodPop < 0)
+            foodHBox.getChildren().add(faceP[0]);
+        } else if (foodPop < 0) {
             foodText.setFill(Color.RED);
+            foodHBox.getChildren().add(faceN[0]);
+        } else {
+            foodText.setFill(Color.BLACK);
+            foodHBox.getChildren().add(faceM[0]);
+        }
 
-        Text taxText = new Text("Tax: " + taxPop);
-        if (taxPop > 0)
+        taxText.setText("Tax: " + taxPop);
+        taxHBox.getChildren().add(taxText);
+        if (taxPop > 0) {
             taxText.setFill(Color.GREEN);
-        else if (taxPop < 0)
+            taxHBox.getChildren().add(faceP[1]);
+        } else if (taxPop < 0) {
             taxText.setFill(Color.RED);
+            taxHBox.getChildren().add(faceN[1]);
+        }else {
+            taxText.setFill(Color.BLACK);
+            taxHBox.getChildren().add(faceM[1]);
+        }
 
-        Text fearText = new Text("Fear: " + fearPop);
-        if (fearPop > 0)
+        fearText.setText("Fear: " + fearPop);
+        fearHBox.getChildren().add(fearText);
+        if (fearPop > 0) {
             fearText.setFill(Color.GREEN);
-        else if (fearPop < 0)
+            fearHBox.getChildren().add(faceP[2]);
+        } else if (fearPop < 0) {
             fearText.setFill(Color.RED);
+            fearHBox.getChildren().add(faceN[2]);
+        }else {
+            fearText.setFill(Color.BLACK);
+            fearHBox.getChildren().add(faceM[2]);
+        }
 
-        Text religionText = new Text("Religion: " + religionPop);
-        if (religionPop > 0)
+        religionText.setText("Religion: " + religionPop);
+        religionHBox.getChildren().add(religionText);
+        if (religionPop > 0) {
             religionText.setFill(Color.GREEN);
-        else if (religionPop < 0)
+            religionHBox.getChildren().add(faceP[3]);
+        } else if (religionPop < 0) {
             religionText.setFill(Color.RED);
+            religionHBox.getChildren().add(faceN[3]);
+        }else {
+            religionText.setFill(Color.BLACK);
+            religionHBox.getChildren().add(faceM[3]);
+        }
 
-        Text rateText = new Text("Rate: " + (foodPop + taxPop + fearPop + religionPop));
-        if ((foodPop + taxPop + fearPop + religionPop) > 0)
+        rateText.setText("Rate: " + (foodPop + taxPop + fearPop + religionPop));
+        rateHBox.getChildren().add(rateText);
+        if ((foodPop + taxPop + fearPop + religionPop) > 0) {
             rateText.setFill(Color.GREEN);
-        else if ((foodPop + taxPop + fearPop + religionPop) < 0)
+            rateHBox.getChildren().add(faceP[4]);
+        } else if ((foodPop + taxPop + fearPop + religionPop) < 0) {
             rateText.setFill(Color.RED);
+            rateHBox.getChildren().add(faceN[4]);
+        }else {
+            rateText.setFill(Color.BLACK);
+            rateHBox.getChildren().add(faceM[4]);
+        }
 
-        Text popularityText = new Text("Popularity: " + popularity + "/100");
-        if (popularity > 0)
+        popularityText.setText("Popularity: " + popularity + "/100");
+        popularityHBox.getChildren().add(popularityText);
+        if (popularity > 0) {
             popularityText.setFill(Color.GREEN);
-        else if (popularity < 0)
+            popularityHBox.getChildren().add(faceP[5]);
+        } else if (popularity < 0) {
             popularityText.setFill(Color.RED);
-
-        popularityVBox.getChildren().clear();
-        popularityVBox.getChildren().add(new Text("Popularity Info"));
-        popularityVBox.getChildren().add(foodText);
-        popularityVBox.getChildren().add(taxText);
-        popularityVBox.getChildren().add(fearText);
-        popularityVBox.getChildren().add(religionText);
-        popularityVBox.getChildren().add(rateText);
-        popularityVBox.getChildren().add(popularityText);
-
-        gridePane.add(popularityVBox, (200 / tilesLength), x, (200 / tilesLength), (200 / tilesLength));
+            popularityHBox.getChildren().add(faceN[5]);
+        }else {
+            populationText.setFill(Color.BLACK);
+            popularityHBox.getChildren().add(faceM[5]);
+        }
     }
 
     @Override
@@ -867,10 +1006,83 @@ public class GameMenu extends Application {
         rectangleVBox = new VBox();
         rectangleVBox.setAlignment(Pos.CENTER);
         rectangleVBox.setSpacing(10);
+        rectangleVBox.getChildren().add(new Text("Rectangle Info"));
+        rectangleVBox.getChildren().add(numberOfUnitsText);
+        rectangleVBox.getChildren().add(avRateText);
+        rectangleVBox.getChildren().add(rateMaxText);
+        rectangleVBox.getChildren().add(rateMinText);
 
         popularityVBox = new VBox();
         popularityVBox.setAlignment(Pos.CENTER);
         popularityVBox.setSpacing(10);
+        popularityVBox.getChildren().add(new Text("Popularity Info"));
+        popularityVBox.getChildren().add(foodHBox);
+        popularityVBox.getChildren().add(taxHBox);
+        popularityVBox.getChildren().add(fearHBox);
+        popularityVBox.getChildren().add(religionHBox);
+        popularityVBox.getChildren().add(rateHBox);
+        popularityVBox.getChildren().add(popularityHBox);
+
+        anotherVBox = new VBox();
+        anotherVBox.setAlignment(Pos.CENTER);
+        anotherVBox.setSpacing(10);
+        anotherVBox.getChildren().add(new Text("Fear rate"));
+        anotherVBox.getChildren().add(slider);
+        slider.valueProperty().addListener(
+                (observableValue, number, t1) -> {
+                    GameMenuController.fearRateSet(t1.intValue());
+                    popularityVBoxShow();
+                }
+        );
+        anotherVBox.getChildren().add(treasuryText);
+        anotherVBox.getChildren().add(populationText);
+
+        buttonVBox = new VBox();
+        buttonVBox.setAlignment(Pos.CENTER);
+        buttonVBox.setSpacing(10);
+        Button briefing = new Button("Briefing");
+        buttonVBox.getChildren().add(briefing);
+        briefing.setOnAction(actionEvent -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Briefing");
+            alert.setHeaderText("Briefings");
+            String s = "";
+            for (User user : Game.getUsers()) {
+                s += "username: " + user.getUsername() + " | Gold: " + user.getGovernment().getGold() + "\n";
+            }
+            alert.setContentText(s);
+
+            alert.showAndWait();
+        });
+
+        Button delete = new Button("Delete");
+        buttonVBox.getChildren().add(delete);
+        delete.setOnAction(actionEvent -> {
+            for (Building building : buildingsInRectangle) {
+                if(building != null)
+                    MapMenuController.clearBlock(building.getX1Position(), building.getY1Position(), true);
+            }
+            reload();
+            showRectAngle();
+            showMap();
+        });
+
+        Button option = new Button("Option");
+        buttonVBox.getChildren().add(option);
+        option.setOnAction(actionEvent -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Options");
+            alert.setHeaderText("exit");
+            alert.setContentText("Are you sure about exit?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                //TODO: exit
+            } else {
+
+            }
+
+        });
 
 
         showRectAngle();
@@ -883,6 +1095,11 @@ public class GameMenu extends Application {
         pane.getChildren().add(rectangle);
 
         showMap();
+
+        gridePane.add(rectangleVBox, (200 / tilesLength) * 0, x, (200 / tilesLength), (200 / tilesLength));
+        gridePane.add(popularityVBox, (200 / tilesLength) * 1, x, (200 / tilesLength), (200 / tilesLength));
+        gridePane.add(anotherVBox, (200 / tilesLength) * 2, x, (200 / tilesLength), (200 / tilesLength));
+        gridePane.add(buttonVBox, (200 / tilesLength) * 3, x, (200 / tilesLength), (200 / tilesLength));
 
         scene = new Scene(pane);
 
@@ -1091,20 +1308,25 @@ public class GameMenu extends Application {
     }
 
     public void press(MouseEvent mouseEvent) {
-        startDragX = mouseEvent.getSceneX();
-        startDragY = mouseEvent.getSceneY();
-        if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-            rectangleXOut = rectangleXIn = -1;
-            rectangleYOut = rectangleYIn = -1;
-            rectangle.setWidth(0);
-            rectangle.setHeight(0);
-            showRectAngle();
+        if (mouseEvent.getY() <= (900 - (200 / tilesLength) * tilesLength)) {
+            startDragX = mouseEvent.getSceneX();
+            startDragY = mouseEvent.getSceneY();
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                rectangleXOut = rectangleXIn = -1;
+                rectangleYOut = rectangleYIn = -1;
+                rectangle.setWidth(0);
+                rectangle.setHeight(0);
+                showRectAngle();
+            }
+        } else {
+            startDragX = -1;
+            startDragY = -1;
         }
     }
 
     public void drag(MouseEvent event) {
         if (event.getButton().equals(MouseButton.SECONDARY)) {
-            if (startDragY <= 700) {
+            if (startDragY != -1 && event.getSceneY() <= (900 - (200 / tilesLength) * tilesLength)) {
                 boolean moved = false;
                 if ((int) (startDragX - event.getSceneX()) / tilesLength > 0) {
                     yOfMap += (startDragX - event.getSceneX()) / tilesLength;
@@ -1129,7 +1351,7 @@ public class GameMenu extends Application {
                 }
             }
         } else if (event.getButton().equals(MouseButton.PRIMARY)) {
-            if (startDragY <= 700) {
+            if (startDragY != -1 && event.getSceneY() <= (900 - (200 / tilesLength) * tilesLength)) {
                 rectangleYIn = (int) ((startDragX / 1800) * y) + yOfMap - y / 2;
                 rectangleXIn = (int) ((startDragY / (900 - ((200 / tilesLength) * tilesLength))) * x) + xOfMap - x / 2;
                 rectangleYOut = (int) ((event.getX() / 1800) * y) + yOfMap - y / 2;
@@ -1151,6 +1373,8 @@ public class GameMenu extends Application {
     }
 
     private void showRectAngle() {
+        unitsInRectangle.clear();
+        buildingsInRectangle.clear();
         if (rectangleYIn != -1 && rectangleXIn != -1) {
             int xMin = xOfMap < x / 2 ? 0 : xOfMap - x / 2;
             int yMin = yOfMap < y / 2 ? 0 : yOfMap - y / 2;
@@ -1180,8 +1404,18 @@ public class GameMenu extends Application {
             tilesLength = Math.min(tilesLength, 60);
         }
         reload();
+        gridePaneReload();
         showRectAngle();
         showMap();
+    }
+
+    private void gridePaneReload() {
+        gridePane.getChildren().clear();
+        setImageViews();
+        gridePane.add(rectangleVBox, (200 / tilesLength) * 0, x, (200 / tilesLength), (200 / tilesLength));
+        gridePane.add(popularityVBox, (200 / tilesLength) * 1, x, (200 / tilesLength), (200 / tilesLength));
+        gridePane.add(anotherVBox, (200 / tilesLength) * 2, x, (200 / tilesLength), (200 / tilesLength));
+        gridePane.add(buttonVBox, (200 / tilesLength) * 3, x, (200 / tilesLength), (200 / tilesLength));
     }
 
     public void showMap() {
@@ -1207,7 +1441,7 @@ public class GameMenu extends Application {
         pane.getChildren().clear();
         pane.getChildren().add(node1);
         pane.getChildren().add(node2);
-        reload();
+//        reload();
         for (Building building : Building.getBuildings()) {
             if (building.getX1Position() >= xMin && building.getX2Position() <= xMax) {
                 if (building.getY1Position() >= yMin && building.getY2Position() <= yMax) {
@@ -1223,7 +1457,7 @@ public class GameMenu extends Application {
     }
 
     public void hover(MouseEvent mouseEvent) {
-        if (mouseEvent.getY() < 700) {
+        if (mouseEvent.getY() <= (900 - (200 / tilesLength) * tilesLength)) {
             int yIn = (int) ((mouseEvent.getX() / 1800) * y) + yOfMap - y / 2;
             int xIn = (int) ((mouseEvent.getY() / (900 - ((200 / tilesLength) * tilesLength))) * x) + xOfMap - x / 2;
             String unitData = "x: " + xIn + " y: " + yIn + "\n" + MapMenuController.showMapDetails(xIn, yIn);
@@ -1234,7 +1468,9 @@ public class GameMenu extends Application {
             tooltip.setShowDelay(Duration.seconds(1));
             tooltip.setShowDuration(Duration.seconds(4));
             tooltip.setWrapText(true);
-            Tooltip.install(gridePane, tooltip);
+            Tooltip.install(pane, tooltip);
+        } else {
+            Tooltip.uninstall(pane, tooltip);
         }
     }
 }
