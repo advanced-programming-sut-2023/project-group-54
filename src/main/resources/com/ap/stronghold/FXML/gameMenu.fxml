@@ -1,9 +1,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<Pane prefHeight="900.0" prefWidth="1800.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/8"
+<Pane onScroll="#scroll" onMouseDragged="#drag"
+      onMousePressed="#press" onMouseMoved="#hover" prefHeight="900.0" prefWidth="1800.0"
+      stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ap.stronghold.view.GameMenu">
-    <GridPane onScroll="#scroll" onMouseDragged="#drag"
-              onMousePressed="#press" onMouseMoved="#hover" alignment="CENTER">
+    <GridPane alignment="CENTER">
 
     </GridPane>
 </Pane>
