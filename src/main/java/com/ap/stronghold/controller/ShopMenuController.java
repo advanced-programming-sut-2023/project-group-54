@@ -1,24 +1,18 @@
 package com.ap.stronghold.controller;
 
 import com.ap.stronghold.model.Game;
+import com.ap.stronghold.model.Government;
 import com.ap.stronghold.model.Resource;
 import com.ap.stronghold.model.User;
 import com.ap.stronghold.view.enums.messages.ShopMenuMessage;
 
 public class ShopMenuController {
-    private static User user = Game.getCurrentUser();
-
-    public static String showItemList() {
-        String result = "";
-        int counter = 1;
-
-        for (Resource item : Resource.values()) {
-            result += (counter++) + "- itemName:" + item.getName() +
-                    " Buy Price: " + item.getBuyPrice() + " Sell Price: " + item.getSellPrice() +
-                    " Your Storage Amount: " + user.getGovernment().getResourceCount(item) + "\n";
-        }
-        return result.trim();
-
+    //private static User user = Game.getCurrentUser();
+    //TODO change this and delete comment
+    private static  User user=new User("ali","23AAaaahhh","al","al@gmail.com","null",1,"sa",new Government());
+    public static double getAmount(String itemName) {
+        Resource resource=Resource.getResourceByName(itemName);
+        return user.getGovernment().getResourceCount(resource);
     }
 
     public static ShopMenuMessage buyItemChecker(String itemName, int amount) {

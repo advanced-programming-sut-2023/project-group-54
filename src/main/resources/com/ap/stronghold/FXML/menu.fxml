@@ -10,4 +10,5 @@
     <Button text="profile" styleClass="button3" onAction="#enterProfileMenu"/>
     <Button text="logout" styleClass="button3" onAction="#logout"/>
     <Button text="exit" styleClass="button3" onAction="#exit"/>
+    <Button text="Shop Menu" styleClass="button3" onAction="#enterShopMenu"/>
 </VBox>

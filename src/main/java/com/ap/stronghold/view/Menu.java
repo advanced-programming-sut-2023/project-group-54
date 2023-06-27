@@ -201,6 +201,9 @@ public class Menu extends Application {
     public void enterProfileMenu() throws Exception {
         (new ProfileMenu()).start(MainMenu.stage);
     }
+    public void enterShopMenu() throws Exception{
+        (new ShopMenu()).start(MainMenu.stage);
+    }
 
     public void exit() {
         User.saveUser();
@@ -237,6 +240,7 @@ public class Menu extends Application {
     private void getUsers(int count) throws Exception {
         ArrayList<User>users = new ArrayList<>();
         users.add(Controller.getLoggedInUser());
+        boolean presented = true;
         for (int i = 1; i < count; i++){
             TextInputDialog dialog = new TextInputDialog("");
             dialog.setTitle("user " + i+1);
@@ -254,8 +258,13 @@ public class Menu extends Application {
                     result = dialog.showAndWait();
                 }
             }
+
+            if(!result.isPresent()){
+                presented = false;
+                break;
+            }
         }
-        if(setMap()){
+        if(presented && setMap()){
             Game.setCurrentUser(Controller.getLoggedInUser());
             Game.setUsers(users);
             Game.setUserRemoved();

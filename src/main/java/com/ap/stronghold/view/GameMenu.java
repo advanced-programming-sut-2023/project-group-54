@@ -1,85 +1,147 @@
 package com.ap.stronghold.view;
 
-import com.ap.stronghold.controller.Controller;
-import com.ap.stronghold.controller.GameMenuController;
-import com.ap.stronghold.controller.MapMenuController;
+import com.ap.stronghold.controller.*;
+import com.ap.stronghold.model.Buildings.Building;
+import com.ap.stronghold.model.Buildings.ProducerBuilding;
 import com.ap.stronghold.model.Direction;
 import com.ap.stronghold.model.Game;
 import com.ap.stronghold.model.MapType;
+import com.ap.stronghold.model.units.State;
+import com.ap.stronghold.model.units.Unit;
 import com.ap.stronghold.view.enums.commands.Command;
 import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.GameMenuMessage;
 import com.ap.stronghold.view.enums.messages.MapMenuMessage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.regex.Matcher;
 
 public class GameMenu extends Application {
+    public static GridPane gridePane;
+    public static Pane pane;
     private static int tilesLength = 50;
-    public static GridPane pane;
     private static int xOfMap;
     private static int yOfMap;
     private static MapType typeForTreeAndTexture = MapType.DEFAULT;
     private static Direction direction = Direction.F;
-    private static HashMap<MapType, Image> images;
+    private static HashMap<String, Image> images;
     private static ImageView[][] imageViews;
-
     private static int x;
     private static int y;
+    private static Tooltip tooltip;
+    private static Rectangle rectangle = new Rectangle();
+    private static VBox rectangleVBox;
+    private static VBox popularityVBox;
+    private static int rectangleYIn = -1;
+    private static int rectangleXIn = -1;
+    private static int rectangleYOut = -1;
+    private static int rectangleXOut = -1;
+    private static ArrayList<Unit> unitsInRectangle = new ArrayList<>();
+    private static HashSet<Building> buildingsInRectangle = new HashSet<>();
+
+    static {
+        images = new HashMap<>();
+        images.put("EARTH", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/earth.png").toExternalForm()));
+        images.put("EARTH_AND_STONE", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/earth_and_stone.png").toExternalForm()));
+        images.put("BOULDERS", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/boulders.png").toExternalForm()));
+        images.put("ROCK_N", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_n.png").toExternalForm()));
+        images.put("ROCK_S", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_s.png").toExternalForm()));
+        images.put("ROCK_E", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_e.png").toExternalForm()));
+        images.put("ROCK_W", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_w.png").toExternalForm()));
+        images.put("IRON", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/iron.png").toExternalForm()));
+        images.put("OASIS_GRASS", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/oasis_grass.png").toExternalForm()));
+        images.put("SCRUB", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/scrub.png").toExternalForm()));
+        images.put("THICK_SCRUB", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/thick_scrub.png").toExternalForm()));
+        images.put("OIL", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/oil.png").toExternalForm()));
+        images.put("SHALLOW_WATER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/shallow_water.png").toExternalForm()));
+        images.put("RIVER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/river.png").toExternalForm()));
+        images.put("SMALL_POND", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/small_pond.png").toExternalForm()));
+        images.put("BIG_POUND", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/big_pound.png").toExternalForm()));
+        images.put("BEACH", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/beach.png").toExternalForm()));
+        images.put("SEA", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/sea.png").toExternalForm()));
+
+        images.put("WALL_STAIRS", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/WALL_STAIRS.png").toExternalForm()));
+        images.put("LOW_WALL", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/LOW_WALL.png").toExternalForm()));
+        images.put("STONE_WALL", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/STONE_WALL.png").toExternalForm()));
+        images.put("SMALL_STONE_GATE", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/SMALL_STONE_GATE.png").toExternalForm()));
+        images.put("LARGE_STONE_GATE", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/LARGE_STONE_GATE.png").toExternalForm()));
+        images.put("DRAW_BRIDGE", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/DRAW_BRIDGE.png").toExternalForm()));
+        images.put("LOOK_OUT_TOWER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/LOOK_OUT_TOWER.png").toExternalForm()));
+        images.put("PERIMETER_TOWER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/PERIMETER_TOWER.png").toExternalForm()));
+        images.put("DEFENCE_TOWER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/DEFENCE_TOWER.png").toExternalForm()));
+        images.put("SQUARE_TOWER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/SQUARE_TOWER.png").toExternalForm()));
+        images.put("ROUND_TOWER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/ROUND_TOWER.png").toExternalForm()));
+        images.put("ARMOURY", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/ARMOURY.png").toExternalForm()));
+        images.put("BARRACKS", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/BARRACKS.png").toExternalForm()));
+        images.put("MERCENARY_POST", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/MERCENARY_POST.png").toExternalForm()));
+        images.put("ENGINEERS_GUILD", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/ENGINEERS_GUILD.png").toExternalForm()));
+        images.put("KILLING_PIT", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/KILLING_PIT.png").toExternalForm()));
+        images.put("OIL_SMELTER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/OIL_SMELTER.png").toExternalForm()));
+        images.put("PITCH_DITCH", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/PITCH_DITCH.png").toExternalForm()));
+        images.put("CAGED_WAR_DOGS", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/CAGED_WAR_DOGS.png").toExternalForm()));
+        images.put("SIEGE_TENT", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/SIEGE_TENT.png").toExternalForm()));
+        images.put("APPLE_ORCHARD", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/APPLE_ORCHARD.png").toExternalForm()));
+        images.put("DIARY_FARMER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/DIARY_FARMER.png").toExternalForm()));
+        images.put("HOPS_FARMER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/HOPS_FARMER.png").toExternalForm()));
+        images.put("WHEAT_FARMER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/WHEAT_FARMER.png").toExternalForm()));
+        images.put("HUNTER_POST", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/HUNTER_POST.png").toExternalForm()));
+        images.put("BAKERY", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/BAKERY.png").toExternalForm()));
+        images.put("BREWER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/BREWER.png").toExternalForm()));
+        images.put("GRANARY", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/GRANARY.png").toExternalForm()));
+        images.put("INN", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/INN.png").toExternalForm()));
+        images.put("MILL", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/MILL.png").toExternalForm()));
+        images.put("IRON_MINE", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/IRON_MINE.png").toExternalForm()));
+        images.put("MARKET", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/MARKET.png").toExternalForm()));
+        images.put("OX_TETHER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/OX_TETHER.png").toExternalForm()));
+        images.put("PITCH_RIG", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/PITCH_RIG.png").toExternalForm()));
+        images.put("QUARRY", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/QUARRY.png").toExternalForm()));
+        images.put("STOCK_PILE", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/STOCK_PILE.png").toExternalForm()));
+        images.put("WOODCUTTER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/WOODCUTTER.png").toExternalForm()));
+        images.put("HOVEL", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/HOVEL.png").toExternalForm()));
+        images.put("CHURCH", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/CHURCH.png").toExternalForm()));
+        images.put("CATHEDRAL", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/CATHEDRAL.png").toExternalForm()));
+        images.put("ARMOURER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/ARMOURER.png").toExternalForm()));
+        images.put("BLACKSMITH", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/BLACKSMITH.png").toExternalForm()));
+        images.put("FLETCHER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/FLETCHER.png").toExternalForm()));
+        images.put("POLETURNER", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/POLETURNER.png").toExternalForm()));
+        images.put("MAIN_HOUSE", new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Buildings/MAIN_HOUSE.png").toExternalForm()));
+
+        imageViews = new ImageView[180][70];
+        for (int i = 0; i < 180; i++) {
+            for (int j = 0; j < 70; j++) {
+                imageViews[i][j] = new ImageView();
+            }
+        }
+    }
+
     private Scene scene;
     private double startDragX;
     private double startDragY;
 
-    private static void reload(){
-        x = ((900 / tilesLength) - (200 / tilesLength));
-        y = (1800 / tilesLength);
-
-        images = new HashMap<>();
-        images.put(MapType.EARTH, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/earth.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.EARTH_AND_STONE, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/earth_and_stone.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.BOULDERS, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/boulders.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.ROCK_N, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_n.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.ROCK_S, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_s.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.ROCK_E, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_e.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.ROCK_W, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/rock_w.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.IRON, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/iron.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.OASIS_GRASS, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/oasis_grass.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.SCRUB, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/scrub.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.THICK_SCRUB, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/thick_scrub.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.OIL, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/oil.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.SHALLOW_WATER, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/shallow_water.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.RIVER, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/river.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.SMALL_POND, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/small_pond.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.BIG_POUND, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/big_pound.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.BEACH, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/beach.png").toExternalForm(), tilesLength, tilesLength, false, false));
-        images.put(MapType.SEA, new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/Tiles/sea.png").toExternalForm(), tilesLength, tilesLength, false, false));
-
-        imageViews = new ImageView[y][x];
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                imageViews[i][j] = new ImageView();
-            }
-        }
-
-        pane.getChildren().clear();
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                pane.add(imageViews[i][j], i, j);
-            }
-        }
-        pane.add(new ImageView(new Image(GameMenu.class.getResource("/com/ap/stronghold/Media/backgrounds/01.jpg")
-                .toExternalForm(), 1800, 200, false, false)), 0, x, y, (200 / tilesLength));
-    }
     public static void run() {
         String command;
         HashMap<String, ArrayList<String>> options;
@@ -696,84 +758,483 @@ public class GameMenu extends Application {
         GameMenuController.setNextUser();
     }
 
+    private static void reload() {
+        x = ((900 / tilesLength) - (200 / tilesLength));
+        y = (1800 / tilesLength);
+
+        xOfMap = Math.max(xOfMap, x / 2);
+        xOfMap = Math.min(xOfMap, (Game.getX() - x / 2));
+        yOfMap = Math.max(yOfMap, y / 2);
+        yOfMap = Math.min(yOfMap, (Game.getY() - y / 2));
+
+        gridePane.getChildren().clear();
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                imageViews[i][j].setFitWidth(tilesLength);
+                imageViews[i][j].setFitHeight(tilesLength);
+                gridePane.add(imageViews[i][j], i, j);
+            }
+        }
+
+        int numberOfUnit = unitsInRectangle.size();
+        double avRate = 0;
+        double rateSize = 0;
+        double rateMax = 0;
+        double rateMin = 0;
+        for (Building building : buildingsInRectangle) {
+            if (building instanceof ProducerBuilding) {
+                avRate += ((ProducerBuilding) building).getProductionRate();
+                rateSize++;
+                if (rateMax < ((ProducerBuilding) building).getProductionRate()) {
+                    rateMax = ((ProducerBuilding) building).getProductionRate();
+                }
+                if (rateMin > ((ProducerBuilding) building).getProductionRate() || rateMin == 0) {
+                    rateMin = ((ProducerBuilding) building).getProductionRate();
+                }
+            }
+        }
+        avRate = avRate == 0 ? 0 : avRate / rateSize;
+
+        rectangleVBox.getChildren().clear();
+        rectangleVBox.getChildren().add(new Text("Rectangle Info"));
+        rectangleVBox.getChildren().add(new Text("units: " + numberOfUnit));
+        rectangleVBox.getChildren().add(new Text("avRate: " + avRate));
+        rectangleVBox.getChildren().add(new Text("rateMax: " + rateMax));
+        rectangleVBox.getChildren().add(new Text("rateMin: " + rateMin));
+
+        gridePane.add(rectangleVBox, 0, x, (200 / tilesLength), (200 / tilesLength));
+
+
+        int foodPop = GameMenuController.getPopularityFromFood();
+        int taxPop = GameMenuController.getPopularityFromTax();
+        int fearPop = GameMenuController.getPopularityFromFear();
+        int religionPop = GameMenuController.getPopularityFromReligion();
+        int popularity = GameMenuController.getPopularity();
+
+        Text foodText = new Text("Food: " + foodPop);
+        if (foodPop > 0)
+            foodText.setFill(Color.GREEN);
+        else if (foodPop < 0)
+            foodText.setFill(Color.RED);
+
+        Text taxText = new Text("Tax: " + taxPop);
+        if (taxPop > 0)
+            taxText.setFill(Color.GREEN);
+        else if (taxPop < 0)
+            taxText.setFill(Color.RED);
+
+        Text fearText = new Text("Fear: " + fearPop);
+        if (fearPop > 0)
+            fearText.setFill(Color.GREEN);
+        else if (fearPop < 0)
+            fearText.setFill(Color.RED);
+
+        Text religionText = new Text("Religion: " + religionPop);
+        if (religionPop > 0)
+            religionText.setFill(Color.GREEN);
+        else if (religionPop < 0)
+            religionText.setFill(Color.RED);
+
+        Text rateText = new Text("Rate: " + (foodPop + taxPop + fearPop + religionPop));
+        if ((foodPop + taxPop + fearPop + religionPop) > 0)
+            rateText.setFill(Color.GREEN);
+        else if ((foodPop + taxPop + fearPop + religionPop) < 0)
+            rateText.setFill(Color.RED);
+
+        Text popularityText = new Text("Popularity: " + popularity + "/100");
+        if (popularity > 0)
+            popularityText.setFill(Color.GREEN);
+        else if (popularity < 0)
+            popularityText.setFill(Color.RED);
+
+        popularityVBox.getChildren().clear();
+        popularityVBox.getChildren().add(new Text("Popularity Info"));
+        popularityVBox.getChildren().add(foodText);
+        popularityVBox.getChildren().add(taxText);
+        popularityVBox.getChildren().add(fearText);
+        popularityVBox.getChildren().add(religionText);
+        popularityVBox.getChildren().add(rateText);
+        popularityVBox.getChildren().add(popularityText);
+
+        gridePane.add(popularityVBox, (200 / tilesLength), x, (200 / tilesLength), (200 / tilesLength));
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         pane = FXMLLoader.load(Menu.class.getResource("/com/ap/stronghold/FXML/gameMenu.fxml"));
+        gridePane = (GridPane) pane.getChildren().get(0);
+
+        rectangleVBox = new VBox();
+        rectangleVBox.setAlignment(Pos.CENTER);
+        rectangleVBox.setSpacing(10);
+
+        popularityVBox = new VBox();
+        popularityVBox.setAlignment(Pos.CENTER);
+        popularityVBox.setSpacing(10);
+
+
+        showRectAngle();
+
         reload();
 
         xOfMap = x / 2;
         yOfMap = y / 2;
 
+        pane.getChildren().add(rectangle);
+
         showMap();
 
         scene = new Scene(pane);
 
-        scene.setOnMousePressed(mouseEvent -> {
-            startDragX = mouseEvent.getSceneX();
-            startDragY = mouseEvent.getSceneY();
-        });
-
-        scene.setOnMouseDragged(event -> {
-            if(event.getButton().equals(MouseButton.SECONDARY)){
-                if(startDragY <= 700){
-                    boolean moved = false;
-                    if ((int) (startDragX - event.getSceneX()) / tilesLength > 0) {
-                        yOfMap += (startDragX - event.getSceneX()) / tilesLength;
-                        yOfMap = Math.min(yOfMap, 400 - y / 2);
-                        moved = true;
-                    } else if ((int) (event.getSceneX() - startDragX) / tilesLength > 0) {
-                        yOfMap -= (event.getSceneX() - startDragX) / tilesLength;
-                        yOfMap = Math.max(yOfMap, y / 2);
-                        moved = true;
-                    }
-                    if ((int) (startDragY - event.getSceneY()) / tilesLength > 0) {
-                        xOfMap += (startDragY - event.getSceneY()) / tilesLength;
-                        xOfMap = Math.min(xOfMap, 400 - x / 2);
-                        moved = true;
-                    } else if ((int) (event.getSceneY() - startDragY) / tilesLength > 0) {
-                        xOfMap -= (event.getSceneY() - startDragY) / tilesLength;
-                        xOfMap = Math.max(xOfMap, x / 2);
-                        moved = true;
-                    }
-                    if (moved) {
-                        startDragX = event.getSceneX();
-                        startDragY = event.getSceneY();
-                        showMap();
-                    }
-                }
+        scene.setOnKeyPressed(keyEvent -> {
+            KeyCode keyCode = keyEvent.getCode();
+            switch (keyCode) {
+                case M -> moveSelectedUnit();
+                case S -> setStateSelectedUnit();
+                case A -> attackSelectedUnit();
+                case D -> disbandSelectedUnit();
+                case R -> repairSelectedBuilding();
             }
-        });
-
-        scene.setOnScroll(scrollEvent -> {
-            double deltaY = scrollEvent.getDeltaY();
-            if(deltaY < 0){
-                tilesLength -= 5;
-                tilesLength = Math.max(tilesLength, 10);
-            }else{
-                tilesLength += 5;
-                tilesLength = Math.min(tilesLength, 60);
-            }
-            showMap();
         });
 
         stage.setScene(scene);
         stage.show();
     }
 
-    public void showMap() {
-        reload();
-        int xMin = xOfMap < x / 2 ? 0 : xOfMap - x / 2;
-        int xMax = xOfMap < x / 2 ? x : xOfMap + x / 2;
-        int yMin = yOfMap < y / 2 ? 0 : yOfMap - y / 2;
-        int yMax = yOfMap < y / 2 ? y : yOfMap + y / 2;
-        for (int i = yMin; i < yMax; i++) {
-            for (int j = xMin; j < xMax; j++) {
-                imageViews[i - yMin][j - xMin].setImage(images.get(Game.getGameMap()[j][i].getMapType()));
+    private void repairSelectedBuilding() {
+        if (buildingsInRectangle.size() < 1) {
+            return;
+        }
+        for (Building building : buildingsInRectangle) {
+            BuildingMenuController.setSelectedBuilding(building);
+            BuildingMenuController.repair();
+        }
+    }
+
+    private void disbandSelectedUnit() {
+        if (unitsInRectangle.size() < 1) {
+            return;
+        }
+        UnitMenuController.setSelectedUnit(unitsInRectangle);
+        UnitMenuController.disbandUnit();
+    }
+
+    private void attackSelectedUnit() {
+        if (unitsInRectangle.size() < 1) {
+            return;
+        }
+        int destinationX = 0;
+        int destinationY = 0;
+
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("attack to");
+        dialog.setHeaderText("attack coordinates");
+        dialog.setContentText("what is X coordinates of attack?");
+        Optional<String> result = dialog.showAndWait();
+        while (result.isPresent()) {
+            try {
+                int x = Integer.parseInt(result.get());
+                if (x < 0 || x > Game.getX()) {
+                    dialog.setHeaderText("X must lower than " + Game.getX());
+                    result = dialog.showAndWait();
+                } else {
+                    destinationX = x;
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                dialog.setHeaderText("X must be a number");
+                result = dialog.showAndWait();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (!result.isPresent()) {
+            return;
+        }
+
+        dialog.setHeaderText("attack coordinates");
+        dialog.setContentText("what is Y coordinates of attack?");
+        result = dialog.showAndWait();
+        while (result.isPresent()) {
+            try {
+                int y = Integer.parseInt(result.get());
+                if (y < 0 || y > Game.getY()) {
+                    dialog.setHeaderText("Y must lower than " + Game.getY());
+                    result = dialog.showAndWait();
+                } else {
+                    destinationY = y;
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                dialog.setHeaderText("Y must be a number");
+                result = dialog.showAndWait();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (!result.isPresent()) {
+            return;
+        }
+
+        UnitMenuController.setSelectedUnit(unitsInRectangle);
+        UnitMenuController.attack(destinationX, destinationY);
+    }
+
+    private void setStateSelectedUnit() {
+        if (unitsInRectangle.size() < 1) {
+            return;
+        }
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("state");
+        dialog.setHeaderText("select unit state");
+
+        ChoiceBox<String> order = new ChoiceBox<String>();
+        order.getItems().add("standing");
+        order.getItems().add("defensive");
+        order.getItems().add("offensive");
+        order.setValue("standing");
+        HBox content = new HBox();
+        content.setSpacing(10);
+        content.getChildren().addAll(new Label("select units state: "), order);
+        dialog.getDialogPane().setContent(content);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                return order.getValue();
+            }
+            return null;
+        });
+
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            State state = null;
+            switch (result.get()) {
+                case "standing":
+                    state = State.STATIC;
+                    break;
+                case "defensive":
+                    state = State.DEFENSIVE;
+                    break;
+                case "offensive":
+                    state = State.AGGRESSIVE;
+                    break;
+            }
+            UnitMenuController.setSelectedUnit(unitsInRectangle);
+            UnitMenuController.setState(state);
+        }
+    }
+
+    private void moveSelectedUnit() {
+        if (unitsInRectangle.size() < 1) {
+            return;
+        }
+        int destinationX = 0;
+        int destinationY = 0;
+
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("move to");
+        dialog.setHeaderText("destination coordinates");
+        dialog.setContentText("what is X coordinates of destination?");
+        Optional<String> result = dialog.showAndWait();
+        while (result.isPresent()) {
+            try {
+                int x = Integer.parseInt(result.get());
+                if (x < 0 || x > Game.getX()) {
+                    dialog.setHeaderText("X must lower than " + Game.getX());
+                    result = dialog.showAndWait();
+                } else {
+                    destinationX = x;
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                dialog.setHeaderText("X must be a number");
+                result = dialog.showAndWait();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (!result.isPresent()) {
+            return;
+        }
+
+        dialog.setHeaderText("destination coordinates");
+        dialog.setContentText("what is Y coordinates of destination?");
+        result = dialog.showAndWait();
+        while (result.isPresent()) {
+            try {
+                int y = Integer.parseInt(result.get());
+                if (y < 0 || y > Game.getY()) {
+                    dialog.setHeaderText("Y must lower than " + Game.getY());
+                    result = dialog.showAndWait();
+                } else {
+                    destinationY = y;
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                dialog.setHeaderText("Y must be a number");
+                result = dialog.showAndWait();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (!result.isPresent()) {
+            return;
+        }
+
+        UnitMenuController.setSelectedUnit(unitsInRectangle);
+        UnitMenuController.moveUnit(destinationX, destinationY);
+    }
+
+    public void press(MouseEvent mouseEvent) {
+        startDragX = mouseEvent.getSceneX();
+        startDragY = mouseEvent.getSceneY();
+        if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+            rectangleXOut = rectangleXIn = -1;
+            rectangleYOut = rectangleYIn = -1;
+            rectangle.setWidth(0);
+            rectangle.setHeight(0);
+            showRectAngle();
+        }
+    }
+
+    public void drag(MouseEvent event) {
+        if (event.getButton().equals(MouseButton.SECONDARY)) {
+            if (startDragY <= 700) {
+                boolean moved = false;
+                if ((int) (startDragX - event.getSceneX()) / tilesLength > 0) {
+                    yOfMap += (startDragX - event.getSceneX()) / tilesLength;
+                    moved = true;
+                } else if ((int) (event.getSceneX() - startDragX) / tilesLength > 0) {
+                    yOfMap -= (event.getSceneX() - startDragX) / tilesLength;
+                    moved = true;
+                }
+                if ((int) (startDragY - event.getSceneY()) / tilesLength > 0) {
+                    xOfMap += (startDragY - event.getSceneY()) / tilesLength;
+                    moved = true;
+                } else if ((int) (event.getSceneY() - startDragY) / tilesLength > 0) {
+                    xOfMap -= (event.getSceneY() - startDragY) / tilesLength;
+                    moved = true;
+                }
+                if (moved) {
+                    startDragX = event.getSceneX();
+                    startDragY = event.getSceneY();
+                    reload();
+                    showRectAngle();
+                    showMap();
+                }
+            }
+        } else if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (startDragY <= 700) {
+                rectangleYIn = (int) ((startDragX / 1800) * y) + yOfMap - y / 2;
+                rectangleXIn = (int) ((startDragY / (900 - ((200 / tilesLength) * tilesLength))) * x) + xOfMap - x / 2;
+                rectangleYOut = (int) ((event.getX() / 1800) * y) + yOfMap - y / 2;
+                rectangleXOut = (int) ((event.getY() / (900 - ((200 / tilesLength) * tilesLength))) * x) + xOfMap - x / 2;
+                if (rectangleYIn > rectangleYOut) {
+                    int tmp = rectangleYIn;
+                    rectangleYIn = rectangleYOut;
+                    rectangleYOut = tmp;
+                }
+                if (rectangleXIn > rectangleXOut) {
+                    int tmp = rectangleXIn;
+                    rectangleXIn = rectangleXOut;
+                    rectangleXOut = tmp;
+                }
+                reload();
+                showRectAngle();
             }
         }
     }
 
-    public void initialize() {
+    private void showRectAngle() {
+        if (rectangleYIn != -1 && rectangleXIn != -1) {
+            int xMin = xOfMap < x / 2 ? 0 : xOfMap - x / 2;
+            int yMin = yOfMap < y / 2 ? 0 : yOfMap - y / 2;
+            rectangle.setX((rectangleYIn - yMin) * tilesLength);
+            rectangle.setY((rectangleXIn - xMin) * tilesLength);
+            rectangle.setWidth((rectangleYOut - rectangleYIn + 1) * tilesLength);
+            rectangle.setHeight((rectangleXOut - rectangleXIn + 1) * tilesLength);
+            rectangle.setFill(Color.TRANSPARENT);
+            rectangle.setStroke(Color.RED);
+            for (int i = rectangleXIn; i < rectangleXOut; i++) {
+                for (int j = rectangleYIn; j < rectangleYOut; j++) {
+                    unitsInRectangle.addAll(Game.getGameMap()[i][j].getUnit());
+                    if (Game.getGameMap()[i][j].getBuilding() != null)
+                        buildingsInRectangle.add(Game.getGameMap()[i][j].getBuilding());
+                }
+            }
+        }
+    }
 
+    public void scroll(ScrollEvent scrollEvent) {
+        double deltaY = scrollEvent.getDeltaY();
+        if (deltaY < 0) {
+            tilesLength -= 1;
+            tilesLength = Math.max(tilesLength, 10);
+        } else {
+            tilesLength += 1;
+            tilesLength = Math.min(tilesLength, 60);
+        }
+        reload();
+        showRectAngle();
+        showMap();
+    }
+
+    public void showMap() {
+        int xMin = xOfMap < x / 2 ? 0 : xOfMap - x / 2;
+        int xMax = xOfMap < x / 2 ? x : xOfMap + x / 2;
+        int yMin = yOfMap < y / 2 ? 0 : yOfMap - y / 2;
+        int yMax = yOfMap < y / 2 ? y : yOfMap + y / 2;
+        if (x % 2 == 1) {
+            xMax++;
+        }
+        if (y % 2 == 1) {
+            yMax++;
+        }
+        yMax = Math.min(yMax, Game.getY());
+        xMax = Math.min(xMax, Game.getX());
+        for (int i = yMin; i < yMax; i++) {
+            for (int j = xMin; j < xMax; j++) {
+                imageViews[i - yMin][j - xMin].setImage(images.get(Game.getGameMap()[j][i].getMapType().name()));
+            }
+        }
+        Node node1 = pane.getChildren().get(0);
+        Node node2 = pane.getChildren().get(1);
+        pane.getChildren().clear();
+        pane.getChildren().add(node1);
+        pane.getChildren().add(node2);
+        reload();
+        for (Building building : Building.getBuildings()) {
+            if (building.getX1Position() >= xMin && building.getX2Position() <= xMax) {
+                if (building.getY1Position() >= yMin && building.getY2Position() <= yMax) {
+                    ImageView imageView = new ImageView(images.get(building.getBuildingType().name()));
+                    imageView.setFitWidth((building.getY2Position() - building.getY1Position()) * tilesLength);
+                    imageView.setFitHeight((building.getX2Position() - building.getX1Position()) * tilesLength);
+                    imageView.setLayoutX((building.getY1Position() - yMin) * tilesLength);
+                    imageView.setLayoutY((building.getX1Position() - xMin) * tilesLength);
+                    pane.getChildren().add(imageView);
+                }
+            }
+        }
+    }
+
+    public void hover(MouseEvent mouseEvent) {
+        if (mouseEvent.getY() < 700) {
+            int yIn = (int) ((mouseEvent.getX() / 1800) * y) + yOfMap - y / 2;
+            int xIn = (int) ((mouseEvent.getY() / (900 - ((200 / tilesLength) * tilesLength))) * x) + xOfMap - x / 2;
+            String unitData = "x: " + xIn + " y: " + yIn + "\n" + MapMenuController.showMapDetails(xIn, yIn);
+            for (Unit unit : Game.getGameMap()[xIn][yIn].getUnit()) {
+                unitData += "\n" + (unit.getxTarget() == -1 ? "" : "attacking...") + "type: " + unit.getUnitType().name() + " health: " + unit.getHp() + " damage: " + unit.getUnitType().getDamage();
+            }
+            tooltip = new Tooltip(unitData);
+            tooltip.setShowDelay(Duration.seconds(1));
+            tooltip.setShowDuration(Duration.seconds(4));
+            tooltip.setWrapText(true);
+            Tooltip.install(gridePane, tooltip);
+        }
     }
 }

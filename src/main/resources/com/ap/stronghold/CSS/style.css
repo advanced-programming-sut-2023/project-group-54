@@ -125,6 +125,14 @@ PasswordField{
     -fx-background-position: center center;
     -fx-background-size: 1100 700;
 }
+#ShopMenu{
+-fx-background-image: url("../Media/backgrounds/Backgrounds_For_Menus_yac/IMG_6047.PNG");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-size: 1100 700;
+
+}
+
 /*#ScoreBoard{*/
 /*    -fx-background-image: url("../Media/backgrounds/24.jpg");*/
 /*    -fx-background-repeat: stretch;*/
