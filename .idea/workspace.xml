@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="profile menu change">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/gameMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/gameMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/ProfileMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/ProfileMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ChangePassword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ProfileMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ScoreBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ScoreBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/SignupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/SignupMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/changePassword.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/changePassword.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/profileMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/profileMenu.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,22 +90,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/mfamin/Documents/javaproject/project-group-54&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Amirhosein\IdeaProjects\project-group-54-phase2\src\main\java" />
@@ -108,10 +110,23 @@
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.ap.stronghold.Main" />
+      <module name="StrongHold" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ap.stronghold.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="com.ap.stronghold.Main" />
-      <module name="project-group-54" />
+      <option name="MAIN_CLASS_NAME" value="com.ap.stronghold.view.MainMenu" />
+      <module name="StrongHold" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -158,6 +173,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.MainMenu" />
       <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.LoginMenuControllerTest" />
       <item itemvalue="JUnit.LoginMenuControllerTest,userFoundTest and 3 more" />
@@ -165,6 +181,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.MainMenu" />
         <item itemvalue="JUnit.LoginMenuControllerTest" />
         <item itemvalue="JUnit.LoginMenuControllerTest,userFoundTest and 3 more" />
       </list>
@@ -195,6 +212,10 @@
       <workItem from="1685452649587" duration="3418000" />
       <workItem from="1685515065087" duration="30622000" />
       <workItem from="1685826931276" duration="66506000" />
+      <workItem from="1686204199719" duration="475000" />
+      <workItem from="1686204714618" duration="9580000" />
+      <workItem from="1686237228509" duration="3364000" />
+      <workItem from="1687352229834" duration="22079000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="phase0">
       <created>1681498802040</created>
@@ -550,18 +571,18 @@
     <SUITE FILE_PATH="coverage/Main_java$LoginMenuControllerTest_checkQuestionAnswer.ic" NAME="LoginMenuControllerTest.checkQuestionAnswer Coverage Results" MODIFIED="1684009269926" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>controller.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Main_java$LoginTest_passwordCheckerTest.ic" NAME="LoginTest.passwordCheckerTest Coverage Results" MODIFIED="1684006093714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>model.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/Main_java$LoginMenuControllerTest_passwordCheckerTest.ic" NAME="LoginMenuControllerTest.passwordCheckerTest Coverage Results" MODIFIED="1684006605925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/Main_java$LoginMenuControllerTest.ic" NAME="LoginMenuControllerTest Coverage Results" MODIFIED="1684836042631" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>controller.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Main_java$Main.ic" NAME="Main Coverage Results" MODIFIED="1684829719526" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/Main_java$LoginMenuControllerTest.ic" NAME="LoginMenuControllerTest Coverage Results" MODIFIED="1684836042631" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/Main_java$LoginMenuControllerTest_passwordCheckerTest.ic" NAME="LoginMenuControllerTest.passwordCheckerTest Coverage Results" MODIFIED="1684006605925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>controller.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/Main_java$LoginTest_passwordCheckerTest__1_.ic" NAME="LoginTest.passwordCheckerTest (1) Coverage Results" MODIFIED="1684006246015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>Controller.*</FILTER>
     </SUITE>
+    <SUITE FILE_PATH="coverage/Main_java$LoginTest_passwordCheckerTest.ic" NAME="LoginTest.passwordCheckerTest Coverage Results" MODIFIED="1684006093714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Main_java$Main.ic" NAME="Main Coverage Results" MODIFIED="1684829719526" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
