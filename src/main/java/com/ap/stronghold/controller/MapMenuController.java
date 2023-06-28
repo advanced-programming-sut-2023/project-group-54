@@ -327,6 +327,9 @@ public class MapMenuController {
                 }
                 storageBuilding.getOwner().getBuildings().remove(building);
             }
+            for (Unit unit : Game.getGameMap()[xCoordinate][yCoordinate].getUnit()) {
+                Unit.getUnits().remove(unit);
+            }
             Game.getGameMap()[xCoordinate][yCoordinate].setUnit();
             Building.getBuildings().remove(building);
         }
@@ -513,6 +516,7 @@ public class MapMenuController {
         SiegeBuilding siegeBuilding = null;
         StorageBuilding storageBuilding = null;
         TrapBuilding trapBuilding = null;
+        ShopBuilding shopBuilding = null;
         Building building = null;
         if (defenseType != null){
             defenseBuilding = new DefenseBuilding(defenseType, x, x+length, y, y+width, government);
@@ -535,8 +539,13 @@ public class MapMenuController {
             government.addBuilding(trapBuilding);
         }
         else{
-            building = new Building(buildingType, buildingType.getMaxHp(), government, x, x+length, y, y+width);
-            government.addBuilding(building);
+            if(buildingGroup.equals(BuildingGroup.SHOP_BUILDING)){
+                shopBuilding = new ShopBuilding( x, x+length, y, y+width, government);
+                government.addBuilding(shopBuilding);
+            }else{
+                building = new Building(buildingType, buildingType.getMaxHp(), government, x, x+length, y, y+width);
+                government.addBuilding(building);
+            }
         }
         for (int i = x; i < x + length; i++) {
             for (int j = y; j < y + width; j++) {
@@ -566,12 +575,13 @@ public class MapMenuController {
                     Game.getCurrentUser().getGovernment().getBuildings().add(trapBuilding);
                 }
                 else{
-//                    if(building.getBuildingType().equals(BuildingType.HOVEL)){
-//                        Game.getCurrentUser().getGovernment().setPopulation2(8);
-//                        Game.getCurrentUser().getGovernment().addUnemployedWorker(8);
-//                    }
-                    Game.getGameMap()[i][j].setBuilding(building);
-                    Game.getCurrentUser().getGovernment().getBuildings().add(building);
+                    if(buildingGroup.equals(BuildingGroup.SHOP_BUILDING)){
+                        Game.getGameMap()[i][j].setBuilding(shopBuilding);
+                        Game.getCurrentUser().getGovernment().getBuildings().add(shopBuilding);
+                    }else{
+                        Game.getGameMap()[i][j].setBuilding(building);
+                        Game.getCurrentUser().getGovernment().getBuildings().add(building);
+                    }
                 }
             }
         }
