@@ -11,14 +11,17 @@ public class Trade {
     private int price;
     private String senderMessage;
     private String receiverMessage;
+    private boolean acceptedStatus;
 
-    public Trade(User senderUser, Resource resource, int amount, int price, String senderMessage, String receiverMessage) {
+    public Trade(User senderUser,User receiverUser, Resource resource, int amount, int price, String senderMessage, String receiverMessage) {
         this.senderUser = senderUser;
         this.resource = resource;
         this.amount = amount;
         this.price = price;
         this.senderMessage = senderMessage;
         this.receiverMessage = receiverMessage;
+        this.receiverUser=receiverUser;
+        this.acceptedStatus=false;
         trades.add(this);
     }
 
@@ -85,4 +88,5 @@ public class Trade {
     public void setReceiverMessage(String receiverMessage) {
         this.receiverMessage = receiverMessage;
     }
+
 }

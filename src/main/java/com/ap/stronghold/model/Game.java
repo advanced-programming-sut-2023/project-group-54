@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Game {
     private static ArrayList<User> users;
     private static ArrayList<Building> mainHouses;
-    private static User currentUser;
+    private static User currentUser=new User("ali","23AAaaahhh","al","al@gmail.com","null",1,"sa",new Government());
     private static int x;
     private static int y;
     private static Map[][] gameMap;

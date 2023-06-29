@@ -27,6 +27,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import javax.print.attribute.standard.Media;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -48,90 +49,18 @@ public class ShopMenu extends Application {
             else if (CommandHandler.parsCommand(Command.SHOW_PRICE_LIST, command) != null)
                 return;
             else if ((options = CommandHandler.parsCommand(Command.SHOP_BUY, command)) != null)
-                buyItem(options);
+               return;
             else if ((options = CommandHandler.parsCommand(Command.SHOP_SELL, command)) != null)
-                sellItem(options);
+               return;
             else System.out.println("invalid command in shop menu");
         }
     }
 
 
 
-    public static void buyItem(HashMap<String, ArrayList<String>> options) {
-        String name = null;
-        String amount = null;
-        for (String s : options.keySet()) {
-            switch (s) {
-                case "i" -> name = Controller.buildParameter(options.get(s).get(0));
-                case "a" -> amount = Controller.buildParameter(options.get(s).get(0));
-            }
-        }
-        if (name == null) {
-            System.out.println("itemName not entered");
-            return;
-        }
-        if (amount == null) {
-            System.out.println("amount not entered");
-            return;
-        }
-        if (!Controller.isNumeric(amount)) {
-            System.out.println("amount format is invalid");
-            return;
-        }
-        ShopMenuMessage result = ShopMenuController.buyItemChecker(name, Integer.parseInt(amount));
 
-        switch (result) {
-            case INVALID_ITEM -> System.out.println("item is invalid");
-            case INVALID_AMOUNT -> System.out.println("amount is invalid it should be at least 1");
-            case NOT_ENOUGH_CAPACITY -> System.out.println("you don't have enough capacity to buy this item");
-            case NOT_ENOUGH_GOLD -> System.out.println("you don't have enough gold to buy this item");
-            case SUCCESS -> {
-                String confirmMessage = "are you sure you want to buy " + amount + " of " + name + "? if you are sure enter Y";
-                System.out.println(confirmMessage);
-                String confirmAnswer = MainMenu.getScanner().nextLine();
-                ShopMenuMessage buyResult = ShopMenuController.buyItemConfirm(confirmAnswer, name, Integer.parseInt(amount));
-                if (buyResult.equals(ShopMenuMessage.SUCCESS)) System.out.println("item bought");
-                else System.out.println("canceled");
-            }
-        }
-    }
 
-    public static void sellItem(HashMap<String, ArrayList<String>> options) {
-        String name = null;
-        String amount = null;
-        for (String s : options.keySet()) {
-            switch (s) {
-                case "i" -> name = Controller.buildParameter(options.get(s).get(0));
-                case "a" -> amount = Controller.buildParameter(options.get(s).get(0));
-            }
-        }
-        if (name == null) {
-            System.out.println("itemName not entered");
-            return;
-        }
-        if (amount == null) {
-            System.out.println("amount not entered");
-            return;
-        }
-        if (!Controller.isNumeric(amount)) {
-            System.out.println("amount format is invalid");
-            return;
-        }
-        ShopMenuMessage result = ShopMenuController.sellItemChecker(name, Integer.parseInt(amount));
-        switch (result) {
-            case NOT_ENOUGH_ITEM -> System.out.println("you don't have enough amount of this item to sell it");
-            case INVALID_ITEM -> System.out.println("item is invalid");
-            case INVALID_AMOUNT -> System.out.println("amount is invalid it should be at least 1");
-            case SUCCESS -> {
-                String confirmMessage = "are you sure you want to sell " + amount + " of " + name + "? if you are sure enter Y";
-                System.out.println(confirmMessage);
-                String confirmAnswer = MainMenu.getScanner().nextLine();
-                ShopMenuMessage sellResult = ShopMenuController.sellItemConfirm(confirmAnswer, name, Integer.parseInt(amount));
-                if (sellResult.equals(ShopMenuMessage.SUCCESS)) System.out.println("item sold");
-                else System.out.println("canceled");
-            }
-        }
-    }
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -143,7 +72,24 @@ public class ShopMenu extends Application {
         imageView.setLayoutY(50);
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
+        Button tradeButton=new Button();
+        tradeButton.setLayoutX(900);
+        tradeButton.setLayoutY(620);
+        tradeButton.setScaleX(1);
+        tradeButton.setScaleY(1);
+        tradeButton.setText("Trade Menu");
+        tradeButton.setStyle("-fx-background-color: red;");
+        tradeButton.setOnMouseEntered(e -> tradeButton.setStyle("-fx-background-color: blue;"));
+        tradeButton.setOnMouseExited(e -> tradeButton.setStyle("-fx-background-color: red;"));
+        tradeButton.setOnAction(event -> {
+            try {
+                new TradeMenu().start(stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
         pane.getChildren().add(imageView);
+        pane.getChildren().add(tradeButton);
         HBox hbox1 = createHBox1();
         HBox hbox2 = createHBox2();
         HBox hbox3 = createHBox3();
@@ -281,6 +227,7 @@ public class ShopMenu extends Application {
             textField.setScaleX(1.5);
             textField.setStyle("-fx-prompt-text-fill: grey; -fx-font-size: 14px; -fx-font-family: Arial;-fx-background-color: black; -fx-text-fill: white;");
             textField.setPromptText("amount of "+itemName);
+
             Button buyButton = new Button("Buy");
 
 
@@ -288,15 +235,33 @@ public class ShopMenu extends Application {
                 String input = textField.getText();
                 if (!input.isEmpty()) {
                     Popup popup1 = new Popup();
-                    int amount = Integer.parseInt(input);
-                    // Do something with the amount, such as add it to the user's inventory
-                    Text message = new Text("Buy button clicked with amount: " + amount);
+                    Text message = new Text("");
                     message.setFont(Font.font("Arial", FontWeight.BOLD, 16));
                     message.setFill(Color.WHITE);
                     message.setTextAlignment(TextAlignment.CENTER);
+                    String amount=input;
+                    if (!Controller.isNumeric(amount)) {
+                        message.setText("please enter a number!");
+                    }
+                    ShopMenuMessage result = ShopMenuController.buyItemChecker(itemName, Integer.parseInt(amount));
+                    switch (result) {
+                        case INVALID_ITEM -> message.setText("item is invalid");
+                        case INVALID_AMOUNT -> message.setText("amount is invalid it should be at least 1");
+                        case NOT_ENOUGH_CAPACITY -> message.setText("you don't have enough capacity to buy this item");
+                        case NOT_ENOUGH_GOLD -> message.setText("you don't have enough gold to buy this item");
+                        case SUCCESS -> {
 
+                            ShopMenuController.buyItemConfirm(itemName,Integer.parseInt(amount));
+
+                            message.setText("item bought");
+                        }
+                    }
                     Button closeButton = new Button("Close");
-                    closeButton.setOnAction(event1 -> popup1.hide());
+                    closeButton.setOnAction(event1 -> {
+                        popup1.hide();
+                        amountLabel.setText("Amount: " + ShopMenuController.getAmount(itemName));
+
+                    });
 
                     VBox layout = new VBox(10, message, closeButton);
                     layout.setAlignment(Pos.CENTER);
@@ -308,7 +273,6 @@ public class ShopMenu extends Application {
                     popup1.show(buyButton.getScene().getWindow());
                 } else {
                     Popup popup1 = new Popup();
-                    // Handle empty input
                     Text message = new Text("Please enter an amount.");
                     message.setFont(Font.font("Arial", FontWeight.BOLD, 16));
                     message.setFill(Color.WHITE);
@@ -332,16 +296,33 @@ public class ShopMenu extends Application {
             sellButton.setOnAction(event -> {
                 String input = textField.getText();
                 if (!input.isEmpty()) {
-                    Popup popup1 = new Popup();
-                    int amount = Integer.parseInt(input);
-                    // Do something with the amount, such as add it to the user's inventory
-                    Text message = new Text("Sell button clicked with amount: " + amount);
+                    Text message = new Text("");
                     message.setFont(Font.font("Arial", FontWeight.BOLD, 16));
                     message.setFill(Color.WHITE);
                     message.setTextAlignment(TextAlignment.CENTER);
+                    Popup popup1 = new Popup();
+                   String amount=input;
+                    if (!Controller.isNumeric(amount)) {
+                        message.setText("please enter a number!");
+                    }
+                    ShopMenuMessage result = ShopMenuController.sellItemChecker(itemName, Integer.parseInt(amount));
+                    switch (result) {
+                        case NOT_ENOUGH_ITEM -> message.setText("you don't have enough amount of this item to sell it");
+                        case INVALID_ITEM -> message.setText("item is invalid");
+                        case INVALID_AMOUNT -> message.setText("amount is invalid it should be at least 1");
+                        case SUCCESS -> {
+                            ShopMenuController.sellItemConfirm(itemName,Integer.parseInt(amount));
+                            message.setText("item sold");
+                        }
+                    }
+
+
 
                     Button closeButton = new Button("Close");
-                    closeButton.setOnAction(event1 -> popup1.hide());
+                    closeButton.setOnAction(event1 -> {
+                        amountLabel.setText("Amount: " + ShopMenuController.getAmount(itemName));
+                        popup1.hide();
+                    });
 
                     VBox layout = new VBox(10, message, closeButton);
                     layout.setAlignment(Pos.CENTER);

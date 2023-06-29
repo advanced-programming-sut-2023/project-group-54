@@ -216,4 +216,11 @@ public class User implements Comparable<User>{
     public String toString() {
         return this.username;
     }
+    public static ArrayList<String> usersToString(){
+        ArrayList<String> result=new ArrayList<>();
+        for (int i=0;i< users.size();i++){
+            result.add(users.get(i).getUsername());
+        }
+        return result;
+    }
 }

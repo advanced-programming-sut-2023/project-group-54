@@ -24,6 +24,7 @@ public class Government {
     private ArrayList<Trade> newTrades = new ArrayList<>();
     private ArrayList<Trade> AllTrades = new ArrayList<>();
 
+
     public Government() {
         this.popularity = 100;
         this.population = 10;
@@ -41,6 +42,7 @@ public class Government {
         allResources.put(Resource.WOOD, (double) 100);
         allResources.put(Resource.STONE, (double) 50);
         allResources.put(Resource.BREAD, (double) 60);
+
     }
 
 

@@ -4,6 +4,7 @@ import com.ap.stronghold.model.*;
 import com.ap.stronghold.view.enums.messages.TradeMenuMessage;
 
 public class TradeMenuController {
+
     public static TradeMenuMessage trade(String username, Resource resource, int amount, int price, String message) {
         return TradeMenuMessage.SUCCESS;
     }
@@ -32,7 +33,7 @@ public class TradeMenuController {
         return TradeMenuMessage.SUCCESS;
     }
 
-    public static TradeMenuMessage trade(String resourceType, String amount, String price, String message) {
+    public static TradeMenuMessage trade(String resourceType, String amount, String price, String message,User receiverUser) {
         Resource resource = Resource.getResourceByName(resourceType);
         int intAmount = Integer.parseInt(amount);
         int intPrice = Integer.parseInt(price);
@@ -41,15 +42,11 @@ public class TradeMenuController {
         if (intAmount <= 0) return TradeMenuMessage.INVALID_AMOUNT;
         if (intPrice < 0) return TradeMenuMessage.INVALID_PRICE;
         if (Game.getCurrentUser().getGovernment().getAllResources().get(resource) < intAmount) return TradeMenuMessage.NOT_ENOUGH_ITEM;
-        Trade trade = new Trade(Game.getCurrentUser(), resource, intAmount, intPrice, message,null);
+        Trade trade = new Trade(Game.getCurrentUser(),receiverUser, resource, intAmount, intPrice, message,null);
         Game.getCurrentUser().getGovernment().getSentTrades().add(trade);
-        for (int i = 0; i < Game.getUsers().size(); i++) {
-            if (!Game.getUsers().get(i).getUsername().equals(Game.getCurrentUser().getUsername())) {
-                Government government = Game.getUsers().get(i).getGovernment();
-                government.getNewTrades().add(trade);
-                government.getAllTrades().add(trade);
-            }
-        }
+        Government government = receiverUser.getGovernment();
+        government.getNewTrades().add(trade);
+        government.getAllTrades().add(trade);
         return TradeMenuMessage.SUCCESS;
     }
 

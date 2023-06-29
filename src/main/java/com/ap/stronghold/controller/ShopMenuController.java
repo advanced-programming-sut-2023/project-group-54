@@ -25,15 +25,13 @@ public class ShopMenuController {
 
     }
 
-    public static ShopMenuMessage buyItemConfirm(String confirmAnswer, String itemName, int amount) {
+    public static void buyItemConfirm( String itemName, int amount) {
         Resource item = Resource.getResourceByName(itemName);
-        if (confirmAnswer.matches("\\s*[Yy]\\s*")) {
             int finalGold = user.getGovernment().getGold() - item.getBuyPrice() * amount;
             user.getGovernment().setGold(finalGold);
             user.getGovernment().changeResourceAmount(item, amount);
             user.getGovernment().addToStorage(item, amount);
-            return ShopMenuMessage.SUCCESS;
-        } else return ShopMenuMessage.CANCEL;
+
     }
 
     public static ShopMenuMessage sellItemChecker(String itemName, int amount) {
@@ -45,14 +43,13 @@ public class ShopMenuController {
 
     }
 
-    public static ShopMenuMessage sellItemConfirm(String confirmAnswer, String itemName, int amount) {
+    public static ShopMenuMessage sellItemConfirm( String itemName, int amount) {
         Resource item = Resource.getResourceByName(itemName);
-        if (confirmAnswer.matches("\\s*[Yy]\\s*")) {
             int finalGold = user.getGovernment().getGold() + item.getSellPrice()*amount;
             user.getGovernment().setGold(finalGold);
             user.getGovernment().changeResourceAmount(item, -amount);
             user.getGovernment().removeFromStorage(item, amount);
             return ShopMenuMessage.SUCCESS;
-        } else return ShopMenuMessage.CANCEL;
+
     }
 }

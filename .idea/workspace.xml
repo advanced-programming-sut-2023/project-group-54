@@ -4,11 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="add page for resources on shop">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="buy button and sell button text showing on pup up remained">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/NewTradeMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/PreviousTradeMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/newTradeMenu.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/previousTradeMenu.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/Media/tradeLogo.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/ShopMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/ShopMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/TradeMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/TradeMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Government.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Resource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Trade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Trade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/users.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ShopMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ShopMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/shopMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/shopMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/TradeMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/TradeMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/CSS/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/CSS/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/tradeMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/tradeMenu.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +36,7 @@
       <list>
         <option value="Enum" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -333,7 +350,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687475990685</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="buy button and sell button text showing on pup up remained">
+      <created>1687525029219</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1687525029219</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,7 +390,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="add Gitignore" />
     <MESSAGE value="change Command" />
     <MESSAGE value="resolve Some Mistake" />
     <MESSAGE value="connect menus" />
@@ -391,7 +414,8 @@
     <MESSAGE value="add hover and rectangle(not debugged)" />
     <MESSAGE value="shop added" />
     <MESSAGE value="add page for resources on shop" />
-    <option name="LAST_COMMIT_MESSAGE" value="add page for resources on shop" />
+    <MESSAGE value="buy button and sell button text showing on pup up remained" />
+    <option name="LAST_COMMIT_MESSAGE" value="buy button and sell button text showing on pup up remained" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -408,6 +432,10 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="13" />
         </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NoSuchMethodException" package="java.lang" />
+          <option name="timeStamp" value="16" />
+        </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/controller/MapMenuController.java</url>
           <line>541</line>
@@ -415,12 +443,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ShopMenu.java</url>
-          <line>35</line>
+          <line>36</line>
           <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/Main.java</url>
+          <line>6</line>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ShopMenu.java</url>
-          <line>37</line>
+          <line>38</line>
           <properties class="com.ap.stronghold.view.ShopMenu" method="run">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

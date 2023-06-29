@@ -2,19 +2,31 @@ package com.ap.stronghold.view;
 
 import com.ap.stronghold.controller.Controller;
 import com.ap.stronghold.controller.TradeMenuController;
-import com.ap.stronghold.model.Game;
-import com.ap.stronghold.model.Government;
-import com.ap.stronghold.model.Trade;
-import com.ap.stronghold.model.User;
+import com.ap.stronghold.model.*;
 import com.ap.stronghold.view.enums.commands.Command;
 import com.ap.stronghold.view.enums.commands.CommandHandler;
 import com.ap.stronghold.view.enums.messages.TradeMenuMessage;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
-public class TradeMenu {
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class TradeMenu extends Application {
     public static void run() {
         String command;
         Matcher matcher;
@@ -28,7 +40,7 @@ public class TradeMenu {
             else if (CommandHandler.parsCommand(Command.BACK, command) != null)
                 return;
             else if ((options = CommandHandler.parsCommand(Command.TRADE, command)) != null)
-                trade(options);
+                return;
             else if (CommandHandler.parsCommand(Command.TRADE_LIST, command) != null)
                 tradeListShow();
             else if ((options = CommandHandler.parsCommand(Command.TRADE_ACCEPT, command)) != null)
@@ -65,20 +77,24 @@ public class TradeMenu {
         government.getNewTrades().clear();
     }
 
-    public static void tradeListShow() {
+    public static ListView tradeListShow() {
         Government government = Game.getCurrentUser().getGovernment();
+        ListView<String> listView = new ListView<>();
         String result = "";
+
+        ObservableList<String> items = FXCollections.observableArrayList();
+
 
         for (int i = 0; i < government.getAllTrades().size(); i++) {
             Trade trade = government.getAllTrades().get(i);
-            result += i + 1 + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
-            result += " sender: " + trade.getSenderUser().getUsername() + "\n";
+             result = (i + 1) + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
+            result += " sender: " + trade.getSenderUser().getUsername();
+            items.add(result);
         }
-        if (result.equals(""))
-            System.out.println("you don't have any request or donation");
-        else {
-            System.out.println(result.trim());
-        }
+
+
+        listView.setItems(items);
+        return listView;
     }
 
     public static void historyShow() {
@@ -92,7 +108,7 @@ public class TradeMenu {
         for (int i = 0; i < government.getReceivedTrades().size(); i++) {
             Trade trade = government.getReceivedTrades().get(i);
             result += i + 1 + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
-            result += " acceptMessage: "+trade.getReceiverMessage()+" sender: " + trade.getSenderUser().getUsername() + "\n";
+            result += " acceptMessage: " + trade.getReceiverMessage() + " sender: " + trade.getSenderUser().getUsername() + "\n";
         }
         if (result.equals("")) {
             System.out.println("your history is empty");
@@ -103,52 +119,6 @@ public class TradeMenu {
 
     }
 
-    public static void trade(HashMap<String, ArrayList<String>> options) {
-        String resourceType = null;
-        String amount = null;
-        String price = null;
-        String message = null;
-        for (String s : options.keySet()) {
-            switch (s) {
-                case "t" -> resourceType = Controller.buildParameter(options.get(s).get(0));
-                case "a" -> amount = Controller.buildParameter(options.get(s).get(0));
-                case "p" -> price = Controller.buildParameter(options.get(s).get(0));
-                case "m" -> message = Controller.buildParameter(options.get(s).get(0));
-            }
-        }
-        if (resourceType == null) {
-            System.out.println("resource not entered");
-            return;
-        }
-        if (amount == null) {
-            System.out.println("amount not entered");
-            return;
-        }
-        if (!Controller.isNumeric(amount)) {
-            System.out.println("amount format is invalid please enter a amount");
-            return;
-        }
-        if (price == null) {
-            System.out.println("price not entered");
-            return;
-        }
-        if (!Controller.isNumeric(price)) {
-            System.out.println("price format is invalid please enter a number");
-            return;
-        }
-        if (message == null) {
-            System.out.println("message not entered");
-            return;
-        }
-        TradeMenuMessage result = TradeMenuController.trade(resourceType, amount, price, message);
-        switch (result) {
-            case INVALID_ITEM -> System.out.println("item is invalid we don't have this item in our game");
-            case INVALID_AMOUNT -> System.out.println("amount is invalid it should be at least 1");
-            case NOT_ENOUGH_ITEM -> System.out.println("you don't have enough item for this trade request");
-            case INVALID_PRICE -> System.out.println("price is invalid price should be grater than 0");
-            case SUCCESS -> System.out.println("your trade request has been sent successfully");
-        }
-    }
 
     public static void acceptTrade(HashMap<String, ArrayList<String>> options) {
         String id = null;
@@ -182,4 +152,78 @@ public class TradeMenu {
 
 
     }
+    private ComboBox<String> userComboBox;
+    private Label selectedUserLabel;
+    public void start(Stage stage) throws IOException {
+        Pane pane = FXMLLoader.load(LoginMenu.class.getResource("/com/ap/stronghold/FXML/tradeMenu.fxml"));
+        Image logo = new Image(ShopMenu.class.getResource("/com/ap/stronghold/Media/tradeLogo.jpg").toExternalForm());
+        ImageView imageView = new ImageView(logo);
+        imageView.setLayoutX(200);
+        imageView.setLayoutY(100);
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(100);
+        Button newTradeButton=new Button("New Trade");
+        Button previousTradeButton=new Button("previous trades");
+
+        newTradeButton.setStyle("-fx-background-color: red;");
+        newTradeButton.setOnMouseEntered(e -> newTradeButton.setStyle("-fx-background-color: green;"));
+        newTradeButton.setOnMouseExited(e -> newTradeButton.setStyle("-fx-background-color: red;"));
+        previousTradeButton.setLayoutX(300);
+        previousTradeButton.setLayoutY(350);
+        previousTradeButton.setScaleX(1);
+        previousTradeButton.setScaleY(1);
+        previousTradeButton.setStyle("-fx-background-color: red;");
+        previousTradeButton.setOnMouseEntered(e -> previousTradeButton.setStyle("-fx-background-color: green;"));
+        previousTradeButton.setOnMouseExited(e -> previousTradeButton.setStyle("-fx-background-color: red;"));
+        userComboBox = new ComboBox<>();
+        selectedUserLabel = new Label();
+        userComboBox.getItems().addAll(User.usersToString());
+        pane.getChildren().add(imageView);
+        userComboBox.setDisable(true);
+        pane.getChildren().add(previousTradeButton);
+        newTradeButton.setOnAction(event -> showUserList(stage));
+        newTradeButton.setLayoutX(100);
+        newTradeButton.setLayoutY(350);
+        newTradeButton.setScaleX(1);
+        newTradeButton.setScaleY(1);
+        userComboBox.setLayoutX(100);
+        userComboBox.setLayoutY(400);
+        previousTradeButton.setOnAction(actionEvent -> {
+            try {
+                (new PreviousTradeMenu()).start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
+        selectedUserLabel.setLayoutX(240);
+        selectedUserLabel.setLayoutY(10);
+        pane.getChildren().addAll(newTradeButton,userComboBox,selectedUserLabel);
+        Scene scene=new Scene(pane);
+        stage.setScene(scene);
+
+    }
+    private void showUserList(Stage stage) {
+        userComboBox.setDisable(false);
+        // Show user list
+        userComboBox.show();
+        userComboBox.setOnAction(event -> {
+            try {
+                selectUser(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        userComboBox.setDisable(true);
+    }
+
+    private void selectUser(Stage stage) throws Exception {
+        // Get selected user
+        String selectedUser = userComboBox.getSelectionModel().getSelectedItem();
+        User user=User.findUserByUsername(selectedUser);
+        (new NewTradeMenu(user)).start(stage);
+
+    }
 }
+

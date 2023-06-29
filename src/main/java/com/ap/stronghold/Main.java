@@ -6,6 +6,7 @@ import com.ap.stronghold.view.MainMenu;
 public class
 Main {
     public static void main(String[] args) throws Exception {
+
         User.loadUser();
         MainMenu menu = new MainMenu();
         menu.run();

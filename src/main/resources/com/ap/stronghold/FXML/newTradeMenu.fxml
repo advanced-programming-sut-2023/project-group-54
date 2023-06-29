@@ -1,0 +1,7 @@
+<?import javafx.scene.layout.Pane?>
+
+<Pane id="NewTradeMenu" prefHeight="700" prefWidth="1100"
+      stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ap.stronghold.view.NewTradeMenu">
+
+</Pane>
