@@ -8,11 +8,13 @@ import java.util.PriorityQueue;
 public class AStarShortestPath {
 
     static Node[][] cell;
-    static ArrayList<Node> pathList = new ArrayList<>();
-    static ArrayList<Node> closedList = new ArrayList<>();
+    static ArrayList<Node> pathList;
+    static ArrayList<Node> closedList;
     static boolean additionalPath = false;
 
     public static ArrayList<Map> findPath(Map[][] gameMap, int Ai, int Aj, int Bi, int Bj) {
+        pathList = new ArrayList<>();
+        closedList = new ArrayList<>();
         int rows = Game.getY();
         int columns = Game.getX();
         boolean[][] matrix = new boolean[rows][columns];

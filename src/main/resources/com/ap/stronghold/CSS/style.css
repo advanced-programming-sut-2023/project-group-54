@@ -13,7 +13,18 @@ Button{
     -fx-font-size: 15px;
     -fx-transition-duration: 0.4s;
 }
-
+.buttonSmall{
+    -fx-min-width: 150;
+    -fx-max-width: 250;
+    -fx-min-height: 25;
+    -fx-background-color: linear-gradient(#f3f3f3 10%, #9d9d9d 49%);
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+    -fx-transition-duration: 0.4s;
+}
 .button1:hover {
     -fx-background-color: #88d98c;
     -fx-color: white;
