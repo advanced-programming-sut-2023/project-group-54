@@ -5,8 +5,10 @@ import com.ap.stronghold.controller.LoginMenuController;
 import com.ap.stronghold.controller.ProfileMenuController;
 import com.ap.stronghold.controller.SignupMenuController;
 import com.ap.stronghold.view.enums.messages.LoginMenuMessage;
+import com.ap.stronghold.view.enums.messages.ProfileMenuMessage;
 import com.ap.stronghold.view.enums.messages.SignupMenuMessage;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -28,9 +30,9 @@ public class ChangePassword extends Application {
     public PasswordField newPassword;
     public PasswordField newPasswordConfirmation;
     private static Stage stageIn;
-    public TextField passwordText;
-    public TextField newPasswordText;
-    public TextField confirmationPasswordText;
+    public TextField passwordText = new TextField();
+    public TextField newPasswordText = new TextField();
+    public TextField confirmationPasswordText = new TextField();
     public boolean visiblePassword;
     public static Pane pane;
     private boolean visiblePassword2;
@@ -46,25 +48,51 @@ public class ChangePassword extends Application {
         stage.show();
     }
 
+    @FXML
     public void initialize() {
+
         newPassword.textProperty().addListener((observable, oldText, newText)->{
             if(newPassword.getText().isEmpty())
                 passwordCheck.setText("password not entered");
-            else if (newPassword.equals(oldPassword)) passwordCheck.setText("new password is equal to old password");
-            else if (newPassword.equals(newPasswordConfirmation)) passwordCheck.setText("password and password confirmation not equal");
             else{
                 SignupMenuMessage result = Controller.checkPasswordValidity(newPassword.getText());
                 passwordCheck.setText(SignupMenu.getError(result));
             }
         });
+        newPasswordText.textProperty().addListener((observable, oldText, newText)->{
+            if(newPasswordText.getText().isEmpty())
+                passwordCheck.setText("password not entered");
+            else{
+                SignupMenuMessage result = Controller.checkPasswordValidity(newPasswordText.getText());
+                passwordCheck.setText(SignupMenu.getError(result));
+            }
+        });
+
     }
     public void changePasswordMenu(MouseEvent mouseEvent) {
-        if (passwordCheck == null) ProfileMenu.showAlertError("change password error","you have error in new password");
-        else if (LoginMenuController.passwordChecker(oldPassword.getText()).equals(LoginMenuMessage.SUCCESS)) {
-            ProfileMenuController.changePassword(newPassword.getText(),newPasswordConfirmation.getText());
+        String oldPass = visiblePassword ? passwordText.getText() : oldPassword.getText();
+        String newPass = visiblePassword2 ? newPasswordText.getText() : newPassword.getText();
+        String conPass = visiblePassword2 ? confirmationPasswordText.getText() : newPasswordConfirmation.getText();
+        if (!passwordCheck.getText().equals("") || oldPass.equals("") ||
+                newPass.equals("") || conPass.equals(""))
+            ProfileMenu.showAlertError("change password error","you have error in new or old password");
+        else if (LoginMenuController.passwordChecker(oldPass).equals(LoginMenuMessage.SUCCESS)){
+            ProfileMenu.showAlertError("change password error","old password is not correct");
+            if (!visiblePassword) oldPassword.setText("");
+            else passwordText.setText("");
+        }
+        else if (newPass.equals(oldPass))
+            ProfileMenu.showAlertError("change password error","new password is equal to old password");
+        else if (!newPass.equals(conPass)) {
+            ProfileMenu.showAlertError("change password error", "password and password confirmation not equal");
+            if (!visiblePassword2) newPasswordConfirmation.setText("");
+            else confirmationPasswordText.setText("");
+        }
+        else if (ProfileMenuController.changePassword(oldPass,newPass).equals(ProfileMenuMessage.SUCCESS)) {
+            ProfileMenuController.changePasswordConfirmation(newPass,conPass);
             ProfileMenu.showAlertConfirm("change password", "password changed successfully");
             stageIn.close();
-        } else ProfileMenu.showAlertError("change password error","old password is not correct");
+        }
 
     }
 
@@ -187,6 +215,7 @@ public class ChangePassword extends Application {
             newPasswordConfirmation.setText(passwordVal2);
             newPasswordConfirmation.setPromptText("password");
             ((HBox) pane.getChildren().get(index4)).getChildren().add(index3, newPasswordConfirmation);
+            initialize();
         }
     }
     public void getRandomPassword() {

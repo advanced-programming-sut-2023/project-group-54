@@ -364,8 +364,9 @@ public class ProfileMenu extends Application implements DropTargetListener{
         });
 
         nickname.textProperty().addListener((observable, oldText, newText) -> {
-            if (!nickname.getText().isEmpty())
-                nicknameCheck.setText("");
+            if (nickname.getText().isEmpty())
+                nicknameCheck.setText("nick name is empty");
+            else nicknameCheck.setText("");
         });
         email.textProperty().addListener((observable, oldText, newText) -> {
             if (email.getText().isEmpty())
@@ -409,7 +410,7 @@ public class ProfileMenu extends Application implements DropTargetListener{
 
     public void setAvatars(Pane pane) {
         for (int i = 0; i < 6; i++) {
-            avatars[i] = new Image(ProfileMenu.class.getResource("/com/ap/stronghold/Media/Avatars/" + i + ".png").toExternalForm());
+            avatars[i] = new Image("C:\\Users\\Amirhosein\\IdeaProjects\\project-group-54-after-prof\\target\\classes\\com\\ap\\stronghold\\Media\\Avatars\\"+i+".png");
             view[i] = new ImageView(avatars[i]);
             circles[i] = new Circle(75 + i * 75 + 16, 360, 25);
             view[i].setClip(circles[i]);
@@ -505,8 +506,8 @@ public class ProfileMenu extends Application implements DropTargetListener{
         new ScoreBoard();
     }
 
-    public void saveChanges() {
-        if (usernameCheck.equals("") && emailCheck.equals("") && nicknameCheck.equals("")) {
+    public void saveChanges(MouseEvent mouseEvent) throws Exception {
+        if (usernameCheck.getText().equals("") && emailCheck.getText().equals("") && nicknameCheck.getText().equals("")) {
             ProfileMenuController.changeUsername(username.getText());
             ProfileMenuController.changeNickname(nickname.getText());
             ProfileMenuController.changeEmail(email.getText());
@@ -514,24 +515,14 @@ public class ProfileMenu extends Application implements DropTargetListener{
             else ProfileMenuController.changeSlogan("");
             for (Toggle toggle: avatar.getToggles()) {
                 if (((RadioButton) toggle).getGraphic() != null &&
-                        ((RadioButton)toggle).isSelected())
-                    ProfileMenuController.setPhoto(((ImageView)((RadioButton)toggle).getGraphic()).getImage().getUrl());
+                        ((RadioButton)toggle).isSelected()) {
+                    ProfileMenuController.setPhoto(((ImageView) ((RadioButton) toggle).getGraphic()).getImage().getUrl());
+                    break;
+                }
             }
+            showAlertConfirm("changes saved","changes to avatar,username,email and nickname saved");
+            (new Menu()).start(MainMenu.stage);
         }
-    }
-
-    public static ImageIcon setAvatar(User user) {
-        Image image = new Image(user.getAvatarPath());
-        ImageView imageView = new ImageView(image);
-        Circle circle = new Circle(25);
-        imageView.setClip(circle);
-        imageView.setX(50 + 6 * 75 + 16);
-        imageView.setY(340);
-        imageView.setFitWidth(50);
-        imageView.setPreserveRatio(true);
-        ImageIcon imageIcon = new ImageIcon(user.getAvatarPath());
-
-        return imageIcon;
     }
 
     public void askQuestion(MouseEvent mouseEvent) {
@@ -615,12 +606,12 @@ public class ProfileMenu extends Application implements DropTargetListener{
     public void fileChooser(MouseEvent mouseEvent) {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG & GIF Images", "jpg", "gif");
+                "JPG & PNG Images", "jpg", "png");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
-                    chooser.getSelectedFile().getName());
+            ProfileMenuController.setPhoto(chooser.getSelectedFile().getPath());
+            setSelfPhoto(pane);
         }
     }
 
@@ -639,6 +630,7 @@ class DragDropFrame extends JFrame {
             ProfileMenu profileMenu = new ProfileMenu();
             new DropTarget(myLabel, profileMenu);
             this.getContentPane().add(BorderLayout.CENTER, myLabel);
+            this.setLocationRelativeTo(null);
             this.setVisible(true);
         }
     }

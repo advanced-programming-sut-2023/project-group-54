@@ -46,8 +46,7 @@ public class User implements Comparable<User>{
         this.questionAnswer = questionAnswer;
         this.government = government;
         this.highScore = 0;
-        this.avatarPath = ProfileMenu.class.getResource("/com/ap/stronghold/Media/Avatars/"+ 5 + ".png").toString();
-        ;
+        this.avatarPath ="C:\\Users\\Amirhosein\\IdeaProjects\\project-group-54-after-prof\\target\\classes\\com\\ap\\stronghold\\Media\\Avatars\\5.png";
         users.add(this);
     }
     public static void loadUser(){

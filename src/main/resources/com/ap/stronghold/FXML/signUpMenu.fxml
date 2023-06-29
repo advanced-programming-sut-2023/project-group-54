@@ -7,11 +7,11 @@
       alignment="CENTER" spacing="15">
 
     <TextField promptText="username" fx:id="username"/>
-    <Text fx:id="usernameCheck"/>
-    <HBox spacing="10" alignment="CENTER">
-        <PasswordField promptText="password" fx:id="password"/>
-        <Button text="random password" onAction="#getRandomPassword"/>
-        <Button text="show/hide password" onAction="#togglePasswordVisible"/>
+    <Text fx:id="usernameCheck" />
+    <HBox spacing="10" alignment="CENTER" fx:id="passwordBox">
+        <PasswordField promptText="password" fx:id="password" />
+        <Button text="random password" onAction="#getRandomPassword" styleClass="button6"/>
+        <Button text="show/hide password" onAction="#togglePasswordVisible" styleClass="button4"/>
     </HBox>
     <Text fx:id="passwordCheck"/>
     <!--    <Button fx:id="visible" text="show password" onAction="#showPassword" prefWidth="40" prefHeight="40">-->

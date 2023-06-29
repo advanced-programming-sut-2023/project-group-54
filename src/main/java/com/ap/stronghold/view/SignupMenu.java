@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,12 +47,12 @@ public class SignupMenu extends Application {
     public String questionAnswer = "";
     public static Pane pane;
 
+
     @Override
     public void start(Stage stage) throws IOException {
         pane = FXMLLoader.load(LoginMenu.class.getResource("/com/ap/stronghold/FXML/signUpMenu.fxml"));
         visiblePassword = false;
         Scene scene = new Scene(pane);
-
         stage.setScene(scene);
     }
 
@@ -62,8 +63,11 @@ public class SignupMenu extends Application {
     public void signUp() {
         String sloganText = "";
         if (haveSlogan.isSelected()) sloganText = slogan.getText();
+        String passwordToSend = "";
+        if (!visiblePassword) passwordToSend = password.getText();
+        else passwordToSend = passwordText.getText();
         SignupMenuMessage result = SignupMenuController.setUser(username.getText()
-                , password.getText(), nickname.getText(), email.getText(),sloganText);
+                , passwordToSend, nickname.getText(), email.getText(), sloganText);
         switch (result) {
             case SECURITY_QUESTION:
                 setSecurityQuestion();
@@ -96,15 +100,15 @@ public class SignupMenu extends Application {
 
         Optional<String> result = dialog.showAndWait();
 
-        if (result.isPresent()){
+        if (result.isPresent()) {
             questionNumber = 0;
-            switch (order.getValue()){
+            switch (order.getValue()) {
                 case "What is your father’s name?" -> questionNumber = 1;
                 case "What is your mother’s last name?" -> questionNumber = 2;
                 case "What was your first pet’s name?" -> questionNumber = 3;
             }
             setSecurityQuestionAnswer();
-        }else{
+        } else {
             message.setFill(Color.RED);
             message.setText("failed during sign up");
         }
@@ -120,30 +124,30 @@ public class SignupMenu extends Application {
             case 3 -> dialog.setContentText("What is your mother’s last name?");
         }
         Optional<String> result = dialog.showAndWait();
-        if(result.isPresent()){
+        if (result.isPresent()) {
             questionAnswer = result.get();
             SignupMenuMessage createUserResult = SignupMenuController.createUser(questionNumber, questionAnswer);
-            if(createUserResult != SignupMenuMessage.SUCCESS) {
+            if (createUserResult != SignupMenuMessage.SUCCESS) {
                 message.setFill(Color.RED);
                 message.setText("failed because of wrong answers for captcha");
-            }else{
+            } else {
                 message.setFill(Color.GREEN);
                 message.setText("sign up successfully");
             }
-        }else{
+        } else {
             message.setFill(Color.RED);
             message.setText("failed during sign up");
         }
     }
 
     public void changeHaveSlogan() {
-        if(!haveSlogan.isSelected()){
+        if (!haveSlogan.isSelected()) {
             slogan.setVisible(false);
             slogan.setText("");
             randomSlogan.setVisible(false);
             commonSlogan.selectToggle(null);
             commonSloganHBox.setVisible(false);
-        }else{
+        } else {
             commonSloganHBox.setVisible(true);
             slogan.setVisible(true);
             randomSlogan.setVisible(true);
@@ -160,63 +164,76 @@ public class SignupMenu extends Application {
     }
 
     @FXML
-    public void initialize(){
-        username.setText("");
-        password.setText("");
-        nickname.setText("");
-        email.setText("");
-        slogan.setText("");
+    public void initialize() {
+//        username.setText("");
+//        password.setText("");
+//        nickname.setText("");
+//        email.setText("");
+//        slogan.setText("");
         emailCheck.setFill(Color.RED);
         nicknameCheck.setFill(Color.RED);
         passwordCheck.setFill(Color.RED);
         usernameCheck.setFill(Color.RED);
 
-        if(username.getText().isEmpty())
+        if (username.getText().isEmpty())
             usernameCheck.setText("username not entered");
-        if(password.getText().isEmpty())
+        if (password.getText().isEmpty())
             passwordCheck.setText("password not entered");
-        if(nickname.getText().isEmpty())
+        if (nickname.getText().isEmpty())
             nicknameCheck.setText("nickname not entered");
-        if(email.getText().isEmpty())
+        if (email.getText().isEmpty())
             emailCheck.setText("email not entered");
 
-        username.textProperty().addListener((observable, oldText, newText)->{
-            if(username.getText().isEmpty())
+        username.textProperty().addListener((observable, oldText, newText) -> {
+            if (username.getText().isEmpty())
                 usernameCheck.setText("username not entered");
             else {
                 SignupMenuMessage result = Controller.checkUsernameValidity(username.getText());
                 usernameCheck.setText(getError(result));
             }
         });
-        password.textProperty().addListener((observable, oldText, newText)->{
-            if(password.getText().isEmpty())
-                passwordCheck.setText("password not entered");
-            else{
-                SignupMenuMessage result = Controller.checkPasswordValidity(password.getText());
-                passwordCheck.setText(getError(result));
-            }
-        });
-        nickname.textProperty().addListener((observable, oldText, newText)->{
-            if(!nickname.getText().isEmpty())
+        if (!visiblePassword) {
+            password.textProperty().addListener((observable, oldText, newText) -> {
+                if (password.getText().isEmpty())
+                    passwordCheck.setText("password not entered");
+                else {
+                    SignupMenuMessage result = Controller.checkPasswordValidity(password.getText());
+                    passwordCheck.setText(getError(result));
+                }
+            });
+        }
+        else {
+
+            passwordText.textProperty().addListener((observable, oldText, newText) -> {
+                if (passwordText.getText().isEmpty())
+                    passwordCheck.setText("password not entered");
+                else {
+                    SignupMenuMessage result = Controller.checkPasswordValidity(passwordText.getText());
+                    passwordCheck.setText(getError(result));
+                }
+            });
+        }
+        nickname.textProperty().addListener((observable, oldText, newText) -> {
+            if (!nickname.getText().isEmpty())
                 nicknameCheck.setText("");
         });
-        email.textProperty().addListener((observable, oldText, newText)->{
-            if(email.getText().isEmpty())
+        email.textProperty().addListener((observable, oldText, newText) -> {
+            if (email.getText().isEmpty())
                 emailCheck.setText("email not entered");
             else {
                 SignupMenuMessage result = Controller.checkEmailValidity(email.getText());
                 emailCheck.setText(getError(result));
             }
         });
-        slogan.textProperty().addListener((observable, oldText, newText)->{
+        slogan.textProperty().addListener((observable, oldText, newText) -> {
             commonSlogan.selectToggle(null);
         });
     }
 
-    public static String getError(SignupMenuMessage result){
+    public static String getError(SignupMenuMessage result) {
         String message = "";
 
-        switch (result){
+        switch (result) {
             case EMAIL_EXIST:
                 message = "this email already exists";
                 break;
@@ -248,20 +265,20 @@ public class SignupMenu extends Application {
         alert.setHeaderText("password");
         alert.setContentText("your random password is: " + randomPassword);
         Optional<ButtonType> option = alert.showAndWait();
-        if(ButtonType.OK.equals(option.get())){
+        if (ButtonType.OK.equals(option.get())) {
             password.setText(randomPassword);
         }
     }
 
     public void togglePasswordVisible() {
-        if(!visiblePassword){
+        if (!visiblePassword) {
             visiblePassword = true;
             int index = 0;
             int index2 = 0;
             for (Node child : pane.getChildren()) {
-                if(child instanceof HBox){
+                if (child instanceof HBox) {
                     index = ((HBox) child).getChildren().indexOf(password);
-                    if(index != -1){
+                    if (index != -1) {
                         index2 = pane.getChildren().indexOf(child);
                         break;
                     }
@@ -273,14 +290,15 @@ public class SignupMenu extends Application {
             passwordText.setText(passwordVal);
             passwordText.setPromptText("password");
             ((HBox) pane.getChildren().get(index2)).getChildren().add(index, passwordText);
-        }else{
+            initialize();
+        } else {
             visiblePassword = false;
             int index = 0;
             int index2 = 0;
             for (Node child : pane.getChildren()) {
-                if(child instanceof HBox){
+                if (child instanceof HBox) {
                     index = ((HBox) child).getChildren().indexOf(passwordText);
-                    if(index != -1){
+                    if (index != -1) {
                         index2 = pane.getChildren().indexOf(child);
                         break;
                     }
@@ -292,6 +310,7 @@ public class SignupMenu extends Application {
             password.setText(passwordVal);
             password.setPromptText("password");
             ((HBox) pane.getChildren().get(index2)).getChildren().add(index, password);
+            initialize();
         }
     }
 }

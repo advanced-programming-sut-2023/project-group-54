@@ -150,5 +150,6 @@ public class ProfileMenuController {
 
     public static void setPhoto(String string) {
         Controller.getLoggedInUser().setAvatarPath(string);
+        User.saveUser();
     }
 }
