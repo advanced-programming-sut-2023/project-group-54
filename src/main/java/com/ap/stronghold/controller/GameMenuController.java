@@ -2,7 +2,10 @@ package com.ap.stronghold.controller;
 
 import com.ap.stronghold.model.*;
 import com.ap.stronghold.model.Buildings.*;
-import com.ap.stronghold.model.units.*;
+import com.ap.stronghold.model.units.Engineer;
+import com.ap.stronghold.model.units.State;
+import com.ap.stronghold.model.units.Unit;
+import com.ap.stronghold.model.units.UnitType;
 import com.ap.stronghold.view.enums.messages.GameMenuMessage;
 
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ public class GameMenuController {
 
     private static boolean hasApple() {
         for (Building building : Building.getBuildings()) {
-            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
+            if (building.getBuildingType().equals(BuildingType.GRANARY) && building.getOwner().equals(Game.getCurrentUser().getGovernment())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
                     if (resource.equals(Resource.APPLE)) {
@@ -35,7 +38,7 @@ public class GameMenuController {
 
     private static boolean hasMeet() {
         for (Building building : Building.getBuildings()) {
-            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
+            if (building.getBuildingType().equals(BuildingType.GRANARY) && building.getOwner().equals(Game.getCurrentUser().getGovernment())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
                     if (resource.equals(Resource.MEAT)) {
@@ -50,7 +53,7 @@ public class GameMenuController {
 
     private static boolean hasCheese() {
         for (Building building : Building.getBuildings()) {
-            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
+            if (building.getBuildingType().equals(BuildingType.GRANARY) && building.getOwner().equals(Game.getCurrentUser().getGovernment())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
                     if (resource.equals(Resource.CHEESE)) {
@@ -65,7 +68,7 @@ public class GameMenuController {
 
     private static boolean hasBread() {
         for (Building building : Building.getBuildings()) {
-            if (building.getBuildingType().equals(BuildingType.GRANARY)) {
+            if (building.getBuildingType().equals(BuildingType.GRANARY) && building.getOwner().equals(Game.getCurrentUser().getGovernment())) {
                 StorageBuilding storageBuilding = (StorageBuilding) building;
                 for (Resource resource : storageBuilding.getStorage().keySet()) {
                     if (resource.equals(Resource.BREAD)) {
@@ -244,8 +247,8 @@ public class GameMenuController {
         if (whereToGoXLow < 0) whereToGoXLow = 0;
         if (whereToGoYHigh >= Game.getY()) whereToGoYHigh = Game.getY();
         if (whereToGoYLow < 0) whereToGoYLow = 0;
-        if(!(unit instanceof Engineer)){
-            if(!aggressiveOrDefence){
+        if (!(unit instanceof Engineer)) {
+            if (!aggressiveOrDefence) {
                 for (int i = whereToGoXLow; i < whereToGoXHigh; i++) {
                     for (int j = whereToGoYLow; j < whereToGoYHigh; j++) {
                         for (Unit unit1 : Game.getGameMap()[i][j].getUnit()) {
@@ -262,18 +265,18 @@ public class GameMenuController {
                         }
                     }
                 }
-            }else{
+            } else {
                 ArrayList<Map> path = null;
                 for (Unit unit1 : Unit.getUnits()) {
                     ArrayList<Map> newPath;
-                    if(!unit1.getOwner().equals(unit.getOwner())){
+                    if (!unit1.getOwner().equals(unit.getOwner())) {
                         newPath = AStarShortestPath.findPath(Game.getGameMap(), unit.getxPosition(), unit.getyPosition(), unit1.getxPosition(), unit1.getyPosition());
-                        if(path == null || path.size() < newPath.size()){
+                        if (path == null || path.size() < newPath.size()) {
                             path = newPath;
                         }
                     }
                 }
-                if(path != null){
+                if (path != null) {
                     moveTo(path, unit);
                 }
             }
@@ -427,7 +430,7 @@ public class GameMenuController {
                 ((Engineer) unit).setHasOil(false);
                 killUnit((Engineer) unit, ((Engineer) unit).getPour());
                 engineerAttack((Engineer) unit);
-            }else{
+            } else {
                 if (unit.getUnitType().getRange() != 1 && !unit.isPatrol()) {
                     if (unit.getxTarget() == -1) {
                         if (unit.getState().equals(State.DEFENSIVE)) setPlacesToFightInDifferentModes(unit, false);
@@ -444,40 +447,40 @@ public class GameMenuController {
         removeBuildings();
     }
 
-    private static boolean checkEngineerAttack(Direction direction, Engineer unit, boolean isAggressive){
+    private static boolean checkEngineerAttack(Direction direction, Engineer unit, boolean isAggressive) {
         int count = 0;
-        switch (unit.getPour()){
+        switch (unit.getPour()) {
             case UP:
-                if(unit.getxPosition() - 1 >= 0){
+                if (unit.getxPosition() - 1 >= 0) {
                     for (Unit unit1 : Game.getGameMapXY(unit.getxPosition() - 1, unit.getyPosition()).getUnit()) {
-                        if(!unit1.getOwner().equals(unit.getOwner())){
+                        if (!unit1.getOwner().equals(unit.getOwner())) {
                             count++;
                         }
                     }
                 }
                 break;
             case DOWN:
-                if(unit.getxPosition() + 1 <= Game.getX()){
+                if (unit.getxPosition() + 1 <= Game.getX()) {
                     for (Unit unit1 : Game.getGameMapXY(unit.getxPosition() + 1, unit.getyPosition()).getUnit()) {
-                        if(!unit1.getOwner().equals(unit.getOwner())){
+                        if (!unit1.getOwner().equals(unit.getOwner())) {
                             count++;
                         }
                     }
                 }
                 break;
             case RIGHT:
-                if(unit.getyPosition() + 1 <= Game.getX()){
+                if (unit.getyPosition() + 1 <= Game.getX()) {
                     for (Unit unit1 : Game.getGameMapXY(unit.getxPosition(), unit.getyPosition() + 1).getUnit()) {
-                        if(!unit1.getOwner().equals(unit.getOwner())){
+                        if (!unit1.getOwner().equals(unit.getOwner())) {
                             count++;
                         }
                     }
                 }
                 break;
             case LEFT:
-                if(unit.getyPosition() - 1 >= 0){
+                if (unit.getyPosition() - 1 >= 0) {
                     for (Unit unit1 : Game.getGameMapXY(unit.getxPosition(), unit.getyPosition() - 1).getUnit()) {
-                        if(!unit1.getOwner().equals(unit.getOwner())){
+                        if (!unit1.getOwner().equals(unit.getOwner())) {
                             count++;
                         }
                     }
@@ -488,15 +491,15 @@ public class GameMenuController {
     }
 
     private static void engineerAttack(Engineer unit) {
-        if(unit.getState().equals(State.DEFENSIVE)){
-            if(unit.getHasOil() && unit.getPour() != null){
-                if(checkEngineerAttack(unit.getPour(), unit, false)) {
+        if (unit.getState().equals(State.DEFENSIVE)) {
+            if (unit.getHasOil() && unit.getPour() != null) {
+                if (checkEngineerAttack(unit.getPour(), unit, false)) {
                     killUnit(unit, unit.getPour());
                 }
             }
-        }else if(unit.getState().equals(State.AGGRESSIVE)){
-            if(unit.getHasOil() && unit.getPour() != null){
-                if(checkEngineerAttack(unit.getPour(), unit, true)){
+        } else if (unit.getState().equals(State.AGGRESSIVE)) {
+            if (unit.getHasOil() && unit.getPour() != null) {
+                if (checkEngineerAttack(unit.getPour(), unit, true)) {
                     killUnit(unit, unit.getPour());
                 }
             }
@@ -506,28 +509,28 @@ public class GameMenuController {
     private static void killUnit(Engineer unit, Direction pour) {
         switch (pour) {
             case UP:
-                if(unit.getxPosition() - 1 >= 0){
+                if (unit.getxPosition() - 1 >= 0) {
                     for (Unit unit1 : Game.getGameMap()[unit.getxPosition() - 1][unit.getyPosition()].getUnit()) {
                         Unit.getUnits().remove(unit1);
                         Game.getGameMap()[unit.getxPosition() - 1][unit.getyPosition()].getUnit().remove(unit1);
                     }
                 }
             case DOWN:
-                if(unit.getxPosition() + 1 <= Game.getX()){
+                if (unit.getxPosition() + 1 <= Game.getX()) {
                     for (Unit unit1 : Game.getGameMap()[unit.getxPosition() + 1][unit.getyPosition()].getUnit()) {
                         Unit.getUnits().remove(unit1);
                         Game.getGameMap()[unit.getxPosition() + 1][unit.getyPosition()].getUnit().remove(unit1);
                     }
                 }
             case RIGHT:
-                if(unit.getyPosition() + 1 <= Game.getY()){
+                if (unit.getyPosition() + 1 <= Game.getY()) {
                     for (Unit unit1 : Game.getGameMap()[unit.getxPosition() + 1][unit.getyPosition()].getUnit()) {
                         Unit.getUnits().remove(unit1);
                         Game.getGameMap()[unit.getxPosition() + 1][unit.getyPosition()].getUnit().remove(unit1);
                     }
                 }
             case LEFT:
-                if(unit.getyPosition() - 1 >= 0){
+                if (unit.getyPosition() - 1 >= 0) {
                     for (Unit unit1 : Game.getGameMap()[unit.getxPosition() - 1][unit.getyPosition()].getUnit()) {
                         Unit.getUnits().remove(unit1);
                         Game.getGameMap()[unit.getxPosition() - 1][unit.getyPosition()].getUnit().remove(unit1);
@@ -560,7 +563,8 @@ public class GameMenuController {
     public static void removeBuildings() {
         ArrayList<Building> buildingsToBeRemoved = new ArrayList<>();
         for (Building building : Building.getBuildings()) {
-            if (building.getHp() <= 0 && building.getBuildingType().getMaxHp() != -1) buildingsToBeRemoved.add(building);
+            if (building.getHp() <= 0 && building.getBuildingType().getMaxHp() != -1)
+                buildingsToBeRemoved.add(building);
         }
         for (Building building : buildingsToBeRemoved) {
             if (building instanceof StorageBuilding) {
@@ -590,11 +594,15 @@ public class GameMenuController {
         ArrayList<Unit> units = new ArrayList<>();
         Unit oldUnit = null;
         for (Unit unit : Unit.getUnits()) {
-            if (oldUnit == null || (oldUnit.getxMoveTarget() == unit.getxMoveTarget() && oldUnit.getyMoveTarget() == unit.getyMoveTarget()))
+            if (oldUnit == null || ((oldUnit.getxMoveTarget() == unit.getxMoveTarget()
+                    && oldUnit.getyMoveTarget() == unit.getyMoveTarget())
+                    && (oldUnit.getxPosition() == unit.getxPosition()
+                    && oldUnit.getyPosition() == unit.getyPosition())))
                 units.add(unit);
             else {
                 moveTroop(units);
                 units.clear();
+                units.add(unit);
             }
             oldUnit = unit;
         }

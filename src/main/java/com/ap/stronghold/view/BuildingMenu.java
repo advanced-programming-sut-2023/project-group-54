@@ -18,24 +18,24 @@ public class BuildingMenu {
         System.out.println("you are in building menu");
         while (true) {
             command = MainMenu.getScanner().nextLine();
-            if (CommandHandler.parsCommand(Command.BACK, command) != null)
-                return;
-            else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
-                System.out.println("building menu");
-            else if (CommandHandler.parsCommand(Command.REPAIR, command) != null)
-                repair();
-            else if ((options = CommandHandler.parsCommand(Command.CREATE_UNIT, command)) != null)
+//            if (CommandHandler.parsCommand(Command.BACK, command) != null)
+//                return;
+//            else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
+//                System.out.println("building menu");
+//            else if (CommandHandler.parsCommand(Command.REPAIR, command) != null)
+//                repair();
+            if ((options = CommandHandler.parsCommand(Command.CREATE_UNIT, command)) != null)
                 createUnit(options);
-            else if ((options = CommandHandler.parsCommand(Command.TAX_RATE, command)) != null)
-                taxRateSet(options);
-            else if ((options = CommandHandler.parsCommand(Command.FOOD_RATE, command)) != null)
-                foodRateSet(options);
-            else if ((options = CommandHandler.parsCommand(Command.OPEN_GATE, command)) != null)
-                openGate(options);
-            else if ((options = CommandHandler.parsCommand(Command.CLOSE_GATE, command)) != null)
-                closeGate(options);
-            else if ((options = CommandHandler.parsCommand(Command.CHANGE_OUTPUT, command)) != null)
-                changeOutput(options);
+//            else if ((options = CommandHandler.parsCommand(Command.TAX_RATE, command)) != null)
+//                taxRateSet(options);
+//            else if ((options = CommandHandler.parsCommand(Command.FOOD_RATE, command)) != null)
+//                foodRateSet(options);
+//            else if ((options = CommandHandler.parsCommand(Command.OPEN_GATE, command)) != null)
+//                openGate(options);
+//            else if ((options = CommandHandler.parsCommand(Command.CLOSE_GATE, command)) != null)
+//                closeGate(options);
+//            else if ((options = CommandHandler.parsCommand(Command.CHANGE_OUTPUT, command)) != null)
+//                changeOutput(options);
             else
                 System.out.println("Invalid command in building menu");
         }

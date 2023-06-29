@@ -24,22 +24,22 @@ public class UnitMenu {
             if(isDisband)
                 return;
             command = MainMenu.getScanner().nextLine();
-            if (CommandHandler.parsCommand(Command.BACK, command) != null)
-                return;
-            else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
-                System.out.println("unit menu");
-            else if ((options = CommandHandler.parsCommand(Command.MOVE_UNIT_TO, command)) != null)
-                moveUnit(options);
-            else if ((options = CommandHandler.parsCommand(Command.PATROL_UNIT, command)) != null)
+//            if (CommandHandler.parsCommand(Command.BACK, command) != null)
+//                return;
+//            else if (CommandHandler.parsCommand(Command.SHOW_MENU, command) != null)
+//                System.out.println("unit menu");
+//            else if ((options = CommandHandler.parsCommand(Command.MOVE_UNIT_TO, command)) != null)
+//                moveUnit(options);
+            if ((options = CommandHandler.parsCommand(Command.PATROL_UNIT, command)) != null)
                 patrolUnit(options);
             else if ((options = CommandHandler.parsCommand(Command.STOP_PATROL_UNIT, command)) != null)
                 stopPatrolUnit(options);
-            else if ((options = CommandHandler.parsCommand(Command.SET, command)) != null)
-                setState(options);
-            else if ((options = CommandHandler.parsCommand(Command.ATTACK, command)) != null)
-                attack(options);
-            else if ((options = CommandHandler.parsCommand(Command.DISBAND_UNIT, command)) != null)
-                disbandUnit();
+//            else if ((options = CommandHandler.parsCommand(Command.SET, command)) != null)
+//                setState(options);
+//            else if ((options = CommandHandler.parsCommand(Command.ATTACK, command)) != null)
+//                attack(options);
+//            else if ((options = CommandHandler.parsCommand(Command.DISBAND_UNIT, command)) != null)
+//                disbandUnit();
             else if ((options = CommandHandler.parsCommand(Command.POUR_OIL, command)) != null)
                 pourOil(options);
             else if ((options = CommandHandler.parsCommand(Command.BUILD, command)) != null)

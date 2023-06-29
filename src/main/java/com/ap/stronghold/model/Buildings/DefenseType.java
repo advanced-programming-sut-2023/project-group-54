@@ -4,7 +4,6 @@ public enum DefenseType {
     WALL_STAIRS(BuildingType.WALL_STAIRS, 0, false, false, false, false),
     LOW_WALL(BuildingType.LOW_WALL, 0, false, false, false, false),
     STONE_WALL(BuildingType.STONE_WALL, 0, false, false, false, false),
-    CRENELATED_WALL(BuildingType.CRENELATED_WALL, 0, false, false, false, false),
     SMALL_STONE_GATE(BuildingType.SMALL_STONE_GATE, 5, false, false, true, true),
     LARGE_STONE_GATE(BuildingType.LARGE_STONE_GATE, 5, false, false, true, true),
     DRAW_BRIDGE(BuildingType.DRAW_BRIDGE, 0, false, true, false, false),

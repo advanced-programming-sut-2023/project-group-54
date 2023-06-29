@@ -14,8 +14,6 @@ public enum BuildingType {
             0.25, false, BuildingGroup.CASTLE, BuildingGroup.DEFENSE_BUILDING, false),
     STONE_WALL(800, 1, 1, 0, "stone wall", null, 0, Resource.STONE,
             0.5, false, BuildingGroup.CASTLE, BuildingGroup.DEFENSE_BUILDING, false),
-    CRENELATED_WALL(1000, 1, 1, 0, "wall stairs", null, 0, Resource.STONE,
-            0.5, false, BuildingGroup.CASTLE, BuildingGroup.DEFENSE_BUILDING, false),
     SMALL_STONE_GATE(1000, 5, 5, 0, "small stone gate", null, 0, Resource.STONE,
             10, false, BuildingGroup.CASTLE, BuildingGroup.DEFENSE_BUILDING, true),
     LARGE_STONE_GATE(2000, 7, 7, 0, "large stone gate", null, 0, Resource.STONE,

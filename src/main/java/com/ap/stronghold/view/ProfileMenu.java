@@ -1,6 +1,7 @@
 package com.ap.stronghold.view;
 
 import com.ap.stronghold.controller.Controller;
+import com.ap.stronghold.controller.LoginMenuController;
 import com.ap.stronghold.controller.ProfileMenuController;
 import com.ap.stronghold.controller.SignupMenuController;
 import com.ap.stronghold.model.User;
@@ -11,6 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,10 +25,20 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class ProfileMenu extends Application {
+public class ProfileMenu extends Application implements DropTargetListener{
     public TextField nickname;
 
     public TextField username;
@@ -43,6 +57,7 @@ public class ProfileMenu extends Application {
     public Text passwordCheck;
     public Text highScore;
     public HBox commonSloganHBox;
+    public RadioButton avatar6 = new RadioButton();
     @FXML
     private RadioButton avatar0;
     @FXML
@@ -61,8 +76,12 @@ public class ProfileMenu extends Application {
     private Image[] avatars = new Image[6];
     private ImageView[] view = new ImageView[6];
     private Circle[] circles = new Circle[6];
-
-
+    private ImageView selfPhoto = new ImageView();
+    private Circle selfCircle = new Circle();
+    private Pane pane = new Pane();
+    public int questionNumber = 0;
+    public String questionAnswer = "";
+    private DragDropFrame dragFile = new DragDropFrame(false);
 //    public static void run() {
 //
 //        System.out.println("you are in profile menu");
@@ -101,7 +120,7 @@ public class ProfileMenu extends Application {
 //    }
 
 
-//    public static void main(String[] args) {
+    //    public static void main(String[] args) {
 //        launch();
 //    }
     private static void changeUsername(HashMap<String, ArrayList<String>> options) {
@@ -268,59 +287,109 @@ public class ProfileMenu extends Application {
         System.out.println(result.trim());
     }
 
+
+    @Override
+    public void drop(DropTargetDropEvent event) {
+        event.acceptDrop(DnDConstants.ACTION_COPY);
+        Transferable transferable = event.getTransferable();
+        DataFlavor[] flavors = transferable.getTransferDataFlavors();
+        for (DataFlavor flavor : flavors) {
+            try {
+                if (flavor.isFlavorJavaFileListType()) {
+                    java.util.List<Object> files = Arrays.asList(transferable.getTransferData(flavor));
+                    //List files = (List) transferable.getTransferData(flavor);
+                    String string = files.get(0).toString();
+                    string = string.substring(1,string.length() -1);
+                    Pattern pattern = Pattern.compile("(.jpg$)|(.png$)");
+                    Matcher matcher = pattern.matcher(string);
+                    if (matcher.find()) {
+                        ProfileMenuController.setPhoto(string);
+                        setSelfPhoto(pane);
+                    } //else
+                        //ProfileMenu.showAlertError("format error","you have to choose a jpg or png file");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        event.dropComplete(true);
+    }
+
+    @Override
+    public void dragEnter(DropTargetDragEvent event) {
+    }
+
+    @Override
+    public void dragExit(DropTargetEvent event) {
+    }
+
+    @Override
+    public void dragOver(DropTargetDragEvent event) {
+    }
+
+    @Override
+    public void dropActionChanged(DropTargetDragEvent event) {
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
-        Pane pane = FXMLLoader.load(LoginMenu.class.getResource("/com/ap/stronghold/FXML/profileMenu.fxml"));
+        pane = FXMLLoader.load(LoginMenu.class.getResource("/com/ap/stronghold/FXML/profileMenu.fxml"));
         Scene scene = new Scene(pane);
-
         stage.setScene(scene);
     }
 
+
     @FXML
     public void initialize() {
+
         emailCheck.setFill(Color.RED);
         nicknameCheck.setFill(Color.RED);
         usernameCheck.setFill(Color.RED);
         username.setText(Controller.getLoggedInUser().getUsername());
         nickname.setText(Controller.getLoggedInUser().getNickname());
         email.setText(Controller.getLoggedInUser().getEmail());
-        username.textProperty().addListener((observable, oldText, newText)->{
-            if(username.getText().isEmpty())
+        slogan.setText(Controller.getLoggedInUser().getSlogan());
+        username.textProperty().addListener((observable, oldText, newText) -> {
+            if (username.getText().isEmpty())
                 usernameCheck.setText("username not entered");
             else {
                 SignupMenuMessage result = Controller.checkUsernameValidity(username.getText());
-                if(!result.equals(SignupMenuMessage.USERNAME_EXIST) || !username.getText().equals(Controller.getLoggedInUser().getUsername())){
+                if (!result.equals(SignupMenuMessage.USERNAME_EXIST) || !username.getText().equals(Controller.getLoggedInUser().getUsername())) {
                     usernameCheck.setText(SignupMenu.getError(result));
-                }else {
+                } else {
                     usernameCheck.setText("");
                 }
             }
         });
 
-        nickname.textProperty().addListener((observable, oldText, newText)->{
-            if(!nickname.getText().isEmpty())
-                nicknameCheck.setText("");
+        nickname.textProperty().addListener((observable, oldText, newText) -> {
+            if (nickname.getText().isEmpty())
+                nicknameCheck.setText("nick name is empty");
+            else nicknameCheck.setText("");
         });
-        email.textProperty().addListener((observable, oldText, newText)->{
-            if(email.getText().isEmpty())
+        email.textProperty().addListener((observable, oldText, newText) -> {
+            if (email.getText().isEmpty())
                 emailCheck.setText("email not entered");
             else {
                 SignupMenuMessage result = Controller.checkEmailValidity(email.getText());
-                if(!result.equals(SignupMenuMessage.EMAIL_EXIST) || !email.getText().equals(Controller.getLoggedInUser().getEmail())){
+                if (!result.equals(SignupMenuMessage.EMAIL_EXIST) || !email.getText().equals(Controller.getLoggedInUser().getEmail())) {
                     emailCheck.setText(SignupMenu.getError(result));
-                }else{
+                } else {
                     emailCheck.setText("");
                 }
             }
         });
-        highScore.setText("high score is : " +Controller.getLoggedInUser().getHighScore());
-        selectImage().setSelected(true);
-        setAvatars();
+        highScore.setText("high score is : " + Controller.getLoggedInUser().getHighScore());
+        setAvatars(pane);
+
+
     }
 
     public RadioButton selectImage() {
         Image[] avatars = new Image[6];
-        int toReturn = Controller.getLoggedInUser().getAvatarNumber();
+        int toReturn = 5;
+        //Controller.getLoggedInUser().getAvatarNumber();
         switch (toReturn) {
             case 0:
                 return avatar0;
@@ -339,39 +408,71 @@ public class ProfileMenu extends Application {
         }
     }
 
-    public void setAvatars() {
+    public void setAvatars(Pane pane) {
         for (int i = 0; i < 6; i++) {
-            avatars[i] = new Image(ProfileMenu.class.getResource("/com/ap/stronghold/Media/Avatars/"+ i + ".png").toExternalForm());
+            avatars[i] = new Image("C:\\Users\\Amirhosein\\IdeaProjects\\project-group-54-after-prof\\target\\classes\\com\\ap\\stronghold\\Media\\Avatars\\"+i+".png");
             view[i] = new ImageView(avatars[i]);
-            circles[i] = new Circle(100 + i * 75 + 16, 360, 25);
+            circles[i] = new Circle(75 + i * 75 + 16, 360, 25);
             view[i].setClip(circles[i]);
-            view[i].setX(75 + i * 75 + 16);
+            view[i].setX(50 + i * 75 + 16);
             view[i].setY(340);
             view[i].setFitWidth(50);
             view[i].setPreserveRatio(true);
+            pane.getChildren().add(view[i]);
         }
-
+        boolean sign = true;
+        for (Image image : avatars) {
+            if (image.getUrl().equals(Controller.getLoggedInUser().getAvatarPath())) {
+                sign = false;
+                break;
+            }
+        }
+        if (sign) {
+            setSelfPhoto(pane);
+        }
         avatar0.setGraphic(view[0]);
         avatar1.setGraphic(view[1]);
         avatar2.setGraphic(view[2]);
         avatar3.setGraphic(view[3]);
         avatar4.setGraphic(view[4]);
         avatar5.setGraphic(view[5]);
+        for (Toggle toggle : avatar.getToggles()) {
+            if (((RadioButton) toggle).getGraphic() != null &&
+                    ((ImageView) ((RadioButton) toggle).getGraphic()).getImage().getUrl().equals(Controller.getLoggedInUser().getAvatarPath()))
+                ((RadioButton) toggle).setSelected(true);
+        }
+
     }
+
+    public void setSelfPhoto(Pane pane) {
+        selfPhoto = new ImageView(Controller.getLoggedInUser().getAvatarPath());
+        selfCircle = new Circle(91 + 6 * 75, 360, 25);
+        selfPhoto.setClip(selfCircle);
+        selfPhoto.setX(50 + 6 * 75 + 16);
+        selfPhoto.setY(340);
+        selfPhoto.setFitWidth(50);
+        selfPhoto.setPreserveRatio(true);
+        this.pane.getChildren().add(selfPhoto);
+        avatar6.setGraphic(selfPhoto);
+        avatar6.setSelected(true);
+    }
+
 
     public void changePassword(MouseEvent mouseEvent) throws Exception {
         (new ChangePassword()).start(new Stage());
     }
+
     public void changeHaveSlogan() {
-        if(!haveSlogan.isSelected()){
+        if (!haveSlogan.isSelected()) {
             slogan.setVisible(false);
             slogan.setText("");
             randomSlogan.setVisible(false);
             commonSlogan.selectToggle(null);
             commonSloganHBox.setVisible(false);
-        }else{
+        } else {
             commonSloganHBox.setVisible(true);
             slogan.setVisible(true);
+            slogan.setText(Controller.getLoggedInUser().getSlogan());
             randomSlogan.setVisible(true);
         }
     }
@@ -380,6 +481,7 @@ public class ProfileMenu extends Application {
         slogan.setText(SignupMenuController.getRandomSlogan());
         commonSlogan.selectToggle(null);
     }
+
     public void commonSloganSelect() {
         slogan.setText(commonSlogan.getSelectedToggle().getUserData().toString());
     }
@@ -404,7 +506,132 @@ public class ProfileMenu extends Application {
         new ScoreBoard();
     }
 
-    public void saveChanges() {
+    public void saveChanges(MouseEvent mouseEvent) throws Exception {
+        if (usernameCheck.getText().equals("") && emailCheck.getText().equals("") && nicknameCheck.getText().equals("")) {
+            ProfileMenuController.changeUsername(username.getText());
+            ProfileMenuController.changeNickname(nickname.getText());
+            ProfileMenuController.changeEmail(email.getText());
+            if (haveSlogan.isSelected()) ProfileMenuController.changeSlogan(slogan.getText());
+            else ProfileMenuController.changeSlogan("");
+            for (Toggle toggle: avatar.getToggles()) {
+                if (((RadioButton) toggle).getGraphic() != null &&
+                        ((RadioButton)toggle).isSelected()) {
+                    ProfileMenuController.setPhoto(((ImageView) ((RadioButton) toggle).getGraphic()).getImage().getUrl());
+                    break;
+                }
+            }
+            showAlertConfirm("changes saved","changes to avatar,username,email and nickname saved");
+            (new Menu()).start(MainMenu.stage);
+        }
+    }
 
+    public void askQuestion(MouseEvent mouseEvent) {
+        int questionNumber = LoginMenuController.getQuestion(Controller.getLoggedInUser().getUsername());
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Change security question");
+        dialog.setHeaderText("Enter Answer To Question Below");
+        switch (questionNumber) {
+            case 1 -> dialog.setContentText("What is your father’s name?");
+            case 2 -> dialog.setContentText("What was your first pet’s name?");
+            case 3 -> dialog.setContentText("What is your mother’s last name?");
+        }
+        Optional<String> result = dialog.showAndWait();
+        while (result.isPresent()) {
+            if (ProfileMenuController.checkAnswer(result.get())) {
+                setSecurityQuestion();
+                return;
+            } else {
+                dialog.setHeaderText("wrong answer");
+                result = dialog.showAndWait();
+            }
+        }
+    }
+
+    private void setSecurityQuestion() {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("security question");
+        dialog.setHeaderText("select security question");
+
+        ChoiceBox<String> order = new ChoiceBox<String>();
+        order.getItems().add("What is your father’s name?");
+        order.getItems().add("What was your first pet’s name?");
+        order.getItems().add("What is your mother’s last name?");
+        order.setValue("What is your father’s name?");
+        HBox content = new HBox();
+        content.setSpacing(10);
+        content.getChildren().addAll(new Label("select your security question"), order);
+        dialog.getDialogPane().setContent(content);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                return order.getValue();
+            }
+            return null;
+        });
+
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            questionNumber = 0;
+            switch (order.getValue()) {
+                case "What is your father’s name?" -> questionNumber = 1;
+                case "What is your mother’s last name?" -> questionNumber = 2;
+                case "What was your first pet’s name?" -> questionNumber = 3;
+            }
+            setSecurityQuestionAnswer();
+        }
+    }
+
+    private void setSecurityQuestionAnswer() {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("security question answer");
+        dialog.setHeaderText("enter answer to question below");
+        switch (questionNumber) {
+            case 1 -> dialog.setContentText("What is your father’s name?");
+            case 2 -> dialog.setContentText("What was your first pet’s name?");
+            case 3 -> dialog.setContentText("What is your mother’s last name?");
+        }
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            questionAnswer = result.get();
+            ProfileMenuController.setSecurityQuestion(questionNumber, questionAnswer);
+        }
+    }
+
+    public void back(MouseEvent mouseEvent) throws Exception {
+        (new Menu()).start(MainMenu.stage);
+
+    }
+
+    public void fileChooser(MouseEvent mouseEvent) {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JPG & PNG Images", "jpg", "png");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            ProfileMenuController.setPhoto(chooser.getSelectedFile().getPath());
+            setSelfPhoto(pane);
+        }
+    }
+
+
+    public void dragFile(MouseEvent mouseEvent) {
+        dragFile = new DragDropFrame(true);
+    }
+}
+class DragDropFrame extends JFrame {
+    private static final long serialVersionUID = 1L;
+    public DragDropFrame(boolean b) {
+        super("Drag and drop test");
+        if (b) {
+            this.setSize(250, 150);
+            JLabel myLabel = new JLabel("Drag something here!", SwingConstants.CENTER);
+            ProfileMenu profileMenu = new ProfileMenu();
+            new DropTarget(myLabel, profileMenu);
+            this.getContentPane().add(BorderLayout.CENTER, myLabel);
+            this.setLocationRelativeTo(null);
+            this.setVisible(true);
+        }
     }
 }

@@ -1,10 +1,13 @@
 package com.ap.stronghold.model;
 
+import com.ap.stronghold.view.ProfileMenu;
+import com.ap.stronghold.view.ScoreBoard;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.ap.stronghold.controller.Controller;
+import javafx.scene.image.Image;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -29,7 +32,7 @@ public class User implements Comparable<User>{
     @Expose
     private int highScore;
     @Expose
-    private int avatarNumber;
+    private String avatarPath;
 
     private Government government;
 
@@ -43,7 +46,7 @@ public class User implements Comparable<User>{
         this.questionAnswer = questionAnswer;
         this.government = government;
         this.highScore = 0;
-        this.avatarNumber = 5;
+        this.avatarPath ="C:\\Users\\Amirhosein\\IdeaProjects\\project-group-54-after-prof\\target\\classes\\com\\ap\\stronghold\\Media\\Avatars\\5.png";
         users.add(this);
     }
     public static void loadUser(){
@@ -90,12 +93,12 @@ public class User implements Comparable<User>{
         User.users = users;
     }
 
-    public int getAvatarNumber() {
-        return avatarNumber;
+    public String getAvatarPath() {
+        return avatarPath;
     }
 
-    public void setAvatarNumber(int avatarNumber) {
-        this.avatarNumber = avatarNumber;
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
     public String getUsername() {
