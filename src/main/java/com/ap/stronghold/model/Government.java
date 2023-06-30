@@ -61,6 +61,7 @@ public class Government {
     public void setReceivedTrades(ArrayList<Trade> receivedTrades) {
         this.receivedTrades = receivedTrades;
     }
+
     public void addReceivedTrades(Trade receivedTrades) {
         this.receivedTrades.add(receivedTrades);
     }
@@ -123,10 +124,9 @@ public class Government {
     }
 
     public void setPopularity2(int popularity) {
-        if(this.popularity >= 100)
-            this.popularity = 100;
-        else
-            this.popularity += popularity;
+        this.popularity += popularity;
+        if (this.popularity > 100) this.popularity = 100;
+        if(this.popularity < 0) this.popularity = 0;
     }
 
     public int getFoodRate() {
