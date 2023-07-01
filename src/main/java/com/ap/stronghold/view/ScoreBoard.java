@@ -4,17 +4,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.html.ImageView;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
-import com.ap.stronghold.controller.Controller;
 import com.ap.stronghold.controller.ProfileMenuController;
 import com.ap.stronghold.model.User;
 
@@ -44,7 +37,7 @@ public class ScoreBoard extends JFrame {
         };
 
         table.setModel(model);
-        table.getColumnModel().getColumn(0).setCellRenderer(new ImageTableCellRenderer());
+        table.getColumnModel().getColumn(0).setCellRenderer(new imageTableCellRenderer());
         table.setDefaultRenderer(Object.class,new NonEditableCellRenderer());
 //        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 //        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -76,44 +69,6 @@ public class ScoreBoard extends JFrame {
         setSize(300, 200);
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-}
-
-class ImageTableCellRenderer extends DefaultTableCellRenderer {
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        if (value instanceof File) {
-            //String string = ((File) value).getPath().replaceAll("^file:\\\\","");
-            File file = (File) value;
-            try {
-                Image image = ImageIO.read(file);
-                ImageIcon icon = new ImageIcon(image.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
-                setIcon(icon);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            setIcon(null);
-        }
-
-        return this;
-    }
-}
-
-class NonEditableCellRenderer extends DefaultTableCellRenderer {
-
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        //table.setEnabled(false);
-        if (isSelected) {
-            component.setBackground(table.getSelectionBackground());
-            component.setForeground(table.getSelectionForeground());
-        } else {
-            component.setBackground(table.getBackground());
-            component.setForeground(table.getForeground());
-        }
-        return component;
     }
 }
 

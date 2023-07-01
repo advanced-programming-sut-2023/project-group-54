@@ -410,7 +410,7 @@ public class ProfileMenu extends Application implements DropTargetListener{
 
     public void setAvatars(Pane pane) {
         for (int i = 0; i < 6; i++) {
-            avatars[i] = new Image("C:\\Users\\Amirhosein\\IdeaProjects\\project-group-54-after-prof\\target\\classes\\com\\ap\\stronghold\\Media\\Avatars\\"+i+".png");
+            avatars[i] = new Image(ProfileMenu.class.getResource("/com/ap/stronghold/Media/avatars/"+i+".png").toExternalForm());
             view[i] = new ImageView(avatars[i]);
             circles[i] = new Circle(75 + i * 75 + 16, 360, 25);
             view[i].setClip(circles[i]);

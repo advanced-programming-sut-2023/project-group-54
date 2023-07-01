@@ -1,5 +1,8 @@
 package com.ap.stronghold.model;
 
+import com.ap.stronghold.model.chat.AllChat;
+import com.ap.stronghold.model.chat.Group;
+import com.ap.stronghold.model.chat.PublicChat;
 import com.ap.stronghold.view.ProfileMenu;
 import com.ap.stronghold.view.ScoreBoard;
 import com.google.common.reflect.TypeToken;
@@ -15,6 +18,7 @@ import java.util.Collections;
 
 public class User implements Comparable<User>{
     private static ArrayList<User> users = new ArrayList<>();
+    private static PublicChat publicChat;
     @Expose
     private String username;
     @Expose
@@ -34,6 +38,7 @@ public class User implements Comparable<User>{
     @Expose
     private String avatarPath;
 
+    private AllChat allChat;
     private Government government;
 
     public User(String username, String password, String nickname, String email, String slogan, int questionNumber, String questionAnswer, Government government) {
@@ -46,9 +51,12 @@ public class User implements Comparable<User>{
         this.questionAnswer = questionAnswer;
         this.government = government;
         this.highScore = 0;
-        this.avatarPath ="C:\\Users\\Amirhosein\\IdeaProjects\\project-group-54-after-prof\\target\\classes\\com\\ap\\stronghold\\Media\\Avatars\\5.png";
+        this.avatarPath = User.class.getResource("/com/ap/stronghold/Media/avatars/5.png").toExternalForm();
         users.add(this);
+        this.allChat = new AllChat();
     }
+
+
     public static void loadUser(){
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
@@ -63,6 +71,7 @@ public class User implements Comparable<User>{
         ArrayList<User> allUsers = gson.fromJson(fileReader, new TypeToken<ArrayList<User>>() {}.getType());
         if (allUsers == null) allUsers = new ArrayList<>();
         users = allUsers;
+        publicChat = new PublicChat("0","public chat");
         for (User user : users) {
             Government government = new Government();
             user.setGovernment(government);
@@ -206,6 +215,14 @@ public class User implements Comparable<User>{
             }
         }
         return -1;
+    }
+
+    public static PublicChat getPublicChat() {
+        return publicChat;
+    }
+
+    public AllChat getAllChat() {
+        return allChat;
     }
 
     @Override

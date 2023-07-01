@@ -17,4 +17,6 @@ module com.ap.stronghold {
     opens com.ap.stronghold.model.Buildings to com.google.gson;
     exports com.ap.stronghold.model.units;
     opens com.ap.stronghold.model.units to com.google.gson;
+    exports com.ap.stronghold.model.chat;
+    opens com.ap.stronghold.model.chat to com.google.gson;
 }
