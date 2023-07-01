@@ -35,6 +35,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -495,7 +496,9 @@ public class GameMenu extends Application {
             }
             if(inMarket) {
                 try {
-                    (new ShopMenu()).start(stage);
+                    Stage shopStage = new Stage();
+                    shopStage.initModality(Modality.APPLICATION_MODAL);
+                    (new ShopMenu()).start(shopStage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

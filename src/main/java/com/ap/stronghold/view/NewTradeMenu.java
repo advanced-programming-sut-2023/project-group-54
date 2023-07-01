@@ -31,6 +31,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -48,7 +49,16 @@ public class NewTradeMenu extends Application {
     public void start(Stage stage) throws Exception {
 
         Pane pane= FXMLLoader.load(LoginMenu.class.getResource("/com/ap/stronghold/FXML/newTradeMenu.fxml"));
-
+        Button backButton=new Button("Back");
+        backButton.setLayoutX(0);
+        backButton.setLayoutY(650);
+        backButton.setOnAction(actionEvent -> {
+            try {
+                (new TradeMenu()).start(stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
         HBox hbox1 = createHBox1();
         HBox hbox2 = createHBox2();
         HBox hbox3 = createHBox3();
@@ -59,6 +69,7 @@ public class NewTradeMenu extends Application {
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10));
         pane.getChildren().add(vbox);
+        pane.getChildren().add(backButton);
         Scene scene=new Scene(pane);
         stage.setScene(scene);
     }
@@ -172,12 +183,11 @@ public class NewTradeMenu extends Application {
                     "    -fx-font-family: \"Arial Black\";\n" +
                     "    -fx-fill: #818181;\n" +
                     "    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );");
-            TextField textField = new TextField();
-            textField.setLayoutX(10);
-            textField.setLayoutY(10);
-            textField.setScaleX(1.5);
-            textField.setStyle("-fx-prompt-text-fill: grey; -fx-font-size: 14px; -fx-font-family: Arial;-fx-background-color: black; -fx-text-fill: white;");
-            textField.setPromptText("amount of "+itemName);
+            Label amountField = new Label("amount of "+itemName);
+            amountField.setLayoutX(10);
+            amountField.setLayoutY(10);
+            amountField.setScaleX(1.5);
+            amountField.setStyle("-fx-prompt-text-fill: grey; -fx-font-size: 14px; -fx-font-family: Arial;-fx-background-color: black; -fx-text-fill: white;");
             TextField textField1=new TextField();
             textField1.setLayoutX(10);
             textField1.setLayoutY(20);
@@ -196,12 +206,12 @@ public class NewTradeMenu extends Application {
             Button plusButton=new Button("+");
             plusButton.setOnAction(actionEvent -> {
                 quantity.getAndIncrement();
-                textField.setText(quantity.toString());
+                amountField.setText(quantity.toString());
             });
             minusButton.setOnAction(actionEvent -> {
                 if(quantity.get() > 0){
                     quantity.getAndDecrement();
-                    textField.setText(quantity.toString());
+                    amountField.setText(quantity.toString());
                 }
             });
 
@@ -317,7 +327,7 @@ public class NewTradeMenu extends Application {
             pageBox.setSpacing(20);
             pageBox.setPadding(new Insets(10));
 
-            pageBox.getChildren().add(1, textField);
+            pageBox.getChildren().add(1, amountField);
             pageBox.getChildren().add(2,textField1);
             pageBox.getChildren().add(3,plusButton);
             pageBox.getChildren().add(4,minusButton);
