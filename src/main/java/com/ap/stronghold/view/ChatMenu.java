@@ -12,34 +12,51 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ChatMenu {
+public class ChatMenu extends Thread{
     private Chat chat;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
     private String ip;
     private int port;
-    public ChatMenu(Chat chat,String ip,int port) throws IOException {
+    public ChatMenu(Chat chat, String ip, int port) throws IOException, ClassNotFoundException {
         this.chat = chat;
         this.ip = ip;
         this.port = port;
-        Socket socket = new Socket(ip, port);
-        dataInputStream = new DataInputStream(socket.getInputStream());
-        dataOutputStream = new DataOutputStream(socket.getOutputStream());
-    }
-
-    public Matcher matcherFind(String command,String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(command);
-        if (matcher.find()) return matcher;
-        return null;
     }
 
 
-
-    public void run() throws IOException, ClassNotFoundException {
+    @Override
+    public synchronized void run()  {
         System.out.println("Starting Client service...");
-        sendAllInformation();
+        Socket socket = null;
+        try {
+            socket = new Socket(ip, port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            dataInputStream = new DataInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            sendAllInformation();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         String command = MainMenu.getScanner().nextLine();
+        try {
+            getAllInformation();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         Pattern sendMessagePattern = Pattern.compile(Regexes.SEND_MESSAGE.getRegex());
         Pattern addMemberPattern = Pattern.compile(Regexes.ADD_MEMBER.getRegex());
         Pattern editMessagePattern = Pattern.compile(Regexes.EDIT_MESSAGE.getRegex());
@@ -49,18 +66,53 @@ public class ChatMenu {
         Pattern createPrivateChatPattern = Pattern.compile(Regexes.CREATE_PRIVATE_CHAT.getRegex());
         Matcher matcher;
         while (true) {
-            getAllInformation();
-            if (command.matches("back")) return;
+            try {
+                getAllInformation();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (command.matches("back")) {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    dataOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    dataInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return;
+            }
             else if (command.matches(Regexes.SEND_MESSAGE.getRegex())) {
                 matcher = sendMessagePattern.matcher(command);
                 System.out.println(sendMessage(matcher));
             } else if (command.matches(Regexes.ADD_MEMBER.getRegex())) {
                 matcher = addMemberPattern.matcher(command);
-                System.out.println(addMember(matcher));
+                try {
+                    System.out.println(addMember(matcher));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (command.matches(Regexes.SHOW_ALL_MESSAGES.getRegex())) {
-                showMessages();
+                try {
+                    showMessages();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (command.matches(Regexes.SHOW_ALL_MEMBERS.getRegex())) {
-                showMembers();
+                try {
+                    showMembers();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (command.matches(Regexes.EDIT_MESSAGE.getRegex())) {
                 matcher = editMessagePattern.matcher(command);
                 editMessage(matcher);
@@ -82,7 +134,11 @@ public class ChatMenu {
             }
 
             else System.out.println("Invalid command!");
-            sendAllInformation();
+            try {
+                sendAllInformation();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             command = MainMenu.getScanner().nextLine();
         }
     }
@@ -93,14 +149,13 @@ public class ChatMenu {
     }
 
     private synchronized void getAllInformation() throws IOException, ClassNotFoundException {
-        System.out.println("xxx");
         dataOutputStream.writeUTF("load");
         if (dataInputStream.available() != 0) {
             User.loadJsonString(dataInputStream.readUTF());
         }
     }
 
-    private void createPrivateChat(Matcher matcher) {
+    private synchronized void createPrivateChat(Matcher matcher) {
         matcher.find();
         User user;
         if ((user = User.findUserByUsername(matcher.group("id"))) == null) {
@@ -116,7 +171,7 @@ public class ChatMenu {
         System.out.println("private chat created");
     }
 
-    private void createGroup(Matcher matcher) {
+    private synchronized void createGroup(Matcher matcher) {
         matcher.find();
         if (AllChat.findChatInAll(matcher.group("id")) != null) {
             System.out.println("chat already exists");
@@ -126,12 +181,12 @@ public class ChatMenu {
         System.out.println("group created");
     }
 
-    private void showFriendShipRequests() {
+    private synchronized void showFriendShipRequests() {
         //sending request to server
     }
 
 
-    public String showMessages() throws IOException {
+    public synchronized String showMessages() throws IOException {
         //dataOutputStream.writeUTF("show messages");
 
         System.out.println("Messages:");
@@ -145,7 +200,7 @@ public class ChatMenu {
         return "correct";
     }
 
-    public String showMembers() throws IOException {
+    public synchronized String showMembers() throws IOException {
         //dataOutputStream.writeUTF("show members");
         if (chat instanceof PrivateChat) {
             System.out.println("Invalid command!");
@@ -175,14 +230,14 @@ public class ChatMenu {
         return "User has been added successfully!";
     }
 
-    public String sendMessage(Matcher matcher) {
+    public synchronized String sendMessage(Matcher matcher) {
         matcher.find();
             chat.addMessages(new Message(Controller.getLoggedInUser(), matcher.group("message")));
             addChatToFirst(matcher.group("message"));
             return "Message has been sent successfully!";
     }
 
-    private void addChatToFirst(String message) {
+    private synchronized void addChatToFirst(String message) {
         if (chat instanceof PrivateChat) {
             Controller.getLoggedInUser().getAllChat().getAllChatsOfUser().remove(chat);
             Controller.getLoggedInUser().getAllChat().addChat(chat);
@@ -207,7 +262,7 @@ public class ChatMenu {
         }
     }
 
-    public void editMessage(Matcher matcher) {
+    public synchronized void editMessage(Matcher matcher) {
         matcher.find();
         int number = Integer.parseInt(matcher.group("number")) - 1;
         if (number < 0 || number > chat.getMessages().size() - 1) {
@@ -229,7 +284,7 @@ public class ChatMenu {
         System.out.println("message edited");
     }
 
-    public void removeMessage(Matcher matcher) {
+    public synchronized void removeMessage(Matcher matcher) {
         matcher.find();
         int number = Integer.parseInt(matcher.group("number")) - 1;
         if (number < 0 || number > chat.getMessages().size() - 1) {
@@ -243,7 +298,7 @@ public class ChatMenu {
         System.out.println(("message removed"));
     }
 
-    public void putReaction(Matcher matcher) {
+    public synchronized void putReaction(Matcher matcher) {
         matcher.find();
         int number = Integer.parseInt(matcher.group("number")) - 1;
         if (number < 0 || number > chat.getMessages().size() - 1) {

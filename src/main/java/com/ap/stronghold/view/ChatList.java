@@ -67,8 +67,13 @@ public class ChatList extends JFrame {
                     JOptionPane.showMessageDialog(null, "continue chat in command line");
                     setVisible(false);
                     try {
-                        (new ChatMenu(Controller.getLoggedInUser().getAllChat().findChatsOfUser((String)table.getValueAt(row,0)), InetAddress.getLocalHost().getHostAddress(), 8080)).run();
+                        ChatMenu chatMenu = new ChatMenu(Controller.getLoggedInUser().getAllChat().findChatsOfUser((String)table.getValueAt(row,0)),
+                                InetAddress.getLocalHost().getHostAddress(), 8080);
+                        chatMenu.start();
+                        chatMenu.join();
                     } catch (IOException | ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                    } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
 
