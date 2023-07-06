@@ -1,6 +1,7 @@
 package com.ap.stronghold.view;
 
 import com.ap.stronghold.controller.Controller;
+import com.ap.stronghold.controller.ShopMenuController;
 import com.ap.stronghold.controller.TradeMenuController;
 import com.ap.stronghold.model.*;
 import com.ap.stronghold.view.enums.commands.Command;
@@ -10,11 +11,19 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,7 +31,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -44,7 +52,7 @@ public class TradeMenu extends Application {
             else if (CommandHandler.parsCommand(Command.TRADE_LIST, command) != null)
                 tradeListShow();
             else if ((options = CommandHandler.parsCommand(Command.TRADE_ACCEPT, command)) != null)
-                acceptTrade(options);
+                return;
             else if (CommandHandler.parsCommand(Command.TRADE_HISTORY, command) != null)
                 historyShow();
             else System.out.println("invalid command in trade menu");
@@ -80,21 +88,142 @@ public class TradeMenu extends Application {
     public static ListView tradeListShow() {
         Government government = Game.getCurrentUser().getGovernment();
         ListView<String> listView = new ListView<>();
-        String result = "";
+
 
         ObservableList<String> items = FXCollections.observableArrayList();
 
 
-        for (int i = 0; i < government.getAllTrades().size(); i++) {
-            Trade trade = government.getAllTrades().get(i);
-             result = (i + 1) + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
-            result += " sender: " + trade.getSenderUser().getUsername();
+        for (int i = 0; i < government.getSentTrades().size(); i++) {
+            String result = "";
+            Trade trade = government.getSentTrades().get(i);
+            result = (i + 1) + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
+            result += " receiver: " + trade.getReceiverUser().getUsername()+" status: "+trade.getAcceptedStatus();
             items.add(result);
         }
 
 
         listView.setItems(items);
         return listView;
+    }
+    public  static ListView receivedTradeListShow( Stage stage){
+
+        Government government = Game.getCurrentUser().getGovernment();
+
+
+        ObservableList<String> items = FXCollections.observableArrayList();
+
+        for (int i = 0; i < government.getReceivedTrades().size(); i++) {
+            String result = "";
+            Trade trade = government.getReceivedTrades().get(i);
+            result = (i + 1) + " resourceType: " + trade.getResource() + " amount: " + trade.getAmount() + " price: " + trade.getPrice() + " message: " + trade.getSenderMessage();
+            result += " sender: " + trade.getSenderUser().getUsername() + " status: " + trade.getAcceptedStatus();
+            items.add(result);
+        }
+
+        ListView<String> tradeListView = new ListView<>(items);
+        tradeListView.setCellFactory(listView -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setBackground(null);
+                } else {
+                    setText(item);
+                    Trade trade = government.getReceivedTrades().get(getIndex());
+
+
+                     if (trade.getAcceptedStatus().equals("pending") && !trade.getIsNew()) {
+                        setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+                         setOnMouseClicked(event -> {
+                             Popup popup1 = new Popup();
+                             Text message = new Text("");
+                             message.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+                             message.setFill(Color.WHITE);
+                             message.setTextAlignment(TextAlignment.CENTER);
+                            TradeMenuMessage result= TradeMenu.acceptTrade(getIndex());
+                             switch (result) {
+                                 case INVALID_INDEX -> message.setText("index is invalid");
+                                 case NOT_ENOUGH_GOLD -> message.setText("you don't have enough gold to accept this trade");
+                                 case NOT_ENOUGH_CAPACITY -> message.setText("you don't have enough capacity to accept this trade");
+                                 case SUCCESS -> message.setText("your acceptation has been successfully done");
+                             }
+                             Button closeButton = new Button("Close");
+                             closeButton.setOnAction(event1 -> {
+                                 popup1.hide();
+                                 trade.setAcceptedStatus(true);
+                                 try {
+                                     ( new PreviousTradeMenu()).start(stage);
+                                 } catch (Exception e) {
+                                     throw new RuntimeException(e);
+                                 }
+                                 tradeListView.setVisible(false);
+                             });
+
+                             VBox layout = new VBox(10, message, closeButton);
+                             layout.setAlignment(Pos.CENTER);
+                             layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px;");
+
+
+                             popup1.getContent().add(layout);
+                             popup1.setAutoHide(true);
+                             popup1.show(tradeListView.getScene().getWindow());
+
+                         });
+                    }else if(trade.getIsNew() && !trade.getAcceptedStatus().equals("accepted")){
+                         setBackground(new Background(new BackgroundFill(Color.BLUE, null, null)));
+                         setOnMouseClicked(event -> {
+                             Popup popup1 = new Popup();
+                             Text message = new Text("");
+                             message.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+                             message.setFill(Color.WHITE);
+                             message.setTextAlignment(TextAlignment.CENTER);
+                             TradeMenuMessage result= TradeMenu.acceptTrade(getIndex());
+                             switch (result) {
+                                 case INVALID_INDEX -> message.setText("index is invalid");
+                                 case NOT_ENOUGH_GOLD -> message.setText("you don't have enough gold to accept this trade");
+                                 case NOT_ENOUGH_CAPACITY -> message.setText("you don't have enough capacity to accept this trade");
+                                 case SUCCESS -> message.setText("your acceptation has been successfully done");
+                             }
+                             Button closeButton = new Button("Close");
+                             closeButton.setOnAction(event1 -> {
+                                 popup1.hide();
+                                 trade.setAcceptedStatus(true);
+                                 try {
+                                     ( new PreviousTradeMenu()).start(stage);
+                                 } catch (Exception e) {
+                                     throw new RuntimeException(e);
+                                 }
+                                tradeListView.setVisible(false);
+
+
+                             });
+
+                             VBox layout = new VBox(10, message, closeButton);
+                             layout.setAlignment(Pos.CENTER);
+                             layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px;");
+
+
+                             popup1.getContent().add(layout);
+                             popup1.setAutoHide(true);
+                             popup1.show(tradeListView.getScene().getWindow());
+
+                         });
+                     }
+                     else {
+                        setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
+                    }
+
+
+
+
+                }
+            }
+        });
+
+
+        return tradeListView;
     }
 
     public static void historyShow() {
@@ -120,35 +249,12 @@ public class TradeMenu extends Application {
     }
 
 
-    public static void acceptTrade(HashMap<String, ArrayList<String>> options) {
-        String id = null;
-        String message = null;
-        for (String s : options.keySet()) {
-            switch (s) {
-                case "i" -> id = Controller.buildParameter(options.get(s).get(0));
-                case "m" -> message = Controller.buildParameter(options.get(s).get(0));
-            }
-        }
-        if (id == null) {
-            System.out.println("id not entered");
-            return;
-        }
-        if (!Controller.isNumeric(id)) {
-            System.out.println("id should be number please choose one of the indexes");
-            return;
-        }
-        if (message == null) {
-            System.out.println("message not entered");
-            return;
-        }
+    public static TradeMenuMessage acceptTrade(int id) {
 
-        TradeMenuMessage result = TradeMenuController.acceptTrade(id, message);
-        switch (result) {
-            case INVALID_INDEX -> System.out.println("index is invalid");
-            case NOT_ENOUGH_GOLD -> System.out.println("you don't have enough gold to accept this trade");
-            case NOT_ENOUGH_CAPACITY -> System.out.println("you don't have enough capacity to accept this trade");
-            case SUCCESS -> System.out.println("your acceptation has been successfully done");
-        }
+
+        TradeMenuMessage result = TradeMenuController.acceptTrade(id+1,null);
+        return result;
+
 
 
     }
@@ -164,7 +270,6 @@ public class TradeMenu extends Application {
         imageView.setFitHeight(100);
         Button newTradeButton=new Button("New Trade");
         Button previousTradeButton=new Button("previous trades");
-
         newTradeButton.setStyle("-fx-background-color: red;");
         newTradeButton.setOnMouseEntered(e -> newTradeButton.setStyle("-fx-background-color: green;"));
         newTradeButton.setOnMouseExited(e -> newTradeButton.setStyle("-fx-background-color: red;"));
@@ -175,10 +280,21 @@ public class TradeMenu extends Application {
         previousTradeButton.setStyle("-fx-background-color: red;");
         previousTradeButton.setOnMouseEntered(e -> previousTradeButton.setStyle("-fx-background-color: green;"));
         previousTradeButton.setOnMouseExited(e -> previousTradeButton.setStyle("-fx-background-color: red;"));
+        Button backButton=new Button("Back");
+        backButton.setLayoutX(0);
+        backButton.setLayoutY(650);
+        backButton.setOnAction(actionEvent -> {
+            try {
+                (new ShopMenu()).start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
         userComboBox = new ComboBox<>();
         selectedUserLabel = new Label();
         userComboBox.getItems().addAll(User.usersToString());
         pane.getChildren().add(imageView);
+        pane.getChildren().add(backButton);
         userComboBox.setDisable(true);
         pane.getChildren().add(previousTradeButton);
         newTradeButton.setOnAction(event -> showUserList(stage));

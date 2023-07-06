@@ -243,6 +243,7 @@ public class User implements Comparable<User>{
     public static ArrayList<String> usersToString(){
         ArrayList<String> result=new ArrayList<>();
         for (int i=0;i< users.size();i++){
+            if(!users.get(i).equals(Game.getCurrentUser()))
             result.add(users.get(i).getUsername());
         }
         return result;

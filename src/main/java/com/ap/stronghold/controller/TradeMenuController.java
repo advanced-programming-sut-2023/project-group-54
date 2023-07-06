@@ -9,10 +9,10 @@ public class TradeMenuController {
         return TradeMenuMessage.SUCCESS;
     }
 
-    public static TradeMenuMessage acceptTrade(String id, String message) {
-        if(Integer.parseInt(id) < 1 || Integer.parseInt(id) > Game.getCurrentUser().getGovernment().getAllTrades().size())
+    public static TradeMenuMessage acceptTrade(int id, String message) {
+        if(id < 1 || id > Game.getCurrentUser().getGovernment().getReceivedTrades().size())
             return TradeMenuMessage.INVALID_INDEX;
-        Trade trade = Game.getCurrentUser().getGovernment().getAllTrades().get(Integer.parseInt(id) - 1);
+        Trade trade = Game.getCurrentUser().getGovernment().getReceivedTrades().get(id - 1);
         trade.setReceiverMessage(message);
         Resource resource = trade.getResource();
         int amount = trade.getAmount();
@@ -23,13 +23,8 @@ public class TradeMenuController {
             return TradeMenuMessage.NOT_ENOUGH_CAPACITY;
         Game.getCurrentUser().getGovernment().addToStorage(resource, amount);
         senderUser.getGovernment().removeFromStorage(resource, amount);
-        Game.getCurrentUser().getGovernment().getReceivedTrades().add(trade);
         Game.getCurrentUser().getGovernment().setGold2(-(amount*trade.getPrice()));
-        senderUser.getGovernment().setGold2((amount*trade.getPrice()));
-        for (User user : Game.getUsers()) {
-            user.getGovernment().getAllTrades().remove(trade);
-            user.getGovernment().getNewTrades().remove(trade);
-        }
+
         return TradeMenuMessage.SUCCESS;
     }
 
@@ -43,10 +38,12 @@ public class TradeMenuController {
         if (intPrice < 0) return TradeMenuMessage.INVALID_PRICE;
         if (Game.getCurrentUser().getGovernment().getAllResources().get(resource) < intAmount) return TradeMenuMessage.NOT_ENOUGH_ITEM;
         Trade trade = new Trade(Game.getCurrentUser(),receiverUser, resource, intAmount, intPrice, message,null);
-        Game.getCurrentUser().getGovernment().getSentTrades().add(trade);
+        Game.getCurrentUser().getGovernment().getSentTrades().add(0,trade);
+        Game.getCurrentUser().getGovernment().getAllTrades().add(0,trade);
         Government government = receiverUser.getGovernment();
-        government.getNewTrades().add(trade);
-        government.getAllTrades().add(trade);
+        government.getReceivedTrades().add(0,trade);
+        government.getNewTrades().add(0,trade);
+        government.getAllTrades().add(0,trade);
         return TradeMenuMessage.SUCCESS;
     }
 

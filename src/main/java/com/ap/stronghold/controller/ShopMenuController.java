@@ -7,9 +7,9 @@ import com.ap.stronghold.model.User;
 import com.ap.stronghold.view.enums.messages.ShopMenuMessage;
 
 public class ShopMenuController {
-    //private static User user = Game.getCurrentUser();
-    //TODO change this and delete comment
-    private static  User user=new User("ali","23AAaaahhh","al","al@gmail.com","null",1,"sa",new Government());
+    private static User user = Game.getCurrentUser();
+
+
     public static double getAmount(String itemName) {
         Resource resource=Resource.getResourceByName(itemName);
         return user.getGovernment().getResourceCount(resource);

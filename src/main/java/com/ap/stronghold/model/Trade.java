@@ -12,6 +12,7 @@ public class Trade {
     private String senderMessage;
     private String receiverMessage;
     private boolean acceptedStatus;
+    private boolean isNew;
 
     public Trade(User senderUser,User receiverUser, Resource resource, int amount, int price, String senderMessage, String receiverMessage) {
         this.senderUser = senderUser;
@@ -22,6 +23,7 @@ public class Trade {
         this.receiverMessage = receiverMessage;
         this.receiverUser=receiverUser;
         this.acceptedStatus=false;
+        this.isNew=true;
         trades.add(this);
     }
 
@@ -87,6 +89,18 @@ public class Trade {
 
     public void setReceiverMessage(String receiverMessage) {
         this.receiverMessage = receiverMessage;
+    }
+    public void setAcceptedStatus(boolean status){this.acceptedStatus=status;}
+    public String getAcceptedStatus(){
+        if(acceptedStatus)
+            return "accepted";
+        else return "pending";
+    }
+    public void setIsNew(){
+        this.isNew=false;
+    }
+    public boolean getIsNew(){
+        return this.isNew;
     }
 
 }

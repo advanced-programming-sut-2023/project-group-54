@@ -65,7 +65,12 @@ public class ShopMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Pane pane = FXMLLoader.load(LoginMenu.class.getResource("/com/ap/stronghold/FXML/shopMenu.fxml"));
-
+        Button backButton=new Button("Back");
+        backButton.setLayoutX(0);
+        backButton.setLayoutY(650);
+        backButton.setOnAction(actionEvent -> {
+            stage.close();
+        });
         Image logo = new Image(ShopMenu.class.getResource("/com/ap/stronghold/Media/shopLogo.png").toExternalForm());
         ImageView imageView = new ImageView(logo);
         imageView.setLayoutX(750);
@@ -100,8 +105,10 @@ public class ShopMenu extends Application {
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10));
         pane.getChildren().add(vbox);
+        pane.getChildren().add(backButton);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
+        stage.show();
     }
     public void initialize(){
 
