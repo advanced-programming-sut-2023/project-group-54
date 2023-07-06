@@ -1,18 +1,25 @@
 package com.ap.stronghold.model.chat;
 
 import com.ap.stronghold.model.User;
+import com.google.gson.annotations.Expose;
 import javafx.scene.input.InputMethodTextRun;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Message {
+    @Expose
     private User owner;
+    @Expose
     private String content;
+    @Expose
     private String messageTime;
     //private int[] messageTimeForSort;
+    @Expose
     private boolean isMessageSent;
+    @Expose
     private boolean isMessageSeen;
+    @Expose
     private String reactions;
 
 

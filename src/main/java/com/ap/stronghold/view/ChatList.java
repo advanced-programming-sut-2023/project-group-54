@@ -68,7 +68,7 @@ public class ChatList extends JFrame {
                     setVisible(false);
                     try {
                         (new ChatMenu(Controller.getLoggedInUser().getAllChat().findChatsOfUser((String)table.getValueAt(row,0)), InetAddress.getLocalHost().getHostAddress(), 8080)).run();
-                    } catch (IOException ex) {
+                    } catch (IOException | ClassNotFoundException ex) {
                         ex.printStackTrace();
                     }
 

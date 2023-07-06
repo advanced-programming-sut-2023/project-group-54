@@ -1,15 +1,22 @@
 package com.ap.stronghold.model.chat;
 
 import com.ap.stronghold.model.User;
+import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 
 public class Chat {
+    @Expose
     private ArrayList<User> member;
+    @Expose
     private ArrayList<Message> messages;
+    @Expose
     private User owner;
+    @Expose
     private String id;
+    @Expose
     private String name;
+    @Expose
     private int[] messageTimeForSort;
 
     public Chat(User owner, String id, String name) {

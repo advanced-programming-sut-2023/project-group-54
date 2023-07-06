@@ -37,6 +37,7 @@ public class User implements Comparable<User>{
     private int highScore;
     @Expose
     private String avatarPath;
+    @Expose
     private AllChat allChat;
     private ArrayList<User> friends;
         private Government government;
@@ -77,13 +78,38 @@ public class User implements Comparable<User>{
             Government government = new Government();
             user.setGovernment(government);
             government.setUser(user);
-            user.allChat = new AllChat();
-            user.allChat.addChat(publicChat);
+//            user.allChat = new AllChat();
+//            user.allChat.addChat(publicChat);
             user.friends = new ArrayList<>();
         }
     }
 
-    public static void saveUser(){
+    public static String saveJson() {
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
+        return gson.toJson(User.getUsers());
+    }
+
+    public synchronized static void loadJsonString(String json) {
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
+        ArrayList<User> allUsers = gson.fromJson(json, new TypeToken<ArrayList<User>>() {}.getType());
+        if (allUsers == null) allUsers = new ArrayList<>();
+        users = allUsers;
+        AllChat.allChatsInTheGame.add(publicChat);
+        for (User user : users) {
+            Government government = new Government();
+            user.setGovernment(government);
+            government.setUser(user);
+//            user.allChat = new AllChat();
+//            user.allChat.addChat(publicChat);
+            user.friends = new ArrayList<>();
+        }
+    }
+
+    public synchronized static void saveUser(){
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();

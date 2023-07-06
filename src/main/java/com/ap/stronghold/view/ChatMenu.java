@@ -16,14 +16,15 @@ public class ChatMenu {
     private Chat chat;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
-    private ObjectInputStream objectInputStream;
-    private ObjectOutputStream objectOutputStream;
     private String ip;
     private int port;
-    public ChatMenu(Chat chat,String ip,int port) {
+    public ChatMenu(Chat chat,String ip,int port) throws IOException {
         this.chat = chat;
         this.ip = ip;
         this.port = port;
+        Socket socket = new Socket(ip, port);
+        dataInputStream = new DataInputStream(socket.getInputStream());
+        dataOutputStream = new DataOutputStream(socket.getOutputStream());
     }
 
     public Matcher matcherFind(String command,String regex) {
@@ -35,13 +36,8 @@ public class ChatMenu {
 
 
 
-    public void run() throws IOException {
+    public void run() throws IOException, ClassNotFoundException {
         System.out.println("Starting Client service...");
-        Socket socket = new Socket(ip, port);
-        dataInputStream = new DataInputStream(socket.getInputStream());
-        dataOutputStream = new DataOutputStream(socket.getOutputStream());
-        objectInputStream = new ObjectInputStream(socket.getInputStream());
-        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
         sendAllInformation();
         String command = MainMenu.getScanner().nextLine();
         Pattern sendMessagePattern = Pattern.compile(Regexes.SEND_MESSAGE.getRegex());
@@ -53,6 +49,7 @@ public class ChatMenu {
         Pattern createPrivateChatPattern = Pattern.compile(Regexes.CREATE_PRIVATE_CHAT.getRegex());
         Matcher matcher;
         while (true) {
+            getAllInformation();
             if (command.matches("back")) return;
             else if (command.matches(Regexes.SEND_MESSAGE.getRegex())) {
                 matcher = sendMessagePattern.matcher(command);
@@ -85,18 +82,22 @@ public class ChatMenu {
             }
 
             else System.out.println("Invalid command!");
+            sendAllInformation();
             command = MainMenu.getScanner().nextLine();
         }
     }
 
-    private void sendAllInformation() throws IOException {
-        System.out.println("a");
-        objectOutputStream.writeObject(User.getUsers());
-        System.out.println("x");
+    private synchronized void sendAllInformation() throws IOException {
+        dataOutputStream.writeUTF("save");
+        dataOutputStream.writeUTF(User.saveJson());
     }
 
-    private void getAllInformation() throws IOException, ClassNotFoundException {
-        User.setUsers((ArrayList<User>) objectInputStream.readObject());
+    private synchronized void getAllInformation() throws IOException, ClassNotFoundException {
+        System.out.println("xxx");
+        dataOutputStream.writeUTF("load");
+        if (dataInputStream.available() != 0) {
+            User.loadJsonString(dataInputStream.readUTF());
+        }
     }
 
     private void createPrivateChat(Matcher matcher) {
@@ -136,7 +137,8 @@ public class ChatMenu {
         System.out.println("Messages:");
         int count = 1;
         for (Message message : chat.getMessages()) {
-            System.out.println(count + " - message from : " + message.getOwner().getUsername() + "(" + message.getOwner().getNickname() + ")\n"
+            System.out.println(count + " - message from : " + (message.getOwner() == null ? "" : message.getOwner().getUsername()) +
+                    "(" + (message.getOwner() == null ? "" :message.getOwner().getNickname()) + ")\n"
                     + ": \"" + message.getContent() + "\"\n\t\t\t" + message.getMessageTime());
             count++;
         }

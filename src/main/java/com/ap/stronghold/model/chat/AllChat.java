@@ -2,6 +2,7 @@ package com.ap.stronghold.model.chat;
 
 import com.ap.stronghold.controller.Controller;
 import com.ap.stronghold.model.User;
+import com.google.gson.annotations.Expose;
 import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
@@ -10,8 +11,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 
 public class AllChat {
+    @Expose
     public static HashSet<Chat> allChatsInTheGame = new HashSet<>();
+    @Expose
     private ArrayList<Chat> allChatsOfUser;
+    @Expose
     private int numberOfChat;
 //    private final ArrayList<PrivateChat> privateChats;
 //    private final ArrayList<Group> groups;
