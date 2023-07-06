@@ -18,7 +18,7 @@ import java.util.Collections;
 
 public class User implements Comparable<User>{
     private static ArrayList<User> users = new ArrayList<>();
-    private static PublicChat publicChat;
+    private static PublicChat publicChat = new PublicChat();
     @Expose
     private String username;
     @Expose
@@ -37,9 +37,9 @@ public class User implements Comparable<User>{
     private int highScore;
     @Expose
     private String avatarPath;
-
     private AllChat allChat;
-    private Government government;
+    private ArrayList<User> friends;
+        private Government government;
 
     public User(String username, String password, String nickname, String email, String slogan, int questionNumber, String questionAnswer, Government government) {
         this.username = username;
@@ -51,9 +51,10 @@ public class User implements Comparable<User>{
         this.questionAnswer = questionAnswer;
         this.government = government;
         this.highScore = 0;
-        this.avatarPath = User.class.getResource("/com/ap/stronghold/Media/avatars/5.png").toExternalForm();
+        this.avatarPath ="C:\\Users\\Amirhosein\\IdeaProjects\\project-group-54-after-prof\\target\\classes\\com\\ap\\stronghold\\Media\\Avatars\\5.png";
         users.add(this);
         this.allChat = new AllChat();
+        this.friends = new ArrayList<>();
     }
 
 
@@ -71,11 +72,14 @@ public class User implements Comparable<User>{
         ArrayList<User> allUsers = gson.fromJson(fileReader, new TypeToken<ArrayList<User>>() {}.getType());
         if (allUsers == null) allUsers = new ArrayList<>();
         users = allUsers;
-        publicChat = new PublicChat("0","public chat");
+        AllChat.allChatsInTheGame.add(publicChat);
         for (User user : users) {
             Government government = new Government();
             user.setGovernment(government);
             government.setUser(user);
+            user.allChat = new AllChat();
+            user.allChat.addChat(publicChat);
+            user.friends = new ArrayList<>();
         }
     }
 

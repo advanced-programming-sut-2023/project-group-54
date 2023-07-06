@@ -1,8 +1,6 @@
 package com.ap.stronghold.view;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
 import java.io.File;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
@@ -37,7 +35,7 @@ public class ScoreBoard extends JFrame {
         };
 
         table.setModel(model);
-        table.getColumnModel().getColumn(0).setCellRenderer(new imageTableCellRenderer());
+        table.getColumnModel().getColumn(0).setCellRenderer(new ImageTableCellRenderer());
         table.setDefaultRenderer(Object.class,new NonEditableCellRenderer());
 //        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 //        centerRenderer.setHorizontalAlignment(JLabel.CENTER);

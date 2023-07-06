@@ -2,14 +2,15 @@ package com.ap.stronghold.model.chat;
 
 import com.ap.stronghold.controller.Controller;
 import com.ap.stronghold.model.User;
-import com.ap.stronghold.model.chat.PrivateChat;
+import org.checkerframework.checker.units.qual.C;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 
 public class AllChat {
+    public static HashSet<Chat> allChatsInTheGame = new HashSet<>();
     private ArrayList<Chat> allChatsOfUser;
     private int numberOfChat;
 //    private final ArrayList<PrivateChat> privateChats;
@@ -59,6 +60,7 @@ public class AllChat {
 
     public void addChat(Chat chat) {
         allChatsOfUser.add(chat);
+        allChatsInTheGame.add(chat);
     }
 
     public void sortChats() {
@@ -74,8 +76,17 @@ public class AllChat {
         Collections.sort(Controller.getLoggedInUser().getAllChat().getAllChatsOfUser(),multipleFieldComparator);
     }
 
-    public Chat findChat(String id) {
+    public Chat findChatsOfUser(String id) {
         for (Chat chat : allChatsOfUser) {
+            if (chat.getId().equals(id))
+                return chat;
+        }
+        return null;
+    }
+
+
+    public static Chat findChatInAll(String id) {
+        for (Chat chat : allChatsInTheGame) {
             if (chat.getId().equals(id))
                 return chat;
         }

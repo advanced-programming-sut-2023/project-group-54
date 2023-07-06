@@ -4,9 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="trade Menu added">
+    <list default="true" id="507d5977-c7b4-4281-84b7-19139910c284" name="Changes" comment="Changes in chat">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/Government.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/ProfileMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/controller/ProfileMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/chat/AllChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/chat/AllChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/chat/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/chat/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/chat/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/chat/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/chat/PublicChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/chat/PublicChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/stayLoggedInUser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/model/data/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ChatList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ChatList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ChatMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ChatMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ProfileMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ScoreBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ScoreBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/enums/commands/Regexes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/enums/commands/Regexes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/imageTableCellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ap/stronghold/view/ImageTableCellRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ap/stronghold/FXML/menu.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,26 +94,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Master" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ap.stronghold.Main" />
-      <module name="project-group-54" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.ap.stronghold.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ShopMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.ap.stronghold.view.ShopMenu" />
       <module name="StrongHold" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.ap.stronghold.view.*" />
+          <option name="PATTERN" value="com.ap.stronghold.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -119,14 +128,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="Application.ShopMenu" />
-      <item itemvalue="Application.Main" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.ShopMenu" />
       </list>
     </recent_temporary>
   </component>
@@ -151,6 +155,9 @@
       <workItem from="1683878183168" duration="2413000" />
       <workItem from="1687774916056" duration="10035000" />
       <workItem from="1687794801799" duration="83134000" />
+      <workItem from="1688294656319" duration="6146000" />
+      <workItem from="1688389175757" duration="10559000" />
+      <workItem from="1688560581386" duration="9658000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="phase0">
       <created>1681498802040</created>
@@ -357,7 +364,14 @@
       <option name="presentableId" value="LOCAL‎−۰۰۰۳۳" />
       <updated>1687967966481</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Changes in chat">
+      <created>1688236420622</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1688236420622</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -390,7 +404,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="drop completed -" />
     <MESSAGE value="complete user save in json" />
     <MESSAGE value="unit menu" />
     <MESSAGE value="some for unit menu" />
@@ -415,7 +428,8 @@
     <MESSAGE value="building, face, buttons" />
     <MESSAGE value="face pics" />
     <MESSAGE value="game complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="game complete" />
+    <MESSAGE value="Changes in chat" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes in chat" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -153,5 +153,9 @@ public class Menu extends Application {
             (new GameMenu()).start(MainMenu.stage);
         }
     }
+
+    public void enterChatList(ActionEvent actionEvent) throws Exception {
+        new ChatList();
+    }
 }
 

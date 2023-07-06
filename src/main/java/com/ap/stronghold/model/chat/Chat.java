@@ -12,7 +12,6 @@ public class Chat {
     private String name;
     private int[] messageTimeForSort;
 
-
     public Chat(User owner, String id, String name) {
         this.owner = owner;
         this.id = id;
@@ -20,7 +19,7 @@ public class Chat {
         this.member = new ArrayList<>();
         this.messages = new ArrayList<>();
         this.messages.add(new Message(null,"public chat started"));
-        this.messageTimeForSort = messages.get(0).getMessageTimeForSort();
+       // this.messageTimeForSort = messages.get(0).getMessageTimeForSort();
     }
 
     public String findMember(User user) {

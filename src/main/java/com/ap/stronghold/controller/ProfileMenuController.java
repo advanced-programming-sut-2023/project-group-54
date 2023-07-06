@@ -8,6 +8,8 @@ import com.ap.stronghold.view.enums.messages.ProfileMenuMessage;
 import com.ap.stronghold.view.enums.messages.SignupMenuMessage;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProfileMenuController {
     private static User user = Controller.getLoggedInUser();
@@ -149,7 +151,35 @@ public class ProfileMenuController {
     }
 
     public static void setPhoto(String string) {
+
         Controller.getLoggedInUser().setAvatarPath(string);
         User.saveUser();
+    }
+
+    public static void setPhotoByProf(String path) {
+        Pattern pattern = Pattern.compile("(/|\\\\)(?<filename>\\S+$)");
+        Matcher matcher = pattern.matcher(path);
+        matcher.find();
+        String string = matcher.group("filename");
+        String destinationFolderPath = ProfileMenuController.class.getResource("/com/ap/stronghold/Media/avatars/").toExternalForm();
+        try (FileInputStream fis = new FileInputStream(path)) {
+            File destinationFolder = new File(destinationFolderPath);
+            if (!destinationFolder.exists()) destinationFolder.mkdirs();
+            String fileName = new File(path).getName();
+            String destinationFilePath = destinationFolderPath + fileName;
+            destinationFilePath = destinationFolderPath.replaceAll("^file:(\\\\|/)","");
+            System.out.println(destinationFilePath);
+            try (FileOutputStream fos = new FileOutputStream(destinationFilePath)) {
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = fis.read(buffer)) > 0) {
+                    fos.write(buffer, 0, length);
+                }
+            }
+            System.out.println(ProfileMenuController.class.getResource("/com/ap/stronghold/Media/avatars/").toExternalForm() + string);
+            setPhoto(ProfileMenuController.class.getResource("/com/ap/stronghold/Media/avatars/").toExternalForm() + string);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

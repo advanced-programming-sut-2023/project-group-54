@@ -11,6 +11,11 @@ public class Message {
     private String content;
     private String messageTime;
     //private int[] messageTimeForSort;
+    private boolean isMessageSent;
+    private boolean isMessageSeen;
+    private String reactions;
+
+
     public Message(User owner, String content) {
         this.owner = owner;
         this.content = content;
@@ -23,6 +28,44 @@ public class Message {
 //        for (int i = 0; i < time2.length; i++)
 //            timesToInt[i] = Integer.parseInt(time2[i]);
 //        this.messageTimeForSort = timesToInt;
+        this.isMessageSeen =false;
+        this.isMessageSent = false;
+        this.reactions = "reactions :\n";
+    }
+
+    public String getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(String reactions) {
+        this.reactions += reactions;
+    }
+
+    public boolean isMessageSent() {
+        return isMessageSent;
+    }
+
+    public void setMessageSent(boolean messageSent) {
+        isMessageSent = messageSent;
+    }
+
+    public boolean isMessageSeen() {
+        return isMessageSeen;
+    }
+
+    public void setMessageSeen(boolean messageSeen) {
+        isMessageSeen = messageSeen;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setMessageTime() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        this.messageTime = dtf.format(now);
+        this.messageTime = messageTime;
     }
 
     public User getOwner() {

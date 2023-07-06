@@ -1,14 +1,11 @@
 package com.ap.stronghold.view;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.InetAddress;
 
 import com.ap.stronghold.controller.Controller;
 import com.ap.stronghold.model.chat.Group;
@@ -50,7 +47,7 @@ public class ChatList extends JFrame {
         };
 
         table.setModel(model);
-        table.getColumnModel().getColumn(0).setCellRenderer(new imageTableCellRenderer());
+        table.getColumnModel().getColumn(0).setCellRenderer(new ImageTableCellRenderer());
         table.setDefaultRenderer(Object.class,new NonEditableCellRenderer());
 //        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 //        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -69,7 +66,12 @@ public class ChatList extends JFrame {
                     //int column = table.getSelectedColumn();
                     JOptionPane.showMessageDialog(null, "continue chat in command line");
                     setVisible(false);
-                    (new ChatMenu(Controller.getLoggedInUser().getAllChat().findChat((String)table.getValueAt(row,0)))).run();
+                    try {
+                        (new ChatMenu(Controller.getLoggedInUser().getAllChat().findChatsOfUser((String)table.getValueAt(row,0)), InetAddress.getLocalHost().getHostAddress(), 8080)).run();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+
 //                    if (column == 0 ) {
 //                        File object = (File) table.getValueAt(row, column);
 //                        ProfileMenuController.setPhoto(object.getPath());

@@ -7,12 +7,14 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class imageTableCellRenderer extends DefaultTableCellRenderer {
+public class ImageTableCellRenderer extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         if (value instanceof File) {
-            //String string = ((File) value).getPath().replaceAll("^file:\\\\","");
+            //String string = ((File) value).getPath().replaceAll("^file:(\\\\|/)","");
+            //System.out.println(string);
             File file = (File) value;
+            //System.out.println(file.getPath());
             try {
                 Image image = ImageIO.read(file);
                 ImageIcon icon = new ImageIcon(image.getScaledInstance(50, 50, Image.SCALE_SMOOTH));

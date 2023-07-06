@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class PublicChat extends Chat{
 
-    public PublicChat( String id, String name) {
-        super(null, id, name);
+    public PublicChat() {
+        super(null, "1", "public chat");
         for (User user : User.getUsers())
             this.addMember(user);
     }

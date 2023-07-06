@@ -11,4 +11,5 @@
     <Button text="logout" styleClass="button3" onAction="#logout"/>
     <Button text="exit" styleClass="button3" onAction="#exit"/>
     <Button text="Shop Menu" styleClass="button3" onAction="#enterShopMenu"/>
+    <Button text="chat list" styleClass="button5" onAction="#enterChatList"/>
 </VBox>
